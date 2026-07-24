@@ -1,0 +1,8 @@
+# runtime dependencies (Python 3.10+, conda env candidate_scoring)
+# Установка из корня проекта:  pip install -r requirements.txt
+# синтетика, UI
+faker
+streamlit
+
+# Опционально — нужно только для MongoDB-интеграции и CLI `python -m scorer.service`
+pymongo>=4.0

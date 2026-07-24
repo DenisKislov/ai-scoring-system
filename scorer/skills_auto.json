@@ -1,0 +1,505 @@
+{
+  "AI": [
+    "ai"
+  ],
+  "ANT": [
+    "ant"
+  ],
+  "API": [
+    "api"
+  ],
+  "API Gateway": [
+    "api gateway"
+  ],
+  "Amocrm api": [
+    "amocrm api"
+  ],
+  "Android": [
+    "android"
+  ],
+  "AngularJS": [
+    "angularjs"
+  ],
+  "Apache Airflow": [
+    "apache airflow",
+    "airflow"
+  ],
+  "Apache Kafka": [
+    "apache kafka",
+    "kafka"
+  ],
+  "Apache Superset": [
+    "apache superset"
+  ],
+  "Atlassian Confluence": [
+    "atlassian confluence"
+  ],
+  "Atlassian Jira": [
+    "atlassian jira"
+  ],
+  "Azure": [
+    "azure"
+  ],
+  "BPMN": [
+    "bpmn"
+  ],
+  "Backend": [
+    "backend"
+  ],
+  "Big Data": [
+    "big data"
+  ],
+  "BigQuery": [
+    "bigquery"
+  ],
+  "Bitbucket": [
+    "bitbucket"
+  ],
+  "CMS Wordpress": [
+    "cms wordpress"
+  ],
+  "CV": [
+    "cv"
+  ],
+  "CatBoost": [
+    "catboost"
+  ],
+  "Celery": [
+    "celery"
+  ],
+  "ChartJS": [
+    "chartjs"
+  ],
+  "Claude Code": [
+    "claude code"
+  ],
+  "Codex": [
+    "codex"
+  ],
+  "Core MLLinux": [
+    "core mllinux"
+  ],
+  "DWH": [
+    "dwh"
+  ],
+  "Dart": [
+    "dart"
+  ],
+  "Data Analysis": [
+    "data analysis"
+  ],
+  "DevOps": [
+    "devops"
+  ],
+  "Django Framework": [
+    "django framework"
+  ],
+  "Django Rest Framework": [
+    "django rest framework"
+  ],
+  "Drupal": [
+    "drupal"
+  ],
+  "Drupal API": [
+    "drupal api"
+  ],
+  "EDA": [
+    "eda"
+  ],
+  "ELK": [
+    "elk"
+  ],
+  "ELMA": [
+    "elma"
+  ],
+  "ElementPlus": [
+    "elementplus"
+  ],
+  "Entity Framework": [
+    "entity framework"
+  ],
+  "Fast API": [
+    "fast api"
+  ],
+  "Figma": [
+    "figma"
+  ],
+  "Flutter": [
+    "flutter"
+  ],
+  "GitHub": [
+    "github"
+  ],
+  "GitLab CI": [
+    "gitlab ci"
+  ],
+  "Gitlab": [
+    "gitlab"
+  ],
+  "Grafana": [
+    "grafana"
+  ],
+  "GraphQL": [
+    "graphql"
+  ],
+  "Greenplum": [
+    "greenplum"
+  ],
+  "HAProxy": [
+    "haproxy"
+  ],
+  "HTTP": [
+    "http"
+  ],
+  "Helm": [
+    "helm"
+  ],
+  "Hibernate": [
+    "hibernate"
+  ],
+  "IPTables": [
+    "iptables"
+  ],
+  "ISTIO": [
+    "istio"
+  ],
+  "IT": [
+    "it"
+  ],
+  "JSON": [
+    "json"
+  ],
+  "JWT": [
+    "jwt"
+  ],
+  "Jest": [
+    "jest"
+  ],
+  "KServe": [
+    "kserve"
+  ],
+  "KeyCloak": [
+    "keycloak"
+  ],
+  "LLM": [
+    "llm"
+  ],
+  "LangChain": [
+    "langchain"
+  ],
+  "LangGraph": [
+    "langgraph"
+  ],
+  "Laravel": [
+    "laravel"
+  ],
+  "Learning to Rank": [
+    "learning to rank"
+  ],
+  "LightGBM": [
+    "lightgbm"
+  ],
+  "MLflow": [
+    "mlflow"
+  ],
+  "MS SQL": [
+    "ms sql"
+  ],
+  "Material Design": [
+    "material design"
+  ],
+  "Mathematics": [
+    "mathematics"
+  ],
+  "Multithreading": [
+    "multithreading"
+  ],
+  "NLTK": [
+    "nltk"
+  ],
+  "Natural Language Processing": [
+    "natural language processing"
+  ],
+  "Nexus": [
+    "nexus"
+  ],
+  "Nginx": [
+    "nginx"
+  ],
+  "NoSQL": [
+    "nosql"
+  ],
+  "Nuxt": [
+    "nuxt"
+  ],
+  "ORACLE": [
+    "oracle"
+  ],
+  "ORM": [
+    "orm"
+  ],
+  "OpenCart": [
+    "opencart"
+  ],
+  "Patroni": [
+    "patroni"
+  ],
+  "Prometheus": [
+    "prometheus"
+  ],
+  "PySpark": [
+    "pyspark"
+  ],
+  "Pydantic": [
+    "pydantic"
+  ],
+  "Pytest": [
+    "pytest"
+  ],
+  "QML": [
+    "qml"
+  ],
+  "Qt": [
+    "qt"
+  ],
+  "RAG": [
+    "rag"
+  ],
+  "REST API design": [
+    "rest api design"
+  ],
+  "RESTful API": [
+    "restful api"
+  ],
+  "RabbitMQ": [
+    "rabbitmq"
+  ],
+  "ReactJS": [
+    "reactjs"
+  ],
+  "Redux": [
+    "redux"
+  ],
+  "RxJS": [
+    "rxjs"
+  ],
+  "SCSS": [
+    "scss"
+  ],
+  "SOLID": [
+    "solid"
+  ],
+  "SPA": [
+    "spa"
+  ],
+  "SQLAlchemy": [
+    "sqlalchemy"
+  ],
+  "Sass": [
+    "sass"
+  ],
+  "SciPy": [
+    "scipy"
+  ],
+  "Sentry": [
+    "sentry"
+  ],
+  "Spring Data": [
+    "spring data"
+  ],
+  "Statistics": [
+    "statistics"
+  ],
+  "Svelte": [
+    "svelte"
+  ],
+  "Swagger": [
+    "swagger"
+  ],
+  "TDD": [
+    "tdd"
+  ],
+  "TeamCity": [
+    "teamcity"
+  ],
+  "TorchServe": [
+    "torchserve"
+  ],
+  "Triton": [
+    "triton"
+  ],
+  "Triton Inference Server": [
+    "triton inference server"
+  ],
+  "UI": [
+    "ui"
+  ],
+  "UML": [
+    "uml"
+  ],
+  "UX": [
+    "ux"
+  ],
+  "Ubuntu": [
+    "ubuntu"
+  ],
+  "VMware": [
+    "vmware"
+  ],
+  "Vuex": [
+    "vuex"
+  ],
+  "WPF": [
+    "wpf"
+  ],
+  "Web Security": [
+    "web security"
+  ],
+  "WebSocket": [
+    "websocket"
+  ],
+  "Webpack": [
+    "webpack"
+  ],
+  "WinForms": [
+    "winforms"
+  ],
+  "Windows Development": [
+    "windows development"
+  ],
+  "Wordpress": [
+    "wordpress"
+  ],
+  "XGBoost": [
+    "xgboost"
+  ],
+  "XML": [
+    "xml"
+  ],
+  "Yii": [
+    "yii"
+  ],
+  "Zabbix": [
+    "zabbix"
+  ],
+  "docker swarm": [
+    "docker swarm"
+  ],
+  "frontend": [
+    "frontend"
+  ],
+  "gRPC": [
+    "grpc"
+  ],
+  "iOS": [
+    "ios"
+  ],
+  "jQuery": [
+    "jquery"
+  ],
+  "vllm": [
+    "vllm"
+  ],
+  "Автоматизация процессов": [
+    "автоматизация процессов"
+  ],
+  "Адаптивная верстка": [
+    "адаптивная верстка"
+  ],
+  "Администрирование серверов Linux": [
+    "администрирование серверов linux"
+  ],
+  "Алгоритмы и структуры данных": [
+    "алгоритмы и структуры данных"
+  ],
+  "Аналитическое мышление": [
+    "аналитическое мышление"
+  ],
+  "Английский Начальный": [
+    "английский начальный"
+  ],
+  "Английский Продвинутый": [
+    "английский продвинутый"
+  ],
+  "Английский Средний": [
+    "английский средний"
+  ],
+  "Английский Элементарный": [
+    "английский элементарный"
+  ],
+  "Английский язык": [
+    "английский язык"
+  ],
+  "Базы данных": [
+    "базы данных"
+  ],
+  "Верстка": [
+    "верстка"
+  ],
+  "Информационная безопасность": [
+    "информационная безопасность"
+  ],
+  "Исследовательский анализ данных": [
+    "исследовательский анализ данных"
+  ],
+  "Кроссбраузерная верстка": [
+    "кроссбраузерная верстка"
+  ],
+  "Математический анализ": [
+    "математический анализ"
+  ],
+  "Математическое моделирование": [
+    "математическое моделирование"
+  ],
+  "Микросервисная архитектура": [
+    "микросервисная архитектура"
+  ],
+  "ООП": [
+    "ооп"
+  ],
+  "Оптимизация кода": [
+    "оптимизация кода"
+  ],
+  "Ответственность": [
+    "ответственность"
+  ],
+  "Работа в команде": [
+    "работа в команде"
+  ],
+  "Рефакторинг кода": [
+    "рефакторинг кода"
+  ],
+  "Сетевые протоколы": [
+    "сетевые протоколы"
+  ],
+  "Сетевые технологии": [
+    "сетевые технологии"
+  ],
+  "Статистика": [
+    "статистика"
+  ],
+  "ТСД": [
+    "тсд"
+  ],
+  "Торговая площадка": [
+    "торговая площадка"
+  ],
+  "Управление командой": [
+    "управление командой"
+  ],
+  "аккуратность в отчетах и оценках": [
+    "аккуратность в отчетах и оценках"
+  ],
+  "навыки архитектрного проектирования": [
+    "навыки архитектрного проектирования"
+  ],
+  "навыки декомпозиции задач": [
+    "навыки декомпозиции задач"
+  ],
+  "прикладная статистика": [
+    "прикладная статистика"
+  ],
+  "самостоятельность": [
+    "самостоятельность"
+  ]
+}

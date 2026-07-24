@@ -1,0 +1,9 @@
+{
+  "vacancy_parsing": true,
+  "company_parsing": true,
+  "resume_parsing": true,
+  "start_urls": [
+    "https://hh.ru/search/vacancy?text=python&area=1&search_period=30",
+    "https://hh.ru/search/vacancy?text=frontend&area=1&search_period=30"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  ".NET Core": [
+    ".net core"
+  ],
+  ".NET Framework": [
+    ".net framework"
+  ],
+  "1С": [
+    "1с"
+  ],
+  "1С программирование": [
+    "1с программирование"
+  ],
+  "1С-Битрикс": [
+    "1с-битрикс"
+  ],
+  "1С: Предприятие 8": [
+    "1с: предприятие 8"
+  ],
+  "3DChart": [
+    "3dchart"
+  ],
+  "AI-разработка": [
+    "ai-разработка"
+  ],
+  "AI/ML": [
+    "ai/ml"
+  ],
+  "Architecture Decision Records (ADR)": [
+    "architecture decision records (adr)"
+  ],
+  "CSS3": [
+    "css3"
+  ],
+  "Drupal 10": [
+    "drupal 10"
+  ],
+  "ES6": [
+    "es6"
+  ],
+  "HTML5": [
+    "html5"
+  ],
+  "Next.js": [
+    "next.js"
+  ],
+  "Next.js 14+ App Router": [
+    "next.js 14+ app router"
+  ],
+  "NextAuth.js": [
+    "nextauth.js"
+  ],
+  "Node.js 20 LTS": [
+    "node.js 20 lts"
+  ],
+  "Nuxt.js": [
+    "nuxt.js"
+  ],
+  "Prisma 5.x": [
+    "prisma 5.x"
+  ],
+  "RBAC-проектирование": [
+    "rbac-проектирование"
+  ],
+  "React.js": [
+    "react.js"
+  ],
+  "Redux-Saga": [
+    "redux-saga"
+  ],
+  "Redux-Thunk": [
+    "redux-thunk"
+  ],
+  "SQL / PostgreSQL 15–16": [
+    "sql / postgresql 15–16"
+  ],
+  "TCP/IP": [
+    "tcp/ip"
+  ],
+  "TypeScript 5.x": [
+    "typescript 5.x"
+  ],
+  "Vue-router": [
+    "vue-router"
+  ],
+  "Vue.js": [
+    "vue.js"
+  ],
+  "Vue2": [
+    "vue2"
+  ],
+  "Vue3": [
+    "vue3"
+  ],
+  "gitlab (ci)": [
+    "gitlab (ci)"
+  ],
+  "Английский Средне-продвинутый": [
+    "английский средне-продвинутый"
+  ],
+  "Веб-программирование": [
+    "веб-программирование"
+  ],
+  "ИТ-инфраструктура": [
+    "ит-инфраструктура"
+  ]
+}

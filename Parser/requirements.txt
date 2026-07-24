@@ -1,0 +1,7 @@
+# HH.ru parser (Scrapy) — runtime dependencies (Python 3.10+)
+# Установка из папки Parser:  cd Parser && pip install -r requirements.txt
+
+scrapy>=2.8            # фреймворк краулера + CrawlerProcess (entry points)
+pymongo>=4.0           # пайплайн записи в MongoDB (gb_parse.pipelines)
+itemloaders>=1.1       # ItemLoader с процессорами полей (gb_parse.loaders)
+itemadapter>=0.8       # Scrapy Item -> dict в Mongo-пайплайне

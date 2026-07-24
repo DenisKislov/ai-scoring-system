@@ -1,0 +1,3 @@
+# тесты, httpx нужен TestClient'у API
+pytest
+httpx
