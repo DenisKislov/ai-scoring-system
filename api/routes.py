@@ -21,6 +21,9 @@ from scorer.service import score_vacancy
 from db.builders import resume_text
 from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
 
+from fastapi import UploadFile, File, HTTPException
+from .file_parser import extract_text_from_file
+
 router = APIRouter()
 
 
@@ -133,8 +136,38 @@ def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
 
 
-@router.get("/feedback", summary="Get current HR decision")
-def get_feedback(vacancy_id: str, resume_id: str) -> dict:
-    decision = mongo.get_feedback(vacancy_id, resume_id)
-    return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
+@router.post("/upload_resume", summary="Загрузить файл резюме (PDF/TXT)")
+async def upload_resume_file(file: UploadFile = File(...)):
+    try:
+        # Читаем файл в память
+        content = await file.read()
 
+        # Вытаскиваем текст
+        extracted_text = extract_text_from_file(content, file.filename)
+
+        if not extracted_text:
+            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+
+        # Формируем документ для базы данных
+        resume_doc = {
+            "filename": file.filename,
+            "raw_text": extracted_text,
+            # Заглушки, которые в будущем можно заполнять через NLP или регулярки
+            "candidate_name": "Не распознано",
+            "parsed_skills": []
+        }
+
+        # Сохраняем в MongoDB (функция вернет ID нового документа)
+        resume_id = mongo.insert_resume(resume_doc)
+
+        return {
+            "resume_id": str(resume_id),
+            "filename": file.filename,
+            "status": "success",
+            "text_preview": extracted_text[:200] + "..."
+        }
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
