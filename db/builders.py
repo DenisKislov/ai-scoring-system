@@ -64,3 +64,44 @@ def experience_years(item: dict) -> Optional[int]:
     text = _as_str(item.get("experience"))
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
+def parse_raw_text_to_resume(raw_text: str) -> dict:
+    experience_text = ""
+    match = _YEARS_RE.search(raw_text)
+    if match:
+        experience_text = match.group(0)
+    title = ""
+    title_patterns = [
+        r"Должность:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
+        r"Профессия:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
+        r"Специализация:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
+    ]
+    for pattern in title_patterns:
+        match = re.search(pattern, raw_text, re.IGNORECASE)
+        if match:
+            title = match.group(1).strip()
+            break
+    skills = []
+    skills_block_match = re.search(
+        r"Ключевые навыки:\s*([^\n]+)",
+        raw_text,
+        re.IGNORECASE
+    )
+    if skills_block_match:
+        skills_raw = skills_block_match.group(1)
+        if ',' in skills_raw:
+            skills = [s.strip() for s in skills_raw.split(',') if s.strip()]
+        else:
+            words = skills_raw.split()
+            stop_words = {'опыт', 'работы', 'ключевые', 'навыки', 'технологии', 'стек'}
+            for word in words:
+                cleaned = word.strip('.,!?;:')
+                if len(cleaned) > 2 and cleaned.lower() not in stop_words:
+                    skills.append(cleaned)
+
+    return {
+        "title": title,
+        "specialization": "",
+        "experience": experience_text,
+        "skills": skills,
+        "tags": skills,
+    }
