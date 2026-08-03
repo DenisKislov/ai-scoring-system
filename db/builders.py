@@ -51,7 +51,7 @@ def resume_text(item: dict) -> str:
 # "Опыт работы: N лет|год|года" — the phrasing the synthetic renderer and the
 # hh.ru free-text both use. Generalizes Parser/extract_years_of_experience.py
 # so the live (MongoDB) pipeline can derive the same figure.
-_YEARS_RE = re.compile(r"опыт\s+работы:\s*(\d+)\s*(?:лет|год|года)", re.IGNORECASE)
+_YEARS_RE = re.compile(r"опыт\s+работы:?\s*(\d+)\s*(?:лет|год|года)", re.IGNORECASE)
 
 
 def experience_years(item: dict) -> Optional[int]:
@@ -64,11 +64,14 @@ def experience_years(item: dict) -> Optional[int]:
     text = _as_str(item.get("experience"))
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
+
+
 def parse_raw_text_to_resume(raw_text: str) -> dict:
     experience_text = ""
     match = _YEARS_RE.search(raw_text)
     if match:
         experience_text = match.group(0)
+
     title = ""
     title_patterns = [
         r"Должность:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
@@ -80,17 +83,27 @@ def parse_raw_text_to_resume(raw_text: str) -> dict:
         if match:
             title = match.group(1).strip()
             break
+
+    # Страховка для Pydantic: если должность не нашлась по жестким шаблонам,
+    # ставим заглушку, чтобы схема ResumeIn не сломалась на обязательном поле
+    if not title:
+        title = "Не указано"
+
     skills = []
+    # Используем re.DOTALL, чтобы точка захватывала переносы строк (\n).
+    # Теперь мы ищем всё от "Ключевые навыки" до следующего крупного раздела или конца текста.
     skills_block_match = re.search(
-        r"Ключевые навыки:\s*([^\n]+)",
+        r"Ключевые навыки:?\s*(.+?)(?=\nОбо мне|\nВысшее образование|\nОпыт работы|\Z)",
         raw_text,
-        re.IGNORECASE
+        re.IGNORECASE | re.DOTALL
     )
+
     if skills_block_match:
         skills_raw = skills_block_match.group(1)
         if ',' in skills_raw:
             skills = [s.strip() for s in skills_raw.split(',') if s.strip()]
         else:
+            # Метод .split() без аргументов автоматически бьет строку и по пробелам, и по \n
             words = skills_raw.split()
             stop_words = {'опыт', 'работы', 'ключевые', 'навыки', 'технологии', 'стек'}
             for word in words:
