@@ -1,26 +1,25 @@
-"""Публичный API скоринга: calculate_score и rank_candidates.
+"""Публичный API скоринга: ``calculate_score`` и ``rank_candidates``.
 
 Обе функции реализуют согласованный гибридный скор:
 
     raw = w_keyword * keyword_score + w_cosine * cosine_similarity
     Score(%) = round(raw * 100)
 
-* keyword_score — долю требуемых навыков вакансии (из онтологии),
-  найденных в резюме. Формирует столбец «Найденные навыки».
-* cosine_similarity — TF-IDF-косинус между описанием вакансии и
+* ``keyword_score`` — долю требуемых навыков вакансии (из онтологии),
+  найденных в резюме, с повышенным весом критических (must-have) навыков.
+  Формирует столбцы «Найденные навыки» и «Критические пробелы».
+* ``cosine_similarity`` — TF-IDF-косинус между описанием вакансии и
   резюме (опыт + описание).
 
-Score является **абсолютной** мерой в диапазоне [0, 100]: полностью
+``Score`` является **абсолютной** мерой в диапазоне ``[0, 100]``: полностью
 совпадающее резюме получает высокий балл, нерелевантное — низкий, даже если
-оно единственное в пуле. Это удовлетворяет требованию «Показ 3» (не ставить
-100 % нерелевантным текстам).
-rank_candidates дополнительно возвращает rank_percentile — позицию
-кандидата внутри поданного пула, чтобы UI мог показывать бейдж «топ-10 %»
-без искажения абсолютного скора.
+оно единственное в пуле. Это удовлетворяет требованию «Показ 3».
+``rank_candidates`` дополнительно возвращает ``rank_percentile`` — позицию
+кандидата внутри поданного пула.
 """
 from __future__ import annotations
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 from .normalize import normalize
 from .similarity import batch_cosine, pair_cosine
@@ -35,12 +34,14 @@ def calculate_score(
     vacancy_text: str,
     weights: Optional[Dict[str, float]] = None,
     min_score: Optional[float] = None,
+    critical_skills: Optional[Set[str]] = None,
 ) -> Dict:
     """Считает скор одного резюме относительно одной вакансии.
 
-    Возвращает JSON-совместимый словарь: score (0–100), keyword_score,
-    cosine_sim, raw_score, matched_skills, missing_skills,
-    а также вклад каждого компонента и (опционально) флаг прохождения порога.
+    Возвращает JSON-совместимый словарь: ``score`` (0–100), ``keyword_score``,
+    ``cosine_sim``, ``raw_score``, ``matched_skills``, ``missing_skills``,
+    ``matched_critical``, ``missing_critical``, вклад каждого компонента
+    и (опционально) флаг прохождения порога.
     """
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not (resume_text and resume_text.strip()) or not (
@@ -48,7 +49,11 @@ def calculate_score(
     ):
         return _empty_result()
 
-    match = match_skills(resume_text, vacancy_text)
+    match = match_skills(
+        resume_text,
+        vacancy_text,
+        critical_skills=critical_skills,
+    )
     keyword_score = match["keyword_score"]
     cosine_sim = pair_cosine(normalize(vacancy_text), normalize(resume_text))
 
@@ -64,7 +69,10 @@ def calculate_score(
         "cosine_contribution": round(w["cosine"] * cosine_sim, 3),
         "matched_skills": sorted(match["matched"]),
         "missing_skills": sorted(match["missing"]),
+        "matched_critical": sorted(match["matched_critical"]),
+        "missing_critical": sorted(match["missing_critical"]),
         "vacancy_skills": sorted(match["vacancy_skills"]),
+        "critical_skills": sorted(match["critical_skills"]),
     }
 
     # Добавляет флаг прохождения минимального порога, если порог задан.
@@ -80,13 +88,14 @@ def rank_candidates(
     candidate_ids: Optional[List] = None,
     weights: Optional[Dict[str, float]] = None,
     min_score: Optional[float] = None,
+    critical_skills: Optional[Set[str]] = None,
 ) -> List[Dict]:
     """Считает скоры и ранжирует пачку резюме относительно одной вакансии.
 
-    TF-IDF обучается один раз на фиксированном референс-корпусе, поэтому
-    косинус пары не зависит от состава пула, а Score остаётся абсолютной
-    мерой. Результаты сортируются по score по убыванию и обогащаются
-    полем rank_percentile.
+    TF-IDF использует фиксированный референс-корпус, поэтому косинус пары
+    не зависит от состава пула, а ``Score`` остаётся абсолютной мерой.
+    Результаты сортируются по ``score`` по убыванию и обогащаются
+    полем ``rank_percentile``.
     """
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not candidate_texts:
@@ -105,7 +114,12 @@ def rank_candidates(
 
     results: List[Dict] = []
     for cid, rtext, cos in zip(candidate_ids, candidate_texts, cosines):
-        match = match_skills(rtext, vacancy_text, vacancy_skills=v_skills)
+        match = match_skills(
+            rtext,
+            vacancy_text,
+            vacancy_skills=v_skills,
+            critical_skills=critical_skills,
+        )
         kw = match["keyword_score"]
         raw = w["keyword"] * kw + w["cosine"] * cos
         score = round(raw * 100)
@@ -120,6 +134,9 @@ def rank_candidates(
             "cosine_contribution": round(w["cosine"] * cos, 3),
             "matched_skills": sorted(match["matched"]),
             "missing_skills": sorted(match["missing"]),
+            "matched_critical": sorted(match["matched_critical"]),
+            "missing_critical": sorted(match["missing_critical"]),
+            "critical_skills": sorted(match["critical_skills"]),
             "_raw": raw,
         }
 
@@ -139,7 +156,7 @@ def rank_candidates(
 
 
 def _add_percentile_rank(results: List[Dict]) -> None:
-    """Прикрепляет rank_percentile — долю пула, набравшую строго меньший скор."""
+    """Прикрепляет ``rank_percentile`` — долю пула, набравшую строго меньший скор."""
     raws = [r["_raw"] for r in results]
     n = len(raws)
     if n <= 1:
@@ -162,5 +179,8 @@ def _empty_result() -> Dict:
         "cosine_contribution": 0.0,
         "matched_skills": [],
         "missing_skills": [],
+        "matched_critical": [],
+        "missing_critical": [],
         "vacancy_skills": [],
+        "critical_skills": [],
     }
