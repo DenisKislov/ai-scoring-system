@@ -47,7 +47,8 @@ def score_vacancy(
         raise ValueError(f"vacancy {vacancy_id} not found")
 
     if resume_ids:
-        resumes = [r for r in (mongo.get_resume(rid) for rid in resume_ids) if r]
+        resumes = [r for r in (mongo.get_resume(rid)
+                               for rid in resume_ids) if r]
     else:
         resumes = mongo.list_resumes(limit=limit_resumes)
     if not resumes:
@@ -109,12 +110,20 @@ def _print_top(vacancy: Dict, results: List[Dict], top: int) -> None:
 
 def main(argv: Optional[List[str]] = None) -> int:
     """Точка входа CLI."""
-    p = argparse.ArgumentParser(description="Считает скоры резюме вакансии через MongoDB.")
-    p.add_argument("vacancy_id", nargs="?", help="vacancy _id (по умолчанию — первая вакансия)")
-    p.add_argument("--top", type=int, default=10, help="сколько лучших результатов показать")
-    p.add_argument("--limit-resumes", type=int, default=None, help="ограничение размера пула")
+    p = argparse.ArgumentParser(
+        description="Считает скоры резюме вакансии через MongoDB.")
+    p.add_argument("vacancy_id", nargs="?",
+                   help="vacancy _id (по умолчанию — первая вакансия)")
+    p.add_argument("--top", type=int, default=10,
+                   help="сколько лучших результатов показать")
+    p.add_argument("--limit-resumes", type=int, default=None,
+                   help="ограничение размера пула")
     p.add_argument("--no-save", action="store_true", help="не сохранять скоры")
-    p.add_argument("--json", action="store_true", help="вывести результаты в JSON")
+    p.add_argument("--json", action="store_true",
+                   help="вывести результаты в JSON")
+    p.add_argument("--critical-skills", nargs="*", default=None,
+                   help="must-have навыки (через пробел)")
+
     args = p.parse_args(argv)
 
     vid = args.vacancy_id
@@ -129,6 +138,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         vid,
         limit_resumes=args.limit_resumes,
         save=not args.no_save,
+        critical_skills=set(
+            args.critical_skills) if args.critical_skills else None,
     )
     if args.json:
         import json
