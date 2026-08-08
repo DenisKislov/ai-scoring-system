@@ -1,16 +1,22 @@
-"""Skill extraction and matching against the ontology.
+"""Извлечение и сопоставление навыков по онтологии.
 
-The ontology (``skills_dict.SKILLS`` + ``RAW_SKILLS``) is compiled once into a
-lookup table that maps a *normalized* surface form to one or more canonical
-skills. Two matchers run over each text:
+Онтологию (``skills_dict.SKILLS`` + ``RAW_SKILLS``) один раз компилирует
+в таблицы поиска, которые отображают *нормализованную* поверхностную форму
+на один или несколько канонических навыков. Над каждым текстом работают
+два матчера:
 
-* **Lemma matcher** — for letter/space aliases. Both alias and text are run
-  through the same normalization pipeline, then uni- and bi-grams of the text
-  are looked up. This handles inflection ("разработке"->"разработка") and
-  multi-word skills ("машинное обучение", "machine learning").
-* **Raw matcher** — for symbol-bearing skills (``C++``, ``.NET``). Matched as
-  word-boundary-aware substrings of the lower-cased original text, because
-  ``razdel``/``pymorphy3`` destroy their punctuation.
+* **Lemma-матчер** — для буквенно-пробельных алиасов. И алиас, и текст
+  проходят через один и тот же пайплайн нормализации, после чего по тексту
+  строятся уни- и биграммы и ищутся в индексе. Это обрабатывает склонения
+  («разработке» → «разработка») и многословные навыки («машинное обучение»,
+  «machine learning»).
+* **Raw-матчер** — для навыков с символами (``C++``, ``.NET``, ``CI/CD``).
+  Ищет их как подстроку исходного текста в нижнем регистре с учётом границ
+  слов, потому что ``razdel``/``pymorphy3`` разрушают их пунктуацию.
+
+Дополнительно поддерживает разделение навыков на **критические** (must-have)
+и обычные (nice-to-have). При передаче множества критических навыков
+``keyword_score`` считается с повышенным весом для must-have.
 """
 from __future__ import annotations
 
@@ -20,23 +26,30 @@ from typing import Dict, Optional, Set, Tuple
 from .normalize import lemmatize_tokens, tokenize_words
 from .skills_dict import RAW_SKILLS_ALL, SKILLS_ALL
 
+# Вес критического навыка относительно обычного при расчёте keyword_score.
+# 2.0 означает, что один must-have навык «стоит» как два обычных.
+CRITICAL_WEIGHT = 2.0
+
 
 def _raw_pattern(alias: str) -> re.Pattern:
-    """Compile a word-boundary-aware regex for a raw alias."""
-    # Boundaries: not preceded/followed by a word char or a dot, so ".net" does
-    # not match inside "network" and "c++" does not match inside "c++++".
+    """Компилирует regex с учётом границ слов для сырого алиаса."""
+    # Границы: не предшествует/не следует буква, цифра или точка, чтобы
+    # «.net» не матчился внутри «network», а «c++» — внутри «c++++».
     return re.compile(rf"(?<![\w.]){re.escape(alias)}(?![\w.])")
 
 
 def build_skill_index(
-    skills: Dict[str, list] = None, raw_skills: Dict[str, list] = None
-) -> Tuple[Dict[str, Set[str]], Dict[str, re.Pattern]]:
-    """Compile the ontology into lookup tables.
+    skills: Dict[str, list] = None,
+    raw_skills: Dict[str, list] = None,
+) -> Tuple[Dict[str, Set[str]], Dict[re.Pattern, str]]:
+    """Компилирует онтологию в таблицы поиска.
 
-    Returns ``(lemma_index, raw_index)``:
+    Возвращает пару ``(lemma_index, raw_index)``:
 
-    * ``lemma_index`` — normalized surface form -> set of canonical skills.
-    * ``raw_index``  — compiled regex -> canonical skill (for symbol skills).
+    * ``lemma_index`` — нормализованная поверхностная форма → множество
+      канонических навыков.
+    * ``raw_index`` — скомпилированный regex → канонический навык
+      (для символьных навыков).
     """
     skills = SKILLS_ALL if skills is None else skills
     raw_skills = RAW_SKILLS_ALL if raw_skills is None else raw_skills
@@ -56,12 +69,14 @@ def build_skill_index(
     return lemma_index, raw_index
 
 
-# Lazy module-level singletons — built on first use, reused afterwards.
+# Ленивые синглтоны уровня модуля — строятся при первом обращении и
+# переиспользуются дальше.
 _lemma_index: Dict[str, Set[str]] | None = None
 _raw_index: Dict[re.Pattern, str] | None = None
 
 
-def _indices():
+def _indices() -> Tuple[Dict[str, Set[str]], Dict[re.Pattern, str]]:
+    """Возвращает (и при необходимости строит) индексы навыков."""
     global _lemma_index, _raw_index
     if _lemma_index is None:
         _lemma_index, _raw_index = build_skill_index()
@@ -69,11 +84,12 @@ def _indices():
 
 
 def extract_skills(text: str) -> Set[str]:
-    """Return the set of canonical skills found in *text*."""
+    """Возвращает множество канонических навыков, найденных в *text*."""
     lemma_index, raw_index = _indices()
 
     lemmas = lemmatize_tokens(tokenize_words(text))
-    grams = set(lemmas)
+    grams: Set[str] = set(lemmas)
+    # Добавляет биграммы для многословных навыков («machine learning» и т.п.).
     grams.update(" ".join(pair) for pair in zip(lemmas, lemmas[1:]))
 
     found: Set[str] = set()
@@ -93,25 +109,60 @@ def match_skills(
     resume_text: str,
     vacancy_text: str,
     vacancy_skills: Optional[Set[str]] = None,
+    critical_skills: Optional[Set[str]] = None,
 ) -> dict:
-    """Compare skills extracted from a resume against those required by a vacancy.
+    """Сравнивает навыки резюме с навыками, требуемыми вакансией.
 
-    Returns a dict with ``matched``, ``missing``, ``keyword_score``
-    (share of required skills present, in ``[0, 1]``), plus the raw sets.
+    Возвращает словарь:
 
-    *vacancy_skills* lets a caller that scores many resumes against one vacancy
-    pass the vacancy's skill set in once (see ``rank_candidates``) instead of
-    re-extracting it on every call.
+    * ``matched`` / ``missing`` — полное пересечение и разница;
+    * ``matched_critical`` / ``missing_critical`` — то же только по must-have;
+    * ``keyword_score`` — доля покрытия с учётом повышенного веса критических
+      навыков (если ``critical_skills`` передан);
+    * ``vacancy_skills`` / ``resume_skills`` — сырые множества.
+
+    *vacancy_skills* позволяет вызывающему коду передать навыки вакансии
+    один раз (см. ``rank_candidates``).
+    *critical_skills* — необязательное множество канонических must-have
+    навыков. Если не передано, все навыки считаются равнозначными
+    (обратная совместимость).
     """
     v_skills = vacancy_skills if vacancy_skills is not None else extract_skills(vacancy_text)
     r_skills = extract_skills(resume_text)
+
     matched = v_skills & r_skills
     missing = v_skills - r_skills
-    keyword_score = len(matched) / len(v_skills) if v_skills else 0.0
+
+    # Критические навыки (must-have).
+    crit = critical_skills or set()
+    # Оставляем только те критические, которые реально требуются вакансией.
+    crit = crit & v_skills
+
+    matched_critical = matched & crit
+    missing_critical = crit - matched
+
+    # Расчёт keyword_score с учётом весов.
+    if crit:
+        # Каждый критический навык весит CRITICAL_WEIGHT, обычный — 1.0.
+        total_weight = 0.0
+        got_weight = 0.0
+        for skill in v_skills:
+            w = CRITICAL_WEIGHT if skill in crit else 1.0
+            total_weight += w
+            if skill in matched:
+                got_weight += w
+        keyword_score = got_weight / total_weight if total_weight > 0 else 0.0
+    else:
+        # Старое поведение — просто доля покрытия.
+        keyword_score = len(matched) / len(v_skills) if v_skills else 0.0
+
     return {
         "matched": matched,
         "missing": missing,
+        "matched_critical": matched_critical,
+        "missing_critical": missing_critical,
         "keyword_score": keyword_score,
         "vacancy_skills": v_skills,
         "resume_skills": r_skills,
+        "critical_skills": crit,
     }
