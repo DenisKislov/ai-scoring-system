@@ -9,7 +9,7 @@ export const api = {
   },
 
   // Запустить скоринг для вакансии
-  async runScoring(vacancyId, limitResumes = 100) {
+  async runScoring(vacancyId, limitResumes = 10000) {
     const response = await fetch(`${API_URL}/score`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
