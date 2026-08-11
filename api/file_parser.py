@@ -1,28 +1,36 @@
 import io
-import PyPDF2
+import re
+import pdfplumber
 
 
-def extract_text_from_file(file_bytes: bytes, filename: str) -> str:
+def extract_text_from_file(content: bytes, filename: str) -> str:
     """
-    Определяет формат файла по расширению и извлекает из него текст.
+    Извлекает текст из загруженного файла (PDF или TXT).
+    Безопасно считывает текст из PDF и расшивает склеенные слова.
     """
-    text = ""
-
     if filename.lower().endswith('.pdf'):
-        # Читаем PDF из байтов в памяти
-        pdf_file = io.BytesIO(file_bytes)
-        reader = PyPDF2.PdfReader(pdf_file)
+        text_blocks = []
 
-        for page in reader.pages:
-            extracted = page.extract_text()
-            if extracted:
-                text += extracted + "\n"
+        with pdfplumber.open(io.BytesIO(content)) as pdf:
+            for page in pdf.pages:
+                # 1. Извлекаем текст в стандартном режиме (без жесткой привязки к layout)
+                page_text = page.extract_text() or ""
+                if page_text.strip():
+                    text_blocks.append(page_text)
+
+        full_text = "\n".join(text_blocks)
+
+        # 2. Страховка: расшиваем склеенные слова (CamelCase)
+        clean_text = re.sub(r'(?<=[a-zа-яё])(?=[A-ZА-ЯЁ])', ' ', full_text)
+        clean_text = re.sub(r'(?<=[a-zа-яё])(?=[0-9])', ' ', clean_text)
+
+        # 3. Нормализуем множественные переносы строк и пробелы
+        clean_text = re.sub(r'\n+', '\n', clean_text)
+
+        return clean_text.strip()
 
     elif filename.lower().endswith('.txt'):
-        # Читаем обычный текстовый файл
-        text = file_bytes.decode('utf-8')
+        return content.decode('utf-8', errors='ignore').strip()
 
     else:
-        raise ValueError("Неподдерживаемый формат файла. Разрешены только PDF и TXT.")
-
-    return text.strip()
+        raise ValueError("Неподдерживаемый формат файла. Загрузите PDF или TXT.")

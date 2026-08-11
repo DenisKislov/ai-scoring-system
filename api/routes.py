@@ -23,6 +23,7 @@ from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
 
 from fastapi import UploadFile, File, HTTPException
 from .file_parser import extract_text_from_file
+import subprocess
 
 router = APIRouter()
 
@@ -186,3 +187,42 @@ async def upload_resume_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
+
+# --- cleanup (удаление данных) ---------------------------------------------
+
+@router.delete("/resumes/clear", summary="Удалить все резюме")
+def clear_all_resumes():
+    """Удаляет все резюме и очищает связанные с ними результаты скоринга."""
+    db = mongo.get_client()[mongo.MONGO_DB]
+    res = db["hh_resumes"].delete_many({})
+    # Заодно чистим коллекцию скоринга, так как старые результаты больше не нужны
+    db["hh_scores"].delete_many({})
+    return {"status": "success", "deleted_count": res.deleted_count}
+
+
+@router.delete("/vacancies/clear", summary="Удалить все вакансии")
+def clear_all_vacancies():
+    """Удаляет все вакансии и связанные с ними результаты скоринга."""
+    db = mongo.get_client()[mongo.MONGO_DB]
+
+    # Теперь мы обращаемся к правильной коллекции 'hh'
+    res = db["hh"].delete_many({})
+
+    # Заодно чистим скоринг
+    db["hh_scores"].delete_many({})
+
+    return {"status": "success", "deleted_count": res.deleted_count}
+
+
+@router.post("/generate_test_data", summary="Сгенерировать тестовые данные")
+def generate_test_data(vacancies: int = 5, resumes: int = 20):
+    """Вызывает скрипт db.seed для генерации синтетических данных."""
+    try:
+        # Эмитируем ввод команды в терминал
+        subprocess.run(
+            ["python", "-m", "db.seed", "--vacancies", str(vacancies), "--resumes", str(resumes)],
+            check=True
+        )
+        return {"status": "success", "message": f"Сгенерировано {vacancies} вакансий и {resumes} резюме"}
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка генерации: {e}")
