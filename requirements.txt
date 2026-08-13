@@ -6,3 +6,7 @@ streamlit
 
 # Опционально — нужно только для MongoDB-интеграции и CLI `python -m scorer.service`
 pymongo>=4.0
+# API: веб-сервис (FastAPI) и парсинг файлов резюме (PDF)
+fastapi>=0.100
+uvicorn>=0.23
+pdfplumber
