@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # 1. База данных MongoDB
+  mongo:
+    image: mongo:8
+    container_name: scoring_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  # 2. Бэкенд (FastAPI)
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: scoring_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+    depends_on:
+      - mongo
+    restart: always
+
+  # 3. Фронтенд (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: scoring_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mongo_data:
