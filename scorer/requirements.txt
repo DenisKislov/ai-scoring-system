@@ -1,18 +1,12 @@
-# Resume scorer — runtime dependencies (Python 3.10+, conda env candidate_scoring)
-# Установка из корня проекта:  pip install -r scorer/requirements.txt
-
-# Русское NLP: лемматизация + токенизация
-pymorphy3>=2.0
-pymorphy3-dicts-ru>=2.0
-razdel>=0.5
-
-# Сходство текстов: TF-IDF-векторы + косинус
-scikit-learn>=1.3
-
-# Метрики качества ранжирования (scorer/metrics.py): nDCG, precision@k, Spearman
-numpy>=1.24
-scipy>=1.10
-
-# Опционально — нужно только для MongoDB-интеграции и CLI `python -m scorer.service`
-# (ставится на уровне проекта вместе с faker/streamlit):
-#   pymongo>=4.0
+fastapi
+uvicorn[standard]
+pymongo
+pdfplumber
+spacy
+scikit-learn
+numpy
+razdel
+pymorphy3
+pydantic
+python-multipart
+faker

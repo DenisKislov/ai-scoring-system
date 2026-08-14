@@ -1,9 +1,12 @@
-# FastAPI backend — HTTP-слой над db.mongo + scorer.service
-# Установка из корня проекта:  pip install -r api/requirements.txt
-# (pydantic v2 ставится зависимостью fastapi)
-
-fastapi>=0.110
-uvicorn[standard]>=0.27
-
-# Для герметичного теста tests/test_api.py (TestClient):
-#   pip install httpx
+fastapi
+uvicorn[standard]
+pymongo
+pdfplumber
+spacy
+scikit-learn
+numpy
+razdel
+pymorphy3
+pydantic
+python-multipart
+faker
