@@ -24,6 +24,7 @@ from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
 from fastapi import UploadFile, File, HTTPException
 from .file_parser import extract_text_from_file
 import subprocess
+from .nlp_parser import extract_smart_skills
 
 router = APIRouter()
 
@@ -89,7 +90,6 @@ def create_resume(payload: ResumeIn) -> dict:
 
 
 # --- scoring ---------------------------------------------------------------
-
 @router.post("/score", summary="Run scoring for a vacancy")
 def score(payload: ScoreRequest) -> dict:
     """Score the vacancy's resume pool and persist results to ``hh_scores``."""
@@ -99,6 +99,7 @@ def score(payload: ScoreRequest) -> dict:
             resume_ids=payload.resume_ids,
             limit_resumes=payload.limit_resumes,
             weights=payload.weights,
+            critical_skills=set(payload.critical_skills) if payload.critical_skills else None,
         )
     except ValueError as exc:
         # "vacancy ... not found" / "no resumes to score"
@@ -226,3 +227,78 @@ def generate_test_data(vacancies: int = 5, resumes: int = 20):
         return {"status": "success", "message": f"Сгенерировано {vacancies} вакансий и {resumes} резюме"}
     except subprocess.CalledProcessError as e:
         raise HTTPException(status_code=500, detail=f"Ошибка генерации: {e}")
+
+
+@router.post("/upload_vacancy", summary="Загрузить файл вакансии (PDF/TXT)")
+async def upload_vacancy_file(file: UploadFile = File(...)):
+    try:
+        content = await file.read()
+
+        extracted_text = extract_text_from_file(content, file.filename)
+        if not extracted_text:
+            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+
+        lines = [line.strip() for line in extracted_text.split('\n') if line.strip()]
+        title = lines[0] if lines else "Не указано"
+
+        import re
+
+        text_lower = extracted_text.lower()
+
+        # 1. ПРЕПРОЦЕССИНГ: Лечим PDF-разрывы до поиска слов
+        fixes = {
+            r'\bfast\s*api\b': 'fastapi',
+            r'\bpostgre\s*sql\b': 'postgresql',
+            r'\bpostgre\b': 'postgresql',
+            r'\bci\s*/\s*cd\b': 'ci/cd',
+            r'\brest\s*api\b': 'rest',
+        }
+        for pattern, replacement in fixes.items():
+            text_lower = re.sub(pattern, replacement, text_lower)
+
+        # 2. ЖЕСТКИЙ СТОП-ЛИСТ
+        stop_words = {
+            "middle", "junior", "senior", "backend", "frontend",
+            "developer", "engineer", "and", "or", "api",
+            "code", "merge", "pull", "push", "requests", "review",
+            "framework", "team", "project", "work", "fast"
+        }
+
+        # 3. ИЗВЛЕЧЕНИЕ
+        raw_words = re.findall(r'[a-z0-9\+\#\-\/]+', text_lower)
+
+        skills_set = set()
+        for w in raw_words:
+            clean_w = w.strip('-/')
+            if len(clean_w) > 1 and clean_w not in stop_words and not clean_w.isdigit():
+                skills_set.add(clean_w)
+
+        # Отдельное правило для языка C (английская и русская буквы)
+        if re.search(r'\b[cс]\b', text_lower):
+            skills_set.add("c")
+
+        vacancy_doc = {
+            "title": title,
+            "description": extracted_text,
+            "skills": sorted(list(skills_set))[:20],
+            "_synthetic": False,
+            "_source": "user_upload",
+            "_raw_text": extracted_text,
+            "filename": file.filename,
+        }
+
+        vacancy_id = mongo.insert_vacancy(vacancy_doc)
+
+        return {
+            "vacancy_id": str(vacancy_id),
+            "filename": file.filename,
+            "status": "success",
+            "parsed": {
+                "title": title,
+                "skills_count": len(vacancy_doc["skills"]),
+                "skills": vacancy_doc["skills"][:5]
+            }
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")

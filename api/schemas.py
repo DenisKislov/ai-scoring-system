@@ -46,6 +46,7 @@ class ScoreRequest(BaseModel):
     resume_ids: Optional[List[str]] = None
     limit_resumes: Optional[int] = Field(default=None, ge=1)
     weights: Optional[Dict[str, float]] = None
+    critical_skills: Optional[List[str]] = None
 
 
 class FeedbackIn(BaseModel):
