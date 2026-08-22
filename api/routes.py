@@ -1,29 +1,12 @@
-"""HTTP routes — thin wrappers over ``db.mongo`` and ``scorer.service``.
-
-No business logic lives here: each endpoint maps one HTTP call to one
-data/scorer function and shapes the response.
-
-Error mapping:
-* a missing document, a malformed ObjectId, or a "not found" raised by the
-  scorer -> ``404`` (handled inline);
-* a DB connection failure (``pymongo`` error) bubbles up to the global
-  ``503`` handler in ``api.main``.
-"""
-from __future__ import annotations
-
 from typing import Optional
-
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, HTTPException, Query, status, UploadFile, File
+import subprocess
 
 from db import mongo
-
 from scorer.service import score_vacancy
 from db.builders import resume_text, parse_raw_text_to_resume
 from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
-
-from fastapi import UploadFile, File, HTTPException
 from .file_parser import extract_text_from_file
-import subprocess
 from .nlp_parser import extract_smart_skills
 
 router = APIRouter()
@@ -35,12 +18,9 @@ def _not_found(detail: str) -> None:
 
 @router.get("/health", summary="Health check")
 def health() -> dict:
-    """Ping MongoDB. A connection failure propagates to the 503 handler."""
     mongo.get_client().admin.command("ping")
     return {"status": "ok", "db": mongo.MONGO_DB}
 
-
-# --- vacancies -------------------------------------------------------------
 
 @router.get("/vacancies", summary="List vacancies")
 def list_vacancies(limit: Optional[int] = Query(default=None, ge=1)) -> list:
@@ -52,7 +32,7 @@ def get_vacancy(vacancy_id: str) -> dict:
     try:
         vac = mongo.get_vacancy(vacancy_id)
     except ValueError:
-        vac = None  # not a valid ObjectId
+        vac = None
     if vac is None:
         _not_found(f"vacancy {vacancy_id} not found")
     return vac
@@ -65,8 +45,6 @@ def create_vacancy(payload: VacancyIn) -> dict:
     return doc
 
 
-# --- resumes / candidates --------------------------------------------------
-
 @router.get("/resumes/{resume_id}", summary="Get a resume")
 def get_resume(resume_id: str) -> dict:
     try:
@@ -76,9 +54,7 @@ def get_resume(resume_id: str) -> dict:
     if res is None:
         _not_found(f"resume {resume_id} not found")
 
-    # Вариант Б: собираем красивый текст прямо здесь
     res["formatted_text"] = resume_text(res)
-
     return res
 
 
@@ -89,10 +65,8 @@ def create_resume(payload: ResumeIn) -> dict:
     return doc
 
 
-# --- scoring ---------------------------------------------------------------
 @router.post("/score", summary="Run scoring for a vacancy")
 def score(payload: ScoreRequest) -> dict:
-    """Score the vacancy's resume pool and persist results to ``hh_scores``."""
     try:
         out = score_vacancy(
             payload.vacancy_id,
@@ -102,7 +76,6 @@ def score(payload: ScoreRequest) -> dict:
             critical_skills=set(payload.critical_skills) if payload.critical_skills else None,
         )
     except ValueError as exc:
-        # "vacancy ... not found" / "no resumes to score"
         _not_found(str(exc))
     return {"vacancy_id": payload.vacancy_id, "count": len(out["results"]), "results": out["results"]}
 
@@ -114,8 +87,6 @@ def results(
 ) -> dict:
     scores = mongo.get_scores(vacancy_id, top=top)
     if not scores:
-        # Empty either means "not scored yet" or "vacancy unknown". Resolve the
-        # ambiguity so a typo in the id isn't silently returned as an empty list.
         try:
             exists = mongo.get_vacancy(vacancy_id) is not None
         except ValueError:
@@ -125,12 +96,11 @@ def results(
     return {"vacancy_id": vacancy_id, "count": len(scores), "results": scores}
 
 
-# --- feedback --------------------------------------------------------------
-
 @router.post("/feedback", summary="Record an HR decision")
 def feedback(payload: FeedbackIn) -> dict:
     mongo.save_feedback(payload.vacancy_id, payload.resume_id, payload.decision)
     return {"ok": True, **payload.model_dump()}
+
 
 @router.get("/feedback", summary="Get current HR decision")
 def get_feedback(vacancy_id: str, resume_id: str) -> dict:
@@ -138,34 +108,31 @@ def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
 
 
-@router.post("/upload_resume", summary="Загрузить файл резюме (PDF/TXT)")
+@router.post("/upload_resume", summary="Upload resume file (PDF/TXT)")
 async def upload_resume_file(file: UploadFile = File(...)):
     try:
         content = await file.read()
         extracted_text = extract_text_from_file(content, file.filename)
         if not extracted_text:
             raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+
         parsed = parse_raw_text_to_resume(extracted_text)
+        smart_skills = extract_smart_skills(extracted_text)
+
         resume_doc = {
             "title": parsed.get("title", ""),
             "specialization": parsed.get("specialization", ""),
             "experience": parsed.get("experience", ""),
-            "skills": parsed.get("skills", []),
+            "skills": smart_skills,
             "tags": parsed.get("tags", []),
             "_synthetic": False,
             "_source": "user_upload",
             "_raw_text": extracted_text,
             "filename": file.filename,
         }
-        from .schemas import ResumeIn
-        try:
-            validated = ResumeIn(**resume_doc)
-        except Exception as e:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Данные не прошли валидацию: {str(e)}"
-            )
+
         resume_id = mongo.insert_resume(resume_doc)
+
         return {
             "resume_id": str(resume_id),
             "filename": file.filename,
@@ -173,8 +140,8 @@ async def upload_resume_file(file: UploadFile = File(...)):
             "parsed": {
                 "title": parsed.get("title"),
                 "experience": parsed.get("experience"),
-                "skills_count": len(parsed.get("skills", [])),
-                "skills": parsed.get("skills", [])[:5],
+                "skills_count": len(smart_skills),
+                "skills": smart_skills[:5],
             },
             "text_preview": extracted_text[:300] + "..."
         }
@@ -184,56 +151,11 @@ async def upload_resume_file(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
 
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
 
-# --- cleanup (удаление данных) ---------------------------------------------
-
-@router.delete("/resumes/clear", summary="Удалить все резюме")
-def clear_all_resumes():
-    """Удаляет все резюме и очищает связанные с ними результаты скоринга."""
-    db = mongo.get_client()[mongo.MONGO_DB]
-    res = db["hh_resumes"].delete_many({})
-    # Заодно чистим коллекцию скоринга, так как старые результаты больше не нужны
-    db["hh_scores"].delete_many({})
-    return {"status": "success", "deleted_count": res.deleted_count}
-
-
-@router.delete("/vacancies/clear", summary="Удалить все вакансии")
-def clear_all_vacancies():
-    """Удаляет все вакансии и связанные с ними результаты скоринга."""
-    db = mongo.get_client()[mongo.MONGO_DB]
-
-    # Теперь мы обращаемся к правильной коллекции 'hh'
-    res = db["hh"].delete_many({})
-
-    # Заодно чистим скоринг
-    db["hh_scores"].delete_many({})
-
-    return {"status": "success", "deleted_count": res.deleted_count}
-
-
-@router.post("/generate_test_data", summary="Сгенерировать тестовые данные")
-def generate_test_data(vacancies: int = 5, resumes: int = 20):
-    """Вызывает скрипт db.seed для генерации синтетических данных."""
-    try:
-        # Эмитируем ввод команды в терминал
-        subprocess.run(
-            ["python", "-m", "db.seed", "--vacancies", str(vacancies), "--resumes", str(resumes)],
-            check=True
-        )
-        return {"status": "success", "message": f"Сгенерировано {vacancies} вакансий и {resumes} резюме"}
-    except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка генерации: {e}")
-
-
-@router.post("/upload_vacancy", summary="Загрузить файл вакансии (PDF/TXT)")
+@router.post("/upload_vacancy", summary="Upload vacancy file (PDF/TXT)")
 async def upload_vacancy_file(file: UploadFile = File(...)):
     try:
         content = await file.read()
-
         extracted_text = extract_text_from_file(content, file.filename)
         if not extracted_text:
             raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
@@ -241,46 +163,12 @@ async def upload_vacancy_file(file: UploadFile = File(...)):
         lines = [line.strip() for line in extracted_text.split('\n') if line.strip()]
         title = lines[0] if lines else "Не указано"
 
-        import re
-
-        text_lower = extracted_text.lower()
-
-        # 1. ПРЕПРОЦЕССИНГ: Лечим PDF-разрывы до поиска слов
-        fixes = {
-            r'\bfast\s*api\b': 'fastapi',
-            r'\bpostgre\s*sql\b': 'postgresql',
-            r'\bpostgre\b': 'postgresql',
-            r'\bci\s*/\s*cd\b': 'ci/cd',
-            r'\brest\s*api\b': 'rest',
-        }
-        for pattern, replacement in fixes.items():
-            text_lower = re.sub(pattern, replacement, text_lower)
-
-        # 2. ЖЕСТКИЙ СТОП-ЛИСТ
-        stop_words = {
-            "middle", "junior", "senior", "backend", "frontend",
-            "developer", "engineer", "and", "or", "api",
-            "code", "merge", "pull", "push", "requests", "review",
-            "framework", "team", "project", "work", "fast"
-        }
-
-        # 3. ИЗВЛЕЧЕНИЕ
-        raw_words = re.findall(r'[a-z0-9\+\#\-\/]+', text_lower)
-
-        skills_set = set()
-        for w in raw_words:
-            clean_w = w.strip('-/')
-            if len(clean_w) > 1 and clean_w not in stop_words and not clean_w.isdigit():
-                skills_set.add(clean_w)
-
-        # Отдельное правило для языка C (английская и русская буквы)
-        if re.search(r'\b[cс]\b', text_lower):
-            skills_set.add("c")
+        smart_skills = extract_smart_skills(extracted_text)
 
         vacancy_doc = {
             "title": title,
             "description": extracted_text,
-            "skills": sorted(list(skills_set))[:20],
+            "skills": smart_skills,
             "_synthetic": False,
             "_source": "user_upload",
             "_raw_text": extracted_text,
@@ -295,10 +183,38 @@ async def upload_vacancy_file(file: UploadFile = File(...)):
             "status": "success",
             "parsed": {
                 "title": title,
-                "skills_count": len(vacancy_doc["skills"]),
-                "skills": vacancy_doc["skills"][:5]
+                "skills_count": len(smart_skills),
+                "skills": smart_skills[:5]
             }
         }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
+
+
+@router.delete("/resumes/clear", summary="Clear all resumes")
+def clear_all_resumes():
+    db = mongo.get_client()[mongo.MONGO_DB]
+    res = db["hh_resumes"].delete_many({})
+    db["hh_scores"].delete_many({})
+    return {"status": "success", "deleted_count": res.deleted_count}
+
+
+@router.delete("/vacancies/clear", summary="Clear all vacancies")
+def clear_all_vacancies():
+    db = mongo.get_client()[mongo.MONGO_DB]
+    res = db["hh"].delete_many({})
+    db["hh_scores"].delete_many({})
+    return {"status": "success", "deleted_count": res.deleted_count}
+
+
+@router.post("/generate_test_data", summary="Generate test data")
+def generate_test_data(vacancies: int = 5, resumes: int = 20):
+    try:
+        subprocess.run(
+            ["python", "-m", "db.seed", "--vacancies", str(vacancies), "--resumes", str(resumes)],
+            check=True
+        )
+        return {"status": "success", "message": f"Сгенерировано {vacancies} вакансий и {resumes} резюме"}
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка генерации: {e}")

@@ -1,15 +1,3 @@
-"""Seed MongoDB with synthetic data in the hh.ru item shape.
-
-Lets us run the full pipeline (parser format -> DB -> scorer) without depending
-on a live hh.ru crawl, and without touching real personal data (152-ФЗ).
-Each seeded resume records its profession, its ``_target_vacancy_url`` and
-``_true_relevance`` so integration tests can check ranking quality against
-ground truth.
-
-CLI: ``python -m db.seed [--vacancies N] [--resumes M] [--clear]``
-"""
-from __future__ import annotations
-
 import argparse
 
 from data.synthetic import generate_dataset
@@ -60,11 +48,11 @@ def seed(n_vacancies: int = 6, n_resumes: int = 20, seed: int = 42, clear: bool 
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(description="Seed MongoDB with synthetic hh.ru data.")
+    p = argparse.ArgumentParser(description="Seed MongoDB with synthetic data.")
     p.add_argument("--vacancies", type=int, default=6)
     p.add_argument("--resumes", type=int, default=20)
     p.add_argument("--seed", type=int, default=42)
-    p.add_argument("--clear", action="store_true", help="remove synthetic vacancies/resumes and all scores first")
+    p.add_argument("--clear", action="store_true", help="clear database before seeding")
     args = p.parse_args(argv)
     seed(args.vacancies, args.resumes, args.seed, args.clear)
     return 0

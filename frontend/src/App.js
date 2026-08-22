@@ -12,8 +12,6 @@ function App() {
 
   const [feedbackMap, setFeedbackMap] = useState({});
   const [fullResumeText, setFullResumeText] = useState(null);
-
-  // НОВОЕ СОСТОЯНИЕ: Хранит выбранные критические навыки
   const [criticalSkills, setCriticalSkills] = useState([]);
 
   useEffect(() => {
@@ -33,7 +31,6 @@ function App() {
     loadVacancies();
   }, []);
 
-  // Сброс выбранных критических навыков при смене вакансии
   useEffect(() => {
     setCriticalSkills([]);
   }, [selectedVacancy]);
@@ -140,7 +137,6 @@ function App() {
     setSelectedCandidate(null);
 
     try {
-      // ПРЯМОЙ ВЫЗОВ С ПЕРЕДАЧЕЙ CRITICAL SKILLS
       await fetch('http://127.0.0.1:8000/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -191,6 +187,16 @@ function App() {
     }
   };
 
+  const handleCandidateClick = (c) => {
+    setSelectedCandidate(c);
+    setFullResumeText(null);
+  };
+
+  const closeModal = () => {
+    setSelectedCandidate(null);
+    setFullResumeText(null);
+  };
+
   const getRankColor = (index) => {
     if (index === 0) return 'gold';
     if (index === 1) return 'silver';
@@ -204,7 +210,6 @@ function App() {
     return 'low';
   };
 
-  // Получаем навыки для выбранной вакансии
   const currentVacancyObj = vacancies.find(v => v._id === selectedVacancy);
 
   return (
@@ -253,7 +258,6 @@ function App() {
             ))}
           </select>
 
-          {/* БЛОК ВЫБОРА КРИТИЧЕСКИХ НАВЫКОВ */}
           {currentVacancyObj && currentVacancyObj.skills && currentVacancyObj.skills.length > 0 && (
             <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
               <label style={{ fontWeight: 'bold', color: '#374151', display: 'block', marginBottom: '10px' }}>
@@ -307,33 +311,26 @@ function App() {
                     <th>Кандидат</th>
                     <th>Score</th>
                     <th>Опыт</th>
-                    <th>Навыки</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {candidates.map((c, index) => (
-                    <tr key={c.resume_id || c._id || index} onClick={() => setSelectedCandidate(c)}>
-                      <td className={`rank ${getRankColor(index)}`}>#{index + 1}</td>
-                      <td><strong>{c.candidate_name || 'Кандидат'}</strong></td>
-                      <td className="score-cell">
-                        <div className="score-bar-wrapper">
-                          <span>{c.score || 0}%</span>
-                          <div className="score-bar">
-                            <div className={`score-bar-fill ${getScoreColor(c.score || 0)}`} style={{ width: `${c.score || 0}%` }}></div>
+                  {candidates.map((c, index) => {
+                    return (
+                      <tr key={c.resume_id || c._id || index} onClick={() => handleCandidateClick(c)}>
+                        <td className={`rank ${getRankColor(index)}`}>#{index + 1}</td>
+                        <td><strong>{c.candidate_name || 'Кандидат'}</strong></td>
+                        <td className="score-cell">
+                          <div className="score-bar-wrapper">
+                            <span>{c.score || 0}%</span>
+                            <div className="score-bar">
+                              <div className={`score-bar-fill ${getScoreColor(c.score || 0)}`} style={{ width: `${c.score || 0}%` }}></div>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="experience">{c.experience_years || 0} лет</td>
-                      <td>
-                        <div className="skills-list">
-                          {(c.matched_skills || []).slice(0, 5).map((skill, i) => (
-                            <span key={i} className="skill-tag">{skill}</span>
-                          ))}
-                          {(c.matched_skills || []).length > 5 && <span className="skill-tag more">+{(c.matched_skills || []).length - 5}</span>}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="experience">{c.experience_years || 0} лет</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             )}
@@ -341,9 +338,9 @@ function App() {
         </section>
 
         {selectedCandidate && (
-          <div className="modal-overlay" onClick={() => { setSelectedCandidate(null); setFullResumeText(null); }}>
+          <div className="modal-overlay" onClick={closeModal}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={() => { setSelectedCandidate(null); setFullResumeText(null); }}>✕</button>
+              <button className="modal-close" onClick={closeModal}>✕</button>
               <h2>{selectedCandidate.candidate_name || 'Кандидат'}</h2>
 
               <div className="modal-grid">
@@ -358,15 +355,17 @@ function App() {
               </div>
 
               <div className="modal-skills">
-                <label>Найденные навыки</label>
+                <label>Совпадающие навыки</label>
                 <div className="skills-list">
-                  {(selectedCandidate.matched_skills || []).map((skill, i) => (
+                  {[...new Set(selectedCandidate.matched_skills || [])].map((skill, i) => (
                     <span key={i} className="skill-tag">{skill}</span>
                   ))}
+                  {[...new Set(selectedCandidate.matched_skills || [])].length === 0 && (
+                    <span style={{ color: '#6b7280', fontSize: '13px' }}>Нет совпадений</span>
+                  )}
                 </div>
               </div>
 
-              {/* БЛОК КРИТИЧЕСКИХ ПРОБЕЛОВ (КРАСНЫЙ) */}
               {selectedCandidate.missing_critical && selectedCandidate.missing_critical.length > 0 && (
                 <div className="modal-skills" style={{ marginTop: '15px' }}>
                   <label style={{ color: '#dc2626', fontWeight: 'bold' }}> Критические пробелы:</label>
@@ -378,7 +377,6 @@ function App() {
                 </div>
               )}
 
-              {/* Обычные отсутствующие навыки */}
               <div className="modal-skills" style={{ marginTop: '15px' }}>
                 <label>Остальные недостающие навыки</label>
                 <div className="skills-list">

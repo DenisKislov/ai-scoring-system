@@ -1,27 +1,6 @@
-"""Starter IT skill ontology with aliases.
-
-The customer does not provide a skills dictionary, so we ship a curated,
-extendable IT-oriented ontology. Each canonical skill maps to a list of
-surface aliases (Russian + English, abbreviations, colloquial forms). The
-matcher (``skills.py``) lemmatizes both the alias and the candidate text, so
-declensions and case do not matter.
-
-Two flavours of entries:
-
-* ``SKILLS`` — aliases made of letters / spaces. Matched on lemmatized
-  uni- and bi-grams (handles e.g. "машинное обучение", "machine learning").
-* ``RAW_SKILLS`` — aliases containing symbols (``C++``, ``.NET``, ``CI/CD``).
-  Matched as raw lower-cased substrings with word boundaries, because
-  ``razdel``/``pymorphy3`` mangle their punctuation.
-
-Extend either dict freely — the scorer picks up changes automatically.
-"""
-
 import json
 import os
 
-# Canonical skill -> aliases (lower-case). The canonical form is what we
-# report as a "matched skill" in the output table.
 SKILLS = {
     # --- languages ---
     "Python": ["python", "питон", "пайтон", "python3"],
@@ -98,7 +77,6 @@ SKILLS = {
     "SQL (advanced)": ["t-sql", "plsql", "pl/sql"],
 }
 
-# Symbol-heavy skills matched as raw substrings (word-boundary aware).
 RAW_SKILLS = {
     "C++": ["c++", "с++"],
     "C#": ["c#", "с#"],
@@ -107,13 +85,6 @@ RAW_SKILLS = {
     "CI/CD": ["ci/cd", "ci cd"],
 }
 
-
-# --- auto-derived extension ------------------------------------------------
-# ``skills_auto.json`` / ``skills_auto_raw.json`` are generated from the
-# profession corpus by ``tools/build_ontology.py`` (run it after editing the
-# corpus). They expand coverage from ~60 hand-curated skills to the full hh.ru
-# vocabulary. If the files are absent the matcher falls back to curated-only,
-# so the package still imports on a fresh checkout.
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -128,7 +99,5 @@ def _load_json(name: str) -> dict:
 _AUTO_SKILLS = _load_json("skills_auto.json")
 _AUTO_RAW = _load_json("skills_auto_raw.json")
 
-# Curated entries win on a canonical-name collision — their RU/translit aliases
-# are richer than the auto-generated single-form ones.
 SKILLS_ALL = {**_AUTO_SKILLS, **SKILLS}
 RAW_SKILLS_ALL = {**_AUTO_RAW, **RAW_SKILLS}

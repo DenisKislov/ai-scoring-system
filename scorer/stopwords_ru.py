@@ -1,10 +1,3 @@
-"""Built-in Russian stop-word list.
-
-We ship a small, hand-curated list instead of relying on ``nltk.download()``
-so the scorer is fully reproducible and works offline — important both for the
-defence and for CI. Stop-words are matched on lemmatized form, so only the
-infinitive / nominative form of each word needs to appear here.
-"""
 
 STOPWORDS_RU = frozenset(
     """

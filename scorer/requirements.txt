@@ -10,3 +10,4 @@ pymorphy3
 pydantic
 python-multipart
 faker
+rank-bm25==0.2.2

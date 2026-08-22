@@ -1,32 +1,10 @@
-"""Публичный API скоринга: ``calculate_score`` и ``rank_candidates``.
-
-Обе функции реализуют согласованный гибридный скор:
-
-    raw = w_keyword * keyword_score + w_cosine * cosine_similarity
-    Score(%) = round(raw * 100)
-
-* ``keyword_score`` — долю требуемых навыков вакансии (из онтологии),
-  найденных в резюме, с повышенным весом критических (must-have) навыков.
-  Формирует столбцы «Найденные навыки» и «Критические пробелы».
-* ``cosine_similarity`` — TF-IDF-косинус между описанием вакансии и
-  резюме (опыт + описание).
-
-``Score`` является **абсолютной** мерой в диапазоне ``[0, 100]``: полностью
-совпадающее резюме получает высокий балл, нерелевантное — низкий, даже если
-оно единственное в пуле. Это удовлетворяет требованию «Показ 3».
-``rank_candidates`` дополнительно возвращает ``rank_percentile`` — позицию
-кандидата внутри поданного пула.
-"""
-from __future__ import annotations
-
 from typing import Dict, List, Optional, Set
 
 from .normalize import normalize
 from .similarity import batch_cosine, pair_cosine
 from .skills import extract_skills, match_skills
 
-# Веса по умолчанию: 60 % — пересечение навыков, 40 % — текстовое сходство.
-DEFAULT_WEIGHTS: Dict[str, float] = {"keyword": 0.6, "cosine": 0.4}
+DEFAULT_WEIGHTS: Dict[str, float] = {"keyword": 0.85, "cosine": 0.15}
 
 
 def calculate_score(
@@ -36,13 +14,6 @@ def calculate_score(
     min_score: Optional[float] = None,
     critical_skills: Optional[Set[str]] = None,
 ) -> Dict:
-    """Считает скор одного резюме относительно одной вакансии.
-
-    Возвращает JSON-совместимый словарь: ``score`` (0–100), ``keyword_score``,
-    ``cosine_sim``, ``raw_score``, ``matched_skills``, ``missing_skills``,
-    ``matched_critical``, ``missing_critical``, вклад каждого компонента
-    и (опционально) флаг прохождения порога.
-    """
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not (resume_text and resume_text.strip()) or not (
         vacancy_text and vacancy_text.strip()
@@ -58,6 +29,10 @@ def calculate_score(
     cosine_sim = pair_cosine(normalize(vacancy_text), normalize(resume_text))
 
     raw = w["keyword"] * keyword_score + w["cosine"] * cosine_sim
+
+    if len(match["matched"]) == 0:
+        raw = 0.0
+
     score = round(raw * 100)
 
     result = {
@@ -75,7 +50,6 @@ def calculate_score(
         "critical_skills": sorted(match["critical_skills"]),
     }
 
-    # Добавляет флаг прохождения минимального порога, если порог задан.
     if min_score is not None:
         result["passed_threshold"] = score >= min_score
 
@@ -90,13 +64,6 @@ def rank_candidates(
     min_score: Optional[float] = None,
     critical_skills: Optional[Set[str]] = None,
 ) -> List[Dict]:
-    """Считает скоры и ранжирует пачку резюме относительно одной вакансии.
-
-    TF-IDF использует фиксированный референс-корпус, поэтому косинус пары
-    не зависит от состава пула, а ``Score`` остаётся абсолютной мерой.
-    Результаты сортируются по ``score`` по убыванию и обогащаются
-    полем ``rank_percentile``.
-    """
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not candidate_texts:
         return []
@@ -109,7 +76,6 @@ def rank_candidates(
     norm_resumes = [normalize(r) for r in candidate_texts]
     cosines = batch_cosine(norm_v, norm_resumes)
 
-    # Извлекает навыки вакансии один раз, а не для каждого резюме.
     v_skills = extract_skills(vacancy_text)
 
     results: List[Dict] = []
@@ -140,7 +106,6 @@ def rank_candidates(
             "_raw": raw,
         }
 
-        # Добавляет флаг прохождения минимального порога, если порог задан.
         if min_score is not None:
             item["passed_threshold"] = score >= min_score
 
@@ -149,14 +114,12 @@ def rank_candidates(
     _add_percentile_rank(results)
     results.sort(key=lambda r: r["score"], reverse=True)
 
-    # Удаляет служебное поле после сортировки.
     for r in results:
         del r["_raw"]
     return results
 
 
 def _add_percentile_rank(results: List[Dict]) -> None:
-    """Прикрепляет ``rank_percentile`` — долю пула, набравшую строго меньший скор."""
     raws = [r["_raw"] for r in results]
     n = len(raws)
     if n <= 1:
@@ -169,7 +132,6 @@ def _add_percentile_rank(results: List[Dict]) -> None:
 
 
 def _empty_result() -> Dict:
-    """Возвращает пустой результат при отсутствии текста резюме или вакансии."""
     return {
         "score": 0,
         "raw_score": 0.0,
