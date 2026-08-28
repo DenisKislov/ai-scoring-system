@@ -16,7 +16,14 @@ from __future__ import annotations
 
 import re
 from typing import Any, Iterable, Optional
+import logging
 
+logger = logging.getLogger("db.builders")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    logger.addHandler(handler)
 
 def _as_str(value: Any) -> str:
     """Flatten a str / list-of-str / None into a single trimmed string."""
@@ -46,11 +53,6 @@ def resume_text(item: dict) -> str:
         item.get("skills"),
         item.get("tags"),
     )
-
-
-# "Опыт работы: N лет|год|года" — the phrasing the synthetic renderer and the
-# hh.ru free-text both use. Generalizes Parser/extract_years_of_experience.py
-# so the live (MongoDB) pipeline can derive the same figure.
 _YEARS_RE = re.compile(r"опыт\s+работы:\s*(\d+)\s*(?:лет|год|года)", re.IGNORECASE)
 
 
@@ -64,42 +66,71 @@ def experience_years(item: dict) -> Optional[int]:
     text = _as_str(item.get("experience"))
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
+
 def parse_raw_text_to_resume(raw_text: str) -> dict:
+    logger.info(f"Начинаем парсинг текста, длина: {len(raw_text)} символов")
     experience_text = ""
     match = _YEARS_RE.search(raw_text)
     if match:
         experience_text = match.group(0)
+        logger.info(f"Найден опыт: '{experience_text}'")
+    else:
+        logger.warning("Опыт работы не найден в тексте")
     title = ""
     title_patterns = [
-        r"Должность:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
-        r"Профессия:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
-        r"Специализация:\s*([^,;.\n]+?)(?=\s+Опыт\s+работы|\s+Ключевые\s+навыки|\s*$)",
+        r"Должность:\s*([^,;.\n]+)",
+        r"Профессия:\s*([^,;.\n]+)",
+        r"Специализация:\s*([^,;.\n]+)",
     ]
     for pattern in title_patterns:
         match = re.search(pattern, raw_text, re.IGNORECASE)
         if match:
             title = match.group(1).strip()
+            logger.info(f"Найдена должность: '{title}'")
             break
+    else:
+        title = ""
+        logger.warning("Должность не найдена в тексте")
+    
+    # 3. Извлекаем навыки (skills) из блока "Ключевые навыки"
     skills = []
     skills_block_match = re.search(
         r"Ключевые навыки:\s*([^\n]+)",
         raw_text,
         re.IGNORECASE
     )
+    
     if skills_block_match:
         skills_raw = skills_block_match.group(1)
+        
+        # Пробуем разбить по запятым
         if ',' in skills_raw:
             skills = [s.strip() for s in skills_raw.split(',') if s.strip()]
         else:
+            # Если запятых нет — разбиваем по пробелам
             words = skills_raw.split()
             stop_words = {'опыт', 'работы', 'ключевые', 'навыки', 'технологии', 'стек'}
             for word in words:
                 cleaned = word.strip('.,!?;:')
                 if len(cleaned) > 2 and cleaned.lower() not in stop_words:
                     skills.append(cleaned)
-
+        
+        logger.info(f"Найдено навыков: {len(skills)}")
+        if len(skills) > 0:
+            preview = ', '.join(skills[:5])
+            if len(skills) > 5:
+                preview += f'... (всего {len(skills)})'
+            logger.info(f"   📋 Навыки: {preview}")
+    else:
+        logger.warning("Блок 'Ключевые навыки' не найден")
+    logger.info(
+        f"🔍 Распаршено резюме: должность='{title}', "
+        f"навыков={len(skills)}, "
+        f"опыт='{experience_text}'"
+    )
+    
     return {
-        "title": title,
+        "title": title if title else "Кандидат",
         "specialization": "",
         "experience": experience_text,
         "skills": skills,
