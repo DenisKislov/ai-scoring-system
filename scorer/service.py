@@ -18,13 +18,21 @@ CLI::
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
+import time
 from typing import Dict, List, Optional
 
 from db import mongo
 from db.builders import experience_years, resume_text, vacancy_text
 from scorer import rank_candidates
 
+logger = logging.getLogger("scorer.service")
+logger.setLevel(logging.INFO)
+if not logger.handlers:
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    logger.addHandler(handler)
 
 def score_vacancy(
     vacancy_id: str,
@@ -32,27 +40,51 @@ def score_vacancy(
     limit_resumes: Optional[int] = None,
     save: bool = True,
     weights: Optional[Dict[str, float]] = None,
-) -> Dict:
-    """Score the resumes of a vacancy and (optionally) persist results.
-
-    *resume_ids* restricts the pool; otherwise the whole ``hh_resumes``
-    collection is used (bounded by *limit_resumes*).
-    """
+    min_score: Optional[float] = None,
+    critical_skills: Optional[Set[str]] = None,
+)
+    start_time = time.time()
+    logger.info(f"Запуск скоринга для вакансии: {vacancy_id}")
     vac = mongo.get_vacancy(vacancy_id)
     if not vac:
+        logger.warning(f"Вакансия {vacancy_id} не найдена")
         raise ValueError(f"vacancy {vacancy_id} not found")
-
+    vacancy_title = vac.get("title", "без названия")
+    logger.info(f"Вакансия: '{vacancy_title}'")
     if resume_ids:
+        logger.info(f"Запрошено {len(resume_ids)} конкретных резюме")
         resumes = [r for r in (mongo.get_resume(rid) for rid in resume_ids) if r]
+        found_count = len(resumes)
+        if found_count < len(resume_ids):
+            logger.warning(f"Найдено только {found_count} из {len(resume_ids)} запрошенных резюме")
     else:
         resumes = mongo.list_resumes(limit=limit_resumes)
+        limit_msg = f"(лимит: {limit_resumes})" if limit_resumes else "(все)"
+        logger.info(f"Загружено резюме из БД {limit_msg}: {len(resumes)} шт.")
     if not resumes:
+        logger.warning("Нет резюме для скоринга")
         raise ValueError("no resumes to score")
-
+    logger.info(f"Начинаем скоринг {len(resumes)} резюме...")
     rids = [str(r["_id"]) for r in resumes]
     rtexts = [resume_text(r) for r in resumes]
-    ranked = rank_candidates(vacancy_text(vac), rtexts, candidate_ids=rids, weights=weights)
-
+    ranked = rank_candidates(
+        vacancy_text(vac),
+        rtexts,
+        candidate_ids=rids,
+        weights=weights,
+        min_score=min_score,
+        critical_skills=critical_skills,
+    )
+    logger.info(f"Скоринг завершён: {len(ranked)} резюме оценено")
+    if ranked:
+        scores = [r["score"] for r in ranked]
+        avg_score = sum(scores) / len(scores) if scores else 0
+        max_score = max(scores) if scores else 0
+        min_score_val = min(scores) if scores else 0
+        logger.info(f"Статистика скора: средний={avg_score:.1f}, макс={max_score}, мин={min_score_val}")
+        if min_score:
+            passed = sum(1 for r in ranked if r.get("passed_threshold", False))
+            logger.info(f"Прошли порог {min_score}: {passed} из {len(ranked)} ({passed/len(ranked)*100:.1f}%)")
     by_id = {str(r["_id"]): r for r in resumes}
     years_by_id = {str(r["_id"]): experience_years(r) for r in resumes}
     for r in ranked:
@@ -60,18 +92,17 @@ def score_vacancy(
         r["url"] = rdoc.get("url")
         r["position"] = rdoc.get("title")
         r["experience_years"] = years_by_id.get(r["candidate_id"])
-
-    # Tie-break: among candidates with the same score, the one with more years
-    # of experience ranks higher. The score value itself is NOT changed — it
-    # stays an absolute skill/text measure (architecture decision); this only
-    # orders equal-score rows. ``experience_years`` of None sorts last.
     ranked.sort(
         key=lambda r: (r["score"], r.get("experience_years") or 0),
         reverse=True,
     )
-
     if save:
+        logger.info(f"Сохраняем результаты в коллекцию 'hh_scores' (вакансия {vacancy_id})")
         mongo.save_scores(vacancy_id, ranked)
+    else:
+        logger.info("Результаты НЕ сохранены (флаг --no-save)")
+    elapsed = time.time() - start_time
+    logger.info(f"Общее время выполнения: {elapsed:.2f} секунд")
     return {"vacancy": vac, "results": ranked}
 
 
