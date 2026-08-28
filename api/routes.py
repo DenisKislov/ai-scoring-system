@@ -23,9 +23,9 @@ from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
 
 from fastapi import UploadFile, File, HTTPException
 from .file_parser import extract_text_from_file
-
+from .logger import setup_logger
+logger = setup_logger("api.routes")
 router = APIRouter()
-
 
 def _not_found(detail: str) -> None:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
