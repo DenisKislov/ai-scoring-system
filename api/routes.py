@@ -134,16 +134,27 @@ def feedback(payload: FeedbackIn) -> dict:
 def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     decision = mongo.get_feedback(vacancy_id, resume_id)
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
-
-
-  @router.post("/upload_resume", summary="Загрузить файл резюме (PDF/TXT)")
+  
+@router.post("/upload_resume", status_code=status.HTTP_201_CREATED, summary="Загрузить файл резюме (PDF/TXT)")
 async def upload_resume_file(file: UploadFile = File(...)):
+    logger.info(f"Загружен файл: '{file.filename}', размер: {file.size if hasattr(file, 'size') else 'неизвестен'} байт")
+
     try:
         content = await file.read()
         extracted_text = extract_text_from_file(content, file.filename)
+
         if not extracted_text:
+            logger.warning(f"Файл '{file.filename}' пуст или текст не распознан")
             raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+
+        logger.info(f"Извлечён текст из '{file.filename}': длина {len(extracted_text)} символов")
         parsed = parse_raw_text_to_resume(extracted_text)
+
+        logger.info(
+            f"🔍 Распаршено резюме: должность='{parsed.get('title', '')}', "
+            f"навыков={len(parsed.get('skills', []))}, "
+            f"опыт='{parsed.get('experience', '')}'"
+        )
         resume_doc = {
             "title": parsed.get("title", ""),
             "specialization": parsed.get("specialization", ""),
