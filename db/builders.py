@@ -92,7 +92,6 @@ def parse_raw_text_to_resume(raw_text: str) -> dict:
         title = ""
         logger.warning("Должность не найдена в тексте")
     
-    # 3. Извлекаем навыки (skills) из блока "Ключевые навыки"
     skills = []
     skills_block_match = re.search(
         r"Ключевые навыки:\s*([^\n]+)",
@@ -103,11 +102,9 @@ def parse_raw_text_to_resume(raw_text: str) -> dict:
     if skills_block_match:
         skills_raw = skills_block_match.group(1)
         
-        # Пробуем разбить по запятым
         if ',' in skills_raw:
             skills = [s.strip() for s in skills_raw.split(',') if s.strip()]
         else:
-            # Если запятых нет — разбиваем по пробелам
             words = skills_raw.split()
             stop_words = {'опыт', 'работы', 'ключевые', 'навыки', 'технологии', 'стек'}
             for word in words:
@@ -120,11 +117,11 @@ def parse_raw_text_to_resume(raw_text: str) -> dict:
             preview = ', '.join(skills[:5])
             if len(skills) > 5:
                 preview += f'... (всего {len(skills)})'
-            logger.info(f"   📋 Навыки: {preview}")
+            logger.info(f" Навыки: {preview}")
     else:
         logger.warning("Блок 'Ключевые навыки' не найден")
     logger.info(
-        f"🔍 Распаршено резюме: должность='{title}', "
+        f"Распаршено резюме: должность='{title}', "
         f"навыков={len(skills)}, "
         f"опыт='{experience_text}'"
     )
