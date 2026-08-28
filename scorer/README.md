@@ -17,7 +17,7 @@ pip install -r scorer/requirements.txt
 
 | Пакет | Зачем |
 |---|---|
-| `pymorphy3` + `pymorphy3-dicts-ru` | лемматизация русских слов (`разработке → разработка`) |
+| `pymorphy3` + `pymorphy3-dicts-ru` | лемматизация русских слов (`разработке -> разработка`) |
 | `razdel` | токенизация с учётом правил русского языка |
 | `scikit-learn` | TF-IDF-векторы + косинусное сходство |
 | `numpy` | метрики качества ранжирования (nDCG, precision@k) |
@@ -37,13 +37,13 @@ raw = 0.6 · keyword_score + 0.4 · cosine_sim
 Score(%) = round(raw · 100)
 ```
 
-1. **Нормализация** ([`normalize.py`](normalize.py)) — очистка HTML → `razdel`-токенизация → lowercase + раскрытие IT-сокращений (`k8s → kubernetes`, `js → javascript`, `mongo → mongodb`, `ci → ci/cd`, `ml → machine learning` …) → лемматизация `pymorphy3` (с `lru_cache`) → удаление стоп-слов (до и после лемматизации) и однобуквенных токенов. Английские токены проходят lowercase **без** лемматизации (pymorphy3 — только русский).
+1. **Нормализация** ([`normalize.py`](normalize.py)) — очистка HTML -> `razdel`-токенизация -> lowercase + раскрытие IT-сокращений (`k8s -> kubernetes`, `js -> javascript`, `mongo -> mongodb`, `ci -> ci/cd`, `ml -> machine learning` …) -> лемматизация `pymorphy3` (с `lru_cache`) -> удаление стоп-слов (до и после лемматизации) и однобуквенных токенов. Английские токены проходят lowercase **без** лемматизации (pymorphy3 — только русский).
 2. **Онтология навыков** ([`skills_dict.py`](skills_dict.py) + `skills_auto*.json`) — курируемый словарь IT-навыков с RU/EN-алиасами: буквенные в `SKILLS`, символьные в `RAW_SKILLS`; авто-расширение из корпуса профессий. При коллизии канонических имён курируемая запись выигрывает.
 3. **Сопоставление навыков** ([`skills.py`](skills.py)) — `matched_skills = skills(vacancy) ∩ skills(resume)`. Два матчера: lemma-матчер (уни- и биграммы нормализованных алиасов) и raw-substring-матчер (символьные: `C++`, `.NET`, `CI/CD`). **Must-have** (`critical_skills`) весят **×2** относительно обычных при расчёте `keyword_score`.
-4. **Сходство текстов** ([`similarity.py`](similarity.py)) — TF-IDF (uni+bi-grams, `sublinear_tf`) по лемматизированным текстам → `cosine ∈ [0, 1]`. **Векторизатор обучается один раз** при импорте на фиксированном референс-корпусе ([`reference_corpus.py`](reference_corpus.py)) — поэтому косинус пары не зависит от состава пула, а `Score` остаётся **абсолютной мерой**.
+4. **Сходство текстов** ([`similarity.py`](similarity.py)) — TF-IDF (uni+bi-grams, `sublinear_tf`) по лемматизированным текстам -> `cosine ∈ [0, 1]`. **Векторизатор обучается один раз** при импорте на фиксированном референс-корпусе ([`reference_corpus.py`](reference_corpus.py)) — поэтому косинус пары не зависит от состава пула, а `Score` остаётся **абсолютной мерой**.
 5. **Итог** ([`scoring.py`](scoring.py)) — `Score` 0–100% (абсолютный), плюс `rank_percentile` (позиция в пачке — отдельное поле) и разбор `matched` / `missing` / `critical` с вкладом каждого компонента.
 
-> **Тай-брейк по опыту.** При равном `Score` кандидаты доупорядочиваются по годам опыта (больше → выше). Годы извлекаются в слое интеграции ([`experience_years()`](../db/builders.py:34)), сам `Score` при этом не меняется. См. корневой README.
+> **Тай-брейк по опыту.** При равном `Score` кандидаты доупорядочиваются по годам опыта (больше -> выше). Годы извлекаются в слое интеграции ([`experience_years()`](../db/builders.py:34)), сам `Score` при этом не меняется. См. корневой README.
 
 ---
 
@@ -82,12 +82,37 @@ calculate_score(
 
 ### Метрики ([`metrics.py`](metrics.py))
 
+**Ранжирование** (качество упорядочивания кандидатов):
+
 ```python
 from scorer.metrics import ndcg, precision_at_k, spearman
 ndcg(relevances_in_predicted_order, k=10)   # graded linear-gain nDCG@10
 precision_at_k(relevances, k=5, threshold=0.5)
 spearman(predicted_scores, true_relevances)
 ```
+
+**Классификация навыков** — Precision / Recall / F1 целиком и по категориям
+(таксономия в [`skills_categories.py`](skills_categories.py)):
+
+```python
+from scorer.metrics import precision, recall, f1, classification_report
+
+precision(predicted_skills, true_skills)   # доля предсказанных навыков, которые истинны
+recall(predicted_skills, true_skills)      # доля истинных навыков, которые предсказаны
+f1(predicted_skills, true_skills)          # гармоническое среднее P и R
+
+report = classification_report(predicted_skills, true_skills)
+# report["overall"]            — P/R/F1 + TP/FP/FN по всему множеству
+# report["per_category"]       — {"категория": {"tp","fp","fn","precision","recall","f1"}}
+# report["micro"] / report["macro"] — агрегаты по категориям
+```
+
+Категории заданы в [`skills_categories.py`](skills_categories.py): языки
+программирования, базы данных, ML/Data Science, frontend, backend/API,
+DevOps/инфраструктура, BI, процессы/soft skills. Курируемые навыки размечены
+явно (`SKILL_CATEGORIES`), остальная авто-онтология — детерминированными
+keyword-правилами; нераспознанные навыки попадают в «Прочее». Свою разметку
+можно передать как `categories={"категория": {навыки...}}`.
 
 ---
 
@@ -115,7 +140,8 @@ python -m scorer.service [VACANCY_ID] [--top N] [--limit-resumes N] [--no-save] 
 | [`reference_corpus.py`](reference_corpus.py) | референс-корпус для стабильного IDF (gen: `tools/build_reference_corpus.py`) — **не править руками** |
 | [`similarity.py`](similarity.py) | TF-IDF (фикс. IDF) + cosine |
 | [`scoring.py`](scoring.py) | `calculate_score` + `rank_candidates`, `DEFAULT_WEIGHTS` |
-| [`metrics.py`](metrics.py) | nDCG / precision@k / Spearman |
+| [`metrics.py`](metrics.py) | nDCG / precision@k / Spearman + Precision/Recall/F1 по категориям навыков |
+| [`skills_categories.py`](skills_categories.py) | таксономия категорий навыков для категорийных метрик |
 | [`service.py`](service.py) | интеграция с MongoDB + CLI |
 
 ---
@@ -132,7 +158,7 @@ python -m scorer.service [VACANCY_ID] [--top N] [--limit-resumes N] [--no-save] 
 python tests/eval_synthetic.py
 ```
 
-> ⚠️ Это **контролируемые синтетические данные**: ground-truth задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Цифры доказывают корректность алгоритма и пайплайна оценки, но **не** продакшен-точность. Реальных лейблов нет (152-ФЗ).
+> Это **контролируемые синтетические данные**: ground-truth задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Цифры доказывают корректность алгоритма и пайплайна оценки, но **не** продакшен-точность. Реальных лейблов нет (152-ФЗ).
 
 ---
 
