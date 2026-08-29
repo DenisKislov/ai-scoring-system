@@ -91,7 +91,9 @@ function App() {
         alert(`Успешно удалено резюме: ${data.deleted_count}`);
         setCandidates([]);
       }
-    } finally { setIsUploading(false); }
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleClearVacancies = async () => {
@@ -103,15 +105,28 @@ function App() {
         const data = await response.json();
         alert(`Успешно удалено вакансий: ${data.deleted_count}. Обновите страницу.`);
       }
-    } finally { setIsUploading(false); }
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleGenerateData = async () => {
     setIsUploading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8001/generate_test_data?vacancies=5&resumes=20', { method: 'POST' });
-      if (response.ok) alert('Тестовые данные успешно сгенерированы! Обновите страницу.');
-    } finally { setIsUploading(false); }
+      const response = await fetch('http://127.0.0.1:8001/generate_test_data?vacancies=5&resumes=20', {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message || 'Данные сгенерированы!');
+      } else {
+        alert('Ошибка: ' + (data.detail || 'Неизвестная ошибка'));
+      }
+    } catch (error) {
+      alert('Ошибка сети: ' + error.message);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleViewResumeText = async (resumeId) => {
@@ -204,202 +219,196 @@ function App() {
     return '';
   };
 
-  const getScoreColor = (score) => {
-    if (score >= 70) return 'high';
-    if (score >= 40) return 'medium';
-    return 'low';
-  };
-
   const currentVacancyObj = vacancies.find(v => v._id === selectedVacancy);
 
   return (
     <div className="app">
       <header>
-  <div>
-    <h1>
-      <span className="highlight">Скоринг</span>
-    </h1>
-  </div>
-</header>
+        <div>
+          <h1>
+            <span className="highlight">Скоринг</span>
+          </h1>
+        </div>
+      </header>
 
       <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
         <div>
           <h3 style={{ marginTop: 0 }}>Загрузка данных</h3>
           <div style={{ display: 'flex', gap: '20px' }}>
             <div>
-  <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Резюме</label>
-  <label
-    htmlFor="resume-upload"
-    style={{
-      display: 'inline-block',
-      backgroundColor: '#c084fc',
-      color: 'white',
-      padding: '8px 18px',
-      borderRadius: '20px',
-      fontSize: '14px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      boxShadow: '0 2px 8px rgba(192, 132, 252, 0.3)',
-      border: 'none',
-    }}
-    onMouseEnter={(e) => { e.target.style.backgroundColor = '#a855f7'; e.target.style.transform = 'scale(1.02)'; }}
-    onMouseLeave={(e) => { e.target.style.backgroundColor = '#c084fc'; e.target.style.transform = 'scale(1)'; }}
-  >
-     Выбрать файлы
-  </label>
-  <input
-    id="resume-upload"
-    type="file"
-    multiple
-    accept=".pdf,.txt"
-    onChange={handleUploadResumes}
-    disabled={isUploading}
-    style={{ display: 'none' }}
-  />
-  <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
-    {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
-  </span>
-</div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Резюме</label>
+              <label
+                htmlFor="resume-upload"
+                style={{
+                  display: 'inline-block',
+                  backgroundColor: '#c084fc',
+                  color: 'white',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 8px rgba(192, 132, 252, 0.3)',
+                  border: 'none',
+                }}
+                onMouseEnter={(e) => { e.target.style.backgroundColor = '#a855f7'; e.target.style.transform = 'scale(1.02)'; }}
+                onMouseLeave={(e) => { e.target.style.backgroundColor = '#c084fc'; e.target.style.transform = 'scale(1)'; }}
+              >
+                Выбрать файлы
+              </label>
+              <input
+                id="resume-upload"
+                type="file"
+                multiple
+                accept=".pdf,.txt"
+                onChange={handleUploadResumes}
+                disabled={isUploading}
+                style={{ display: 'none' }}
+              />
+              <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
+                {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
+              </span>
+            </div>
 
-<div>
-  <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Вакансии</label>
-  <label
-    htmlFor="vacancy-upload"
-    style={{
-      display: 'inline-block',
-      backgroundColor: '#60d6e8',
-      color: 'white',
-      padding: '8px 18px',
-      borderRadius: '20px',
-      fontSize: '14px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      boxShadow: '0 2px 8px rgba(96, 214, 232, 0.3)',
-      border: 'none',
-    }}
-    onMouseEnter={(e) => { e.target.style.backgroundColor = '#3bc0d4'; e.target.style.transform = 'scale(1.02)'; }}
-    onMouseLeave={(e) => { e.target.style.backgroundColor = '#60d6e8'; e.target.style.transform = 'scale(1)'; }}
-  >
-     Выбрать файлы
-  </label>
-  <input
-    id="vacancy-upload"
-    type="file"
-    multiple
-    accept=".pdf,.txt"
-    onChange={handleUploadVacancies}
-    disabled={isUploading}
-    style={{ display: 'none' }}
-  />
-  <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
-    {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
-  </span>
-</div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Вакансии</label>
+              <label
+                htmlFor="vacancy-upload"
+                style={{
+                  display: 'inline-block',
+                  backgroundColor: '#60d6e8',
+                  color: 'white',
+                  padding: '8px 18px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 8px rgba(96, 214, 232, 0.3)',
+                  border: 'none',
+                }}
+                onMouseEnter={(e) => { e.target.style.backgroundColor = '#3bc0d4'; e.target.style.transform = 'scale(1.02)'; }}
+                onMouseLeave={(e) => { e.target.style.backgroundColor = '#60d6e8'; e.target.style.transform = 'scale(1)'; }}
+              >
+                Выбрать файлы
+              </label>
+              <input
+                id="vacancy-upload"
+                type="file"
+                multiple
+                accept=".pdf,.txt"
+                onChange={handleUploadVacancies}
+                disabled={isUploading}
+                style={{ display: 'none' }}
+              />
+              <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
+                {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
+              </span>
+            </div>
           </div>
         </div>
 
         <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
           <button
-  onClick={handleGenerateData}
-  disabled={isUploading}
-  style={{
-    backgroundColor: '#40E0D0',
-    color: 'white',
-    border: 'none',
-    padding: '10px 15px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    width: '100%',
-    transition: 'all 0.3s ease',
-    transform: 'scale(1)'
-  }}
-  onMouseEnter={(e) => {
-    e.target.style.transform = 'scale(1.05)';
-    e.target.style.boxShadow = '0 8px 25px rgba(64, 224, 208, 0.4)';
-  }}
-  onMouseLeave={(e) => {
-    e.target.style.transform = 'scale(1)';
-    e.target.style.boxShadow = 'none';
-  }}
-  onMouseDown={(e) => {
-    e.target.style.transform = 'scale(0.95)';
-  }}
-  onMouseUp={(e) => {
-    e.target.style.transform = 'scale(1)';
-  }}
->
-  Сгенерировать данные
-</button>
+            onClick={handleGenerateData}
+            disabled={isUploading}
+            style={{
+              backgroundColor: '#40E0D0',
+              color: 'white',
+              border: 'none',
+              padding: '10px 15px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              width: '100%',
+              transition: 'all 0.3s ease',
+              transform: 'scale(1)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.boxShadow = '0 8px 25px rgba(64, 224, 208, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'scale(1)';
+              e.target.style.boxShadow = 'none';
+            }}
+            onMouseDown={(e) => {
+              e.target.style.transform = 'scale(0.95)';
+            }}
+            onMouseUp={(e) => {
+              e.target.style.transform = 'scale(1)';
+            }}
+          >
+            Сгенерировать данные
+          </button>
           <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>(5 вакансий, 20 резюме)</div>
         </div>
 
         <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <button
-  onClick={handleClearResumes}
-  disabled={isUploading}
-  style={{
-    backgroundColor: '#F08080',
-    color: 'white',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    transition: 'all 0.3s ease',
-    transform: 'scale(1)'
-  }}
-  onMouseEnter={(e) => {
-    e.target.style.transform = 'scale(1.05)';
-    e.target.style.boxShadow = '0 8px 25px rgba(240, 128, 128, 0.4)';
-  }}
-  onMouseLeave={(e) => {
-    e.target.style.transform = 'scale(1)';
-    e.target.style.boxShadow = 'none';
-  }}
-  onMouseDown={(e) => {
-    e.target.style.transform = 'scale(0.95)';
-  }}
-  onMouseUp={(e) => {
-    e.target.style.transform = 'scale(1)';
-  }}
->
-  Удалить резюме
-</button>
+              onClick={handleClearResumes}
+              disabled={isUploading}
+              style={{
+                backgroundColor: '#F08080',
+                color: 'white',
+                border: 'none',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease',
+                transform: 'scale(1)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'scale(1.05)';
+                e.target.style.boxShadow = '0 8px 25px rgba(240, 128, 128, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'scale(1)';
+                e.target.style.boxShadow = 'none';
+              }}
+              onMouseDown={(e) => {
+                e.target.style.transform = 'scale(0.95)';
+              }}
+              onMouseUp={(e) => {
+                e.target.style.transform = 'scale(1)';
+              }}
+            >
+              Удалить резюме
+            </button>
             <button
-  onClick={handleClearVacancies}
-  disabled={isUploading}
-  style={{
-    backgroundColor: '#FF7F50',
-    color: 'white',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    transition: 'all 0.3s ease',
-    transform: 'scale(1)'
-  }}
-  onMouseEnter={(e) => {
-    e.target.style.transform = 'scale(1.05)';
-    e.target.style.boxShadow = '0 8px 25px rgba(255, 127, 80, 0.4)';
-  }}
-  onMouseLeave={(e) => {
-    e.target.style.transform = 'scale(1)';
-    e.target.style.boxShadow = 'none';
-  }}
-  onMouseDown={(e) => {
-    e.target.style.transform = 'scale(0.95)';
-  }}
-  onMouseUp={(e) => {
-    e.target.style.transform = 'scale(1)';
-  }}
->
-  Удалить вакансии
-</button>
+              onClick={handleClearVacancies}
+              disabled={isUploading}
+              style={{
+                backgroundColor: '#FF7F50',
+                color: 'white',
+                border: 'none',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease',
+                transform: 'scale(1)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'scale(1.05)';
+                e.target.style.boxShadow = '0 8px 25px rgba(255, 127, 80, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'scale(1)';
+                e.target.style.boxShadow = 'none';
+              }}
+              onMouseDown={(e) => {
+                e.target.style.transform = 'scale(0.95)';
+              }}
+              onMouseUp={(e) => {
+                e.target.style.transform = 'scale(1)';
+              }}
+            >
+              Удалить вакансии
+            </button>
           </div>
         </div>
       </div>
@@ -415,28 +424,28 @@ function App() {
           </select>
 
           {currentVacancyObj && currentVacancyObj.skills && currentVacancyObj.skills.length > 0 && (
-  <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-    <label style={{ fontWeight: 'bold', color: '#374151', display: 'block', marginBottom: '10px' }}>
-      Отметьте критические навыки (вес ×2):
-    </label>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-      {currentVacancyObj.skills.map((skill) => (
-        <label key={skill} style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: criticalSkills.includes(skill) ? '#fce4ec' : '#ffffff', border: criticalSkills.includes(skill) ? '2px solid #f46984' : '1px solid #d1d5db', padding: '5px 10px', borderRadius: '20px', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}>
-          <input
-            type="checkbox"
-            checked={criticalSkills.includes(skill)}
-            onChange={(e) => {
-              if (e.target.checked) setCriticalSkills([...criticalSkills, skill]);
-              else setCriticalSkills(criticalSkills.filter(s => s !== skill));
-            }}
-            style={{ margin: 0 }}
-          />
-          <span style={{ fontWeight: criticalSkills.includes(skill) ? 'bold' : 'normal', color: criticalSkills.includes(skill) ? '#f46984' : '#4b5563' }}>{skill}</span>
-        </label>
-      ))}
-    </div>
-  </div>
-)}
+            <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <label style={{ fontWeight: 'bold', color: '#374151', display: 'block', marginBottom: '10px' }}>
+                Отметьте критические навыки (вес ×2):
+              </label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {currentVacancyObj.skills.map((skill) => (
+                  <label key={skill} style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: criticalSkills.includes(skill) ? '#fce4ec' : '#ffffff', border: criticalSkills.includes(skill) ? '2px solid #f46984' : '1px solid #d1d5db', padding: '5px 10px', borderRadius: '20px', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}>
+                    <input
+                      type="checkbox"
+                      checked={criticalSkills.includes(skill)}
+                      onChange={(e) => {
+                        if (e.target.checked) setCriticalSkills([...criticalSkills, skill]);
+                        else setCriticalSkills(criticalSkills.filter(s => s !== skill));
+                      }}
+                      style={{ margin: 0 }}
+                    />
+                    <span style={{ fontWeight: criticalSkills.includes(skill) ? 'bold' : 'normal', color: criticalSkills.includes(skill) ? '#f46984' : '#4b5563' }}>{skill}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
 
           <button
             onClick={() => handleScoring(selectedVacancy)}
@@ -484,7 +493,7 @@ function App() {
                   ))}
                 </tbody>
               </table>
-                )}
+            )}
           </div>
         </section>
 
@@ -519,7 +528,7 @@ function App() {
 
               {selectedCandidate.missing_critical && selectedCandidate.missing_critical.length > 0 && (
                 <div className="modal-skills" style={{ marginTop: '15px' }}>
-                  <label style={{ color: '#dc2626', fontWeight: 'bold' }}> Критические пробелы:</label>
+                  <label style={{ color: '#dc2626', fontWeight: 'bold' }}>Критические пробелы:</label>
                   <div className="skills-list">
                     {selectedCandidate.missing_critical.map((skill, i) => (
                       <span key={i} className="skill-tag" style={{ border: '2px solid #dc2626', backgroundColor: '#fee2e2', color: '#991b1b', fontWeight: 'bold' }}>{skill}</span>
@@ -540,42 +549,42 @@ function App() {
               <div style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '15px' }}>
                 {!fullResumeText ? (
                   <button
-  onClick={() => handleViewResumeText(selectedCandidate.resume_id)}
-  style={{
-    width: '100%',
-    padding: '10px',
-    backgroundColor: '#f3f4f6',
-    border: '1px solid #d1d5db',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    color: '#c084fc',
-    transition: 'all 0.3s ease',
-    transform: 'scale(1)'
-  }}
-  onMouseEnter={(e) => {
-    e.target.style.transform = 'scale(1.03)';
-    e.target.style.backgroundColor = '#c084fc';
-    e.target.style.color = 'white';
-    e.target.style.boxShadow = '0 8px 25px rgba(192, 132, 252, 0.3)';
-    e.target.style.borderColor = '#c084fc';
-  }}
-  onMouseLeave={(e) => {
-    e.target.style.transform = 'scale(1)';
-    e.target.style.backgroundColor = '#f3f4f6';
-    e.target.style.color = '#c084fc';
-    e.target.style.boxShadow = 'none';
-    e.target.style.borderColor = '#d1d5db';
-  }}
-  onMouseDown={(e) => {
-    e.target.style.transform = 'scale(0.95)';
-  }}
-  onMouseUp={(e) => {
-    e.target.style.transform = 'scale(1)';
-  }}
->
-  📄 Посмотреть текст резюме
-</button>
+                    onClick={() => handleViewResumeText(selectedCandidate.resume_id)}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#f3f4f6',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontWeight: 'bold',
+                      color: '#c084fc',
+                      transition: 'all 0.3s ease',
+                      transform: 'scale(1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'scale(1.03)';
+                      e.target.style.backgroundColor = '#c084fc';
+                      e.target.style.color = 'white';
+                      e.target.style.boxShadow = '0 8px 25px rgba(192, 132, 252, 0.3)';
+                      e.target.style.borderColor = '#c084fc';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'scale(1)';
+                      e.target.style.backgroundColor = '#f3f4f6';
+                      e.target.style.color = '#c084fc';
+                      e.target.style.boxShadow = 'none';
+                      e.target.style.borderColor = '#d1d5db';
+                    }}
+                    onMouseDown={(e) => {
+                      e.target.style.transform = 'scale(0.95)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.target.style.transform = 'scale(1)';
+                    }}
+                  >
+                    📄 Посмотреть текст резюме
+                  </button>
                 ) : (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
@@ -591,19 +600,18 @@ function App() {
 
               <div className="modal-feedback" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
                 <button
-  onClick={() => sendFeedback(selectedCandidate.resume_id, 'yes')}
-  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #98FB98', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'yes' ? '#98FB98' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'yes' ? 'white' : '#98FB98' }}
->
-  Релевантен
-</button>
-<button
-  onClick={() => sendFeedback(selectedCandidate.resume_id, 'no')}
-  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #f46984', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'no' ? '#f46984' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'no' ? 'white' : '#f46984' }}
->
-  Нерелевантен
-</button>
+                  onClick={() => sendFeedback(selectedCandidate.resume_id, 'yes')}
+                  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #98FB98', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'yes' ? '#98FB98' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'yes' ? 'white' : '#98FB98' }}
+                >
+                  Релевантен
+                </button>
+                <button
+                  onClick={() => sendFeedback(selectedCandidate.resume_id, 'no')}
+                  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #f46984', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'no' ? '#f46984' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'no' ? 'white' : '#f46984' }}
+                >
+                  Нерелевантен
+                </button>
               </div>
-
             </div>
           </div>
         )}
