@@ -171,6 +171,55 @@ def clear_resumes() -> dict:
 
 
 # --- test data generation --------------------------------------------------
+import json
+import os
+
+
+@router.post("/import_superjob_vacancies", summary="Импорт вакансий SuperJob из JSON")
+def import_superjob_vacancies() -> dict:
+    file_path = os.path.join(os.getcwd(), "data", "superjob_dataset.json")
+    if not os.path.exists(file_path):
+        # Если запущено внутри контейнера /app
+        file_path = "/app/data/superjob_dataset.json"
+
+    if not os.path.exists(file_path):
+        logger.error(f"Файл датасета {file_path} не найден")
+        raise HTTPException(status_code=404, detail="Файл superjob_dataset.json не найден")
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    inserted_count = 0
+    for item in data:
+        # Собираем полное текстовое описание для скорера
+        description_parts = []
+        if item.get("responsibilities"):
+            description_parts.append(f"Обязанности: {item['responsibilities']}")
+        if item.get("requirements"):
+            description_parts.append(f"Требования: {item['requirements']}")
+        if item.get("company_description"):
+            description_parts.append(f"О компании: {item['company_description']}")
+
+        full_description = "\n\n".join(description_parts)
+
+        doc = {
+            "title": item.get("vacancy") or item.get("title", "Без названия"),
+            "description": full_description,
+            "skills": item.get("expected_skills", []),
+            "city": item.get("city"),
+            "company_name": item.get("company_name"),
+            "experience": item.get("experience"),
+            "education": item.get("education"),
+            "min_salary": item.get("min_salary"),
+            "max_salary": item.get("max_salary"),
+            "_source": "superjob_manual",
+            "_external_id": item.get("id"),
+        }
+        mongo.insert_vacancy(doc)
+        inserted_count += 1
+
+    logger.info(f"Успешно импортировано {inserted_count} вакансий из SuperJob")
+    return {"status": "ok", "imported_vacancies": inserted_count}
 
 @router.post("/generate_test_data", summary="Генерация тестовых данных")
 def generate_test_data(

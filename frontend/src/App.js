@@ -16,20 +16,24 @@ function App() {
   const [fullResumeText, setFullResumeText] = useState(null);
   const [criticalSkills, setCriticalSkills] = useState([]);
 
-  useEffect(() => {
-    const loadVacancies = async () => {
-      try {
-        const data = await api.getVacancies();
-        if (Array.isArray(data)) {
-          setVacancies(data);
-        } else {
-          setVacancies([]);
-        }
-      } catch (error) {
-        console.error('Ошибка загрузки вакансий:', error);
+  // Состояние выпадающего меню генерации данных
+  const [showGenDropdown, setShowGenDropdown] = useState(false);
+
+  const loadVacancies = async () => {
+    try {
+      const data = await api.getVacancies();
+      if (Array.isArray(data)) {
+        setVacancies(data);
+      } else {
         setVacancies([]);
       }
-    };
+    } catch (error) {
+      console.error('Ошибка загрузки вакансий:', error);
+      setVacancies([]);
+    }
+  };
+
+  useEffect(() => {
     loadVacancies();
   }, []);
 
@@ -78,7 +82,8 @@ function App() {
         console.error(`Ошибка сети при загрузке ${file.name}:`, error);
       }
     }
-    alert(`Успешно добавлено вакансий: ${successCount} из ${files.length}. Обновите страницу.`);
+    alert(`Успешно добавлено вакансий: ${successCount} из ${files.length}.`);
+    await loadVacancies();
     setIsUploading(false);
     event.target.value = null;
   };
@@ -103,16 +108,41 @@ function App() {
       const response = await fetch(`${API_BASE}/vacancies/clear`, { method: 'DELETE' });
       if (response.ok) {
         const data = await response.json();
-        alert(`Успешно удалено вакансий: ${data.deleted_count}. Обновите страницу.`);
+        alert(`Успешно удалено вакансий: ${data.deleted_count}.`);
+        await loadVacancies();
+        setSelectedVacancy(null);
       }
     } finally { setIsUploading(false); }
   };
 
-  const handleGenerateData = async () => {
+  // 1. Генерация синтетических данных
+  const handleGenerateSyntheticData = async () => {
+    setShowGenDropdown(false);
     setIsUploading(true);
     try {
       const response = await fetch(`${API_BASE}/generate_test_data?vacancies=5&resumes=20`, { method: 'POST' });
-      if (response.ok) alert('Тестовые данные успешно сгенерированы! Обновите страницу.');
+      if (response.ok) {
+        alert('Синтетические данные успешно созданы!');
+        await loadVacancies();
+      } else {
+        alert('Ошибка при генерации данных.');
+      }
+    } finally { setIsUploading(false); }
+  };
+
+  // 2. Импорт датасета SuperJob
+  const handleImportSuperJobData = async () => {
+    setShowGenDropdown(false);
+    setIsUploading(true);
+    try {
+      const response = await fetch(`${API_BASE}/import_superjob_vacancies`, { method: 'POST' });
+      if (response.ok) {
+        const data = await response.json();
+        alert(`Успешно импортировано ${data.imported_vacancies || 'все'} вакансий из SuperJob!`);
+        await loadVacancies();
+      } else {
+        alert('Ошибка импорта: проверьте наличие superjob_dataset.json на сервере.');
+      }
     } finally { setIsUploading(false); }
   };
 
@@ -218,9 +248,9 @@ function App() {
         </div>
       </header>
 
-      <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+      <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
         <div>
-          <h3 style={{ marginTop: 0 }}>Загрузка данных</h3>
+          <h3 style={{ marginTop: 0, marginBottom: '10px' }}>Загрузка данных</h3>
           <div style={{ display: 'flex', gap: '20px' }}>
             <div>
               <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Резюме</label>
@@ -296,40 +326,75 @@ function App() {
           </div>
         </div>
 
-        <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
+        {/* Выпадающий список генерации данных */}
+        <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc', position: 'relative' }}>
           <button
-            onClick={handleGenerateData}
+            onClick={() => setShowGenDropdown(!showGenDropdown)}
             disabled={isUploading}
             style={{
               backgroundColor: '#40E0D0',
               color: 'white',
               border: 'none',
-              padding: '10px 15px',
-              borderRadius: '4px',
+              padding: '10px 18px',
+              borderRadius: '6px',
               cursor: 'pointer',
               fontWeight: 'bold',
-              width: '100%',
-              transition: 'all 0.3s ease',
-              transform: 'scale(1)'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 8px 25px rgba(64, 224, 208, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = 'none';
-            }}
-            onMouseDown={(e) => {
-              e.target.style.transform = 'scale(0.95)';
-            }}
-            onMouseUp={(e) => {
-              e.target.style.transform = 'scale(1)';
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              boxShadow: '0 2px 10px rgba(64, 224, 208, 0.3)',
+              transition: 'all 0.2s ease'
             }}
           >
-            Сгенерировать данные
+            📥 Тестовые данные ▾
           </button>
-          <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>(5 вакансий, 20 резюме)</div>
+
+          {showGenDropdown && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '110%',
+                left: '20px',
+                backgroundColor: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                zIndex: 100,
+                width: '230px',
+                overflow: 'hidden',
+                animation: 'fadeSlideUp 0.2s ease forwards'
+              }}
+            >
+              <div
+                onClick={handleGenerateSyntheticData}
+                style={{
+                  padding: '12px 15px',
+                  cursor: 'pointer',
+                  borderBottom: '1px solid #f3f4f6',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0fdf4'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+              >
+                <div style={{ fontWeight: 'bold', fontSize: '13px', color: '#1f2937' }}>🎲 Синтетический датасет</div>
+                <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>5 вакансий + 20 резюме</div>
+              </div>
+
+              <div
+                onClick={handleImportSuperJobData}
+                style={{
+                  padding: '12px 15px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#eff6ff'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
+              >
+                <div style={{ fontWeight: 'bold', fontSize: '13px', color: '#1f2937' }}>💼 SuperJob вакансии</div>
+                <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>Реальные вакансии из JSON</div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
@@ -346,21 +411,6 @@ function App() {
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease',
-                transform: 'scale(1)'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.boxShadow = '0 8px 25px rgba(240, 128, 128, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = 'none';
-              }}
-              onMouseDown={(e) => {
-                e.target.style.transform = 'scale(0.95)';
-              }}
-              onMouseUp={(e) => {
-                e.target.style.transform = 'scale(1)';
               }}
             >
               Удалить резюме
@@ -377,21 +427,6 @@ function App() {
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease',
-                transform: 'scale(1)'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.boxShadow = '0 8px 25px rgba(255, 127, 80, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = 'none';
-              }}
-              onMouseDown={(e) => {
-                e.target.style.transform = 'scale(0.95)';
-              }}
-              onMouseUp={(e) => {
-                e.target.style.transform = 'scale(1)';
               }}
             >
               Удалить вакансии
@@ -547,27 +582,6 @@ function App() {
                       fontWeight: 'bold',
                       color: '#c084fc',
                       transition: 'all 0.3s ease',
-                      transform: 'scale(1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'scale(1.03)';
-                      e.target.style.backgroundColor = '#c084fc';
-                      e.target.style.color = 'white';
-                      e.target.style.boxShadow = '0 8px 25px rgba(192, 132, 252, 0.3)';
-                      e.target.style.borderColor = '#c084fc';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'scale(1)';
-                      e.target.style.backgroundColor = '#f3f4f6';
-                      e.target.style.color = '#c084fc';
-                      e.target.style.boxShadow = 'none';
-                      e.target.style.borderColor = '#d1d5db';
-                    }}
-                    onMouseDown={(e) => {
-                      e.target.style.transform = 'scale(0.95)';
-                    }}
-                    onMouseUp={(e) => {
-                      e.target.style.transform = 'scale(1)';
                     }}
                   >
                     📄 Посмотреть текст резюме
