@@ -108,7 +108,9 @@ def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
 
 
-@router.post("/upload_resume", summary="Upload resume file (PDF/TXT)")
+
+
+@router.post("/upload_resume", summary="Загрузить файл резюме (PDF/TXT)")
 async def upload_resume_file(file: UploadFile = File(...)):
     try:
         content = await file.read()
