@@ -42,7 +42,7 @@ def score_vacancy(
     weights: Optional[Dict[str, float]] = None,
     min_score: Optional[float] = None,
     critical_skills: Optional[Set[str]] = None,
-)
+):
     start_time = time.time()
     logger.info(f"Запуск скоринга для вакансии: {vacancy_id}")
     vac = mongo.get_vacancy(vacancy_id)

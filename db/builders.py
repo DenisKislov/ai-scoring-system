@@ -67,7 +67,7 @@ def experience_years(item: dict) -> Optional[int]:
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
 
-def parse_raw_text_to_resume(raw_text: str) 
+def parse_raw_text_to_resume(raw_text: str):
     logger.info(f"Начинаем парсинг текста, длина: {len(raw_text)} символов")
     experience_text = ""
     match = _YEARS_RE.search(raw_text)

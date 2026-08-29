@@ -12,18 +12,9 @@ CORS: ``API_CORS_ORIGINS`` (comma-separated) defaults to ``*`` — Streamlit
 must be allowed. When the origins are ``*`` we disable credentials (per the
 CORS spec, ``*`` + credentials is invalid).
 """
-import logging
-import sys
-
-# Настройка глобального вывода логов в stdout для всех модулей
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)],
-    force=True  # force=True сбрасывает дефолтные блокировки Uvicorn
-)
-
 from __future__ import annotations
+
+
 
 import os
 
