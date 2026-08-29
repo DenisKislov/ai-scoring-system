@@ -18,12 +18,16 @@ import re
 from typing import Any, Iterable, Optional
 import logging
 
+# Импортируем наш обновленный парсер для извлечения навыков из всего текста
+from api.nlp_parser import extract_smart_skills
+
 logger = logging.getLogger("db.builders")
 logger.setLevel(logging.INFO)
 if not logger.handlers:
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
     logger.addHandler(handler)
+
 
 def _as_str(value: Any) -> str:
     """Flatten a str / list-of-str / None into a single trimmed string."""
@@ -53,6 +57,8 @@ def resume_text(item: dict) -> str:
         item.get("skills"),
         item.get("tags"),
     )
+
+
 _YEARS_RE = re.compile(r"опыт\s+работы:\s*(\d+)\s*(?:лет|год|года)", re.IGNORECASE)
 
 
@@ -67,15 +73,27 @@ def experience_years(item: dict) -> Optional[int]:
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
 
+
 def parse_raw_text_to_resume(raw_text: str):
-    logger.info(f"Начинаем парсинг текста, длина: {len(raw_text)} символов")
+    if not raw_text or len(raw_text.strip()) == 0:
+        logger.warning("WARN: Получен пустой текст для парсинга (вероятно пустой файл)")
+        return {
+            "title": "Кандидат",
+            "specialization": "",
+            "experience": "",
+            "skills": [],
+            "tags": [],
+        }
+
+    logger.info(f"INFO: Начинаем парсинг текста, длина: {len(raw_text)} символов")
+
     experience_text = ""
     match = _YEARS_RE.search(raw_text)
     if match:
         experience_text = match.group(0)
-        logger.info(f"Найден опыт: '{experience_text}'")
     else:
-        logger.warning("Опыт работы не найден в тексте")
+        logger.warning("WARN: Опыт работы не найден в тексте")
+
     title = ""
     title_patterns = [
         r"Должность:\s*([^,;.\n]+)",
@@ -86,50 +104,31 @@ def parse_raw_text_to_resume(raw_text: str):
         match = re.search(pattern, raw_text, re.IGNORECASE)
         if match:
             title = match.group(1).strip()
-            logger.info(f"Найдена должность: '{title}'")
             break
     else:
         title = ""
-        logger.warning("Должность не найдена в тексте")
-    
-    skills = []
-    skills_block_match = re.search(
-        r"Ключевые навыки:\s*([^\n]+)",
-        raw_text,
-        re.IGNORECASE
-    )
-    
-    if skills_block_match:
-        skills_raw = skills_block_match.group(1)
-        
-        if ',' in skills_raw:
-            skills = [s.strip() for s in skills_raw.split(',') if s.strip()]
-        else:
-            words = skills_raw.split()
-            stop_words = {'опыт', 'работы', 'ключевые', 'навыки', 'технологии', 'стек'}
-            for word in words:
-                cleaned = word.strip('.,!?;:')
-                if len(cleaned) > 2 and cleaned.lower() not in stop_words:
-                    skills.append(cleaned)
-        
-        logger.info(f"Найдено навыков: {len(skills)}")
-        if len(skills) > 0:
-            preview = ', '.join(skills[:5])
-            if len(skills) > 5:
-                preview += f'... (всего {len(skills)})'
-            logger.info(f" Навыки: {preview}")
+        logger.warning("WARN: Должность не найдена в тексте")
+
+    # -----------------------------------------------------------------------
+    # ИСПОЛЬЗУЕМ НОВЫЙ NLP ПАРСЕР ДЛЯ ПОИСКА НАВЫКОВ ПО ВСЕМУ ТЕКСТУ
+    # -----------------------------------------------------------------------
+    logger.info(f"INFO: [NLP: ru_core_news_sm] Запуск извлечения навыков")
+    skills = extract_smart_skills(raw_text)
+
+    if skills:
+        logger.info(f"INFO: Извлечено навыков ({len(skills)} шт.): {', '.join(skills)}")
     else:
-        logger.warning("Блок 'Ключевые навыки' не найден")
+        logger.warning("WARN: NLP-парсер не нашел ни одного навыка в тексте")
+
     logger.info(
-        f"Распаршено резюме: должность='{title}', "
-        f"навыков={len(skills)}, "
+        f"INFO: Распаршено резюме: должность='{title}', "
         f"опыт='{experience_text}'"
     )
-    
+
     return {
         "title": title if title else "Кандидат",
         "specialization": "",
         "experience": experience_text,
         "skills": skills,
-        "tags": skills,
+        "tags": skills, # Можно оставить теги дублем навыков, либо потом расширить логику
     }

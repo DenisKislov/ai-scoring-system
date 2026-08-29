@@ -54,25 +54,51 @@ def create_vacancy(payload: VacancyIn) -> dict:
 
 @router.post("/upload_vacancy", status_code=status.HTTP_201_CREATED, summary="Загрузить файл вакансии")
 async def upload_vacancy_file(file: UploadFile = File(...)):
-    logger.info(f"Загружен файл вакансии: '{file.filename}'")
-    try:
-        content = await file.read()
-        extracted_text = extract_text_from_file(content, file.filename)
-        if not extracted_text:
-            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+    content = await file.read()
+    file_size = len(content)
 
-        vacancy_doc = {
-            "title": file.filename.rsplit(".", 1)[0],
-            "description": extracted_text,
-            "skills": [],
-            "_source": "user_upload",
-            "filename": file.filename,
-        }
-        vac_id = mongo.insert_vacancy(vacancy_doc)
-        return {"vacancy_id": str(vac_id), "status": "success", "filename": file.filename}
-    except Exception as e:
-        logger.error(f"Ошибка при загрузке вакансии: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+    if file_size == 0:
+        logger.warning(f"WARN: Файл вакансии '{file.filename}' имеет нулевой размер (пустой текст или неверный путь)")
+        raise HTTPException(status_code=400, detail="Файл пуст")
+
+    extracted_text = extract_text_from_file(content, file.filename)
+    text_len = len(extracted_text) if extracted_text else 0
+
+    if text_len == 0:
+        logger.warning(f"WARN: Не удалось извлечь текст вакансии из '{file.filename}'. Текст пуст.")
+        raise HTTPException(status_code=400, detail="Текст вакансии не распознан")
+
+    parsed = parse_raw_text_to_resume(extracted_text)
+    skills = parsed.get("skills", [])
+    title = file.filename.rsplit(".", 1)[0]
+
+    vacancy_doc = {
+        "title": title,
+        "description": extracted_text,
+        "skills": skills,
+        "_source": "user_upload",
+        "filename": file.filename,
+    }
+
+    vac_id = mongo.insert_vacancy(vacancy_doc)
+
+    # INFO-лог с детализацией (имя модели, длина, сколько и каких навыков)
+    logger.info(
+        f"INFO: [NLP: ru_core_news_sm] Вакансия '{file.filename}' сохранена. "
+        f"Длина текста: {text_len} симв. "
+        f"Извлечено навыков ({len(skills)} шт.): {', '.join(skills) if skills else 'Нет'}"
+    )
+
+    return {
+        "vacancy_id": str(vac_id),
+        "filename": file.filename,
+        "file_size": file_size,
+        "text_length": text_len,
+        "title": title,
+        "skills_count": len(skills),
+        "skills": skills,
+        "status": "success"
+    }
 
 
 @router.delete("/vacancies/clear", summary="Удалить все вакансии")
@@ -104,63 +130,57 @@ def create_resume(payload: ResumeIn) -> dict:
     return doc
 
 
-@router.post("/upload_resume", status_code=status.HTTP_201_CREATED, summary="Загрузить файл резюме (PDF/TXT)")
+@router.post("/upload_resume", status_code=status.HTTP_201_CREATED, summary="Загрузить файл резюме")
 async def upload_resume_file(file: UploadFile = File(...)):
-    logger.info(f"Загружен файл: '{file.filename}', размер: {file.size if hasattr(file, 'size') else 'неизвестен'} байт")
+    content = await file.read()
+    file_size = len(content)
 
-    try:
-        content = await file.read()
-        extracted_text = extract_text_from_file(content, file.filename)
+    if file_size == 0:
+        logger.warning(f"WARN: Файл '{file.filename}' имеет нулевой размер (пустой текст или неверный путь)")
+        raise HTTPException(status_code=400, detail="Файл пуст")
 
-        if not extracted_text:
-            logger.warning(f"Файл '{file.filename}' пуст или текст не распознан")
-            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+    extracted_text = extract_text_from_file(content, file.filename)
+    text_len = len(extracted_text) if extracted_text else 0
 
-        logger.info(f"Извлечён текст из '{file.filename}': длина {len(extracted_text)} символов")
-        parsed = parse_raw_text_to_resume(extracted_text)
+    if text_len == 0:
+        logger.warning(f"WARN: Не удалось извлечь текст из файла '{file.filename}'. Текст пуст.")
+        raise HTTPException(status_code=400, detail="Текст в файле не обнаружен")
 
-        logger.info(
-            f"Распаршено резюме: должность='{parsed.get('title', '')}', "
-            f"навыков={len(parsed.get('skills', []))}, "
-            f"опыт='{parsed.get('experience', '')}'"
-        )
-        resume_doc = {
-            "title": parsed.get("title", ""),
-            "specialization": parsed.get("specialization", ""),
-            "experience": parsed.get("experience", ""),
-            "skills": parsed.get("skills", []),
-            "tags": parsed.get("tags", []),
-            "_synthetic": False,
-            "_source": "user_upload",
-            "_raw_text": extracted_text,
-            "filename": file.filename,
-        }
-        try:
-            ResumeIn(**resume_doc)
-        except Exception as e:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Данные не прошли валидацию: {str(e)}"
-            )
-        resume_id = mongo.insert_resume(resume_doc)
-        return {
-            "resume_id": str(resume_id),
-            "filename": file.filename,
-            "status": "success",
-            "parsed": {
-                "title": parsed.get("title"),
-                "experience": parsed.get("experience"),
-                "skills_count": len(parsed.get("skills", [])),
-                "skills": parsed.get("skills", [])[:5],
-            },
-            "text_preview": extracted_text[:300] + "..."
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Ошибка обработки резюме: {e}")
-        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
+    parsed = parse_raw_text_to_resume(extracted_text)
+    skills = parsed.get("skills", [])
+    title = parsed.get("title", "") or "Кандидат"
 
+    resume_doc = {
+        "title": title,
+        "specialization": parsed.get("specialization", ""),
+        "experience": parsed.get("experience", ""),
+        "skills": skills,
+        "tags": parsed.get("tags", []),
+        "_synthetic": False,
+        "_source": "user_upload",
+        "_raw_text": extracted_text,
+        "filename": file.filename,
+    }
+
+    resume_id = mongo.insert_resume(resume_doc)
+
+    # INFO-лог с детализацией (имя модели, длина, сколько и каких навыков)
+    logger.info(
+        f"INFO: [NLP: ru_core_news_sm] Резюме '{file.filename}' сохранено. "
+        f"Длина текста: {text_len} симв. "
+        f"Извлечено навыков ({len(skills)} шт.): {', '.join(skills) if skills else 'Нет'}"
+    )
+
+    return {
+        "resume_id": str(resume_id),
+        "filename": file.filename,
+        "file_size": file_size,
+        "text_length": text_len,
+        "title": title,
+        "skills_count": len(skills),
+        "skills": skills,
+        "status": "success"
+    }
 
 @router.delete("/resumes/clear", summary="Удалить все резюме")
 def clear_resumes() -> dict:
@@ -303,3 +323,48 @@ def feedback(payload: FeedbackIn) -> dict:
 def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     decision = mongo.get_feedback(vacancy_id, resume_id)
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
+
+
+@router.get("/logs", summary="Получить последние логи сервера")
+def get_server_logs(lines: int = Query(default=50, ge=1)) -> dict:
+    log_file = os.path.join(os.getcwd(), "app.log")
+    if not os.path.exists(log_file):
+        return {"logs": []}
+
+    with open(log_file, "r", encoding="utf-8") as f:
+        # Читаем все строки и забираем только последние
+        all_lines = f.readlines()
+        last_lines = all_lines[-lines:]
+
+    parsed_logs = []
+    # Переворачиваем, чтобы самые свежие логи были сверху
+    for line in reversed(last_lines):
+        try:
+            parts = line.strip().split(" | ", 2)
+            if len(parts) >= 3:
+                timestamp = parts[0]
+                level = parts[1]
+                msg = parts[2]
+
+                # Убираем дублирование INFO:/WARN:, если они остались в тексте
+                if msg.startswith("INFO: "): msg = msg[6:]
+                if msg.startswith("WARN: "): msg = msg[6:]
+
+                # В Python предупреждения пишутся как WARNING, маппим в WARN для фронта
+                parsed_logs.append({
+                    "timestamp": timestamp,
+                    "type": "WARN" if level == "WARNING" else level,
+                    "message": msg
+                })
+        except Exception:
+            continue
+
+    return {"logs": parsed_logs}
+
+
+@router.delete("/logs/clear", summary="Очистить файл логов")
+def clear_server_logs() -> dict:
+    log_file = os.path.join(os.getcwd(), "app.log")
+    if os.path.exists(log_file):
+        open(log_file, 'w').close()  # Очищаем содержимое файла
+    return {"status": "ok"}

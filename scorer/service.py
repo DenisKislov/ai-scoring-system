@@ -57,6 +57,11 @@ def score_vacancy(
     rids = [str(r["_id"]) for r in resumes]
     rtexts = [resume_text(r) for r in resumes]
 
+    # --- ДОБАВИТЬ ЭТИ ДВЕ СТРОКИ ---
+    v_skills = set(vac.get("skills", []))
+    r_skills_list = [set(r.get("skills", [])) for r in resumes]
+
+    # --- ОБНОВИТЬ ВЫЗОВ ---
     ranked = rank_candidates(
         vacancy_text(vac),
         rtexts,
@@ -64,6 +69,8 @@ def score_vacancy(
         weights=weights,
         min_score=min_score,
         critical_skills=critical_skills,
+        vacancy_skills=v_skills,  # Передаем готовые навыки вакансии
+        resume_skills_list=r_skills_list  # Передаем готовые навыки резюме
     )
 
     by_id = {str(r["_id"]): r for r in resumes}

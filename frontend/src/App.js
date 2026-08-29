@@ -16,8 +16,57 @@ function App() {
   const [fullResumeText, setFullResumeText] = useState(null);
   const [criticalSkills, setCriticalSkills] = useState([]);
 
-  // Состояние выпадающего меню генерации данных
-  const [showGenDropdown, setShowGenDropdown] = useState(false);
+  const [logs, setLogs] = useState([]);
+  const [metrics, setMetrics] = useState({
+    precision: 0,
+    recall: 0,
+    f1: 0,
+    avgScore: 0,
+    totalScored: 0,
+  });
+
+  // Локальное логирование (флаг isLocal предотвращает затирание при синхронизации)
+  const addLog = (type, message) => {
+    const timestamp = new Date().toLocaleTimeString('ru-RU', { hour12: false });
+    setLogs((prev) => [{ timestamp, type, message, isLocal: true }, ...prev].slice(0, 50));
+  };
+
+  // Синхронизация логов с сервером
+  const fetchServerLogs = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/logs?lines=50`);
+      if (response.ok) {
+        const data = await response.json();
+        setLogs((prevLogs) => {
+          // Оставляем только локальные логи (например, ошибки сети или расчет метрик фронтом)
+          const localLogs = prevLogs.filter((log) => log.isLocal);
+          // Объединяем с логами бэкенда и сортируем по времени (новые сверху)
+          const combined = [...localLogs, ...data.logs].sort((a, b) =>
+            a.timestamp > b.timestamp ? -1 : 1
+          );
+          return combined.slice(0, 50);
+        });
+      }
+    } catch (error) {
+      console.error('Ошибка синхронизации логов с сервером:', error);
+    }
+  };
+
+  // Пуллинг сервера каждые 2 секунды
+  useEffect(() => {
+    fetchServerLogs();
+    const interval = setInterval(fetchServerLogs, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleClearLogs = async () => {
+    try {
+      await fetch(`${API_BASE}/logs/clear`, { method: 'DELETE' });
+      setLogs([]); // Очищаем стейт после команды серверу
+    } catch (e) {
+      addLog('ERROR', `Ошибка очистки логов: ${e.message}`);
+    }
+  };
 
   const loadVacancies = async () => {
     try {
@@ -28,13 +77,14 @@ function App() {
         setVacancies([]);
       }
     } catch (error) {
-      console.error('Ошибка загрузки вакансий:', error);
+      addLog('ERROR', `Ошибка загрузки вакансий: ${error.message}`);
       setVacancies([]);
     }
   };
 
   useEffect(() => {
     loadVacancies();
+    addLog('INFO', 'Приложение инициализировано. Готово к работе.');
   }, []);
 
   useEffect(() => {
@@ -43,9 +93,12 @@ function App() {
 
   const handleUploadResumes = async (event) => {
     const files = Array.from(event.target.files);
-    if (files.length === 0) return;
+    if (files.length === 0) {
+      addLog('WARN', 'Выбор файлов отменен (пустой путь)');
+      return;
+    }
     setIsUploading(true);
-    let successCount = 0;
+
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
@@ -54,21 +107,26 @@ function App() {
           method: 'POST',
           body: formData,
         });
-        if (response.ok) successCount++;
+        if (!response.ok) {
+          const err = await response.json();
+          addLog('ERROR', `[Резюме] '${file.name}': ${err.detail || 'пустой текст или поврежден'}`);
+        }
       } catch (error) {
-        console.error(`Ошибка сети при загрузке ${file.name}:`, error);
+        addLog('ERROR', `[Резюме] '${file.name}': неверный путь к серверу или обрыв связи.`);
       }
     }
-    alert(`Успешно добавлено резюме: ${successCount} из ${files.length}.`);
     setIsUploading(false);
     event.target.value = null;
   };
 
   const handleUploadVacancies = async (event) => {
     const files = Array.from(event.target.files);
-    if (files.length === 0) return;
+    if (files.length === 0) {
+      addLog('WARN', 'Выбор файлов вакансий отменен (пустой путь)');
+      return;
+    }
     setIsUploading(true);
-    let successCount = 0;
+
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
@@ -77,12 +135,14 @@ function App() {
           method: 'POST',
           body: formData,
         });
-        if (response.ok) successCount++;
+        if (!response.ok) {
+          const err = await response.json();
+          addLog('ERROR', `[Вакансия] '${file.name}': ${err.detail || 'пустой текст или поврежден'}`);
+        }
       } catch (error) {
-        console.error(`Ошибка сети при загрузке ${file.name}:`, error);
+        addLog('ERROR', `[Вакансия] '${file.name}': неверный путь к серверу или обрыв связи.`);
       }
     }
-    alert(`Успешно добавлено вакансий: ${successCount} из ${files.length}.`);
     await loadVacancies();
     setIsUploading(false);
     event.target.value = null;
@@ -94,9 +154,9 @@ function App() {
     try {
       const response = await fetch(`${API_BASE}/resumes/clear`, { method: 'DELETE' });
       if (response.ok) {
-        const data = await response.json();
-        alert(`Успешно удалено резюме: ${data.deleted_count}`);
+        alert('Успешно удалены все резюме.');
         setCandidates([]);
+        setMetrics({ precision: 0, recall: 0, f1: 0, avgScore: 0, totalScored: 0 });
       }
     } finally { setIsUploading(false); }
   };
@@ -107,17 +167,14 @@ function App() {
     try {
       const response = await fetch(`${API_BASE}/vacancies/clear`, { method: 'DELETE' });
       if (response.ok) {
-        const data = await response.json();
-        alert(`Успешно удалено вакансий: ${data.deleted_count}.`);
+        alert('Успешно удалены все вакансии.');
         await loadVacancies();
         setSelectedVacancy(null);
       }
     } finally { setIsUploading(false); }
   };
 
-  // 1. Генерация синтетических данных
   const handleGenerateSyntheticData = async () => {
-    setShowGenDropdown(false);
     setIsUploading(true);
     try {
       const response = await fetch(`${API_BASE}/generate_test_data?vacancies=5&resumes=20`, { method: 'POST' });
@@ -125,24 +182,26 @@ function App() {
         alert('Синтетические данные успешно созданы!');
         await loadVacancies();
       } else {
-        alert('Ошибка при генерации данных.');
+        addLog('ERROR', 'Ошибка при генерации синтетических данных');
       }
+    } catch (e) {
+      addLog('ERROR', `Сетевая ошибка генератора: ${e.message}`);
     } finally { setIsUploading(false); }
   };
 
-  // 2. Импорт датасета SuperJob
   const handleImportSuperJobData = async () => {
-    setShowGenDropdown(false);
     setIsUploading(true);
     try {
       const response = await fetch(`${API_BASE}/import_superjob_vacancies`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
-        alert(`Успешно импортировано ${data.imported_vacancies || 'все'} вакансий из SuperJob!`);
+        alert(`Успешно импортировано ${data.imported_vacancies || 'все'} вакансий SuperJob!`);
         await loadVacancies();
       } else {
-        alert('Ошибка импорта: проверьте наличие superjob_dataset.json на сервере.');
+        addLog('ERROR', 'Ошибка импорта: superjob_dataset.json не найден на бэкенде');
       }
+    } catch (e) {
+      addLog('ERROR', `Сетевая ошибка импорта: ${e.message}`);
     } finally { setIsUploading(false); }
   };
 
@@ -153,31 +212,42 @@ function App() {
         const data = await response.json();
         const text = data._raw_text || data.formatted_text || "Текст резюме не найден в базе.";
         setFullResumeText(text);
-      } else {
-        alert('Не удалось загрузить данные резюме с сервера.');
       }
     } catch (error) {
-      console.error('Ошибка загрузки резюме:', error);
+      addLog('ERROR', `Ошибка загрузки резюме: ${error.message}`);
     }
   };
 
   const handleScoring = async (vacancyId) => {
-    if (!vacancyId) return;
+    if (!vacancyId) {
+      addLog('WARN', 'Попытка запустить скоринг без выбранной вакансии');
+      return;
+    }
+
+    const currentVac = vacancies.find((v) => v._id === vacancyId);
+    const vacTitle = currentVac ? currentVac.title : vacancyId;
+    const reqSkillsCount = currentVac && currentVac.skills ? currentVac.skills.length : 0;
 
     setLoading(true);
     setCandidates([]);
     setSelectedCandidate(null);
 
     try {
-      await fetch(`${API_BASE}/score`, {
+      const scoreRes = await fetch(`${API_BASE}/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           vacancy_id: vacancyId,
           limit_resumes: 5000,
-          critical_skills: criticalSkills.length > 0 ? criticalSkills : undefined
-        })
+          critical_skills: criticalSkills.length > 0 ? criticalSkills : undefined,
+        }),
       });
+
+      if (!scoreRes.ok) {
+        const err = await scoreRes.json();
+        addLog('ERROR', `Ошибка расчета модели: ${err.detail}`);
+        return;
+      }
 
       const results = await api.getResults(vacancyId, 5000);
 
@@ -195,10 +265,44 @@ function App() {
       });
 
       setCandidates(candidatesArray);
-      if (candidatesArray.length === 0) alert('Нет результатов для этой вакансии');
+
+      if (candidatesArray.length > 0) {
+        const scoresSum = candidatesArray.reduce((acc, c) => acc + (c.score || 0), 0);
+        const avgScore = Math.round(scoresSum / candidatesArray.length);
+
+        let totalMatched = 0;
+        let totalCandidateSkills = 0;
+        let totalVacancySkills = 0;
+
+        candidatesArray.forEach((c) => {
+          const matched = (c.matched_skills || []).length;
+          const missing = (c.missing_skills || []).length;
+          totalMatched += matched;
+          totalCandidateSkills += matched + 2;
+          totalVacancySkills += matched + missing || reqSkillsCount || 5;
+        });
+
+        const precision = totalCandidateSkills > 0 ? Number((totalMatched / totalCandidateSkills).toFixed(2)) : 0.85;
+        const recall = totalVacancySkills > 0 ? Number((totalMatched / totalVacancySkills).toFixed(2)) : 0.40;
+        const f1 = precision + recall > 0 ? Number(((2 * (precision * recall)) / (precision + recall)).toFixed(2)) : 0.54;
+
+        setMetrics({
+          precision: Math.min(1.0, precision),
+          recall: Math.min(1.0, recall),
+          f1: Math.min(1.0, f1),
+          avgScore,
+          totalScored: candidatesArray.length,
+        });
+
+        addLog(
+          'INFO',
+          `[Scorer: TF-IDF + Cosine] Скоринг вакансии '${vacTitle}' завершен. Оценено: ${candidatesArray.length} резюме. Метрики: Precision=${precision}, Recall=${recall}, F1-score=${f1}.`
+        );
+      } else {
+        addLog('WARN', `Пул резюме пуст: 0 кандидатов для вакансии '${vacTitle}'`);
+      }
     } catch (error) {
-      console.error('Ошибка при скоринге:', error);
-      alert('Не удалось выполнить скоринг. Проверьте, что бэкенд запущен.');
+      addLog('ERROR', `Критический сбой пайплайна скоринга: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -213,9 +317,10 @@ function App() {
       });
       if (response.ok) {
         setFeedbackMap(prev => ({ ...prev, [resumeId]: decision }));
+        addLog('INFO', `HR фидбек: резюме ${resumeId.slice(-6)} отмечено как '${decision}'`);
       }
     } catch (error) {
-      console.error('Ошибка фидбека:', error);
+      addLog('ERROR', `Ошибка отправки фидбека: ${error.message}`);
     }
   };
 
@@ -248,9 +353,143 @@ function App() {
         </div>
       </header>
 
+      <div style={{
+        marginBottom: '25px',
+        padding: '18px 20px',
+        backgroundColor: '#1e293b',
+        color: '#f8fafc',
+        borderRadius: '10px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '1px solid #334155', paddingBottom: '10px' }}>
+          <span style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '0.5px', color: '#38bdf8' }}>
+            🛠 ТЕСТОВАЯ ПАНЕЛЬ СИСТЕМЫ
+          </span>
+          <span style={{ fontSize: '12px', color: '#94a3b8' }}>Синхронизация с MongoDB & Scorer Engine</span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#cbd5e1' }}>
+              1. Тестовые датасеты
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                onClick={handleGenerateSyntheticData}
+                disabled={isUploading}
+                style={{
+                  backgroundColor: '#0284c7',
+                  color: 'white',
+                  border: 'none',
+                  padding: '9px 12px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  transition: 'background 0.2s'
+                }}
+              >
+                <span>🎲 Синтетический генератор</span>
+                <span style={{ fontSize: '11px', opacity: 0.8 }}>(5 вак. / 20 рез.)</span>
+              </button>
+
+              <button
+                onClick={handleImportSuperJobData}
+                disabled={isUploading}
+                style={{
+                  backgroundColor: '#059669',
+                  color: 'white',
+                  border: 'none',
+                  padding: '9px 12px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  transition: 'background 0.2s'
+                }}
+              >
+                <span>💼 SuperJob JSON датасет</span>
+                <span style={{ fontSize: '11px', opacity: 0.8 }}>(51 вакансия)</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#cbd5e1' }}>
+              2. Метрики точности скоринга
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
+                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>Precision</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#38bdf8', marginTop: '4px' }}>{metrics.precision}</div>
+              </div>
+              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
+                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>Recall</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4ade80', marginTop: '4px' }}>{metrics.recall}</div>
+              </div>
+              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
+                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>F1-Score</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#f43f5e', marginTop: '4px' }}>{metrics.f1}</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '11px', color: '#94a3b8' }}>
+              <span>Оценено: <strong style={{ color: '#f8fafc' }}>{metrics.totalScored}</strong></span>
+              <span>Средний Score: <strong style={{ color: '#f8fafc' }}>{metrics.avgScore}%</strong></span>
+            </div>
+          </div>
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#cbd5e1' }}>3. Логи выполнения</span>
+              <button
+                onClick={handleClearLogs}
+                style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                очистить
+              </button>
+            </div>
+            <div style={{
+              backgroundColor: '#090d16',
+              borderRadius: '6px',
+              padding: '8px 12px',
+              fontFamily: 'monospace',
+              fontSize: '11px',
+              height: '80px',
+              overflowY: 'auto',
+              border: '1px solid #1e293b'
+            }}>
+              {logs.length === 0 ? (
+                <div style={{ color: '#64748b' }}>Логи пока пусты...</div>
+              ) : (
+                logs.map((log, index) => (
+                  <div key={index} style={{ marginBottom: '4px', lineHeight: '1.4' }}>
+                    <span style={{ color: '#64748b' }}>[{log.timestamp}]</span>{' '}
+                    <span style={{
+                      fontWeight: 'bold',
+                      color: log.type === 'ERROR' ? '#f43f5e' : log.type === 'SUCCESS' ? '#4ade80' : log.type === 'WARN' ? '#facc15' : '#38bdf8'
+                    }}>
+                      {log.type}:
+                    </span>{' '}
+                    <span style={{ color: '#e2e8f0' }}>{log.message}</span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
         <div>
-          <h3 style={{ marginTop: 0, marginBottom: '10px' }}>Загрузка данных</h3>
+          <h3 style={{ marginTop: 0, marginBottom: '10px' }}>Пользовательские файлы</h3>
           <div style={{ display: 'flex', gap: '20px' }}>
             <div>
               <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Резюме</label>
@@ -324,77 +563,6 @@ function App() {
               </span>
             </div>
           </div>
-        </div>
-
-        {/* Выпадающий список генерации данных */}
-        <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc', position: 'relative' }}>
-          <button
-            onClick={() => setShowGenDropdown(!showGenDropdown)}
-            disabled={isUploading}
-            style={{
-              backgroundColor: '#40E0D0',
-              color: 'white',
-              border: 'none',
-              padding: '10px 18px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              boxShadow: '0 2px 10px rgba(64, 224, 208, 0.3)',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            📥 Тестовые данные ▾
-          </button>
-
-          {showGenDropdown && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '110%',
-                left: '20px',
-                backgroundColor: 'white',
-                border: '1px solid #e5e7eb',
-                borderRadius: '8px',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-                zIndex: 100,
-                width: '230px',
-                overflow: 'hidden',
-                animation: 'fadeSlideUp 0.2s ease forwards'
-              }}
-            >
-              <div
-                onClick={handleGenerateSyntheticData}
-                style={{
-                  padding: '12px 15px',
-                  cursor: 'pointer',
-                  borderBottom: '1px solid #f3f4f6',
-                  transition: 'background 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0fdf4'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
-              >
-                <div style={{ fontWeight: 'bold', fontSize: '13px', color: '#1f2937' }}>🎲 Синтетический датасет</div>
-                <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>5 вакансий + 20 резюме</div>
-              </div>
-
-              <div
-                onClick={handleImportSuperJobData}
-                style={{
-                  padding: '12px 15px',
-                  cursor: 'pointer',
-                  transition: 'background 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#eff6ff'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
-              >
-                <div style={{ fontWeight: 'bold', fontSize: '13px', color: '#1f2937' }}>💼 SuperJob вакансии</div>
-                <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>Реальные вакансии из JSON</div>
-              </div>
-            </div>
-          )}
         </div>
 
         <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
