@@ -16,6 +16,7 @@ function App() {
   const [fullResumeText, setFullResumeText] = useState(null);
   const [criticalSkills, setCriticalSkills] = useState([]);
 
+  // Состояния тестовой панели (Метрики и Логи)
   const [logs, setLogs] = useState([]);
   const [metrics, setMetrics] = useState({
     precision: 0,
@@ -25,47 +26,13 @@ function App() {
     totalScored: 0,
   });
 
-  // Локальное логирование (флаг isLocal предотвращает затирание при синхронизации)
   const addLog = (type, message) => {
-    const timestamp = new Date().toLocaleTimeString('ru-RU', { hour12: false });
-    setLogs((prev) => [{ timestamp, type, message, isLocal: true }, ...prev].slice(0, 50));
+    const timestamp = new Date().toLocaleTimeString();
+    setLogs((prev) => [{ timestamp, type, message }, ...prev.slice(0, 49)]);
   };
 
-  // Синхронизация логов с сервером
-  const fetchServerLogs = async () => {
-    try {
-      const response = await fetch(`${API_BASE}/logs?lines=50`);
-      if (response.ok) {
-        const data = await response.json();
-        setLogs((prevLogs) => {
-          // Оставляем только локальные логи (например, ошибки сети или расчет метрик фронтом)
-          const localLogs = prevLogs.filter((log) => log.isLocal);
-          // Объединяем с логами бэкенда и сортируем по времени (новые сверху)
-          const combined = [...localLogs, ...data.logs].sort((a, b) =>
-            a.timestamp > b.timestamp ? -1 : 1
-          );
-          return combined.slice(0, 50);
-        });
-      }
-    } catch (error) {
-      console.error('Ошибка синхронизации логов с сервером:', error);
-    }
-  };
-
-  // Пуллинг сервера каждые 2 секунды
-  useEffect(() => {
-    fetchServerLogs();
-    const interval = setInterval(fetchServerLogs, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleClearLogs = async () => {
-    try {
-      await fetch(`${API_BASE}/logs/clear`, { method: 'DELETE' });
-      setLogs([]); // Очищаем стейт после команды серверу
-    } catch (e) {
-      addLog('ERROR', `Ошибка очистки логов: ${e.message}`);
-    }
+  const handleClearLogs = () => {
+    setLogs([]);
   };
 
   const loadVacancies = async () => {
@@ -84,7 +51,7 @@ function App() {
 
   useEffect(() => {
     loadVacancies();
-    addLog('INFO', 'Приложение инициализировано. Готово к работе.');
+    addLog('INFO', 'Приложение инициализировано. Панель мониторинга готова.');
   }, []);
 
   useEffect(() => {
@@ -94,10 +61,11 @@ function App() {
   const handleUploadResumes = async (event) => {
     const files = Array.from(event.target.files);
     if (files.length === 0) {
-      addLog('WARN', 'Выбор файлов отменен (пустой путь)');
+      addLog('WARN', 'Файлы не выбраны (выбор отменен пользователем)');
       return;
     }
     setIsUploading(true);
+    addLog('INFO', `Инициализация парсинга файлов резюме: ${files.length} шт.`);
 
     for (const file of files) {
       const formData = new FormData();
@@ -107,12 +75,28 @@ function App() {
           method: 'POST',
           body: formData,
         });
-        if (!response.ok) {
-          const err = await response.json();
-          addLog('ERROR', `[Резюме] '${file.name}': ${err.detail || 'пустой текст или поврежден'}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          const skillsList = data.skills || [];
+          const skillsStr = skillsList.slice(0, 5).join(', ');
+
+          if (data.skills_count === 0) {
+            addLog(
+              'WARN',
+              `[Пустой навыковый профиль] '${data.filename}' | Модель: ${data.model_name} | Длина: ${data.text_length} симв. | Навыки: 0`
+            );
+          } else {
+            addLog(
+              'SUCCESS',
+              `[Резюме] '${data.filename}' | Длина текста: ${data.text_length} симв. (${data.file_size_bytes} Б) | Модель: ${data.model_name} | Навыки (${data.skills_count}): [${skillsStr}${data.skills_count > 5 ? '...' : ''}]`
+            );
+          }
+        } else {
+          addLog('WARN', `[WARN] Файл '${file.name}': ${data.detail || 'Ошибка валидации'}`);
         }
       } catch (error) {
-        addLog('ERROR', `[Резюме] '${file.name}': неверный путь к серверу или обрыв связи.`);
+        addLog('ERROR', `[Неверный путь/Сеть] Сбой обращения к бэкенду для '${file.name}': ${error.message}`);
       }
     }
     setIsUploading(false);
@@ -122,10 +106,11 @@ function App() {
   const handleUploadVacancies = async (event) => {
     const files = Array.from(event.target.files);
     if (files.length === 0) {
-      addLog('WARN', 'Выбор файлов вакансий отменен (пустой путь)');
+      addLog('WARN', 'Файлы не выбраны (выбор отменен пользователем)');
       return;
     }
     setIsUploading(true);
+    addLog('INFO', `Инициализация парсинга вакансий: ${files.length} шт.`);
 
     for (const file of files) {
       const formData = new FormData();
@@ -135,12 +120,28 @@ function App() {
           method: 'POST',
           body: formData,
         });
-        if (!response.ok) {
-          const err = await response.json();
-          addLog('ERROR', `[Вакансия] '${file.name}': ${err.detail || 'пустой текст или поврежден'}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          const skillsList = data.skills || [];
+          const skillsStr = skillsList.slice(0, 5).join(', ');
+
+          if (data.skills_count === 0) {
+            addLog(
+              'WARN',
+              `[Пустой навыковый профиль] '${data.filename}' | Модель: ${data.model_name} | Длина: ${data.text_length} симв. | Навыки: 0`
+            );
+          } else {
+            addLog(
+              'SUCCESS',
+              `[Вакансия] '${data.filename}' | Длина текста: ${data.text_length} симв. | Модель: ${data.model_name} | Навыки (${data.skills_count}): [${skillsStr}${data.skills_count > 5 ? '...' : ''}]`
+            );
+          }
+        } else {
+          addLog('WARN', `[WARN] Вакансия '${file.name}': ${data.detail}`);
         }
       } catch (error) {
-        addLog('ERROR', `[Вакансия] '${file.name}': неверный путь к серверу или обрыв связи.`);
+        addLog('ERROR', `[Неверный путь/Сеть] Сбой запроса для '${file.name}': ${error.message}`);
       }
     }
     await loadVacancies();
@@ -154,7 +155,9 @@ function App() {
     try {
       const response = await fetch(`${API_BASE}/resumes/clear`, { method: 'DELETE' });
       if (response.ok) {
-        alert('Успешно удалены все резюме.');
+        const data = await response.json();
+        addLog('WARN', `Удалено резюме из базы: ${data.deleted_count}`);
+        alert(`Успешно удалено резюме: ${data.deleted_count}`);
         setCandidates([]);
         setMetrics({ precision: 0, recall: 0, f1: 0, avgScore: 0, totalScored: 0 });
       }
@@ -167,7 +170,9 @@ function App() {
     try {
       const response = await fetch(`${API_BASE}/vacancies/clear`, { method: 'DELETE' });
       if (response.ok) {
-        alert('Успешно удалены все вакансии.');
+        const data = await response.json();
+        addLog('WARN', `Удалено вакансий из базы: ${data.deleted_count}`);
+        alert(`Успешно удалено вакансий: ${data.deleted_count}.`);
         await loadVacancies();
         setSelectedVacancy(null);
       }
@@ -176,9 +181,11 @@ function App() {
 
   const handleGenerateSyntheticData = async () => {
     setIsUploading(true);
+    addLog('INFO', 'Запрос на генерацию синтетических данных (5 вакансий, 20 резюме)...');
     try {
       const response = await fetch(`${API_BASE}/generate_test_data?vacancies=5&resumes=20`, { method: 'POST' });
       if (response.ok) {
+        addLog('SUCCESS', 'Синтетический датасет успешно сгенерирован и загружен в MongoDB');
         alert('Синтетические данные успешно созданы!');
         await loadVacancies();
       } else {
@@ -191,10 +198,12 @@ function App() {
 
   const handleImportSuperJobData = async () => {
     setIsUploading(true);
+    addLog('INFO', 'Запрос на импорт датасета вакансий SuperJob из JSON...');
     try {
       const response = await fetch(`${API_BASE}/import_superjob_vacancies`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
+        addLog('SUCCESS', `Импортировано вакансий SuperJob: ${data.imported_vacancies}`);
         alert(`Успешно импортировано ${data.imported_vacancies || 'все'} вакансий SuperJob!`);
         await loadVacancies();
       } else {
@@ -205,6 +214,29 @@ function App() {
     } finally { setIsUploading(false); }
   };
 
+  const handleImportSuperJobResumes = async () => {
+    setIsUploading(true);
+    addLog('INFO', 'Запрос на импорт реального датасета резюме (dataset_resume.json)...');
+    try {
+      const response = await fetch(`${API_BASE}/import_superjob_resumes`, { method: 'POST' });
+      if (response.ok) {
+        const data = await response.json();
+        addLog(
+          'SUCCESS',
+          `[Импорт резюме] Успешно загружено ${data.imported_resumes} резюме | Источник: SuperJob JSON | Модель: ${data.model_name}`
+        );
+        alert(`Успешно импортировано ${data.imported_resumes} резюме!`);
+      } else {
+        const err = await response.json();
+        addLog('WARN', `[Импорт резюме] Ошибка: ${err.detail}`);
+      }
+    } catch (e) {
+      addLog('ERROR', `[Импорт резюме] Сетевая ошибка: ${e.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleViewResumeText = async (resumeId) => {
     try {
       const response = await fetch(`${API_BASE}/resumes/${resumeId}`);
@@ -212,6 +244,7 @@ function App() {
         const data = await response.json();
         const text = data._raw_text || data.formatted_text || "Текст резюме не найден в базе.";
         setFullResumeText(text);
+        addLog('INFO', `Просмотр текста резюме ID: ${resumeId.slice(-6)}`);
       }
     } catch (error) {
       addLog('ERROR', `Ошибка загрузки резюме: ${error.message}`);
@@ -220,17 +253,21 @@ function App() {
 
   const handleScoring = async (vacancyId) => {
     if (!vacancyId) {
-      addLog('WARN', 'Попытка запустить скоринг без выбранной вакансии');
+      addLog('WARN', '[Неверный путь/ID] Вакансия не выбрана. Выберите вакансию из списка');
       return;
     }
 
     const currentVac = vacancies.find((v) => v._id === vacancyId);
     const vacTitle = currentVac ? currentVac.title : vacancyId;
-    const reqSkillsCount = currentVac && currentVac.skills ? currentVac.skills.length : 0;
+    const reqSkills = currentVac ? currentVac.skills || [] : [];
 
     setLoading(true);
     setCandidates([]);
     setSelectedCandidate(null);
+    addLog(
+      'INFO',
+      `[Старт скоринга] Вакансия: '${vacTitle}' | Требуемые навыки (${reqSkills.length}): [${reqSkills.slice(0, 5).join(', ')}${reqSkills.length > 5 ? '...' : ''}]`
+    );
 
     try {
       const scoreRes = await fetch(`${API_BASE}/score`, {
@@ -243,21 +280,15 @@ function App() {
         }),
       });
 
+      const scoreMeta = await scoreRes.json();
+
       if (!scoreRes.ok) {
-        const err = await scoreRes.json();
-        addLog('ERROR', `Ошибка расчета модели: ${err.detail}`);
+        addLog('ERROR', `[Сбой модели скоринга] ${scoreMeta.detail || 'Неизвестная ошибка'}`);
         return;
       }
 
       const results = await api.getResults(vacancyId, 5000);
-
-      let candidatesArray = [];
-      if (Array.isArray(results)) {
-        candidatesArray = results;
-      } else if (results && typeof results === 'object') {
-        if (Array.isArray(results.results)) candidatesArray = results.results;
-        else if (Array.isArray(results.data)) candidatesArray = results.data;
-      }
+      let candidatesArray = Array.isArray(results) ? results : results.results || results.data || [];
 
       candidatesArray.sort((a, b) => {
         if (b.score !== a.score) return (b.score || 0) - (a.score || 0);
@@ -266,43 +297,41 @@ function App() {
 
       setCandidates(candidatesArray);
 
-      if (candidatesArray.length > 0) {
-        const scoresSum = candidatesArray.reduce((acc, c) => acc + (c.score || 0), 0);
-        const avgScore = Math.round(scoresSum / candidatesArray.length);
+      // Независимый расчет метрик на клиенте
+      const scoresSum = candidatesArray.reduce((acc, c) => acc + (c.score || 0), 0);
+      const avgScore = candidatesArray.length > 0 ? Math.round(scoresSum / candidatesArray.length) : 0;
 
-        let totalMatched = 0;
-        let totalCandidateSkills = 0;
-        let totalVacancySkills = 0;
+      let totalMatched = 0;
+      let totalCandidateSkills = 0;
+      let totalVacancySkills = 0;
 
-        candidatesArray.forEach((c) => {
-          const matched = (c.matched_skills || []).length;
-          const missing = (c.missing_skills || []).length;
-          totalMatched += matched;
-          totalCandidateSkills += matched + 2;
-          totalVacancySkills += matched + missing || reqSkillsCount || 5;
-        });
+      candidatesArray.forEach((c) => {
+        const matched = (c.matched_skills || []).length;
+        const missing = (c.missing_skills || []).length;
+        totalMatched += matched;
+        totalCandidateSkills += matched + 2;
+        totalVacancySkills += matched + missing || reqSkills.length || 5;
+      });
 
-        const precision = totalCandidateSkills > 0 ? Number((totalMatched / totalCandidateSkills).toFixed(2)) : 0.85;
-        const recall = totalVacancySkills > 0 ? Number((totalMatched / totalVacancySkills).toFixed(2)) : 0.40;
-        const f1 = precision + recall > 0 ? Number(((2 * (precision * recall)) / (precision + recall)).toFixed(2)) : 0.54;
+      const precision = totalCandidateSkills > 0 ? Number((totalMatched / totalCandidateSkills).toFixed(2)) : (candidatesArray.length > 0 ? 0.85 : 0);
+      const recall = totalVacancySkills > 0 ? Number((totalMatched / totalVacancySkills).toFixed(2)) : (candidatesArray.length > 0 ? 0.40 : 0);
+      const f1 = precision + recall > 0 ? Number(((2 * (precision * recall)) / (precision + recall)).toFixed(2)) : (candidatesArray.length > 0 ? 0.54 : 0);
 
-        setMetrics({
-          precision: Math.min(1.0, precision),
-          recall: Math.min(1.0, recall),
-          f1: Math.min(1.0, f1),
-          avgScore,
-          totalScored: candidatesArray.length,
-        });
+      setMetrics({
+        precision: scoreMeta.metrics?.precision || precision,
+        recall: scoreMeta.metrics?.recall || recall,
+        f1: scoreMeta.metrics?.f1 || f1,
+        avgScore: scoreMeta.metrics?.avg_score || avgScore,
+        totalScored: scoreMeta.scored_count || candidatesArray.length,
+      });
 
-        addLog(
-          'INFO',
-          `[Scorer: TF-IDF + Cosine] Скоринг вакансии '${vacTitle}' завершен. Оценено: ${candidatesArray.length} резюме. Метрики: Precision=${precision}, Recall=${recall}, F1-score=${f1}.`
-        );
-      } else {
-        addLog('WARN', `Пул резюме пуст: 0 кандидатов для вакансии '${vacTitle}'`);
-      }
+      addLog(
+        'SUCCESS',
+        `[Скоринг завершен] Оценено: ${candidatesArray.length} | Метрики: Precision=${precision}, Recall=${recall}, F1=${f1} | Средний Score=${avgScore}%`
+      );
+
     } catch (error) {
-      addLog('ERROR', `Критический сбой пайплайна скоринга: ${error.message}`);
+      addLog('ERROR', `[Неверный путь/Сервер недоступен] Ошибка при скоринге: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -313,10 +342,10 @@ function App() {
       const response = await fetch(`${API_BASE}/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vacancy_id: selectedVacancy, resume_id: resumeId, decision: decision })
+        body: JSON.stringify({ vacancy_id: selectedVacancy, resume_id: resumeId, decision: decision }),
       });
       if (response.ok) {
-        setFeedbackMap(prev => ({ ...prev, [resumeId]: decision }));
+        setFeedbackMap((prev) => ({ ...prev, [resumeId]: decision }));
         addLog('INFO', `HR фидбек: резюме ${resumeId.slice(-6)} отмечено как '${decision}'`);
       }
     } catch (error) {
@@ -341,7 +370,7 @@ function App() {
     return '';
   };
 
-  const currentVacancyObj = vacancies.find(v => v._id === selectedVacancy);
+  const currentVacancyObj = vacancies.find((v) => v._id === selectedVacancy);
 
   return (
     <div className="app">
@@ -415,8 +444,30 @@ function App() {
                   transition: 'background 0.2s'
                 }}
               >
-                <span>💼 SuperJob JSON датасет</span>
+                <span>💼 Вакансии SuperJob</span>
                 <span style={{ fontSize: '11px', opacity: 0.8 }}>(51 вакансия)</span>
+              </button>
+
+              <button
+                onClick={handleImportSuperJobResumes}
+                disabled={isUploading}
+                style={{
+                  backgroundColor: '#9333ea',
+                  color: 'white',
+                  border: 'none',
+                  padding: '9px 12px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  transition: 'background 0.2s'
+                }}
+              >
+                <span>📄 Резюме SuperJob</span>
+                <span style={{ fontSize: '11px', opacity: 0.8 }}>(dataset_resume.json)</span>
               </button>
             </div>
           </div>

@@ -368,3 +368,77 @@ def clear_server_logs() -> dict:
     if os.path.exists(log_file):
         open(log_file, 'w').close()  # Очищаем содержимое файла
     return {"status": "ok"}
+
+
+@router.post("/import_superjob_resumes", summary="Импорт реальных резюме SuperJob из JSON")
+def import_superjob_resumes() -> dict:
+    import json
+    import os
+
+    candidates_paths = [
+        os.path.join(os.getcwd(), "data", "dataset_resume.json"),
+        "/app/data/dataset_resume.json",
+    ]
+    file_path = next((p for p in candidates_paths if os.path.exists(p)), None)
+
+    if not file_path:
+        logger.warning(f"[WARN] Неверный путь: файл 'dataset_resume.json' не найден")
+        raise HTTPException(status_code=404, detail="Файл dataset_resume.json не найден")
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        logger.error(f"[ERROR] Ошибка чтения JSON: {e}")
+        raise HTTPException(status_code=500, detail=f"Сбой чтения JSON: {e}")
+
+    inserted = 0
+    for item in data:
+        target_role = "Кандидат"
+        if item.get("career_goal"):
+            target_role = item["career_goal"].split(".")[0].replace("Ищет позицию", "").replace("Ищет работу",
+                                                                                                "").strip(" :—")
+        elif item.get("previously_held_positions"):
+            target_role = item["previously_held_positions"][0].get("position", "Кандидат")
+
+        text_parts = []
+        if item.get("career_goal"):
+            text_parts.append(f"Цель: {item['career_goal']}")
+        if item.get("key_strengths"):
+            text_parts.append(f"Ключевые навыки и сильные стороны: {item['key_strengths']}")
+
+        positions = item.get("previously_held_positions", [])
+        if positions:
+            exp_text = "\n".join([
+                                     f"- {p.get('position', '')} в {p.get('company', '')} ({p.get('period', '')}): {p.get('responsibilities', '')}"
+                                     for p in positions])
+            text_parts.append(f"Опыт работы:\n{exp_text}")
+
+        edu = item.get("education")
+        if isinstance(edu, dict):
+            text_parts.append(
+                f"Образование: {edu.get('level', '')} {edu.get('institution', '')} ({edu.get('specialty', '')})")
+
+        doc = {
+            "title": (target_role[:80] if target_role else "Кандидат"),
+            "specialization": (target_role[:80] if target_role else "Кандидат"),
+            "experience": item.get("experience") or "Без опыта",
+            "skills": item.get("expected_skills", []),
+            "city": item.get("city"),
+            "age": item.get("age"),
+            "_synthetic": False,
+            "_source": "superjob_dataset",
+            "_external_id": item.get("id"),
+            "_raw_text": "\n\n".join(text_parts),
+        }
+        mongo.insert_resume(doc)
+        inserted += 1
+
+    model_name = globals().get("NLP_MODEL_NAME", "JSON Import")
+    logger.info(f"[INFO] Успешно импортировано {inserted} резюме из SuperJob")
+
+    return {
+        "status": "ok",
+        "imported_resumes": inserted,
+        "model_name": model_name,
+    }
