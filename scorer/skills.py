@@ -8,7 +8,7 @@
 * **Lemma-матчер** — для буквенно-пробельных алиасов. И алиас, и текст
   проходят через один и тот же пайплайн нормализации, после чего по тексту
   строятся уни- и биграммы и ищутся в индексе. Это обрабатывает склонения
-  («разработке» → «разработка») и многословные навыки («машинное обучение»,
+  («разработке» -> «разработка») и многословные навыки («машинное обучение»,
   «machine learning»).
 * **Raw-матчер** — для навыков с символами (``C++``, ``.NET``, ``CI/CD``).
   Ищет их как подстроку исходного текста в нижнем регистре с учётом границ
@@ -46,9 +46,9 @@ def build_skill_index(
 
     Возвращает пару ``(lemma_index, raw_index)``:
 
-    * ``lemma_index`` — нормализованная поверхностная форма → множество
+    * ``lemma_index`` — нормализованная поверхностная форма -> множество
       канонических навыков.
-    * ``raw_index`` — скомпилированный regex → канонический навык
+    * ``raw_index`` — скомпилированный regex -> канонический навык
       (для символьных навыков).
     """
     skills = SKILLS_ALL if skills is None else skills
@@ -105,45 +105,73 @@ def extract_skills(text: str) -> Set[str]:
     return found
 
 
+def normalize_skill_set(raw_skills_set: Set[str]) -> Set[str]:
+    """Приводит любое сырое множество навыков к каноническим ключам из онтологии."""
+    if not raw_skills_set:
+        return set()
+
+    lemma_index, raw_index = _indices()
+    normalized = set()
+
+    for skill in raw_skills_set:
+        low_skill = skill.lower()
+        found = False
+
+        # Проверяем символьные навыки (C++, .NET)
+        for pattern, canonical in raw_index.items():
+            if pattern.search(low_skill):
+                normalized.add(canonical)
+                found = True
+                break
+        if found:
+            continue
+
+        # Проверяем буквенные навыки через лемматизацию
+        lemmas = lemmatize_tokens(tokenize_words(skill))
+        if not lemmas:
+            continue
+
+        # Ищем точное совпадение
+        gram = " ".join(lemmas)
+        canon = lemma_index.get(gram)
+        if canon:
+            normalized.update(canon)
+        else:
+            # Если навыка нет в словаре, оставляем как есть
+            normalized.add(low_skill)
+
+    return normalized
+
+
 def match_skills(
-    resume_text: str,
-    vacancy_text: str,
-    vacancy_skills: Optional[Set[str]] = None,
-    critical_skills: Optional[Set[str]] = None,
+        resume_text: str,
+        vacancy_text: str,
+        vacancy_skills: Optional[Set[str]] = None,
+        critical_skills: Optional[Set[str]] = None,
+        resume_skills: Optional[Set[str]] = None,  # Добавлена поддержка готовых навыков резюме
 ) -> dict:
-    """Сравнивает навыки резюме с навыками, требуемыми вакансией.
+    """Сравнивает навыки резюме с навыками, требуемыми вакансией."""
+    # ОБЯЗАТЕЛЬНАЯ нормализация для маппинга синонимов
+    if vacancy_skills is not None:
+        v_skills = normalize_skill_set(vacancy_skills)
+    else:
+        v_skills = extract_skills(vacancy_text)
 
-    Возвращает словарь:
-
-    * ``matched`` / ``missing`` — полное пересечение и разница;
-    * ``matched_critical`` / ``missing_critical`` — то же только по must-have;
-    * ``keyword_score`` — доля покрытия с учётом повышенного веса критических
-      навыков (если ``critical_skills`` передан);
-    * ``vacancy_skills`` / ``resume_skills`` — сырые множества.
-
-    *vacancy_skills* позволяет вызывающему коду передать навыки вакансии
-    один раз (см. ``rank_candidates``).
-    *critical_skills* — необязательное множество канонических must-have
-    навыков. Если не передано, все навыки считаются равнозначными
-    (обратная совместимость).
-    """
-    v_skills = vacancy_skills if vacancy_skills is not None else extract_skills(vacancy_text)
-    r_skills = extract_skills(resume_text)
+    if resume_skills is not None:
+        r_skills = normalize_skill_set(resume_skills)
+    else:
+        r_skills = extract_skills(resume_text)
 
     matched = v_skills & r_skills
     missing = v_skills - r_skills
 
-    # Критические навыки (must-have).
     crit = critical_skills or set()
-    # Оставляем только те критические, которые реально требуются вакансией.
-    crit = crit & v_skills
+    crit = normalize_skill_set(crit) & v_skills
 
     matched_critical = matched & crit
     missing_critical = crit - matched
 
-    # Расчёт keyword_score с учётом весов.
     if crit:
-        # Каждый критический навык весит CRITICAL_WEIGHT, обычный — 1.0.
         total_weight = 0.0
         got_weight = 0.0
         for skill in v_skills:
@@ -153,7 +181,6 @@ def match_skills(
                 got_weight += w
         keyword_score = got_weight / total_weight if total_weight > 0 else 0.0
     else:
-        # Старое поведение — просто доля покрытия.
         keyword_score = len(matched) / len(v_skills) if v_skills else 0.0
 
     return {
@@ -166,3 +193,5 @@ def match_skills(
         "resume_skills": r_skills,
         "critical_skills": crit,
     }
+
+

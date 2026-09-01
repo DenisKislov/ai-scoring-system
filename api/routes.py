@@ -1,14 +1,19 @@
+"""HTTP routes — thin wrappers over ``db.mongo`` and ``scorer.service``."""
+from __future__ import annotations
+from data.synthetic import generate_dataset
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Query, status, UploadFile, File
-import subprocess
+
+from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 
 from db import mongo
+from db.builders import parse_raw_text_to_resume, resume_text
 from scorer.service import score_vacancy
-from db.builders import resume_text, parse_raw_text_to_resume
-from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
-from .file_parser import extract_text_from_file
-from .nlp_parser import extract_smart_skills
 
+from .file_parser import extract_text_from_file
+from .logger import setup_logger
+from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
+
+logger = setup_logger("api.routes")
 router = APIRouter()
 
 
@@ -21,6 +26,8 @@ def health() -> dict:
     mongo.get_client().admin.command("ping")
     return {"status": "ok", "db": mongo.MONGO_DB}
 
+
+# --- vacancies -------------------------------------------------------------
 
 @router.get("/vacancies", summary="List vacancies")
 def list_vacancies(limit: Optional[int] = Query(default=None, ge=1)) -> list:
@@ -45,6 +52,64 @@ def create_vacancy(payload: VacancyIn) -> dict:
     return doc
 
 
+@router.post("/upload_vacancy", status_code=status.HTTP_201_CREATED, summary="Загрузить файл вакансии")
+async def upload_vacancy_file(file: UploadFile = File(...)):
+    content = await file.read()
+    file_size = len(content)
+
+    if file_size == 0:
+        logger.warning(f"WARN: Файл вакансии '{file.filename}' имеет нулевой размер (пустой текст или неверный путь)")
+        raise HTTPException(status_code=400, detail="Файл пуст")
+
+    extracted_text = extract_text_from_file(content, file.filename)
+    text_len = len(extracted_text) if extracted_text else 0
+
+    if text_len == 0:
+        logger.warning(f"WARN: Не удалось извлечь текст вакансии из '{file.filename}'. Текст пуст.")
+        raise HTTPException(status_code=400, detail="Текст вакансии не распознан")
+
+    parsed = parse_raw_text_to_resume(extracted_text)
+    skills = parsed.get("skills", [])
+    title = file.filename.rsplit(".", 1)[0]
+
+    vacancy_doc = {
+        "title": title,
+        "description": extracted_text,
+        "skills": skills,
+        "_source": "user_upload",
+        "filename": file.filename,
+    }
+
+    vac_id = mongo.insert_vacancy(vacancy_doc)
+
+    # INFO-лог с детализацией (имя модели, длина, сколько и каких навыков)
+    logger.info(
+        f"INFO: [NLP: ru_core_news_sm] Вакансия '{file.filename}' сохранена. "
+        f"Длина текста: {text_len} симв. "
+        f"Извлечено навыков ({len(skills)} шт.): {', '.join(skills) if skills else 'Нет'}"
+    )
+
+    return {
+        "vacancy_id": str(vac_id),
+        "filename": file.filename,
+        "file_size": file_size,
+        "text_length": text_len,
+        "title": title,
+        "skills_count": len(skills),
+        "skills": skills,
+        "status": "success"
+    }
+
+
+@router.delete("/vacancies/clear", summary="Удалить все вакансии")
+def clear_vacancies() -> dict:
+    res = mongo._coll(mongo.COLL_VACANCIES).delete_many({})
+    logger.info(f"Удалено вакансий: {res.deleted_count}")
+    return {"deleted_count": res.deleted_count}
+
+
+# --- resumes / candidates --------------------------------------------------
+
 @router.get("/resumes/{resume_id}", summary="Get a resume")
 def get_resume(resume_id: str) -> dict:
     try:
@@ -65,6 +130,157 @@ def create_resume(payload: ResumeIn) -> dict:
     return doc
 
 
+@router.post("/upload_resume", status_code=status.HTTP_201_CREATED, summary="Загрузить файл резюме")
+async def upload_resume_file(file: UploadFile = File(...)):
+    content = await file.read()
+    file_size = len(content)
+
+    if file_size == 0:
+        logger.warning(f"WARN: Файл '{file.filename}' имеет нулевой размер (пустой текст или неверный путь)")
+        raise HTTPException(status_code=400, detail="Файл пуст")
+
+    extracted_text = extract_text_from_file(content, file.filename)
+    text_len = len(extracted_text) if extracted_text else 0
+
+    if text_len == 0:
+        logger.warning(f"WARN: Не удалось извлечь текст из файла '{file.filename}'. Текст пуст.")
+        raise HTTPException(status_code=400, detail="Текст в файле не обнаружен")
+
+    parsed = parse_raw_text_to_resume(extracted_text)
+    skills = parsed.get("skills", [])
+    title = parsed.get("title", "") or "Кандидат"
+
+    resume_doc = {
+        "title": title,
+        "specialization": parsed.get("specialization", ""),
+        "experience": parsed.get("experience", ""),
+        "skills": skills,
+        "tags": parsed.get("tags", []),
+        "_synthetic": False,
+        "_source": "user_upload",
+        "_raw_text": extracted_text,
+        "filename": file.filename,
+    }
+
+    resume_id = mongo.insert_resume(resume_doc)
+
+    # INFO-лог с детализацией (имя модели, длина, сколько и каких навыков)
+    logger.info(
+        f"INFO: [NLP: ru_core_news_sm] Резюме '{file.filename}' сохранено. "
+        f"Длина текста: {text_len} симв. "
+        f"Извлечено навыков ({len(skills)} шт.): {', '.join(skills) if skills else 'Нет'}"
+    )
+
+    return {
+        "resume_id": str(resume_id),
+        "filename": file.filename,
+        "file_size": file_size,
+        "text_length": text_len,
+        "title": title,
+        "skills_count": len(skills),
+        "skills": skills,
+        "status": "success"
+    }
+
+@router.delete("/resumes/clear", summary="Удалить все резюме")
+def clear_resumes() -> dict:
+    res = mongo._coll(mongo.COLL_RESUMES).delete_many({})
+    mongo._coll(mongo.COLL_SCORES).delete_many({})
+    logger.info(f"Удалено резюме: {res.deleted_count}")
+    return {"deleted_count": res.deleted_count}
+
+
+# --- test data generation --------------------------------------------------
+import json
+import os
+
+
+@router.post("/import_superjob_vacancies", summary="Импорт вакансий SuperJob из JSON")
+def import_superjob_vacancies() -> dict:
+    file_path = os.path.join(os.getcwd(), "data", "superjob_dataset.json")
+    if not os.path.exists(file_path):
+        # Если запущено внутри контейнера /app
+        file_path = "/app/data/superjob_dataset.json"
+
+    if not os.path.exists(file_path):
+        logger.error(f"Файл датасета {file_path} не найден")
+        raise HTTPException(status_code=404, detail="Файл superjob_dataset.json не найден")
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    inserted_count = 0
+    for item in data:
+        # Собираем полное текстовое описание для скорера
+        description_parts = []
+        if item.get("responsibilities"):
+            description_parts.append(f"Обязанности: {item['responsibilities']}")
+        if item.get("requirements"):
+            description_parts.append(f"Требования: {item['requirements']}")
+        if item.get("company_description"):
+            description_parts.append(f"О компании: {item['company_description']}")
+
+        full_description = "\n\n".join(description_parts)
+
+        doc = {
+            "title": item.get("vacancy") or item.get("title", "Без названия"),
+            "description": full_description,
+            "skills": item.get("expected_skills", []),
+            "city": item.get("city"),
+            "company_name": item.get("company_name"),
+            "experience": item.get("experience"),
+            "education": item.get("education"),
+            "min_salary": item.get("min_salary"),
+            "max_salary": item.get("max_salary"),
+            "_source": "superjob_manual",
+            "_external_id": item.get("id"),
+        }
+        mongo.insert_vacancy(doc)
+        inserted_count += 1
+
+    logger.info(f"Успешно импортировано {inserted_count} вакансий из SuperJob")
+    return {"status": "ok", "imported_vacancies": inserted_count}
+
+@router.post("/generate_test_data", summary="Генерация тестовых данных")
+def generate_test_data(
+    vacancies: int = Query(default=5, ge=1),
+    resumes: int = Query(default=20, ge=1),
+) -> dict:
+    dataset = generate_dataset(n_vacancies=vacancies, n_resumes=resumes)
+    created_resumes_count = 0
+
+    for item in dataset:
+        vac_data = item["vacancy"]
+        vac_doc = {
+            "title": vac_data["role"],
+            "description": vac_data["text"],
+            "skills": vac_data["skills"],
+            "_synthetic": True,
+            "_source": "generator",
+        }
+        mongo.insert_vacancy(vac_doc)
+
+        for cand in item["candidates"]:
+            parsed = parse_raw_text_to_resume(cand["text"])
+            resume_doc = {
+                "title": cand.get("role", parsed.get("title", "")),
+                "specialization": parsed.get("specialization", ""),
+                "experience": parsed.get("experience", ""),
+                "skills": cand.get("skills", parsed.get("skills", [])),
+                "tags": parsed.get("tags", []),
+                "_raw_text": cand["text"],
+                "_synthetic": True,
+                "_source": "generator",
+            }
+            mongo.insert_resume(resume_doc)
+            created_resumes_count += 1
+
+    logger.info(f"Сгенерировано {len(dataset)} вакансий и {created_resumes_count} резюме")
+    return {"status": "ok", "vacancies": len(dataset), "resumes": created_resumes_count}
+
+
+# --- scoring ---------------------------------------------------------------
+
 @router.post("/score", summary="Run scoring for a vacancy")
 def score(payload: ScoreRequest) -> dict:
     try:
@@ -73,7 +289,6 @@ def score(payload: ScoreRequest) -> dict:
             resume_ids=payload.resume_ids,
             limit_resumes=payload.limit_resumes,
             weights=payload.weights,
-            critical_skills=set(payload.critical_skills) if payload.critical_skills else None,
         )
     except ValueError as exc:
         _not_found(str(exc))
@@ -96,6 +311,8 @@ def results(
     return {"vacancy_id": vacancy_id, "count": len(scores), "results": scores}
 
 
+# --- feedback --------------------------------------------------------------
+
 @router.post("/feedback", summary="Record an HR decision")
 def feedback(payload: FeedbackIn) -> dict:
     mongo.save_feedback(payload.vacancy_id, payload.resume_id, payload.decision)
@@ -108,113 +325,46 @@ def get_feedback(vacancy_id: str, resume_id: str) -> dict:
     return {"vacancy_id": vacancy_id, "resume_id": resume_id, "decision": decision}
 
 
-@router.post("/upload_resume", summary="Upload resume file (PDF/TXT)")
-async def upload_resume_file(file: UploadFile = File(...)):
-    try:
-        content = await file.read()
-        extracted_text = extract_text_from_file(content, file.filename)
-        if not extracted_text:
-            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
+@router.get("/logs", summary="Получить последние логи сервера")
+def get_server_logs(lines: int = Query(default=50, ge=1)) -> dict:
+    log_file = os.path.join(os.getcwd(), "app.log")
+    if not os.path.exists(log_file):
+        return {"logs": []}
 
-        parsed = parse_raw_text_to_resume(extracted_text)
-        smart_skills = extract_smart_skills(extracted_text)
+    with open(log_file, "r", encoding="utf-8") as f:
+        # Читаем все строки и забираем только последние
+        all_lines = f.readlines()
+        last_lines = all_lines[-lines:]
 
-        resume_doc = {
-            "title": parsed.get("title", ""),
-            "specialization": parsed.get("specialization", ""),
-            "experience": parsed.get("experience", ""),
-            "skills": smart_skills,
-            "tags": parsed.get("tags", []),
-            "_synthetic": False,
-            "_source": "user_upload",
-            "_raw_text": extracted_text,
-            "filename": file.filename,
-        }
+    parsed_logs = []
+    # Переворачиваем, чтобы самые свежие логи были сверху
+    for line in reversed(last_lines):
+        try:
+            parts = line.strip().split(" | ", 2)
+            if len(parts) >= 3:
+                timestamp = parts[0]
+                level = parts[1]
+                msg = parts[2]
 
-        resume_id = mongo.insert_resume(resume_doc)
+                # Убираем дублирование INFO:/WARN:, если они остались в тексте
+                if msg.startswith("INFO: "): msg = msg[6:]
+                if msg.startswith("WARN: "): msg = msg[6:]
 
-        return {
-            "resume_id": str(resume_id),
-            "filename": file.filename,
-            "status": "success",
-            "parsed": {
-                "title": parsed.get("title"),
-                "experience": parsed.get("experience"),
-                "skills_count": len(smart_skills),
-                "skills": smart_skills[:5],
-            },
-            "text_preview": extracted_text[:300] + "..."
-        }
+                # В Python предупреждения пишутся как WARNING, маппим в WARN для фронта
+                parsed_logs.append({
+                    "timestamp": timestamp,
+                    "type": "WARN" if level == "WARNING" else level,
+                    "message": msg
+                })
+        except Exception:
+            continue
 
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
+    return {"logs": parsed_logs}
 
 
-@router.post("/upload_vacancy", summary="Upload vacancy file (PDF/TXT)")
-async def upload_vacancy_file(file: UploadFile = File(...)):
-    try:
-        content = await file.read()
-        extracted_text = extract_text_from_file(content, file.filename)
-        if not extracted_text:
-            raise HTTPException(status_code=400, detail="Файл пуст или текст не распознан")
-
-        lines = [line.strip() for line in extracted_text.split('\n') if line.strip()]
-        title = lines[0] if lines else "Не указано"
-
-        smart_skills = extract_smart_skills(extracted_text)
-
-        vacancy_doc = {
-            "title": title,
-            "description": extracted_text,
-            "skills": smart_skills,
-            "_synthetic": False,
-            "_source": "user_upload",
-            "_raw_text": extracted_text,
-            "filename": file.filename,
-        }
-
-        vacancy_id = mongo.insert_vacancy(vacancy_doc)
-
-        return {
-            "vacancy_id": str(vacancy_id),
-            "filename": file.filename,
-            "status": "success",
-            "parsed": {
-                "title": title,
-                "skills_count": len(smart_skills),
-                "skills": smart_skills[:5]
-            }
-        }
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка обработки файла: {str(e)}")
-
-
-@router.delete("/resumes/clear", summary="Clear all resumes")
-def clear_all_resumes():
-    db = mongo.get_client()[mongo.MONGO_DB]
-    res = db["hh_resumes"].delete_many({})
-    db["hh_scores"].delete_many({})
-    return {"status": "success", "deleted_count": res.deleted_count}
-
-
-@router.delete("/vacancies/clear", summary="Clear all vacancies")
-def clear_all_vacancies():
-    db = mongo.get_client()[mongo.MONGO_DB]
-    res = db["hh"].delete_many({})
-    db["hh_scores"].delete_many({})
-    return {"status": "success", "deleted_count": res.deleted_count}
-
-
-@router.post("/generate_test_data", summary="Generate test data")
-def generate_test_data(vacancies: int = 5, resumes: int = 20):
-    try:
-        subprocess.run(
-            ["python", "-m", "db.seed", "--vacancies", str(vacancies), "--resumes", str(resumes)],
-            check=True
-        )
-        return {"status": "success", "message": f"Сгенерировано {vacancies} вакансий и {resumes} резюме"}
-    except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка генерации: {e}")
+@router.delete("/logs/clear", summary="Очистить файл логов")
+def clear_server_logs() -> dict:
+    log_file = os.path.join(os.getcwd(), "app.log")
+    if os.path.exists(log_file):
+        open(log_file, 'w').close()  # Очищаем содержимое файла
+    return {"status": "ok"}

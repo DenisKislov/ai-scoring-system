@@ -1,31 +1,60 @@
 const API_URL = 'http://127.0.0.1:8000';
 
 export const api = {
-  // Получить список вакансий
-  async getVacancies(limit = 10) {
-    const response = await fetch(`${API_URL}/vacancies?limit=${limit}`);
-    return response.json();
+  getVacancies: async () => {
+    try {
+      const response = await fetch(`${API_URL}/vacancies`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка в getVacancies:', error);
+      return [];
+    }
   },
 
-  // Запустить скоринг для вакансии
-  async runScoring(vacancyId, limitResumes = 10000) {
-    const response = await fetch(`${API_URL}/score`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vacancy_id: vacancyId, limit_resumes: limitResumes })
-    });
-    return response.json();
+  getResults: async (vacancyId, limit = 5000) => {
+    try {
+      const response = await fetch(`${API_URL}/results/${vacancyId}?top=${limit}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка в getResults:', error);
+      return [];
+    }
   },
 
-  // Получить результаты скоринга
-  async getResults(vacancyId, top = 10) {
-    const response = await fetch(`${API_URL}/results/${vacancyId}?top=${top}`);
-    return response.json();
+  getResume: async (resumeId) => {
+    try {
+      const response = await fetch(`${API_URL}/resumes/${resumeId}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка в getResume:', error);
+      return null;
+    }
   },
 
-  // Получить резюме с подсветкой
-  async getResume(resumeId) {
-    const response = await fetch(`${API_URL}/resumes/${resumeId}`);
-    return response.json();
-  }
+  postFeedback: async (vacancyId, resumeId, decision) => {
+    try {
+      const response = await fetch(`${API_URL}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          vacancy_id: vacancyId,
+          resume_id: resumeId,
+          decision: decision,
+        }),
+      });
+      return response.ok;
+    } catch (error) {
+      console.error('Ошибка в postFeedback:', error);
+      return false;
+    }
+  },
 };

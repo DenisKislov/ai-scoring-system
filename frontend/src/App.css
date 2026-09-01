@@ -1,4 +1,7 @@
 * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,44 +21,85 @@ body {
   padding: 24px 32px;
 }
 
+/* ===== ХЕДЕР — ВОЗДУШНЫЙ И СТИЛЬНЫЙ ===== */
 header {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 18px 32px;
-  border-radius: 20px;
-  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 20px 36px;
+  border-radius: 24px;
+  margin-bottom: 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  gap: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(192, 132, 252, 0.08),
+    0 2px 8px rgba(192, 132, 252, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Декоративный блик на хедере */
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
 }
 
 header h1 {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   color: #2d1b3d;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
 }
 
 header h1 .highlight {
-  background: linear-gradient(135deg, #ff6b9d, #c084fc);
+  background: linear-gradient(135deg, #ff6b9d, #c084fc, #60d6e8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.subtitle {
+  font-size: 14px;
+  color: #6b4a7a;
+  margin-top: 2px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+/* Бейдж справа */
 header .badge {
   font-size: 13px;
   font-weight: 500;
   color: #6b4a7a;
   background: rgba(255, 255, 255, 0.5);
-  padding: 4px 18px;
+  padding: 6px 20px;
   border-radius: 40px;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  position: relative;
+  z-index: 1;
 }
 
 .vacancies {
@@ -168,6 +212,7 @@ header .badge {
 .table-wrapper {
   overflow-x: auto;
   padding: 0 4px;
+  animation: fadeSlideUp 0.5s ease forwards !important;
 }
 
 table {
@@ -251,15 +296,26 @@ tbody tr:last-child td {
 .score-bar-fill {
   height: 100%;
   border-radius: 4px;
-  transition: width 0.8s ease;
   background: linear-gradient(90deg, #c084fc, #ff6b9d);
+  animation: fillBar 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  width: 0%;
 }
 
 .score-bar-fill.medium {
   background: linear-gradient(90deg, #60d6e8, #c084fc);
 }
+
 .score-bar-fill.low {
   background: linear-gradient(90deg, #b8a8c0, #d8bfd8);
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--target-width);
+  }
 }
 
 .skills-list {
@@ -563,4 +619,106 @@ tbody tr:last-child td {
     font-size: 12px;
     width: 30px;
   }
+}
+.vacancies {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.vacancies:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(192, 132, 252, 0.12);
+  border-color: rgba(192, 132, 252, 0.2);
+}
+
+.results {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.results:hover {
+  box-shadow: 0 12px 48px rgba(192, 132, 252, 0.08);
+}
+
+tbody tr {
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+tbody tr:hover {
+  background: rgba(192, 132, 252, 0.08);
+  transform: scale(1.002);
+  box-shadow: 0 2px 12px rgba(192, 132, 252, 0.06);
+}
+
+.modal {
+  transition: all 0.3s ease;
+}
+
+.vacancies button,
+.vacancies select,
+.vacancies label {
+  transition: all 0.25s ease;
+}
+
+.empty-state {
+  transition: all 0.3s ease;
+}
+
+.empty-state:hover {
+  transform: scale(1.01);
+  color: #5a3d6a;
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Кнопка "Сгенерировать данные" — анимация */
+button[onclick*="handleGenerateData"] {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+button[onclick*="handleGenerateData"]:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(64, 224, 208, 0.4) !important;
+}
+
+button[onclick*="handleGenerateData"]:active:not(:disabled) {
+  transform: scale(0.95) !important;
+}
+
+/* Кнопка "Удалить резюме" — анимация */
+button[onclick*="handleClearResumes"] {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+button[onclick*="handleClearResumes"]:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(240, 128, 128, 0.4) !important;
+}
+
+button[onclick*="handleClearResumes"]:active:not(:disabled) {
+  transform: scale(0.95) !important;
+}
+
+/* Кнопка "Удалить вакансии" — анимация */
+button[onclick*="handleClearVacancies"] {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+button[onclick*="handleClearVacancies"]:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(255, 127, 80, 0.4) !important;
+}
+
+button[onclick*="handleClearVacancies"]:active:not(:disabled) {
+  transform: scale(0.95) !important;
 }
