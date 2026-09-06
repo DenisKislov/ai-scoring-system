@@ -1,8 +1,8 @@
 import json
 import csv
 
-# Загружаем вакансии
-with open('data/superjob_dataset.json', 'r', encoding='utf-8') as f:
+# Загружаем вакансии\резюме
+with open('data/dataset_resume.json', 'r', encoding='utf-8') as f:
     vacancies = json.load(f)
 
 # Собираем все уникальные навыки
@@ -14,7 +14,7 @@ for vac in vacancies:
 sorted_skills = sorted(all_skills)
 
 # Создаём CSV
-with open('data/ground_truth_vacancies.csv', 'w', newline='', encoding='utf-8') as f:
+with open('data/ground_truth_resumes.csv', 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     
     # id, навык1, навык2, ...
@@ -23,7 +23,7 @@ with open('data/ground_truth_vacancies.csv', 'w', newline='', encoding='utf-8') 
 
     for vac in vacancies:
         vac_skills = set(vac.get('expected_skills', []))
-        clean_id = vac['id'].replace('sj_', '')
+        clean_id = vac['id'].replace('sj_r_', '')
         row = [clean_id] + [1 if skill in vac_skills else 0 for skill in sorted_skills]
         writer.writerow(row)
 
