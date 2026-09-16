@@ -56,7 +56,11 @@ def generate_resume(
         "text": render_resume(profession, text_skills, rng, faker),
         "true_relevance": round(true_relevance, 3),
         "role": profession,
+        # Полное множество известных навыков (ground truth для релевантности).
         "skills": skills,
+        # То, что реально написано в тексте — честный ground truth для оценки
+        # извлечения навыков (Precision/Recall/F1 по категориям).
+        "text_skills": text_skills,
     }
 
 

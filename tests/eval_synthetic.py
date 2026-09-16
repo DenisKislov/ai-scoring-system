@@ -17,13 +17,33 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np  # noqa: E402
 
 from data.synthetic import generate_dataset  # noqa: E402
-from scorer import rank_candidates  # noqa: E402
-from scorer.metrics import ndcg, precision_at_k, spearman  # noqa: E402
+from scorer import extract_skills, rank_candidates  # noqa: E402
+from scorer.metrics import (  # noqa: E402
+    classification_report,
+    ndcg,
+    precision_at_k,
+    spearman,
+)
 
 N_VACANCIES = 6
 N_RESUMES = 20
 SEED = 42
 QUALITY_BAR = 0.80  # nDCG@10 we expect the scorer to clear
+
+
+def _canon_skills(names):
+    """Канонизирует имена навыков корпуса через онтологию скорера.
+
+    ``skills_by_profession.json`` хранит навыки в собственной нотации
+    («Numpy», «pandas», «Clickhouse»), а ``extract_skills`` возвращает
+    канонические имена онтологии («NumPy», «Pandas», «ClickHouse»). Чтобы
+    ground truth и предсказания сравнивались в одной нотации, каждое имя
+    прогоняется через тот же матчер.
+    """
+    out = set()
+    for name in names:
+        out |= extract_skills(name)
+    return out
 
 
 def evaluate():
@@ -87,6 +107,35 @@ def evaluate():
     print(f"  keyword_score : {spearman(all_keyword, all_true):+.3f}")
     print(f"  cosine_sim    : {spearman(all_cosine, all_true):+.3f}")
     print(f"  combined      : {spearman(all_score, all_true):+.3f}")
+
+    # Качество извлечения навыков (Precision/Recall/F1) — целиком и по
+    # категориям. Ground truth — навыки, реально написанные в тексте
+    # (text_skills), предсказание — extract_skills(text).
+    all_pred: set = set()
+    all_true_skills: set = set()
+    for entry in dataset:
+        for c in entry["candidates"]:
+            all_pred |= extract_skills(c["text"])
+            all_true_skills |= _canon_skills(c.get("text_skills", []))
+    report = classification_report(all_pred, all_true_skills)
+
+    print("\nSkill extraction by category (extract_skills(text) vs written skills):")
+    print(f"{'category':<28}{'P':>8}{'R':>8}{'F1':>8}{'tp':>5}{'fp':>5}{'fn':>5}")
+    print("-" * 67)
+    for name, m in report["per_category"].items():
+        print(
+            f"{name:<28}{m['precision']:>8.3f}{m['recall']:>8.3f}{m['f1']:>8.3f}"
+            f"{m['tp']:>5}{m['fp']:>5}{m['fn']:>5}"
+        )
+    print("-" * 67)
+    for label, m in (
+        ("OVERALL", report["overall"]),
+        ("MICRO", report["micro"]),
+        ("MACRO", report["macro"]),
+    ):
+        print(
+            f"{label:<28}{m['precision']:>8.3f}{m['recall']:>8.3f}{m['f1']:>8.3f}"
+        )
 
     print(f"\nMean nDCG@10 = {mean_ndcg10:.3f}  (quality bar = {QUALITY_BAR})")
     ok = mean_ndcg10 >= QUALITY_BAR

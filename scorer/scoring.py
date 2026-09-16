@@ -3,20 +3,21 @@ from typing import Dict, List, Optional, Set
 from .normalize import normalize
 from .similarity import batch_cosine, pair_cosine
 from .skills import extract_skills, match_skills
+from .metrics import category_metrics
 
 DEFAULT_WEIGHTS: Dict[str, float] = {"keyword": 0.85, "cosine": 0.15}
 
 
 def calculate_score(
-    resume_text: str,
-    vacancy_text: str,
-    weights: Optional[Dict[str, float]] = None,
-    min_score: Optional[float] = None,
-    critical_skills: Optional[Set[str]] = None,
+        resume_text: str,
+        vacancy_text: str,
+        weights: Optional[Dict[str, float]] = None,
+        min_score: Optional[float] = None,
+        critical_skills: Optional[Set[str]] = None,
 ) -> Dict:
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not (resume_text and resume_text.strip()) or not (
-        vacancy_text and vacancy_text.strip()
+            vacancy_text and vacancy_text.strip()
     ):
         return _empty_result()
 
@@ -57,12 +58,14 @@ def calculate_score(
 
 
 def rank_candidates(
-    vacancy_text: str,
-    candidate_texts: List[str],
-    candidate_ids: Optional[List] = None,
-    weights: Optional[Dict[str, float]] = None,
-    min_score: Optional[float] = None,
-    critical_skills: Optional[Set[str]] = None,
+        vacancy_text: str,
+        candidate_texts: List[str],
+        candidate_ids: Optional[List] = None,
+        weights: Optional[Dict[str, float]] = None,
+        min_score: Optional[float] = None,
+        critical_skills: Optional[Set[str]] = None,
+        vacancy_skills: Optional[Set[str]] = None,
+        resume_skills_list: Optional[List[Set[str]]] = None,
 ) -> List[Dict]:
     w = {**DEFAULT_WEIGHTS, **(weights or {})}
     if not candidate_texts:
@@ -76,19 +79,24 @@ def rank_candidates(
     norm_resumes = [normalize(r) for r in candidate_texts]
     cosines = batch_cosine(norm_v, norm_resumes)
 
-    v_skills = extract_skills(vacancy_text)
+    v_skills = vacancy_skills if vacancy_skills is not None else extract_skills(vacancy_text)
 
     results: List[Dict] = []
-    for cid, rtext, cos in zip(candidate_ids, candidate_texts, cosines):
+    for idx, (cid, rtext, cos) in enumerate(zip(candidate_ids, candidate_texts, cosines)):
+        r_skills = resume_skills_list[idx] if resume_skills_list else None
+
         match = match_skills(
-            rtext,
-            vacancy_text,
+            resume_text=rtext,
+            vacancy_text=vacancy_text,
             vacancy_skills=v_skills,
             critical_skills=critical_skills,
+            resume_skills=r_skills
         )
         kw = match["keyword_score"]
         raw = w["keyword"] * kw + w["cosine"] * cos
         score = round(raw * 100)
+
+        cat_metrics = category_metrics(predicted_skills=match["resume_skills"], true_skills=v_skills)
 
         item = {
             "candidate_id": cid,
@@ -103,6 +111,7 @@ def rank_candidates(
             "matched_critical": sorted(match["matched_critical"]),
             "missing_critical": sorted(match["missing_critical"]),
             "critical_skills": sorted(match["critical_skills"]),
+            "metrics_by_category": cat_metrics,
             "_raw": raw,
         }
 

@@ -6,7 +6,7 @@ import pymongo
 from bson import ObjectId
 from bson.errors import InvalidId
 
-MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb://mongo:27017")
 MONGO_DB = os.environ.get("MONGO_DB", "gb_parse")
 
 COLL_VACANCIES = "hh"

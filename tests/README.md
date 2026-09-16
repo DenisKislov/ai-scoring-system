@@ -4,9 +4,10 @@
 
 | Файл | Что проверяет | Нужна MongoDB? |
 |---|---|---|
-| [`test_smoke.py`](test_smoke.py) | Поведение скорера на hand-made русских фикстурах | ❌ нет |
-| [`eval_synthetic.py`](eval_synthetic.py) | Качество ранжирования (nDCG/Spearman) на синтетике с разметкой | ❌ нет |
-| [`integration_demo.py`](integration_demo.py) | End-to-end: БД → скорер → БД (качество + реальная вакансия) | ✅ да |
+| [`test_smoke.py`](test_smoke.py) | Поведение скорера на hand-made русских фикстурах | нет |
+| [`test_metrics.py`](test_metrics.py) | Precision/Recall/F1 извлечения навыков, целиком и по категориям | нет |
+| [`eval_synthetic.py`](eval_synthetic.py) | Качество ранжирования (nDCG/Spearman) + категорийный Precision/Recall/F1 извлечения навыков на синтетике с разметкой | нет |
+| [`integration_demo.py`](integration_demo.py) | End-to-end: БД -> скорер -> БД (качество + реальная вакансия) | да |
 
 ---
 
@@ -19,10 +20,14 @@
 python tests/test_smoke.py        # standalone: печатает RELEVANT/IRRELEVANT/RANKED + PASS
 pytest tests/test_smoke.py -q     # или через pytest
 
-# 2) оценка качества ранжирования
-python tests/eval_synthetic.py    # таблица nDCG@10/nDCG/P@5/Spearman по вакансиям + компоненты
+# 2) unit-тесты метрик извлечения навыков (Precision/Recall/F1 по категориям)
+python tests/test_metrics.py      # standalone
+pytest tests/test_metrics.py -q   # или через pytest
 
-# 3) интеграционное демо (нужен запущенный Mongo + данные)
+# 3) оценка качества ранжирования + категорийный Precision/Recall/F1
+python tests/eval_synthetic.py    # таблица nDCG@10/nDCG/P@5/Spearman по вакансиям + отчёт по категориям
+
+# 4) интеграционное демо (нужен запущенный Mongo + данные)
 docker start mongo
 python tests/integration_demo.py
 ```
@@ -43,11 +48,13 @@ Hand-made русские вакансии/резюме, проверяющие �
 
 Генерирует размеченный датасет (4 вакансии × 20 резюме, `seed=42`, через `data.synthetic.generate_dataset`), прогоняет `rank_candidates` и считает метрики по каждой вакансии: `nDCG@10`, `nDCG`, `precision@5`, `Spearman(score, true_relevance)`. В конце — корреляция компонент (`keyword` / `cosine` / `combined`) с истинной релевантностью. Это количественное обоснование для «Показа 3».
 
+Дополнительно выводится **отчёт по извлечению навыков** (`extract_skills(text)` против навыков, реально написанных в тексте, `text_skills`): Precision/Recall/F1 целиком (`OVERALL`), по каждой категории и агрегаты `MICRO`/`MACRO`.
+
 Заголовок прохода: `Mean nDCG@10`, порог (`QUALITY_BAR = 0.80`). Скрипт `assert`-ит проход порога — падает с ненулевым кодом, если качество просело.
 
-> ⚠️ **Оговорка для защиты.** Это **контролируемые синтетические данные**, а не реальные наймы: ground-truth relevance задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Высокие цифры доказывают корректность алгоритма и работоспособность пайплайна оценки, но **не** продакшен-точность (реальных лейблов нет — 152-ФЗ).
+> **Оговорка для защиты.** Это **контролируемые синтетические данные**, а не реальные наймы: ground-truth relevance задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Высокие цифры доказывают корректность алгоритма и работоспособность пайплайна оценки, но **не** продакшен-точность (реальных лейблов нет — 152-ФЗ).
 
-## integration_demo.py — БД → скорер → БД
+## integration_demo.py — БД -> скорер -> БД
 
 Две части:
 
