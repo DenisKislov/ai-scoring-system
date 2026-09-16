@@ -30,18 +30,12 @@ function App() {
     setLogs((prev) => [{ timestamp, type, message }, ...prev.slice(0, 49)]);
   };
 
-  const handleClearLogs = () => {
-    setLogs([]);
-  };
+  const handleClearLogs = () => setLogs([]);
 
   const loadVacancies = async () => {
     try {
       const data = await api.getVacancies();
-      if (Array.isArray(data)) {
-        setVacancies(data);
-      } else {
-        setVacancies([]);
-      }
+      setVacancies(Array.isArray(data) ? data : []);
     } catch (error) {
       addLog('ERROR', `Ошибка загрузки вакансий: ${error.message}`);
       setVacancies([]);
@@ -50,7 +44,7 @@ function App() {
 
   useEffect(() => {
     loadVacancies();
-    addLog('INFO', 'Приложение инициализировано. Панель мониторинга готова.');
+    addLog('INFO', 'Приложение инициализировано.');
   }, []);
 
   useEffect(() => {
@@ -59,43 +53,21 @@ function App() {
 
   const handleUploadResumes = async (event) => {
     const files = Array.from(event.target.files);
-    if (files.length === 0) {
-      addLog('WARN', 'Файлы не выбраны (выбор отменен пользователем)');
-      return;
-    }
+    if (files.length === 0) return;
     setIsUploading(true);
-    addLog('INFO', `Инициализация парсинга файлов резюме: ${files.length} шт.`);
-
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
       try {
-        const response = await fetch(`${API_BASE}/upload_resume`, {
-          method: 'POST',
-          body: formData,
-        });
+        const response = await fetch(`${API_BASE}/upload_resume`, { method: 'POST', body: formData });
         const data = await response.json();
-
         if (response.ok) {
-          const skillsList = data.skills || [];
-          const skillsStr = skillsList.slice(0, 5).join(', ');
-
-          if (data.skills_count === 0) {
-            addLog(
-              'WARN',
-              `[Пустой навыковый профиль] '${data.filename}' | Модель: ${data.model_name} | Длина: ${data.text_length} симв. | Навыки: 0`
-            );
-          } else {
-            addLog(
-              'SUCCESS',
-              `[Резюме] '${data.filename}' | Длина текста: ${data.text_length} симв. (${data.file_size_bytes} Б) | Модель: ${data.model_name} | Навыки (${data.skills_count}): [${skillsStr}${data.skills_count > 5 ? '...' : ''}]`
-            );
-          }
+          addLog('SUCCESS', `[Резюме] '${data.filename}' | Навыки: ${data.skills_count}`);
         } else {
-          addLog('WARN', `[WARN] Файл '${file.name}': ${data.detail || 'Ошибка валидации'}`);
+          addLog('WARN', `Файл '${file.name}': ${data.detail || 'Ошибка'}`);
         }
       } catch (error) {
-        addLog('ERROR', `[Неверный путь/Сеть] Сбой обращения к бэкенду для '${file.name}': ${error.message}`);
+        addLog('ERROR', `Сбой для '${file.name}': ${error.message}`);
       }
     }
     setIsUploading(false);
@@ -104,43 +76,21 @@ function App() {
 
   const handleUploadVacancies = async (event) => {
     const files = Array.from(event.target.files);
-    if (files.length === 0) {
-      addLog('WARN', 'Файлы не выбраны (выбор отменен пользователем)');
-      return;
-    }
+    if (files.length === 0) return;
     setIsUploading(true);
-    addLog('INFO', `Инициализация парсинга вакансий: ${files.length} шт.`);
-
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
       try {
-        const response = await fetch(`${API_BASE}/upload_vacancy`, {
-          method: 'POST',
-          body: formData,
-        });
+        const response = await fetch(`${API_BASE}/upload_vacancy`, { method: 'POST', body: formData });
         const data = await response.json();
-
         if (response.ok) {
-          const skillsList = data.skills || [];
-          const skillsStr = skillsList.slice(0, 5).join(', ');
-
-          if (data.skills_count === 0) {
-            addLog(
-              'WARN',
-              `[Пустой навыковый профиль] '${data.filename}' | Модель: ${data.model_name} | Длина: ${data.text_length} симв. | Навыки: 0`
-            );
-          } else {
-            addLog(
-              'SUCCESS',
-              `[Вакансия] '${data.filename}' | Длина текста: ${data.text_length} симв. | Модель: ${data.model_name} | Навыки (${data.skills_count}): [${skillsStr}${data.skills_count > 5 ? '...' : ''}]`
-            );
-          }
+          addLog('SUCCESS', `[Вакансия] '${data.filename}' | Навыки: ${data.skills_count}`);
         } else {
-          addLog('WARN', `[WARN] Вакансия '${file.name}': ${data.detail}`);
+          addLog('WARN', `Вакансия '${file.name}': ${data.detail}`);
         }
       } catch (error) {
-        addLog('ERROR', `[Неверный путь/Сеть] Сбой запроса для '${file.name}': ${error.message}`);
+        addLog('ERROR', `Сбой для '${file.name}': ${error.message}`);
       }
     }
     await loadVacancies();
@@ -149,14 +99,14 @@ function App() {
   };
 
   const handleClearResumes = async () => {
-    if (!window.confirm('ВНИМАНИЕ! Вы уверены, что хотите удалить ВСЕ резюме?')) return;
+    if (!window.confirm('Удалить ВСЕ резюме?')) return;
     setIsUploading(true);
     try {
       const response = await fetch(`${API_BASE}/resumes/clear`, { method: 'DELETE' });
       if (response.ok) {
         const data = await response.json();
-        addLog('WARN', `Удалено резюме из базы: ${data.deleted_count}`);
-        alert(`Успешно удалено резюме: ${data.deleted_count}`);
+        addLog('WARN', `Удалено резюме: ${data.deleted_count}`);
+        alert(`Удалено резюме: ${data.deleted_count}`);
         setCandidates([]);
         setMetrics({ precision: 0, recall: 0, f1: 0, avgScore: 0, totalScored: 0 });
       }
@@ -166,14 +116,14 @@ function App() {
   };
 
   const handleClearVacancies = async () => {
-    if (!window.confirm('ВНИМАНИЕ! Вы уверены, что хотите удалить ВСЕ вакансии?')) return;
+    if (!window.confirm('Удалить ВСЕ вакансии?')) return;
     setIsUploading(true);
     try {
       const response = await fetch(`${API_BASE}/vacancies/clear`, { method: 'DELETE' });
       if (response.ok) {
         const data = await response.json();
-        addLog('WARN', `Удалено вакансий из базы: ${data.deleted_count}`);
-        alert(`Успешно удалено вакансий: ${data.deleted_count}.`);
+        addLog('WARN', `Удалено вакансий: ${data.deleted_count}`);
+        alert(`Удалено вакансий: ${data.deleted_count}`);
         await loadVacancies();
         setSelectedVacancy(null);
       }
@@ -184,18 +134,18 @@ function App() {
 
   const handleGenerateSyntheticData = async () => {
     setIsUploading(true);
-    addLog('INFO', 'Запрос на генерацию синтетических данных (5 вакансий, 20 резюме)...');
+    addLog('INFO', 'Генерация синтетических данных...');
     try {
       const response = await fetch(`${API_BASE}/generate_test_data?vacancies=5&resumes=20`, { method: 'POST' });
       if (response.ok) {
-        addLog('SUCCESS', 'Синтетический датасет успешно сгенерирован и загружен в MongoDB');
-        alert('Синтетические данные успешно созданы!');
+        addLog('SUCCESS', 'Датасет сгенерирован');
+        alert('Синтетические данные созданы!');
         await loadVacancies();
       } else {
-        addLog('ERROR', 'Ошибка при генерации синтетических данных');
+        addLog('ERROR', 'Ошибка генерации');
       }
     } catch (e) {
-      addLog('ERROR', `Сетевая ошибка генератора: ${e.message}`);
+      addLog('ERROR', `Сетевая ошибка: ${e.message}`);
     } finally {
       setIsUploading(false);
     }
@@ -203,19 +153,19 @@ function App() {
 
   const handleImportSuperJobData = async () => {
     setIsUploading(true);
-    addLog('INFO', 'Запрос на импорт датасета вакансий SuperJob из JSON...');
+    addLog('INFO', 'Импорт вакансий SuperJob...');
     try {
       const response = await fetch(`${API_BASE}/import_superjob_vacancies`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
-        addLog('SUCCESS', `Импортировано вакансий SuperJob: ${data.imported_vacancies}`);
-        alert(`Успешно импортировано ${data.imported_vacancies || 'все'} вакансий SuperJob!`);
+        addLog('SUCCESS', `Импортировано вакансий: ${data.imported_vacancies}`);
+        alert(`Импортировано вакансий: ${data.imported_vacancies || 'все'}`);
         await loadVacancies();
       } else {
-        addLog('ERROR', 'Ошибка импорта: superjob_dataset.json не найден на бэкенде');
+        addLog('ERROR', 'Ошибка импорта');
       }
     } catch (e) {
-      addLog('ERROR', `Сетевая ошибка импорта: ${e.message}`);
+      addLog('ERROR', `Сетевая ошибка: ${e.message}`);
     } finally {
       setIsUploading(false);
     }
@@ -223,22 +173,19 @@ function App() {
 
   const handleImportSuperJobResumes = async () => {
     setIsUploading(true);
-    addLog('INFO', 'Запрос на импорт реального датасета резюме (dataset_resume.json)...');
+    addLog('INFO', 'Импорт резюме SuperJob...');
     try {
       const response = await fetch(`${API_BASE}/import_superjob_resumes`, { method: 'POST' });
       if (response.ok) {
         const data = await response.json();
-        addLog(
-          'SUCCESS',
-          `[Импорт резюме] Успешно загружено ${data.imported_resumes} резюме | Источник: SuperJob JSON | Модель: ${data.model_name}`
-        );
-        alert(`Успешно импортировано ${data.imported_resumes} резюме!`);
+        addLog('SUCCESS', `Загружено резюме: ${data.imported_resumes}`);
+        alert(`Импортировано резюме: ${data.imported_resumes}`);
       } else {
         const err = await response.json();
-        addLog('WARN', `[Импорт резюме] Ошибка: ${err.detail}`);
+        addLog('WARN', `Ошибка: ${err.detail}`);
       }
     } catch (e) {
-      addLog('ERROR', `[Импорт резюме] Сетевая ошибка: ${e.message}`);
+      addLog('ERROR', `Сетевая ошибка: ${e.message}`);
     } finally {
       setIsUploading(false);
     }
@@ -249,32 +196,26 @@ function App() {
       const response = await fetch(`${API_BASE}/resumes/${resumeId}`);
       if (response.ok) {
         const data = await response.json();
-        const text = data._raw_text || data.formatted_text || 'Текст резюме не найден в базе.';
-        setFullResumeText(text);
-        addLog('INFO', `Просмотр текста резюме ID: ${resumeId.slice(-6)}`);
+        setFullResumeText(data._raw_text || data.formatted_text || 'Текст не найден.');
       }
     } catch (error) {
-      addLog('ERROR', `Ошибка загрузки резюме: ${error.message}`);
+      addLog('ERROR', `Ошибка загрузки: ${error.message}`);
     }
   };
 
   const handleScoring = async (vacancyId) => {
     if (!vacancyId) {
-      addLog('WARN', '[Неверный путь/ID] Вакансия не выбрана. Выберите вакансию из списка');
+      addLog('WARN', 'Вакансия не выбрана');
       return;
     }
 
     const currentVac = vacancies.find((v) => v._id === vacancyId);
-    const vacTitle = currentVac ? currentVac.title : vacancyId;
     const reqSkills = currentVac ? currentVac.skills || [] : [];
 
     setLoading(true);
     setCandidates([]);
     setSelectedCandidate(null);
-    addLog(
-      'INFO',
-      `[Старт скоринга] Вакансия: '${vacTitle}' | Требуемые навыки (${reqSkills.length}): [${reqSkills.slice(0, 5).join(', ')}${reqSkills.length > 5 ? '...' : ''}]`
-    );
+    addLog('INFO', `Старт скоринга: '${currentVac?.title || vacancyId}'`);
 
     try {
       const scoreRes = await fetch(`${API_BASE}/score`, {
@@ -290,7 +231,7 @@ function App() {
       const scoreMeta = await scoreRes.json();
 
       if (!scoreRes.ok) {
-        addLog('ERROR', `[Сбой модели скоринга] ${scoreMeta.detail || 'Неизвестная ошибка'}`);
+        addLog('ERROR', `Сбой скоринга: ${scoreMeta.detail || 'Ошибка'}`);
         return;
       }
 
@@ -319,9 +260,9 @@ function App() {
         totalVacancySkills += matched + missing || reqSkills.length || 5;
       });
 
-      const precision = totalCandidateSkills > 0 ? Number((totalMatched / totalCandidateSkills).toFixed(2)) : (candidatesArray.length > 0 ? 0.85 : 0);
-      const recall = totalVacancySkills > 0 ? Number((totalMatched / totalVacancySkills).toFixed(2)) : (candidatesArray.length > 0 ? 0.40 : 0);
-      const f1 = precision + recall > 0 ? Number(((2 * (precision * recall)) / (precision + recall)).toFixed(2)) : (candidatesArray.length > 0 ? 0.54 : 0);
+      const precision = totalCandidateSkills > 0 ? Number((totalMatched / totalCandidateSkills).toFixed(2)) : 0;
+      const recall = totalVacancySkills > 0 ? Number((totalMatched / totalVacancySkills).toFixed(2)) : 0;
+      const f1 = precision + recall > 0 ? Number(((2 * (precision * recall)) / (precision + recall)).toFixed(2)) : 0;
 
       setMetrics({
         precision: scoreMeta.metrics?.precision || precision,
@@ -331,13 +272,10 @@ function App() {
         totalScored: scoreMeta.scored_count || candidatesArray.length,
       });
 
-      addLog(
-        'SUCCESS',
-        `[Скоринг завершен] Оценено: ${candidatesArray.length} | Метрики: Precision=${precision}, Recall=${recall}, F1=${f1} | Средний Score=${avgScore}%`
-      );
+      addLog('SUCCESS', `Оценено: ${candidatesArray.length} | P=${precision}, R=${recall}, F1=${f1}`);
 
     } catch (error) {
-      addLog('ERROR', `[Неверный путь/Сервер недоступен] Ошибка при скоринге: ${error.message}`);
+      addLog('ERROR', `Ошибка скоринга: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -348,14 +286,14 @@ function App() {
       const response = await fetch(`${API_BASE}/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vacancy_id: selectedVacancy, resume_id: resumeId, decision: decision }),
+        body: JSON.stringify({ vacancy_id: selectedVacancy, resume_id: resumeId, decision }),
       });
       if (response.ok) {
         setFeedbackMap((prev) => ({ ...prev, [resumeId]: decision }));
-        addLog('INFO', `HR фидбек: резюме ${resumeId.slice(-6)} отмечено как '${decision}'`);
+        addLog('INFO', `Фидбек: ${decision}`);
       }
     } catch (error) {
-      addLog('ERROR', `Ошибка отправки фидбека: ${error.message}`);
+      addLog('ERROR', `Ошибка фидбека: ${error.message}`);
     }
   };
 
@@ -382,159 +320,138 @@ function App() {
     <div className="app">
       <header>
         <div>
-          <h1>
-            <span className="highlight">Скоринг</span>
-          </h1>
+          <h1><span className="highlight">Скоринг</span></h1>
         </div>
       </header>
 
       <div style={{
         marginBottom: '25px',
         padding: '18px 20px',
-        backgroundColor: '#1e293b',
-        color: '#f8fafc',
-        borderRadius: '10px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+        backgroundColor: '#4a4a4a',
+        color: '#ffffff',
+        border: '1px solid #4a4a4a'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '1px solid #334155', paddingBottom: '10px' }}>
-          <span style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '0.5px', color: '#38bdf8' }}>
-            🛠 ТЕСТОВАЯ ПАНЕЛЬ СИСТЕМЫ
-          </span>
-          <span style={{ fontSize: '12px', color: '#94a3b8' }}>Синхронизация с MongoDB & Scorer Engine</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '1px solid #ffffff', paddingBottom: '10px' }}>
+          <span style={{ fontWeight: 700, fontSize: '15px', color: '#ffffff' }}>ТЕСТОВАЯ ПАНЕЛЬ</span>
+          <span style={{ fontSize: '12px', color: '#e0e0e0' }}>MongoDB & Scorer Engine</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
 
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#cbd5e1' }}>
-              1. Тестовые датасеты
-            </div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#ffffff' }}>1. Тестовые датасеты</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 onClick={handleGenerateSyntheticData}
                 disabled={isUploading}
                 style={{
-                  backgroundColor: '#0284c7',
-                  color: 'white',
-                  border: 'none',
+                  backgroundColor: '#ffffff',
+                  color: '#4a4a4a',
+                  border: '1px solid #ffffff',
                   padding: '9px 12px',
-                  borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: '600',
                   fontSize: '13px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  transition: 'background 0.2s'
+                  alignItems: 'center'
                 }}
               >
-                <span>🎲 Синтетический генератор</span>
-                <span style={{ fontSize: '11px', opacity: 0.8 }}>(5 вак. / 20 рез.)</span>
+                <span>Синтетический генератор</span>
+                <span style={{ fontSize: '11px' }}>(5 / 20)</span>
               </button>
 
               <button
                 onClick={handleImportSuperJobData}
                 disabled={isUploading}
                 style={{
-                  backgroundColor: '#059669',
-                  color: 'white',
-                  border: 'none',
+                  backgroundColor: '#ffffff',
+                  color: '#4a4a4a',
+                  border: '1px solid #ffffff',
                   padding: '9px 12px',
-                  borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: '600',
                   fontSize: '13px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  transition: 'background 0.2s'
+                  alignItems: 'center'
                 }}
               >
-                <span>💼 Вакансии SuperJob</span>
-                <span style={{ fontSize: '11px', opacity: 0.8 }}>(51 вакансия)</span>
+                <span>Вакансии SuperJob</span>
+                <span style={{ fontSize: '11px' }}>(51)</span>
               </button>
 
               <button
                 onClick={handleImportSuperJobResumes}
                 disabled={isUploading}
                 style={{
-                  backgroundColor: '#9333ea',
-                  color: 'white',
-                  border: 'none',
+                  backgroundColor: '#ffffff',
+                  color: '#4a4a4a',
+                  border: '1px solid #ffffff',
                   padding: '9px 12px',
-                  borderRadius: '6px',
                   cursor: 'pointer',
                   fontWeight: '600',
                   fontSize: '13px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  transition: 'background 0.2s'
+                  alignItems: 'center'
                 }}
               >
-                <span>📄 Резюме SuperJob</span>
-                <span style={{ fontSize: '11px', opacity: 0.8 }}>(dataset_resume.json)</span>
+                <span>Резюме SuperJob</span>
+                <span style={{ fontSize: '11px' }}>(JSON)</span>
               </button>
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#cbd5e1' }}>
-              2. Метрики точности скоринга
-            </div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', marginBottom: '10px', color: '#ffffff' }}>2. Метрики</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>Precision</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#38bdf8', marginTop: '4px' }}>{metrics.precision}</div>
+              <div style={{ backgroundColor: '#ffffff', padding: '10px', textAlign: 'center', border: '1px solid #ffffff' }}>
+                <div style={{ fontSize: '10px', color: '#4a4a4a', textTransform: 'uppercase' }}>Precision</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a4a4a', marginTop: '4px' }}>{metrics.precision}</div>
               </div>
-              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>Recall</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4ade80', marginTop: '4px' }}>{metrics.recall}</div>
+              <div style={{ backgroundColor: '#ffffff', padding: '10px', textAlign: 'center', border: '1px solid #ffffff' }}>
+                <div style={{ fontSize: '10px', color: '#4a4a4a', textTransform: 'uppercase' }}>Recall</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a4a4a', marginTop: '4px' }}>{metrics.recall}</div>
               </div>
-              <div style={{ backgroundColor: '#0f172a', padding: '10px', borderRadius: '6px', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase' }}>F1-Score</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#f43f5e', marginTop: '4px' }}>{metrics.f1}</div>
+              <div style={{ backgroundColor: '#ffffff', padding: '10px', textAlign: 'center', border: '1px solid #ffffff' }}>
+                <div style={{ fontSize: '10px', color: '#4a4a4a', textTransform: 'uppercase' }}>F1</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#4a4a4a', marginTop: '4px' }}>{metrics.f1}</div>
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '11px', color: '#94a3b8' }}>
-              <span>Оценено: <strong style={{ color: '#f8fafc' }}>{metrics.totalScored}</strong></span>
-              <span>Средний Score: <strong style={{ color: '#f8fafc' }}>{metrics.avgScore}%</strong></span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '11px', color: '#e0e0e0' }}>
+              <span>Оценено: <strong style={{ color: '#ffffff' }}>{metrics.totalScored}</strong></span>
+              <span>Средний Score: <strong style={{ color: '#ffffff' }}>{metrics.avgScore}%</strong></span>
             </div>
           </div>
 
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#cbd5e1' }}>3. Логи выполнения</span>
+              <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#ffffff' }}>3. Логи</span>
               <button
                 onClick={handleClearLogs}
-                style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}
+                style={{ background: 'none', border: 'none', color: '#e0e0e0', fontSize: '11px', cursor: 'pointer', textDecoration: 'underline' }}
               >
                 очистить
               </button>
             </div>
             <div style={{
-              backgroundColor: '#090d16',
-              borderRadius: '6px',
+              backgroundColor: '#ffffff',
               padding: '8px 12px',
               fontFamily: 'monospace',
               fontSize: '11px',
               height: '80px',
               overflowY: 'auto',
-              border: '1px solid #1e293b'
+              border: '1px solid #ffffff'
             }}>
               {logs.length === 0 ? (
-                <div style={{ color: '#64748b' }}>Логи пока пусты...</div>
+                <div style={{ color: '#4a4a4a' }}>Логи пусты...</div>
               ) : (
                 logs.map((log, index) => (
-                  <div key={index} style={{ marginBottom: '4px', lineHeight: '1.4' }}>
-                    <span style={{ color: '#64748b' }}>[{log.timestamp}]</span>{' '}
-                    <span style={{
-                      fontWeight: 'bold',
-                      color: log.type === 'ERROR' ? '#f43f5e' : log.type === 'SUCCESS' ? '#4ade80' : log.type === 'WARN' ? '#facc15' : '#38bdf8'
-                    }}>
-                      {log.type}:
-                    </span>{' '}
-                    <span style={{ color: '#e2e8f0' }}>{log.message}</span>
+                  <div key={index} style={{ marginBottom: '4px', lineHeight: '1.4', color: '#4a4a4a' }}>
+                    <span>[{log.timestamp}]</span>{' '}
+                    <span style={{ fontWeight: 'bold' }}>{log.type}:</span>{' '}
+                    <span>{log.message}</span>
                   </div>
                 ))
               )}
@@ -544,99 +461,70 @@ function App() {
         </div>
       </div>
 
-      <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
+      <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#ffffff', border: '1px solid #4a4a4a', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', alignItems: 'center' }}>
         <div>
-          <h3 style={{ marginTop: 0, marginBottom: '10px' }}>Пользовательские файлы</h3>
+          <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#4a4a4a' }}>Пользовательские файлы</h3>
           <div style={{ display: 'flex', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Резюме</label>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px', color: '#4a4a4a' }}>Резюме</label>
               <label
                 htmlFor="resume-upload"
                 style={{
                   display: 'inline-block',
-                  backgroundColor: '#c084fc',
-                  color: 'white',
+                  backgroundColor: '#4a4a4a',
+                  color: '#ffffff',
                   padding: '8px 18px',
-                  borderRadius: '20px',
                   fontSize: '14px',
                   fontWeight: '600',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 8px rgba(192, 132, 252, 0.3)',
-                  border: 'none',
+                  border: '1px solid #4a4a4a',
                 }}
-                onMouseEnter={(e) => { e.target.style.backgroundColor = '#a855f7'; e.target.style.transform = 'scale(1.02)'; }}
-                onMouseLeave={(e) => { e.target.style.backgroundColor = '#c084fc'; e.target.style.transform = 'scale(1)'; }}
               >
-                 Выбрать файлы
+                Выбрать файлы
               </label>
-              <input
-                id="resume-upload"
-                type="file"
-                multiple
-                accept=".pdf,.txt"
-                onChange={handleUploadResumes}
-                disabled={isUploading}
-                style={{ display: 'none' }}
-              />
-              <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
-                {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
+              <input id="resume-upload" type="file" multiple accept=".pdf,.txt" onChange={handleUploadResumes} disabled={isUploading} style={{ display: 'none' }} />
+              <span style={{ fontSize: '13px', color: '#4a4a4a', marginLeft: '10px' }}>
+                {isUploading ? 'Загрузка...' : 'файлы не выбраны'}
               </span>
             </div>
 
             <div>
-              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px' }}>Вакансии</label>
+              <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', fontSize: '14px', color: '#4a4a4a' }}>Вакансии</label>
               <label
                 htmlFor="vacancy-upload"
                 style={{
                   display: 'inline-block',
-                  backgroundColor: '#60d6e8',
-                  color: 'white',
+                  backgroundColor: '#4a4a4a',
+                  color: '#ffffff',
                   padding: '8px 18px',
-                  borderRadius: '20px',
                   fontSize: '14px',
                   fontWeight: '600',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 8px rgba(96, 214, 232, 0.3)',
-                  border: 'none',
+                  border: '1px solid #4a4a4a',
                 }}
-                onMouseEnter={(e) => { e.target.style.backgroundColor = '#3bc0d4'; e.target.style.transform = 'scale(1.02)'; }}
-                onMouseLeave={(e) => { e.target.style.backgroundColor = '#60d6e8'; e.target.style.transform = 'scale(1)'; }}
               >
-                 Выбрать файлы
+                Выбрать файлы
               </label>
-              <input
-                id="vacancy-upload"
-                type="file"
-                multiple
-                accept=".pdf,.txt"
-                onChange={handleUploadVacancies}
-                disabled={isUploading}
-                style={{ display: 'none' }}
-              />
-              <span style={{ fontSize: '13px', color: '#6b7280', marginLeft: '10px' }}>
-                {isUploading ? '⏳ Загрузка...' : 'файлы не выбраны'}
+              <input id="vacancy-upload" type="file" multiple accept=".pdf,.txt" onChange={handleUploadVacancies} disabled={isUploading} style={{ display: 'none' }} />
+              <span style={{ fontSize: '13px', color: '#4a4a4a', marginLeft: '10px' }}>
+                {isUploading ? 'Загрузка...' : 'файлы не выбраны'}
               </span>
             </div>
           </div>
         </div>
 
-        <div style={{ paddingLeft: '20px', borderLeft: '2px solid #ccc' }}>
+        <div style={{ paddingLeft: '20px', borderLeft: '1px solid #4a4a4a' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <button
               onClick={handleClearResumes}
               disabled={isUploading}
               style={{
-                backgroundColor: '#F08080',
-                color: 'white',
-                border: 'none',
+                backgroundColor: '#e0e0e0',
+                color: '#4a4a4a',
+                border: '1px solid #4a4a4a',
                 padding: '8px 12px',
-                borderRadius: '4px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                transition: 'all 0.3s ease',
-                transform: 'scale(1)'
               }}
             >
               Удалить резюме
@@ -645,14 +533,12 @@ function App() {
               onClick={handleClearVacancies}
               disabled={isUploading}
               style={{
-                backgroundColor: '#FF7F50',
-                color: 'white',
-                border: 'none',
+                backgroundColor: '#e0e0e0',
+                color: '#4a4a4a',
+                border: '1px solid #4a4a4a',
                 padding: '8px 12px',
-                borderRadius: '4px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                transition: 'all 0.3s ease',
               }}
             >
               Удалить вакансии
@@ -672,13 +558,13 @@ function App() {
           </select>
 
           {currentVacancyObj && currentVacancyObj.skills && currentVacancyObj.skills.length > 0 && (
-            <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-              <label style={{ fontWeight: 'bold', color: '#374151', display: 'block', marginBottom: '10px' }}>
+            <div style={{ marginTop: '15px', padding: '15px', backgroundColor: '#e0e0e0', border: '1px solid #4a4a4a' }}>
+              <label style={{ fontWeight: 'bold', color: '#4a4a4a', display: 'block', marginBottom: '10px' }}>
                 Отметьте критические навыки (вес ×2):
               </label>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 {currentVacancyObj.skills.map((skill) => (
-                  <label key={skill} style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: criticalSkills.includes(skill) ? '#fce4ec' : '#ffffff', border: criticalSkills.includes(skill) ? '2px solid #f46984' : '1px solid #d1d5db', padding: '5px 10px', borderRadius: '20px', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}>
+                  <label key={skill} style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: criticalSkills.includes(skill) ? '#4a4a4a' : '#ffffff', color: criticalSkills.includes(skill) ? '#ffffff' : '#4a4a4a', border: '1px solid #4a4a4a', padding: '5px 10px', cursor: 'pointer', fontSize: '13px' }}>
                     <input
                       type="checkbox"
                       checked={criticalSkills.includes(skill)}
@@ -688,7 +574,7 @@ function App() {
                       }}
                       style={{ margin: 0 }}
                     />
-                    <span style={{ fontWeight: criticalSkills.includes(skill) ? 'bold' : 'normal', color: criticalSkills.includes(skill) ? '#f46984' : '#4b5563' }}>{skill}</span>
+                    <span style={{ fontWeight: criticalSkills.includes(skill) ? 'bold' : 'normal' }}>{skill}</span>
                   </label>
                 ))}
               </div>
@@ -731,11 +617,7 @@ function App() {
                     <tr key={c.resume_id || c._id || index} onClick={() => handleCandidateClick(c)}>
                       <td className={`rank ${getRankColor(index)}`}>#{index + 1}</td>
                       <td><strong>{c.candidate_name || 'Кандидат'}</strong></td>
-                      <td className="score-cell">
-                        <span style={{ fontWeight: 700, fontSize: '18px', color: '#2d1b3d' }}>
-                          {c.score || 0}%
-                        </span>
-                      </td>
+                      <td className="score-cell">{c.score || 0}%</td>
                       <td className="experience">{c.experience_years || 0} лет</td>
                     </tr>
                   ))}
@@ -769,17 +651,17 @@ function App() {
                     <span key={i} className="skill-tag">{skill}</span>
                   ))}
                   {[...new Set(selectedCandidate.matched_skills || [])].length === 0 && (
-                    <span style={{ color: '#6b7280', fontSize: '13px' }}>Нет совпадений</span>
+                    <span style={{ color: '#4a4a4a', fontSize: '13px' }}>Нет совпадений</span>
                   )}
                 </div>
               </div>
 
               {selectedCandidate.missing_critical && selectedCandidate.missing_critical.length > 0 && (
                 <div className="modal-skills" style={{ marginTop: '15px' }}>
-                  <label style={{ color: '#dc2626', fontWeight: 'bold' }}>Критические пробелы:</label>
+                  <label style={{ color: '#4a4a4a', fontWeight: 'bold' }}>Критические пробелы:</label>
                   <div className="skills-list">
                     {selectedCandidate.missing_critical.map((skill, i) => (
-                      <span key={i} className="skill-tag" style={{ border: '2px solid #dc2626', backgroundColor: '#fee2e2', color: '#991b1b', fontWeight: 'bold' }}>{skill}</span>
+                      <span key={i} className="skill-tag" style={{ backgroundColor: '#4a4a4a', color: '#ffffff' }}>{skill}</span>
                     ))}
                   </div>
                 </div>
@@ -794,47 +676,45 @@ function App() {
                 </div>
               </div>
 
-              <div style={{ marginTop: '20px', borderTop: '1px solid #eee', paddingTop: '15px' }}>
+              <div style={{ marginTop: '20px', borderTop: '1px solid #4a4a4a', paddingTop: '15px' }}>
                 {!fullResumeText ? (
                   <button
                     onClick={() => handleViewResumeText(selectedCandidate.resume_id)}
                     style={{
                       width: '100%',
                       padding: '10px',
-                      backgroundColor: '#f3f4f6',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '5px',
+                      backgroundColor: '#e0e0e0',
+                      border: '1px solid #4a4a4a',
                       cursor: 'pointer',
                       fontWeight: 'bold',
-                      color: '#c084fc',
-                      transition: 'all 0.3s ease',
+                      color: '#4a4a4a',
                     }}
                   >
-                    📄 Посмотреть текст резюме
+                    Посмотреть текст резюме
                   </button>
                 ) : (
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                       <label>Оригинальный текст:</label>
-                      <button onClick={() => setFullResumeText(null)} style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', textDecoration: 'underline' }}>Скрыть</button>
+                      <button onClick={() => setFullResumeText(null)} style={{ background: 'none', border: 'none', color: '#4a4a4a', cursor: 'pointer', textDecoration: 'underline' }}>Скрыть</button>
                     </div>
-                    <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '5px', padding: '15px', maxHeight: '300px', overflowY: 'auto', fontSize: '13px', whiteSpace: 'pre-wrap' }}>
+                    <div style={{ backgroundColor: '#e0e0e0', border: '1px solid #4a4a4a', padding: '15px', maxHeight: '300px', overflowY: 'auto', fontSize: '13px', whiteSpace: 'pre-wrap' }}>
                       {fullResumeText}
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="modal-feedback" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+              <div className="modal-feedback">
                 <button
                   onClick={() => sendFeedback(selectedCandidate.resume_id, 'yes')}
-                  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #98FB98', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'yes' ? '#98FB98' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'yes' ? 'white' : '#98FB98' }}
+                  style={{ backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'yes' ? '#4a4a4a' : '#ffffff', color: feedbackMap[selectedCandidate.resume_id] === 'yes' ? '#ffffff' : '#4a4a4a' }}
                 >
                   Релевантен
                 </button>
                 <button
                   onClick={() => sendFeedback(selectedCandidate.resume_id, 'no')}
-                  style={{ padding: '10px 15px', borderRadius: '5px', border: '1px solid #f46984', cursor: 'pointer', fontWeight: 'bold', backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'no' ? '#f46984' : 'white', color: feedbackMap[selectedCandidate.resume_id] === 'no' ? 'white' : '#f46984' }}
+                  style={{ backgroundColor: feedbackMap[selectedCandidate.resume_id] === 'no' ? '#4a4a4a' : '#ffffff', color: feedbackMap[selectedCandidate.resume_id] === 'no' ? '#ffffff' : '#4a4a4a' }}
                 >
                   Нерелевантен
                 </button>
