@@ -18,8 +18,8 @@ import re
 from typing import Any, Iterable, Optional
 import logging
 
-# Импортируем наш обновленный парсер для извлечения навыков из всего текста
-from api.nlp_parser import extract_smart_skills
+# Единый фасад извлечения навыков через SkillExtractor
+from scorer import extract_skills
 
 logger = logging.getLogger("db.builders")
 logger.setLevel(logging.INFO)
@@ -110,15 +110,15 @@ def parse_raw_text_to_resume(raw_text: str):
         logger.warning("WARN: Должность не найдена в тексте")
 
     # -----------------------------------------------------------------------
-    # ИСПОЛЬЗУЕМ НОВЫЙ NLP ПАРСЕР ДЛЯ ПОИСКА НАВЫКОВ ПО ВСЕМУ ТЕКСТУ
+    # ИСПОЛЬЗУЕМ ОБНОВЛЕННЫЙ SKILL EXTRACTOR
     # -----------------------------------------------------------------------
-    logger.info(f"INFO: [NLP: ru_core_news_sm] Запуск извлечения навыков")
-    skills = extract_smart_skills(raw_text)
+    logger.info("INFO: [SkillExtractor] Запуск извлечения навыков")
+    skills = sorted(list(extract_skills(raw_text)))
 
     if skills:
         logger.info(f"INFO: Извлечено навыков ({len(skills)} шт.): {', '.join(skills)}")
     else:
-        logger.warning("WARN: NLP-парсер не нашел ни одного навыка в тексте")
+        logger.warning("WARN: Парсер не нашел ни одного навыка в тексте")
 
     logger.info(
         f"INFO: Распаршено резюме: должность='{title}', "
@@ -130,5 +130,5 @@ def parse_raw_text_to_resume(raw_text: str):
         "specialization": "",
         "experience": experience_text,
         "skills": skills,
-        "tags": skills, # Можно оставить теги дублем навыков, либо потом расширить логику
+        "tags": skills,
     }

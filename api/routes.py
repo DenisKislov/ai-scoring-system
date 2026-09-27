@@ -8,7 +8,7 @@ from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 from db import mongo
 from db.builders import parse_raw_text_to_resume, resume_text
 from scorer.service import score_vacancy
-
+from fastapi.concurrency import run_in_threadpool
 from .file_parser import extract_text_from_file
 from .logger import setup_logger
 from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
@@ -282,9 +282,10 @@ def generate_test_data(
 # --- scoring ---------------------------------------------------------------
 
 @router.post("/score", summary="Run scoring for a vacancy")
-def score(payload: ScoreRequest) -> dict:
+async def score(payload: ScoreRequest) -> dict:
     try:
-        out = score_vacancy(
+        out = await run_in_threadpool(
+            score_vacancy,
             payload.vacancy_id,
             resume_ids=payload.resume_ids,
             limit_resumes=payload.limit_resumes,
@@ -292,7 +293,11 @@ def score(payload: ScoreRequest) -> dict:
         )
     except ValueError as exc:
         _not_found(str(exc))
-    return {"vacancy_id": payload.vacancy_id, "count": len(out["results"]), "results": out["results"]}
+    return {
+        "vacancy_id": payload.vacancy_id,
+        "count": len(out["results"]),
+        "results": out["results"],
+    }
 
 
 @router.get("/results/{vacancy_id}", summary="Ranked results for a vacancy")

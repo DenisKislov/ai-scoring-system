@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { api } from './api/api';
 import './App.css';
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'http://localhost:8000';
 
 function App() {
   const [vacancies, setVacancies] = useState([]);
