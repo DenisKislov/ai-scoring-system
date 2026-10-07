@@ -33,7 +33,7 @@
 
 - `vacancy_text(item)` — `title + description + skills + tags`.
 - `resume_text(item)` — `title + specialization + experience + skills + tags`. Поля могут быть `str`/`list`/`None` — безопасно нормализуются.
-- `experience_years(item)` — годы опыта из поля `experience` (regex `Опыт работы: N лет|год|года`). Используется **только как тайм-брейк** при равном скорe, в сам `score` не входит. Обобщение `Parser/extract_years_of_experience.py` на живой пайплайн.
+- `experience_years(item)` — годы опыта из поля `experience` (regex `Опыт работы: N лет|год|года`). Используется **только как тайм-брейк** при равном скорe, в сам `score` не входит. Обобщение `scripts/extract_years_of_experience.py` на живой пайплайн.
 
 > **Anti-bias:** `resume_text` намеренно **не включает** `age`, `gender`, `address` — они изолированы от признаков на уровне сборки.
 

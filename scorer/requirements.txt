@@ -1,13 +1,7 @@
-fastapi
-uvicorn[standard]
-pymongo
-pdfplumber
-spacy
 scikit-learn
 numpy
+scipy
 razdel
-pymorphy3
-pydantic
-python-multipart
-faker
+pymorphy3>=2.0.1
 rank-bm25==0.2.2
+pymongo>=4.0

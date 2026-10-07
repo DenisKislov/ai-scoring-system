@@ -1,17 +1,7 @@
 fastapi
 uvicorn[standard]
 pymongo
-pdfplumber
-spacy>=3.5.0
-scikit-learn
-numpy
-razdel
-pymorphy3
 pydantic
 python-multipart
 faker
 PyMuPDF==1.23.8
-sentence-transformers
-scikit-learn
-numpy
-pandas>=2.0.0

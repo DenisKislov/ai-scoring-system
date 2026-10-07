@@ -1,0 +1,5454 @@
+{
+  "version": "1.0",
+  "created_at": "2026-09-11T17:31:42",
+  "config": {
+    "lemmatized": true,
+    "sources": {
+      "resumes": "data/ground_truth_resumes.csv",
+      "vacancies": "data/ground_truth_vacancies.csv"
+    }
+  },
+  "resumes": {
+    ".net": [
+      ".net",
+      "dotnet",
+      ".net core",
+      "net core",
+      ".netcore",
+      "netcore"
+    ],
+    "1c": [
+      "1c"
+    ],
+    "1c 8": [
+      "1c 8"
+    ],
+    "1c-bitrix": [
+      "1c-bitrix"
+    ],
+    "1с": [
+      "1с",
+      "1c"
+    ],
+    "1с-битрикс": [
+      "1с-битрикс"
+    ],
+    "1с: бухгалтерия": [
+      "1с: бухгалтерия"
+    ],
+    "1с: предприятие 8": [
+      "1с: предприятие 8"
+    ],
+    "a/b testing": [
+      "a/b testing"
+    ],
+    "a/b тесты": [
+      "a/b тест"
+    ],
+    "acid": [
+      "acid"
+    ],
+    "acl": [
+      "acl"
+    ],
+    "ad ds": [
+      "ad ds"
+    ],
+    "ai": [
+      "ai"
+    ],
+    "aiohttp": [
+      "aiohttp"
+    ],
+    "ajax": [
+      "ajax"
+    ],
+    "api": [
+      "api"
+    ],
+    "api документация": [
+      "api документация"
+    ],
+    "aws": [
+      "aws"
+    ],
+    "actions api": [
+      "actions api"
+    ],
+    "active directory": [
+      "active directory"
+    ],
+    "adobe dreamweaver": [
+      "adobe dreamweaver"
+    ],
+    "adobe illustrator": [
+      "adobe illustrator"
+    ],
+    "adobe indesign": [
+      "adobe indesign"
+    ],
+    "adobe photoshop": [
+      "adobe photoshop"
+    ],
+    "agile": [
+      "agile"
+    ],
+    "aiogram": [
+      "aiogram"
+    ],
+    "airbyte": [
+      "airbyte"
+    ],
+    "airflow": [
+      "airflow"
+    ],
+    "alembic": [
+      "alembic"
+    ],
+    "alertmanager": [
+      "alertmanager"
+    ],
+    "algorithms": [
+      "algorithms"
+    ],
+    "algorithms sedgewick": [
+      "algorithms sedgewick"
+    ],
+    "altlinux": [
+      "altlinux"
+    ],
+    "amazon web services": [
+      "amazon web services"
+    ],
+    "android": [
+      "android"
+    ],
+    "angular": [
+      "angular"
+    ],
+    "angular cdk": [
+      "angular cdk"
+    ],
+    "angular material": [
+      "angular material"
+    ],
+    "angular router": [
+      "angular router"
+    ],
+    "angularjs": [
+      "angularjs"
+    ],
+    "ansible": [
+      "ansible"
+    ],
+    "ant design": [
+      "ant design"
+    ],
+    "antdesign": [
+      "antdesign"
+    ],
+    "apache": [
+      "apache"
+    ],
+    "apache airflow": [
+      "apache airflow"
+    ],
+    "apache jmeter": [
+      "apache jmeter"
+    ],
+    "apache kafka": [
+      "apache kafka"
+    ],
+    "apache nifi": [
+      "apache nifi"
+    ],
+    "apache superset": [
+      "apache superset"
+    ],
+    "apache2": [
+      "apache2"
+    ],
+    "app router": [
+      "app router"
+    ],
+    "architecture software": [
+      "architecture software"
+    ],
+    "arduino": [
+      "arduino"
+    ],
+    "assertj": [
+      "assertj"
+    ],
+    "astra linux": [
+      "astra linux"
+    ],
+    "astralinux": [
+      "astralinux"
+    ],
+    "asyncio": [
+      "asyncio"
+    ],
+    "asyncpg": [
+      "asyncpg"
+    ],
+    "atlassian jira": [
+      "atlassian jira"
+    ],
+    "axios": [
+      "axios"
+    ],
+    "azure": [
+      "azure"
+    ],
+    "bem": [
+      "bem"
+    ],
+    "bert": [
+      "bert"
+    ],
+    "bgp": [
+      "bgp"
+    ],
+    "bpmn": [
+      "bpmn"
+    ],
+    "bpmn 2.0": [
+      "bpmn 2.0"
+    ],
+    "babel": [
+      "babel"
+    ],
+    "babel loader": [
+      "babel loader"
+    ],
+    "backend": [
+      "backend"
+    ],
+    "bash": [
+      "bash"
+    ],
+    "beautifulsoup": [
+      "beautifulsoup"
+    ],
+    "big data": [
+      "big data"
+    ],
+    "bitbucket": [
+      "bitbucket"
+    ],
+    "bitrix": [
+      "bitrix"
+    ],
+    "bitrix24": [
+      "bitrix24"
+    ],
+    "black box testing": [
+      "black box testing"
+    ],
+    "blender": [
+      "blender"
+    ],
+    "bonding": [
+      "bonding"
+    ],
+    "bootstrap": [
+      "bootstrap"
+    ],
+    "bug reporting": [
+      "bug reporting"
+    ],
+    "bundlewrap": [
+      "bundlewrap"
+    ],
+    "c#": [
+      "c#"
+    ],
+    "c++": [
+      "c++"
+    ],
+    "ccxt": [
+      "ccxt"
+    ],
+    "ci/cd": [
+      "ci/cd",
+      "cicd",
+      "ci cd",
+      "ci-cd"
+    ],
+    "cjm": [
+      "cjm"
+    ],
+    "cms": [
+      "cms"
+    ],
+    "cms wordpress": [
+      "cms wordpress"
+    ],
+    "cnn": [
+      "cnn"
+    ],
+    "cnpg": [
+      "cnpg"
+    ],
+    "cors": [
+      "cors"
+    ],
+    "crisp-dm": [
+      "crisp-dm"
+    ],
+    "crm": [
+      "crm"
+    ],
+    "crontab": [
+      "crontab"
+    ],
+    "crud": [
+      "crud"
+    ],
+    "css": [
+      "css",
+      "css3",
+      "css 3"
+    ],
+    "css modules": [
+      "css modules"
+    ],
+    "css3": [
+      "css3"
+    ],
+    "ctl": [
+      "ctl"
+    ],
+    "camoufox": [
+      "camoufox"
+    ],
+    "canvas": [
+      "canvas"
+    ],
+    "catboost": [
+      "catboost"
+    ],
+    "celery": [
+      "celery"
+    ],
+    "centos": [
+      "centos"
+    ],
+    "chart.js": [
+      "chart.js"
+    ],
+    "charts": [
+      "charts"
+    ],
+    "chatgpt api": [
+      "chatgpt api"
+    ],
+    "check-list": [
+      "check-list"
+    ],
+    "chrome extension": [
+      "chrome extension"
+    ],
+    "cilium": [
+      "cilium"
+    ],
+    "cisco": [
+      "cisco"
+    ],
+    "cisco packet tracer": [
+      "cisco packet tracer"
+    ],
+    "clean architecture": [
+      "clean architecture"
+    ],
+    "clickhouse": [
+      "clickhouse"
+    ],
+    "clickup": [
+      "clickup"
+    ],
+    "cloudflare": [
+      "cloudflare"
+    ],
+    "code review": [
+      "code review"
+    ],
+    "code-splitting": [
+      "code-splitting"
+    ],
+    "components": [
+      "components"
+    ],
+    "computer vision": [
+      "computer vision"
+    ],
+    "confluence": [
+      "confluence"
+    ],
+    "consul": [
+      "consul"
+    ],
+    "context api": [
+      "context api"
+    ],
+    "cypress": [
+      "cypress"
+    ],
+    "d-link": [
+      "d-link"
+    ],
+    "d3": [
+      "d3"
+    ],
+    "dax": [
+      "dax"
+    ],
+    "dbeaver": [
+      "dbeaver"
+    ],
+    "ddl": [
+      "ddl"
+    ],
+    "dhcp": [
+      "dhcp"
+    ],
+    "dml": [
+      "dml"
+    ],
+    "dns": [
+      "dns"
+    ],
+    "dom": [
+      "dom"
+    ],
+    "drf": [
+      "drf"
+    ],
+    "drf spectacular": [
+      "drf spectacular"
+    ],
+    "dry": [
+      "dry"
+    ],
+    "dwh": [
+      "dwh"
+    ],
+    "dagster": [
+      "dagster"
+    ],
+    "data analysis": [
+      "data analysis"
+    ],
+    "data science": [
+      "data science"
+    ],
+    "data scraping": [
+      "data scraping"
+    ],
+    "datadog": [
+      "datadog"
+    ],
+    "deberta": [
+      "deberta"
+    ],
+    "debezium": [
+      "debezium"
+    ],
+    "debian": [
+      "debian"
+    ],
+    "deckhouse": [
+      "deckhouse"
+    ],
+    "deep learning": [
+      "deep learning",
+      "dl",
+      "глубокий обучение"
+    ],
+    "deep q-learning": [
+      "deep q-learning"
+    ],
+    "delphi": [
+      "delphi"
+    ],
+    "dependency injection": [
+      "dependency injection"
+    ],
+    "design patterns": [
+      "design patterns"
+    ],
+    "devops": [
+      "devops"
+    ],
+    "devtools": [
+      "devtools"
+    ],
+    "directum": [
+      "directum"
+    ],
+    "django": [
+      "django"
+    ],
+    "django framework": [
+      "django framework"
+    ],
+    "django orm": [
+      "django orm"
+    ],
+    "django rest framework": [
+      "django rest framework"
+    ],
+    "djoser": [
+      "djoser"
+    ],
+    "docker": [
+      "docker",
+      "докер"
+    ],
+    "docker compose": [
+      "docker compose"
+    ],
+    "docker swarm": [
+      "docker swarm"
+    ],
+    "docker-compose": [
+      "docker-compose"
+    ],
+    "dynamic routing": [
+      "dynamic routing"
+    ],
+    "e-commerce": [
+      "e-commerce"
+    ],
+    "e2e testing": [
+      "e2e testing"
+    ],
+    "e2e tests": [
+      "e2e tests"
+    ],
+    "eda": [
+      "eda"
+    ],
+    "eigrp": [
+      "eigrp"
+    ],
+    "elk": [
+      "elk"
+    ],
+    "elk/opensearch": [
+      "elk/opensearch"
+    ],
+    "es6": [
+      "es6"
+    ],
+    "es6+": [
+      "es6+"
+    ],
+    "eslint": [
+      "eslint"
+    ],
+    "esphome": [
+      "esphome"
+    ],
+    "etl": [
+      "etl"
+    ],
+    "elasticsearch": [
+      "elasticsearch"
+    ],
+    "encrypt": [
+      "encrypt"
+    ],
+    "eventemitter": [
+      "eventemitter"
+    ],
+    "excel": [
+      "excel"
+    ],
+    "express": [
+      "express"
+    ],
+    "express.js": [
+      "express.js"
+    ],
+    "fsd": [
+      "fsd"
+    ],
+    "fsd architecture": [
+      "fsd architecture"
+    ],
+    "ftp": [
+      "ftp"
+    ],
+    "fastapi": [
+      "fastapi"
+    ],
+    "feature-sliced design": [
+      "feature-sliced design"
+    ],
+    "fetch api": [
+      "fetch api"
+    ],
+    "figma": [
+      "figma"
+    ],
+    "filters": [
+      "filters"
+    ],
+    "firebase": [
+      "firebase"
+    ],
+    "firewall": [
+      "firewall"
+    ],
+    "flake8": [
+      "flake8"
+    ],
+    "flasgger": [
+      "flasgger"
+    ],
+    "flask": [
+      "flask"
+    ],
+    "flask-migrate": [
+      "flask-migrate"
+    ],
+    "flask-wtf": [
+      "flask-wtf"
+    ],
+    "flex": [
+      "flex"
+    ],
+    "flexbox": [
+      "flexbox"
+    ],
+    "flutter": [
+      "flutter"
+    ],
+    "flux cd": [
+      "flux cd"
+    ],
+    "flyway": [
+      "flyway"
+    ],
+    "frontend": [
+      "frontend"
+    ],
+    "gcp": [
+      "gcp"
+    ],
+    "gpo": [
+      "gpo"
+    ],
+    "gru": [
+      "gru"
+    ],
+    "geo api": [
+      "geo api"
+    ],
+    "git": [
+      "git"
+    ],
+    "git flow": [
+      "git flow"
+    ],
+    "git-flow": [
+      "git-flow"
+    ],
+    "gitflow": [
+      "gitflow"
+    ],
+    "github": [
+      "github"
+    ],
+    "github actions": [
+      "github actions"
+    ],
+    "gitlab": [
+      "gitlab"
+    ],
+    "gitlab ci": [
+      "gitlab ci"
+    ],
+    "gitlab ci/cd": [
+      "gitlab ci/cd"
+    ],
+    "gitlab runner": [
+      "gitlab runner"
+    ],
+    "gitops": [
+      "gitops"
+    ],
+    "golang": [
+      "golang"
+    ],
+    "google analytics": [
+      "google analytics"
+    ],
+    "google apps script": [
+      "google apps script"
+    ],
+    "google drive api": [
+      "google drive api"
+    ],
+    "google search console": [
+      "google search console"
+    ],
+    "google sheets": [
+      "google sheets"
+    ],
+    "google sheets api": [
+      "google sheets api"
+    ],
+    "gradle": [
+      "gradle"
+    ],
+    "grafana": [
+      "grafana"
+    ],
+    "graphql": [
+      "graphql"
+    ],
+    "graylog": [
+      "graylog"
+    ],
+    "greenplum": [
+      "greenplum"
+    ],
+    "grid": [
+      "grid"
+    ],
+    "groovy": [
+      "groovy"
+    ],
+    "gsap": [
+      "gsap"
+    ],
+    "gulp": [
+      "gulp"
+    ],
+    "gunicorn": [
+      "gunicorn"
+    ],
+    "hmr": [
+      "hmr"
+    ],
+    "hpa": [
+      "hpa"
+    ],
+    "html": [
+      "html",
+      "html5",
+      "html 5"
+    ],
+    "html audio api": [
+      "html audio api"
+    ],
+    "html layout": [
+      "html layout"
+    ],
+    "html5": [
+      "html5"
+    ],
+    "http": [
+      "http"
+    ],
+    "httpx": [
+      "httpx"
+    ],
+    "helm": [
+      "helm"
+    ],
+    "helpdesk": [
+      "helpdesk"
+    ],
+    "hibernate": [
+      "hibernate"
+    ],
+    "hive": [
+      "hive"
+    ],
+    "httpclient": [
+      "httpclient"
+    ],
+    "hugo": [
+      "hugo"
+    ],
+    "husky": [
+      "husky"
+    ],
+    "hyper-v": [
+      "hyper-v"
+    ],
+    "idef": [
+      "idef"
+    ],
+    "idef0": [
+      "idef0"
+    ],
+    "idefo": [
+      "idefo"
+    ],
+    "iis": [
+      "iis"
+    ],
+    "iac": [
+      "iac"
+    ],
+    "iceberg": [
+      "iceberg"
+    ],
+    "informatica": [
+      "informatica"
+    ],
+    "integration testing": [
+      "integration testing"
+    ],
+    "integration tests": [
+      "integration tests"
+    ],
+    "intellij": [
+      "intellij"
+    ],
+    "intellij idea": [
+      "intellij idea"
+    ],
+    "istio": [
+      "istio"
+    ],
+    "join": [
+      "join"
+    ],
+    "json": [
+      "json"
+    ],
+    "json api": [
+      "json api"
+    ],
+    "jwt": [
+      "jwt"
+    ],
+    "java": [
+      "java"
+    ],
+    "java persistence api": [
+      "java persistence api"
+    ],
+    "javascript": [
+      "javascript",
+      "js"
+    ],
+    "jenkins": [
+      "jenkins"
+    ],
+    "jest": [
+      "jest"
+    ],
+    "jetbrains ide": [
+      "jetbrains ide"
+    ],
+    "jinja2": [
+      "jinja2"
+    ],
+    "jira": [
+      "jira"
+    ],
+    "jupyter": [
+      "jupyter"
+    ],
+    "jupyter notebook": [
+      "jupyter notebook"
+    ],
+    "keda": [
+      "keda"
+    ],
+    "kmeans": [
+      "kmeans"
+    ],
+    "knn": [
+      "knn"
+    ],
+    "kvm": [
+      "kvm"
+    ],
+    "kafka": [
+      "kafka"
+    ],
+    "kaggle": [
+      "kaggle"
+    ],
+    "kanban": [
+      "kanban"
+    ],
+    "kaniko": [
+      "kaniko"
+    ],
+    "keepalived": [
+      "keepalived"
+    ],
+    "keras": [
+      "keras"
+    ],
+    "keydb": [
+      "keydb"
+    ],
+    "keycloak": [
+      "keycloak"
+    ],
+    "kibana": [
+      "kibana"
+    ],
+    "kotlin": [
+      "kotlin"
+    ],
+    "kubernetes": [
+      "kubernetes",
+      "k8s"
+    ],
+    "kustomize": [
+      "kustomize"
+    ],
+    "less": [
+      "less"
+    ],
+    "llm": [
+      "llm"
+    ],
+    "lstm": [
+      "lstm"
+    ],
+    "lvm": [
+      "lvm"
+    ],
+    "lakehouse": [
+      "lakehouse"
+    ],
+    "landing page": [
+      "landing page"
+    ],
+    "langchain": [
+      "langchain"
+    ],
+    "lazy loading": [
+      "lazy loading"
+    ],
+    "lens": [
+      "lens"
+    ],
+    "lightgbm": [
+      "lightgbm"
+    ],
+    "linux": [
+      "linux",
+      "линукс",
+      "unix"
+    ],
+    "liquidbase": [
+      "liquidbase"
+    ],
+    "localstorage": [
+      "localstorage"
+    ],
+    "locust": [
+      "locust"
+    ],
+    "lodash": [
+      "lodash"
+    ],
+    "loki": [
+      "loki"
+    ],
+    "luntry": [
+      "luntry"
+    ],
+    "mlflow": [
+      "mlflow"
+    ],
+    "ms excel": [
+      "ms excel"
+    ],
+    "ms power bi": [
+      "ms power bi"
+    ],
+    "ms powerpoint": [
+      "ms powerpoint"
+    ],
+    "ms sql": [
+      "ms sql"
+    ],
+    "ms visual studio": [
+      "ms visual studio"
+    ],
+    "mssql": [
+      "mssql"
+    ],
+    "mui": [
+      "mui"
+    ],
+    "mvc": [
+      "mvc"
+    ],
+    "mvp": [
+      "mvp"
+    ],
+    "mvvm": [
+      "mvvm"
+    ],
+    "machine learning": [
+      "machine learning",
+      "ml",
+      "машинный обучение"
+    ],
+    "material design": [
+      "material design"
+    ],
+    "material ui": [
+      "material ui"
+    ],
+    "material-ui": [
+      "material-ui"
+    ],
+    "materialui": [
+      "materialui"
+    ],
+    "mathematical statistics": [
+      "mathematical statistics"
+    ],
+    "matplotlib": [
+      "matplotlib"
+    ],
+    "maven": [
+      "maven"
+    ],
+    "memoization": [
+      "memoization"
+    ],
+    "mercurial": [
+      "mercurial"
+    ],
+    "metronic": [
+      "metronic"
+    ],
+    "microk8s": [
+      "microk8s"
+    ],
+    "micropython": [
+      "micropython"
+    ],
+    "microfrontends": [
+      "microfrontends"
+    ],
+    "mikrotik": [
+      "mikrotik"
+    ],
+    "mobx": [
+      "mobx"
+    ],
+    "mobile-first": [
+      "mobile-first"
+    ],
+    "mock service worker": [
+      "mock service worker"
+    ],
+    "mockito": [
+      "mockito"
+    ],
+    "mongodb": [
+      "mongodb"
+    ],
+    "multithreading": [
+      "multithreading"
+    ],
+    "mysql": [
+      "mysql"
+    ],
+    "nas": [
+      "nas"
+    ],
+    "nat": [
+      "nat"
+    ],
+    "nlp": [
+      "nlp",
+      "natural language processing"
+    ],
+    "nest.js": [
+      "nest.js"
+    ],
+    "netflix conductor": [
+      "netflix conductor"
+    ],
+    "networking": [
+      "networking"
+    ],
+    "new relic": [
+      "new relic"
+    ],
+    "next.js": [
+      "next.js"
+    ],
+    "nextjs": [
+      "nextjs"
+    ],
+    "nexus": [
+      "nexus"
+    ],
+    "nexus repository": [
+      "nexus repository"
+    ],
+    "ngmodule": [
+      "ngmodule"
+    ],
+    "nginx": [
+      "nginx"
+    ],
+    "node.js": [
+      "node.js",
+      "nodejs",
+      "node js"
+    ],
+    "nodejs": [
+      "nodejs"
+    ],
+    "nomad": [
+      "nomad"
+    ],
+    "npm": [
+      "npm"
+    ],
+    "numpy": [
+      "numpy"
+    ],
+    "nuxt": [
+      "nuxt"
+    ],
+    "nuxt.js": [
+      "nuxt.js"
+    ],
+    "o365": [
+      "o365"
+    ],
+    "oauth": [
+      "oauth"
+    ],
+    "oauth2": [
+      "oauth2"
+    ],
+    "okd": [
+      "okd"
+    ],
+    "oop": [
+      "oop"
+    ],
+    "orm": [
+      "orm"
+    ],
+    "ospf": [
+      "ospf"
+    ],
+    "owasp top 10": [
+      "owasp top 10"
+    ],
+    "observability": [
+      "observability"
+    ],
+    "observable": [
+      "observable"
+    ],
+    "okta": [
+      "okta"
+    ],
+    "openai": [
+      "openai"
+    ],
+    "openai api": [
+      "openai api"
+    ],
+    "openapi": [
+      "openapi"
+    ],
+    "opencv": [
+      "opencv"
+    ],
+    "opencart": [
+      "opencart"
+    ],
+    "openshift": [
+      "openshift"
+    ],
+    "openstack": [
+      "openstack"
+    ],
+    "oracle": [
+      "oracle"
+    ],
+    "pep8": [
+      "pep8"
+    ],
+    "php": [
+      "php"
+    ],
+    "pl/sql": [
+      "pl/sql"
+    ],
+    "pandas": [
+      "pandas"
+    ],
+    "parsing python": [
+      "parsing python"
+    ],
+    "peewee": [
+      "peewee"
+    ],
+    "persona api": [
+      "persona api"
+    ],
+    "photoshop": [
+      "photoshop"
+    ],
+    "pinia": [
+      "pinia"
+    ],
+    "planfix": [
+      "planfix"
+    ],
+    "playwright": [
+      "playwright"
+    ],
+    "plotly": [
+      "plotly"
+    ],
+    "podman": [
+      "podman"
+    ],
+    "poetry": [
+      "poetry"
+    ],
+    "postcss": [
+      "postcss"
+    ],
+    "postgresql": [
+      "postgresql",
+      "postgres",
+      "postgre",
+      "psql"
+    ],
+    "postman": [
+      "postman"
+    ],
+    "power bi": [
+      "power bi"
+    ],
+    "power pivot": [
+      "power pivot"
+    ],
+    "power query": [
+      "power query"
+    ],
+    "powershell": [
+      "powershell"
+    ],
+    "prettier": [
+      "prettier"
+    ],
+    "prisma": [
+      "prisma"
+    ],
+    "procreate": [
+      "procreate"
+    ],
+    "project reactor": [
+      "project reactor"
+    ],
+    "prometheus": [
+      "prometheus"
+    ],
+    "prometheus/grafana": [
+      "prometheus/grafana"
+    ],
+    "proxmox": [
+      "proxmox"
+    ],
+    "puppet": [
+      "puppet"
+    ],
+    "pycharm": [
+      "pycharm"
+    ],
+    "pypdf2": [
+      "pypdf2"
+    ],
+    "pyside6": [
+      "pyside6"
+    ],
+    "pytorch": [
+      "pytorch"
+    ],
+    "pydantic": [
+      "pydantic"
+    ],
+    "pygame": [
+      "pygame"
+    ],
+    "pytest": [
+      "pytest"
+    ],
+    "python": [
+      "python"
+    ],
+    "qa": [
+      "qa"
+    ],
+    "qlik sense": [
+      "qlik sense"
+    ],
+    "rag": [
+      "rag"
+    ],
+    "raid": [
+      "raid"
+    ],
+    "rbac": [
+      "rbac"
+    ],
+    "rest": [
+      "rest"
+    ],
+    "rest api": [
+      "rest api",
+      "rest",
+      "restful",
+      "rest-api"
+    ],
+    "rhel": [
+      "rhel"
+    ],
+    "rmi": [
+      "rmi"
+    ],
+    "rtk": [
+      "rtk"
+    ],
+    "rtk query": [
+      "rtk query"
+    ],
+    "rtl": [
+      "rtl"
+    ],
+    "rabbitmq": [
+      "rabbitmq"
+    ],
+    "radix": [
+      "radix"
+    ],
+    "random forest": [
+      "random forest"
+    ],
+    "rapidapi": [
+      "rapidapi"
+    ],
+    "rate limits": [
+      "rate limits"
+    ],
+    "react": [
+      "react",
+      "react.js",
+      "reactjs"
+    ],
+    "react compiler": [
+      "react compiler"
+    ],
+    "react hook form": [
+      "react hook form"
+    ],
+    "react hooks": [
+      "react hooks"
+    ],
+    "react native": [
+      "react native"
+    ],
+    "react query": [
+      "react query"
+    ],
+    "react router": [
+      "react router"
+    ],
+    "react-native-async-storage": [
+      "react-native-async-storage"
+    ],
+    "react-native-navigation": [
+      "react-native-navigation"
+    ],
+    "react-testing-library": [
+      "react-testing-library"
+    ],
+    "react-router-dom": [
+      "react-router-dom"
+    ],
+    "react.js": [
+      "react.js"
+    ],
+    "react.memo": [
+      "react.memo"
+    ],
+    "reactjs": [
+      "reactjs"
+    ],
+    "reactiveforms": [
+      "reactiveforms"
+    ],
+    "recommendation systems": [
+      "recommendation systems"
+    ],
+    "redis": [
+      "redis"
+    ],
+    "redux": [
+      "redux"
+    ],
+    "redux observable": [
+      "redux observable"
+    ],
+    "redux saga": [
+      "redux saga"
+    ],
+    "redux thunk": [
+      "redux thunk"
+    ],
+    "redux toolkit": [
+      "redux toolkit"
+    ],
+    "redux-saga": [
+      "redux-saga"
+    ],
+    "redux-thunk": [
+      "redux-thunk"
+    ],
+    "redux-toolkit": [
+      "redux-toolkit"
+    ],
+    "regex": [
+      "regex"
+    ],
+    "regression tests": [
+      "regression tests"
+    ],
+    "requests": [
+      "requests"
+    ],
+    "resnet-50": [
+      "resnet-50"
+    ],
+    "robokassa": [
+      "robokassa"
+    ],
+    "runpod gpu": [
+      "runpod gpu"
+    ],
+    "rust": [
+      "rust"
+    ],
+    "rxjs": [
+      "rxjs"
+    ],
+    "s3": [
+      "s3"
+    ],
+    "s3 select": [
+      "s3 select"
+    ],
+    "sap": [
+      "sap"
+    ],
+    "sas": [
+      "sas"
+    ],
+    "sass": [
+      "sass"
+    ],
+    "sast": [
+      "sast"
+    ],
+    "sca": [
+      "sca"
+    ],
+    "scss": [
+      "scss"
+    ],
+    "scss modules": [
+      "scss modules"
+    ],
+    "seo": [
+      "seo"
+    ],
+    "sftp": [
+      "sftp"
+    ],
+    "sftpgo": [
+      "sftpgo"
+    ],
+    "smm": [
+      "smm"
+    ],
+    "snmp": [
+      "snmp"
+    ],
+    "solid": [
+      "solid"
+    ],
+    "spa": [
+      "spa"
+    ],
+    "sql": [
+      "sql"
+    ],
+    "sqlalchemy": [
+      "sqlalchemy"
+    ],
+    "sqlite": [
+      "sqlite"
+    ],
+    "sse": [
+      "sse"
+    ],
+    "ssh": [
+      "ssh"
+    ],
+    "ssis": [
+      "ssis"
+    ],
+    "ssl/tls": [
+      "ssl/tls"
+    ],
+    "ssr": [
+      "ssr"
+    ],
+    "svg": [
+      "svg"
+    ],
+    "svm": [
+      "svm"
+    ],
+    "saas": [
+      "saas"
+    ],
+    "samba": [
+      "samba"
+    ],
+    "sanic": [
+      "sanic"
+    ],
+    "sberetl": [
+      "sberetl"
+    ],
+    "scipy": [
+      "scipy"
+    ],
+    "scikit-learn": [
+      "scikit-learn"
+    ],
+    "scrapy": [
+      "scrapy"
+    ],
+    "scrum": [
+      "scrum"
+    ],
+    "seaborn": [
+      "seaborn"
+    ],
+    "selenium": [
+      "selenium"
+    ],
+    "sentry": [
+      "sentry"
+    ],
+    "sequelize": [
+      "sequelize"
+    ],
+    "serializers": [
+      "serializers"
+    ],
+    "services": [
+      "services"
+    ],
+    "shell": [
+      "shell"
+    ],
+    "shopify": [
+      "shopify"
+    ],
+    "slack": [
+      "slack"
+    ],
+    "sonarqube": [
+      "sonarqube"
+    ],
+    "spark": [
+      "spark"
+    ],
+    "speech recognition": [
+      "speech recognition"
+    ],
+    "speech synthesis": [
+      "speech synthesis"
+    ],
+    "spring": [
+      "spring"
+    ],
+    "spring boot": [
+      "spring boot"
+    ],
+    "spring framework": [
+      "spring framework"
+    ],
+    "static routing": [
+      "static routing"
+    ],
+    "statsmodels": [
+      "statsmodels"
+    ],
+    "statuscake": [
+      "statuscake"
+    ],
+    "stimulus": [
+      "stimulus"
+    ],
+    "stomp": [
+      "stomp"
+    ],
+    "storybook": [
+      "storybook"
+    ],
+    "strapi cms": [
+      "strapi cms"
+    ],
+    "stripe": [
+      "stripe"
+    ],
+    "stripe api": [
+      "stripe api"
+    ],
+    "studio 3t": [
+      "studio 3t"
+    ],
+    "stylelint": [
+      "stylelint"
+    ],
+    "styled components": [
+      "styled components"
+    ],
+    "styledcomponents": [
+      "styledcomponents"
+    ],
+    "subject": [
+      "subject"
+    ],
+    "svelte": [
+      "svelte"
+    ],
+    "sveltekit": [
+      "sveltekit"
+    ],
+    "swagger": [
+      "swagger"
+    ],
+    "swagger/openapi": [
+      "swagger/openapi"
+    ],
+    "swing java": [
+      "swing java"
+    ],
+    "swiper": [
+      "swiper"
+    ],
+    "swiper.js": [
+      "swiper.js"
+    ],
+    "synology": [
+      "synology"
+    ],
+    "t-flex": [
+      "t-flex"
+    ],
+    "t-sql": [
+      "t-sql"
+    ],
+    "tcp/ip": [
+      "tcp/ip"
+    ],
+    "tdd": [
+      "tdd"
+    ],
+    "tableau": [
+      "tableau"
+    ],
+    "taiga ui": [
+      "taiga ui"
+    ],
+    "tailwind": [
+      "tailwind"
+    ],
+    "tailwind css": [
+      "tailwind css"
+    ],
+    "tailwindcss": [
+      "tailwindcss"
+    ],
+    "tanstack query": [
+      "tanstack query"
+    ],
+    "taskiq": [
+      "taskiq"
+    ],
+    "tauri": [
+      "tauri"
+    ],
+    "teamcity": [
+      "teamcity"
+    ],
+    "teamleading": [
+      "teamleading"
+    ],
+    "telebot": [
+      "telebot"
+    ],
+    "telegram api": [
+      "telegram api"
+    ],
+    "telegram bot api": [
+      "telegram bot api"
+    ],
+    "telegrambotapi": [
+      "telegrambotapi"
+    ],
+    "telethon": [
+      "telethon"
+    ],
+    "tensorflow": [
+      "tensorflow"
+    ],
+    "teradata": [
+      "teradata"
+    ],
+    "terraform": [
+      "terraform"
+    ],
+    "test case": [
+      "test case"
+    ],
+    "testing library": [
+      "testing library"
+    ],
+    "thunk": [
+      "thunk"
+    ],
+    "tilda": [
+      "tilda"
+    ],
+    "time series analysis": [
+      "time series analysis"
+    ],
+    "tomcat": [
+      "tomcat"
+    ],
+    "tortoise orm": [
+      "tortoise orm"
+    ],
+    "trade assistant": [
+      "trade assistant"
+    ],
+    "transact-sql": [
+      "transact-sql"
+    ],
+    "tree-shaking": [
+      "tree-shaking"
+    ],
+    "trello": [
+      "trello"
+    ],
+    "trino": [
+      "trino"
+    ],
+    "truenas": [
+      "truenas"
+    ],
+    "twig": [
+      "twig"
+    ],
+    "typeorm": [
+      "typeorm"
+    ],
+    "typescript": [
+      "typescript",
+      "ts"
+    ],
+    "uat tests": [
+      "uat tests"
+    ],
+    "ui": [
+      "ui"
+    ],
+    "uiautomator2": [
+      "uiautomator2"
+    ],
+    "uml": [
+      "uml"
+    ],
+    "ux": [
+      "ux"
+    ],
+    "ux/ui": [
+      "ux/ui"
+    ],
+    "ux/ui дизайн": [
+      "ux/ui дизайн"
+    ],
+    "ubuntu": [
+      "ubuntu"
+    ],
+    "ubuntu server": [
+      "ubuntu server"
+    ],
+    "unit testing": [
+      "unit testing"
+    ],
+    "unit tests": [
+      "unit tests"
+    ],
+    "unittest": [
+      "unittest"
+    ],
+    "use case diagram": [
+      "use case diagram"
+    ],
+    "uvicorn": [
+      "uvicorn"
+    ],
+    "vba": [
+      "vba"
+    ],
+    "vk api": [
+      "vk api"
+    ],
+    "vlan": [
+      "vlan"
+    ],
+    "vmware": [
+      "vmware"
+    ],
+    "vmware vsphere": [
+      "vmware vsphere"
+    ],
+    "vpn": [
+      "vpn"
+    ],
+    "vs code": [
+      "vs code"
+    ],
+    "vscode": [
+      "vscode"
+    ],
+    "vanilla javascript": [
+      "vanilla javascript"
+    ],
+    "vault": [
+      "vault"
+    ],
+    "vercel": [
+      "vercel"
+    ],
+    "virtual machine": [
+      "virtual machine"
+    ],
+    "visual studio code": [
+      "visual studio code"
+    ],
+    "vite": [
+      "vite"
+    ],
+    "vitest": [
+      "vitest"
+    ],
+    "vue": [
+      "vue",
+      "vue.js",
+      "vuejs"
+    ],
+    "vue 2": [
+      "vue 2"
+    ],
+    "vue 3": [
+      "vue 3"
+    ],
+    "vue router": [
+      "vue router"
+    ],
+    "vue-cli": [
+      "vue-cli"
+    ],
+    "vue-router": [
+      "vue-router"
+    ],
+    "vue.js": [
+      "vue.js"
+    ],
+    "vueapollo": [
+      "vueapollo"
+    ],
+    "vuejs": [
+      "vuejs"
+    ],
+    "vuex": [
+      "vuex"
+    ],
+    "vuetify": [
+      "vuetify"
+    ],
+    "wmf": [
+      "wmf"
+    ],
+    "web api": [
+      "web api"
+    ],
+    "web application development": [
+      "web application development"
+    ],
+    "web push api": [
+      "web push api"
+    ],
+    "web vitals": [
+      "web vitals"
+    ],
+    "web-data parsing": [
+      "web-data parsing"
+    ],
+    "webflow": [
+      "webflow"
+    ],
+    "websocket": [
+      "websocket"
+    ],
+    "websockets": [
+      "websockets"
+    ],
+    "webasyst": [
+      "webasyst"
+    ],
+    "webpack": [
+      "webpack"
+    ],
+    "webpack 5": [
+      "webpack 5"
+    ],
+    "webpack module federation": [
+      "webpack module federation"
+    ],
+    "whisper": [
+      "whisper"
+    ],
+    "windows server": [
+      "windows server"
+    ],
+    "wolfram mathematica": [
+      "wolfram mathematica"
+    ],
+    "xgboost": [
+      "xgboost"
+    ],
+    "xml": [
+      "xml"
+    ],
+    "xpath": [
+      "xpath"
+    ],
+    "yaml": [
+      "yaml"
+    ],
+    "yandex cloud": [
+      "yandex cloud"
+    ],
+    "yandex container registry": [
+      "yandex container registry"
+    ],
+    "yandex disk api": [
+      "yandex disk api"
+    ],
+    "yandex.cloud": [
+      "yandex.cloud"
+    ],
+    "yookassa": [
+      "yookassa"
+    ],
+    "youtrack": [
+      "youtrack"
+    ],
+    "yup": [
+      "yup"
+    ],
+    "zbrush": [
+      "zbrush"
+    ],
+    "zod": [
+      "zod"
+    ],
+    "zabbix": [
+      "zabbix"
+    ],
+    "zendesk": [
+      "zendesk"
+    ],
+    "zilot": [
+      "zilot"
+    ],
+    "zipkin": [
+      "zipkin"
+    ],
+    "zustand": [
+      "zustand"
+    ],
+    "aiogram 3": [
+      "aiogram 3"
+    ],
+    "aiogram-dialog": [
+      "aiogram-dialog"
+    ],
+    "amocrm": [
+      "amocrm"
+    ],
+    "cert-manager": [
+      "cert-manager"
+    ],
+    "dbt": [
+      "dbt"
+    ],
+    "docxtpl": [
+      "docxtpl"
+    ],
+    "dotenv": [
+      "dotenv"
+    ],
+    "drf-spectacular": [
+      "drf-spectacular"
+    ],
+    "drf-yasg": [
+      "drf-yasg"
+    ],
+    "embla-carousel-react": [
+      "embla-carousel-react"
+    ],
+    "esp8266": [
+      "esp8266"
+    ],
+    "etcd": [
+      "etcd"
+    ],
+    "ethers.js": [
+      "ethers.js"
+    ],
+    "grpc": [
+      "grpc"
+    ],
+    "geopy": [
+      "geopy"
+    ],
+    "i18n": [
+      "i18n"
+    ],
+    "i18next": [
+      "i18next"
+    ],
+    "ingress-nginx": [
+      "ingress-nginx"
+    ],
+    "iptables": [
+      "iptables"
+    ],
+    "jquery": [
+      "jquery"
+    ],
+    "logging": [
+      "logging"
+    ],
+    "luxon": [
+      "luxon"
+    ],
+    "mdadm": [
+      "mdadm"
+    ],
+    "moment.js": [
+      "moment.js"
+    ],
+    "next-intl": [
+      "next-intl"
+    ],
+    "num2words": [
+      "num2words"
+    ],
+    "nut": [
+      "nut"
+    ],
+    "openpyxl": [
+      "openpyxl"
+    ],
+    "petrovich": [
+      "petrovich"
+    ],
+    "pytelegrambotapi": [
+      "pytelegrambotapi"
+    ],
+    "python-binance": [
+      "python-binance"
+    ],
+    "python-docx": [
+      "python-docx"
+    ],
+    "python-dotenv": [
+      "python-dotenv"
+    ],
+    "python-telegram-bot": [
+      "python-telegram-bot"
+    ],
+    "pywin32": [
+      "pywin32"
+    ],
+    "recaptcha": [
+      "recaptcha"
+    ],
+    "react-day-picker": [
+      "react-day-picker"
+    ],
+    "react-hook-form": [
+      "react-hook-form"
+    ],
+    "react-imask": [
+      "react-imask"
+    ],
+    "react-number-format": [
+      "react-number-format"
+    ],
+    "remote procedure call": [
+      "remote procedure call"
+    ],
+    "shadcn": [
+      "shadcn"
+    ],
+    "smartd": [
+      "smartd"
+    ],
+    "styled-components": [
+      "styled-components"
+    ],
+    "systemd": [
+      "systemd"
+    ],
+    "usecallback": [
+      "usecallback"
+    ],
+    "usememo": [
+      "usememo"
+    ],
+    "web3.js": [
+      "web3.js"
+    ],
+    "автоматизация процессов": [
+      "автоматизация процесс"
+    ],
+    "адаптивная верстка": [
+      "адаптивный вёрстка"
+    ],
+    "администрирование сайта": [
+      "администрирование сайт"
+    ],
+    "администрирование серверов linux": [
+      "администрирование сервер linux"
+    ],
+    "администрирование сетевого оборудования": [
+      "администрирование сетевой оборудование"
+    ],
+    "алгоритмы": [
+      "алгоритм"
+    ],
+    "алгоритмы и структуры данных": [
+      "алгоритм и структура данные"
+    ],
+    "английский язык": [
+      "английский язык"
+    ],
+    "асинхронное программирование": [
+      "асинхронный программирование"
+    ],
+    "бэм": [
+      "бэм"
+    ],
+    "битрикс24": [
+      "битрикс24"
+    ],
+    "брокер сообщений": [
+      "брокер сообщение"
+    ],
+    "верстка": [
+      "вёрстка"
+    ],
+    "визуализация данных": [
+      "визуализация данные"
+    ],
+    "виртуализация": [
+      "виртуализация"
+    ],
+    "кроссбраузерная верстка": [
+      "кроссбраузерный вёрстка"
+    ],
+    "лидерство": [
+      "лидерство"
+    ],
+    "линейная алгебра": [
+      "линейный алгебра"
+    ],
+    "маршрутизация": [
+      "маршрутизация"
+    ],
+    "математика": [
+      "математик"
+    ],
+    "математическая статистика": [
+      "математический статистика"
+    ],
+    "математический анализ": [
+      "математический анализ"
+    ],
+    "микросервисы": [
+      "микросервис"
+    ],
+    "мониторинг": [
+      "мониторинг"
+    ],
+    "ооп": [
+      "ооп",
+      "oop"
+    ],
+    "оконные функции": [
+      "оконный функция"
+    ],
+    "организация мероприятий для сотрудников": [
+      "организация мероприятие для сотрудник"
+    ],
+    "паттерны проектирования": [
+      "паттерн проектирование"
+    ],
+    "проведение собеседований": [
+      "проведение собеседование"
+    ],
+    "руководство коллективом": [
+      "руководство коллектив"
+    ],
+    "семантическая верстка": [
+      "семантический вёрстка"
+    ],
+    "сетевая безопасность": [
+      "сетевой безопасность"
+    ],
+    "сетевое оборудование": [
+      "сетевой оборудование"
+    ],
+    "системы администрирования сайтов": [
+      "система администрирование сайт"
+    ],
+    "создание сайтов": [
+      "создание сайт"
+    ],
+    "статистика": [
+      "статистика"
+    ],
+    "статистический анализ": [
+      "статистический анализ"
+    ],
+    "структуры данных": [
+      "структура данные"
+    ],
+    "тайм-менеджмент": [
+      "тайм-менеджмент"
+    ],
+    "теория вероятностей": [
+      "теория вероятность"
+    ],
+    "управление командой": [
+      "управление команда"
+    ],
+    "управление процессами": [
+      "управление процесс"
+    ],
+    "эконометрика": [
+      "эконометрика"
+    ],
+    "яндекс.метрика": [
+      "яндекс.метрика"
+    ]
+  },
+  "vacancies": {
+    ".net": [
+      ".net",
+      "dotnet",
+      ".net core",
+      "net core",
+      ".netcore",
+      "netcore"
+    ],
+    ".net core": [
+      ".net core"
+    ],
+    ".net framework": [
+      ".net framework"
+    ],
+    ".net6": [
+      ".net6"
+    ],
+    "152-фз": [
+      "152-фз"
+    ],
+    "1с": [
+      "1с",
+      "1c"
+    ],
+    "1с 8.3": [
+      "1с 8.3"
+    ],
+    "1с упп": [
+      "1с упп"
+    ],
+    "1с ут": [
+      "1с ут"
+    ],
+    "1с программирование": [
+      "1с программирование"
+    ],
+    "1с: erp": [
+      "1с: erp"
+    ],
+    "1с: бухгалтерия": [
+      "1с: бухгалтерия"
+    ],
+    "1с: зарплата и кадры": [
+      "1с: зарплата и кадр"
+    ],
+    "1с: зарплата и управление персоналом": [
+      "1с: зарплата и управление персонал"
+    ],
+    "1с: ка": [
+      "1с: ка"
+    ],
+    "1с: предприятие 8": [
+      "1с: предприятие 8"
+    ],
+    "1с: предприятие 8.3": [
+      "1с: предприятие 8.3"
+    ],
+    "1с: упп": [
+      "1с: упп"
+    ],
+    "1с: ут": [
+      "1с: ут"
+    ],
+    "1с: ух": [
+      "1с: ух"
+    ],
+    "1с: управление холдингом": [
+      "1с: управление холдинг"
+    ],
+    "1с:предприятие 8": [
+      "1с:предприятие 8"
+    ],
+    "1с:университет": [
+      "1с:университет"
+    ],
+    "2d шаблоны": [
+      "2d шаблон"
+    ],
+    "3d моделирование": [
+      "3d моделирование"
+    ],
+    "3d-сцены": [
+      "3d-сцена"
+    ],
+    "3ds max": [
+      "3ds max"
+    ],
+    "802.1x": [
+      "802.1x"
+    ],
+    "a/b тесты": [
+      "a/b тест"
+    ],
+    "a/b-тестирование": [
+      "a/b-тестирование"
+    ],
+    "ad": [
+      "ad"
+    ],
+    "adas": [
+      "adas"
+    ],
+    "adb": [
+      "adb"
+    ],
+    "adr": [
+      "adr"
+    ],
+    "ai": [
+      "ai"
+    ],
+    "ai-агенты": [
+      "ai-агент"
+    ],
+    "ai-ассистенты": [
+      "ai-ассистент"
+    ],
+    "ai-инструменты": [
+      "ai-инструмент"
+    ],
+    "ai/ml": [
+      "ai/ml"
+    ],
+    "aida": [
+      "aida"
+    ],
+    "alt linux": [
+      "alt linux"
+    ],
+    "api": [
+      "api"
+    ],
+    "ar": [
+      "ar"
+    ],
+    "aris": [
+      "aris"
+    ],
+    "asp.net": [
+      "asp.net",
+      "asp net"
+    ],
+    "aws": [
+      "aws"
+    ],
+    "actionscript 3": [
+      "actionscript 3"
+    ],
+    "active directory": [
+      "active directory"
+    ],
+    "after effects": [
+      "after effects"
+    ],
+    "agile": [
+      "agile"
+    ],
+    "airflow": [
+      "airflow"
+    ],
+    "altos": [
+      "altos"
+    ],
+    "analytics engineering": [
+      "analytics engineering"
+    ],
+    "android": [
+      "android"
+    ],
+    "ansible": [
+      "ansible"
+    ],
+    "apache": [
+      "apache"
+    ],
+    "apache iceberg": [
+      "apache iceberg"
+    ],
+    "aquarius": [
+      "aquarius"
+    ],
+    "assembler": [
+      "assembler"
+    ],
+    "asterisk": [
+      "asterisk"
+    ],
+    "astra linux": [
+      "astra linux"
+    ],
+    "asus": [
+      "asus"
+    ],
+    "atscale": [
+      "atscale"
+    ],
+    "autocad": [
+      "autocad"
+    ],
+    "azure": [
+      "azure"
+    ],
+    "azure devops": [
+      "azure devops"
+    ],
+    "b2b-продажи": [
+      "b2b-продажа"
+    ],
+    "bgp": [
+      "bgp"
+    ],
+    "bi": [
+      "bi"
+    ],
+    "bi инструменты": [
+      "bi инструмент"
+    ],
+    "bi-аналитика": [
+      "bi-аналитика"
+    ],
+    "bpmn": [
+      "bpmn"
+    ],
+    "brd": [
+      "brd"
+    ],
+    "bs": [
+      "bs"
+    ],
+    "backend driven ui": [
+      "backend driven ui"
+    ],
+    "bare metal": [
+      "bare metal"
+    ],
+    "bash": [
+      "bash"
+    ],
+    "bigquery": [
+      "bigquery"
+    ],
+    "bitrix": [
+      "bitrix"
+    ],
+    "blender": [
+      "blender"
+    ],
+    "business studio": [
+      "business studio"
+    ],
+    "c#": [
+      "c#"
+    ],
+    "c++": [
+      "c++"
+    ],
+    "c4 model": [
+      "c4 model"
+    ],
+    "cad": [
+      "cad"
+    ],
+    "ccna": [
+      "ccna"
+    ],
+    "ccnp": [
+      "ccnp"
+    ],
+    "cf": [
+      "cf"
+    ],
+    "ci/cd": [
+      "ci/cd",
+      "cicd",
+      "ci cd",
+      "ci-cd"
+    ],
+    "cmm": [
+      "cmm"
+    ],
+    "cms": [
+      "cms"
+    ],
+    "cnc": [
+      "cnc"
+    ],
+    "cobit": [
+      "cobit"
+    ],
+    "crm": [
+      "crm"
+    ],
+    "crm-системы": [
+      "crm-система"
+    ],
+    "css": [
+      "css",
+      "css3",
+      "css 3"
+    ],
+    "css3": [
+      "css3"
+    ],
+    "csv": [
+      "csv"
+    ],
+    "cte": [
+      "cte"
+    ],
+    "ctr": [
+      "ctr"
+    ],
+    "carrot broadcast": [
+      "carrot broadcast"
+    ],
+    "cassandra": [
+      "cassandra"
+    ],
+    "celery": [
+      "celery"
+    ],
+    "centos": [
+      "centos"
+    ],
+    "charles": [
+      "charles"
+    ],
+    "chatgpt": [
+      "chatgpt"
+    ],
+    "checkpoint": [
+      "checkpoint"
+    ],
+    "cinema 4d": [
+      "cinema 4d"
+    ],
+    "cisco": [
+      "cisco"
+    ],
+    "cisco asa": [
+      "cisco asa"
+    ],
+    "cisco asr": [
+      "cisco asr"
+    ],
+    "cisco nexus": [
+      "cisco nexus"
+    ],
+    "claude code": [
+      "claude code"
+    ],
+    "clickhouse": [
+      "clickhouse"
+    ],
+    "cloud": [
+      "cloud"
+    ],
+    "codesys": [
+      "codesys"
+    ],
+    "computer vision": [
+      "computer vision"
+    ],
+    "confluence": [
+      "confluence"
+    ],
+    "consul": [
+      "consul"
+    ],
+    "crypto-pro": [
+      "crypto-pro"
+    ],
+    "cube": [
+      "cube"
+    ],
+    "cursor": [
+      "cursor"
+    ],
+    "d-link": [
+      "d-link"
+    ],
+    "dag": [
+      "dag"
+    ],
+    "dcs": [
+      "dcs"
+    ],
+    "ddd": [
+      "ddd"
+    ],
+    "depo": [
+      "depo"
+    ],
+    "dhcp": [
+      "dhcp"
+    ],
+    "dlh": [
+      "dlh"
+    ],
+    "dns": [
+      "dns"
+    ],
+    "dpia": [
+      "dpia"
+    ],
+    "dry": [
+      "dry"
+    ],
+    "dwh": [
+      "dwh"
+    ],
+    "dahua": [
+      "dahua"
+    ],
+    "data classification": [
+      "data classification"
+    ],
+    "data discovery": [
+      "data discovery"
+    ],
+    "data engineering": [
+      "data engineering"
+    ],
+    "data lakehouse": [
+      "data lakehouse"
+    ],
+    "data mapping": [
+      "data mapping"
+    ],
+    "data mesh": [
+      "data mesh"
+    ],
+    "data platform": [
+      "data platform"
+    ],
+    "data vault": [
+      "data vault"
+    ],
+    "data warehouse": [
+      "data warehouse"
+    ],
+    "datalens": [
+      "datalens"
+    ],
+    "databricks": [
+      "databricks"
+    ],
+    "dell": [
+      "dell"
+    ],
+    "delta": [
+      "delta"
+    ],
+    "delta lake": [
+      "delta lake"
+    ],
+    "dev-tools": [
+      "dev-tools"
+    ],
+    "devops": [
+      "devops"
+    ],
+    "django": [
+      "django"
+    ],
+    "django rest": [
+      "django rest"
+    ],
+    "dod": [
+      "dod"
+    ],
+    "docker": [
+      "docker",
+      "докер"
+    ],
+    "doris": [
+      "doris"
+    ],
+    "edi": [
+      "edi"
+    ],
+    "elk stack": [
+      "elk stack"
+    ],
+    "elt": [
+      "elt"
+    ],
+    "esb": [
+      "esb"
+    ],
+    "etl": [
+      "etl"
+    ],
+    "explain": [
+      "explain"
+    ],
+    "effector": [
+      "effector"
+    ],
+    "elasticsearch": [
+      "elasticsearch"
+    ],
+    "ethernet": [
+      "ethernet"
+    ],
+    "excel": [
+      "excel"
+    ],
+    "fbd": [
+      "fbd"
+    ],
+    "fex": [
+      "fex"
+    ],
+    "fs": [
+      "fs"
+    ],
+    "fiddler": [
+      "fiddler"
+    ],
+    "figma": [
+      "figma"
+    ],
+    "flash": [
+      "flash"
+    ],
+    "flink": [
+      "flink"
+    ],
+    "flux cd": [
+      "flux cd"
+    ],
+    "freeipa": [
+      "freeipa"
+    ],
+    "freepbx": [
+      "freepbx"
+    ],
+    "fujitsu": [
+      "fujitsu"
+    ],
+    "g&a": [
+      "g&a"
+    ],
+    "giac": [
+      "giac"
+    ],
+    "glpi": [
+      "glpi"
+    ],
+    "gpon": [
+      "gpon"
+    ],
+    "gameface": [
+      "gameface"
+    ],
+    "ghidra": [
+      "ghidra"
+    ],
+    "gigabyte": [
+      "gigabyte"
+    ],
+    "gigaset": [
+      "gigaset"
+    ],
+    "git": [
+      "git"
+    ],
+    "gitops": [
+      "gitops"
+    ],
+    "github actions": [
+      "github actions"
+    ],
+    "gitlab": [
+      "gitlab"
+    ],
+    "go": [
+      "go",
+      "golang"
+    ],
+    "google cloud": [
+      "google cloud"
+    ],
+    "google sheets": [
+      "google sheets"
+    ],
+    "grafana": [
+      "grafana"
+    ],
+    "greenplum": [
+      "greenplum"
+    ],
+    "hcia": [
+      "hcia"
+    ],
+    "hcip": [
+      "hcip"
+    ],
+    "hdfs": [
+      "hdfs"
+    ],
+    "hp": [
+      "hp"
+    ],
+    "html": [
+      "html",
+      "html5",
+      "html 5"
+    ],
+    "html5": [
+      "html5"
+    ],
+    "http-сервисы": [
+      "http-сервис"
+    ],
+    "https": [
+      "https"
+    ],
+    "hadoop": [
+      "hadoop"
+    ],
+    "helm": [
+      "helm"
+    ],
+    "hex-редакторы": [
+      "hex-редактор"
+    ],
+    "hiew": [
+      "hiew"
+    ],
+    "hikvision": [
+      "hikvision"
+    ],
+    "hive": [
+      "hive"
+    ],
+    "hiwatch": [
+      "hiwatch"
+    ],
+    "huawei": [
+      "huawei"
+    ],
+    "huawei usg": [
+      "huawei usg"
+    ],
+    "hudi": [
+      "hudi"
+    ],
+    "i/o psychology": [
+      "i/o psychology"
+    ],
+    "ida": [
+      "ida"
+    ],
+    "iec 61131-3": [
+      "iec 61131-3"
+    ],
+    "igmp": [
+      "igmp"
+    ],
+    "iis": [
+      "iis"
+    ],
+    "ip телефония": [
+      "ip телефония"
+    ],
+    "ip-телефония": [
+      "ip-телефония"
+    ],
+    "isagraf": [
+      "isagraf"
+    ],
+    "iso": [
+      "iso"
+    ],
+    "iso 27k": [
+      "iso 27k"
+    ],
+    "itsm": [
+      "itsm"
+    ],
+    "iac": [
+      "iac"
+    ],
+    "iceberg": [
+      "iceberg"
+    ],
+    "inframanager": [
+      "inframanager"
+    ],
+    "inovance": [
+      "inovance"
+    ],
+    "iot": [
+      "iot"
+    ],
+    "js": [
+      "js"
+    ],
+    "java": [
+      "java"
+    ],
+    "javascript": [
+      "javascript",
+      "js"
+    ],
+    "jira": [
+      "jira"
+    ],
+    "k8s": [
+      "k8s"
+    ],
+    "kiss": [
+      "kiss"
+    ],
+    "kpi": [
+      "kpi"
+    ],
+    "kvm": [
+      "kvm"
+    ],
+    "kafka": [
+      "kafka"
+    ],
+    "kanban": [
+      "kanban"
+    ],
+    "kaspersky": [
+      "kaspersky"
+    ],
+    "kaspersky endpoint security": [
+      "kaspersky endpoint security"
+    ],
+    "kotlin": [
+      "kotlin"
+    ],
+    "kotlin coroutines": [
+      "kotlin coroutines"
+    ],
+    "kotlin multiplatform": [
+      "kotlin multiplatform"
+    ],
+    "kubernetes": [
+      "kubernetes",
+      "k8s"
+    ],
+    "kudu": [
+      "kudu"
+    ],
+    "lad": [
+      "lad"
+    ],
+    "lan": [
+      "lan"
+    ],
+    "ldap": [
+      "ldap"
+    ],
+    "llm": [
+      "llm"
+    ],
+    "llm-агенты": [
+      "llm-агент"
+    ],
+    "lms moodle": [
+      "lms moodle"
+    ],
+    "lpic": [
+      "lpic"
+    ],
+    "lua": [
+      "lua"
+    ],
+    "laravel": [
+      "laravel"
+    ],
+    "lenovo": [
+      "lenovo"
+    ],
+    "linux": [
+      "linux",
+      "линукс",
+      "unix"
+    ],
+    "loki": [
+      "loki"
+    ],
+    "lookml": [
+      "lookml"
+    ],
+    "loop": [
+      "loop"
+    ],
+    "mca": [
+      "mca"
+    ],
+    "mcd": [
+      "mcd"
+    ],
+    "mcsa": [
+      "mcsa"
+    ],
+    "mcse": [
+      "mcse"
+    ],
+    "mes": [
+      "mes"
+    ],
+    "ml": [
+      "ml"
+    ],
+    "ml-системы": [
+      "ml-система"
+    ],
+    "ml-стек": [
+      "ml-стек"
+    ],
+    "mlflow": [
+      "mlflow"
+    ],
+    "modx": [
+      "modx"
+    ],
+    "mpc": [
+      "mpc"
+    ],
+    "mpp": [
+      "mpp"
+    ],
+    "mpp базы данных": [
+      "mpp база данные"
+    ],
+    "mppi": [
+      "mppi"
+    ],
+    "ms excel": [
+      "ms excel"
+    ],
+    "ms office": [
+      "ms office"
+    ],
+    "ms powerpoint": [
+      "ms powerpoint"
+    ],
+    "ms sql": [
+      "ms sql"
+    ],
+    "ms visio": [
+      "ms visio"
+    ],
+    "ms visual studio": [
+      "ms visual studio"
+    ],
+    "ms winserv": [
+      "ms winserv"
+    ],
+    "msvs2022": [
+      "msvs2022"
+    ],
+    "machine learning": [
+      "machine learning",
+      "ml",
+      "машинный обучение"
+    ],
+    "mango": [
+      "mango"
+    ],
+    "metabase": [
+      "metabase"
+    ],
+    "microsoft": [
+      "microsoft"
+    ],
+    "microsoft active directory": [
+      "microsoft active directory"
+    ],
+    "microsoft office": [
+      "microsoft office"
+    ],
+    "microsoft sql": [
+      "microsoft sql"
+    ],
+    "microsoft sql server": [
+      "microsoft sql server"
+    ],
+    "mikrotik": [
+      "mikrotik"
+    ],
+    "mimir": [
+      "mimir"
+    ],
+    "mysql": [
+      "mysql"
+    ],
+    "n5k": [
+      "n5k"
+    ],
+    "n7k": [
+      "n7k"
+    ],
+    "nat": [
+      "nat"
+    ],
+    "nist": [
+      "nist"
+    ],
+    "nlp": [
+      "nlp",
+      "natural language processing"
+    ],
+    "nodejs": [
+      "nodejs"
+    ],
+    "nx-os": [
+      "nx-os"
+    ],
+    "netbeans": [
+      "netbeans"
+    ],
+    "networking": [
+      "networking"
+    ],
+    "nginx": [
+      "nginx"
+    ],
+    "nosql": [
+      "nosql"
+    ],
+    "nova": [
+      "nova"
+    ],
+    "olap": [
+      "olap"
+    ],
+    "oltp": [
+      "oltp"
+    ],
+    "orc": [
+      "orc"
+    ],
+    "os linux": [
+      "os linux"
+    ],
+    "os x": [
+      "os x"
+    ],
+    "ospf": [
+      "ospf"
+    ],
+    "offensive security": [
+      "offensive security"
+    ],
+    "ollydbg": [
+      "ollydbg"
+    ],
+    "omron": [
+      "omron"
+    ],
+    "oracle": [
+      "oracle"
+    ],
+    "oracle database": [
+      "oracle database"
+    ],
+    "pcs 7": [
+      "pcs 7"
+    ],
+    "pdf": [
+      "pdf"
+    ],
+    "pe": [
+      "pe"
+    ],
+    "php": [
+      "php"
+    ],
+    "pim": [
+      "pim"
+    ],
+    "pss": [
+      "pss"
+    ],
+    "parquet": [
+      "parquet"
+    ],
+    "photoshop": [
+      "photoshop"
+    ],
+    "pnl": [
+      "pnl"
+    ],
+    "postgresql": [
+      "postgresql",
+      "postgres",
+      "postgre",
+      "psql"
+    ],
+    "postgres": [
+      "postgres"
+    ],
+    "postman": [
+      "postman"
+    ],
+    "power bi": [
+      "power bi"
+    ],
+    "power pivot": [
+      "power pivot"
+    ],
+    "power query": [
+      "power query"
+    ],
+    "powerpoint": [
+      "powerpoint"
+    ],
+    "powershell": [
+      "powershell"
+    ],
+    "presto": [
+      "presto"
+    ],
+    "privacy by default": [
+      "privacy by default"
+    ],
+    "privacy by design": [
+      "privacy by design"
+    ],
+    "product management": [
+      "product management"
+    ],
+    "product owner": [
+      "product owner"
+    ],
+    "prometheus": [
+      "prometheus"
+    ],
+    "proxmox": [
+      "proxmox"
+    ],
+    "proxyman": [
+      "proxyman"
+    ],
+    "pubmed": [
+      "pubmed"
+    ],
+    "pyspark": [
+      "pyspark"
+    ],
+    "pytorch": [
+      "pytorch"
+    ],
+    "python": [
+      "python"
+    ],
+    "qa": [
+      "qa"
+    ],
+    "qa automation": [
+      "qa automation"
+    ],
+    "qt": [
+      "qt"
+    ],
+    "qnap": [
+      "qnap"
+    ],
+    "r-admin": [
+      "r-admin"
+    ],
+    "raid": [
+      "raid"
+    ],
+    "rest": [
+      "rest"
+    ],
+    "rest api": [
+      "rest api",
+      "rest",
+      "restful",
+      "rest-api"
+    ],
+    "rls": [
+      "rls"
+    ],
+    "ros": [
+      "ros"
+    ],
+    "ros2": [
+      "ros2"
+    ],
+    "rs-485": [
+      "rs-485"
+    ],
+    "rabbitmq": [
+      "rabbitmq"
+    ],
+    "react": [
+      "react",
+      "react.js",
+      "reactjs"
+    ],
+    "redis": [
+      "redis"
+    ],
+    "redshift": [
+      "redshift"
+    ],
+    "reverse engineering": [
+      "reverse engineering"
+    ],
+    "rockwell automation": [
+      "rockwell automation"
+    ],
+    "routing": [
+      "routing"
+    ],
+    "ruby on rails": [
+      "ruby on rails"
+    ],
+    "rust": [
+      "rust"
+    ],
+    "s3": [
+      "s3"
+    ],
+    "scada": [
+      "scada"
+    ],
+    "sccm": [
+      "sccm"
+    ],
+    "scd": [
+      "scd"
+    ],
+    "scl": [
+      "scl"
+    ],
+    "scorm": [
+      "scorm"
+    ],
+    "sdlc": [
+      "sdlc"
+    ],
+    "seo": [
+      "seo"
+    ],
+    "sla": [
+      "sla"
+    ],
+    "sla-метрики": [
+      "sla-метрика"
+    ],
+    "soap": [
+      "soap"
+    ],
+    "soc": [
+      "soc"
+    ],
+    "solid": [
+      "solid"
+    ],
+    "spss": [
+      "spss"
+    ],
+    "sql": [
+      "sql"
+    ],
+    "sql-инъекции": [
+      "sql-инъекция"
+    ],
+    "sql-функции": [
+      "sql-функция"
+    ],
+    "srs": [
+      "srs"
+    ],
+    "sso": [
+      "sso"
+    ],
+    "stl": [
+      "stl"
+    ],
+    "saas": [
+      "saas"
+    ],
+    "sambadc": [
+      "sambadc"
+    ],
+    "scenegraph": [
+      "scenegraph"
+    ],
+    "schneider electric": [
+      "schneider electric"
+    ],
+    "scrum": [
+      "scrum"
+    ],
+    "scylladb": [
+      "scylladb"
+    ],
+    "selectel": [
+      "selectel"
+    ],
+    "siemens": [
+      "siemens"
+    ],
+    "snowflake": [
+      "snowflake"
+    ],
+    "soda dq": [
+      "soda dq"
+    ],
+    "solid works": [
+      "solid works"
+    ],
+    "spark": [
+      "spark"
+    ],
+    "spark sql": [
+      "spark sql"
+    ],
+    "step 7": [
+      "step 7"
+    ],
+    "supermicro": [
+      "supermicro"
+    ],
+    "swagger": [
+      "swagger"
+    ],
+    "swift": [
+      "swift"
+    ],
+    "switching": [
+      "switching"
+    ],
+    "symfony": [
+      "symfony"
+    ],
+    "synology": [
+      "synology"
+    ],
+    "syser": [
+      "syser"
+    ],
+    "t-flex": [
+      "t-flex"
+    ],
+    "t-sql": [
+      "t-sql"
+    ],
+    "tcp/ip": [
+      "tcp/ip"
+    ],
+    "tdd": [
+      "tdd"
+    ],
+    "tia portal": [
+      "tia portal"
+    ],
+    "tableau": [
+      "tableau"
+    ],
+    "tengri": [
+      "tengri"
+    ],
+    "tensorflow": [
+      "tensorflow"
+    ],
+    "teradata": [
+      "teradata"
+    ],
+    "terraform": [
+      "terraform"
+    ],
+    "trino": [
+      "trino"
+    ],
+    "typescript": [
+      "typescript",
+      "ts"
+    ],
+    "ui-дизайн": [
+      "ui-дизайн"
+    ],
+    "ui/ux": [
+      "ui/ux"
+    ],
+    "uml": [
+      "uml"
+    ],
+    "ux-дизайн": [
+      "ux-дизайн"
+    ],
+    "ux/ui": [
+      "ux/ui"
+    ],
+    "ubuntu": [
+      "ubuntu"
+    ],
+    "unix": [
+      "unix"
+    ],
+    "unreal engine": [
+      "unreal engine"
+    ],
+    "user understanding": [
+      "user understanding"
+    ],
+    "vacuum": [
+      "vacuum"
+    ],
+    "vk cloud": [
+      "vk cloud"
+    ],
+    "vlan": [
+      "vlan"
+    ],
+    "vpn": [
+      "vpn"
+    ],
+    "vroc": [
+      "vroc"
+    ],
+    "vxlan": [
+      "vxlan"
+    ],
+    "vertica": [
+      "vertica"
+    ],
+    "vipnet": [
+      "vipnet"
+    ],
+    "viz artist": [
+      "viz artist"
+    ],
+    "vizrt": [
+      "vizrt"
+    ],
+    "wan": [
+      "wan"
+    ],
+    "wms": [
+      "wms"
+    ],
+    "webassembly": [
+      "webassembly"
+    ],
+    "win32 api": [
+      "win32 api"
+    ],
+    "windbg": [
+      "windbg"
+    ],
+    "windchill": [
+      "windchill"
+    ],
+    "windows": [
+      "windows"
+    ],
+    "windows server": [
+      "windows server"
+    ],
+    "xml": [
+      "xml"
+    ],
+    "yarn": [
+      "yarn"
+    ],
+    "yadro": [
+      "yadro"
+    ],
+    "yonote": [
+      "yonote"
+    ],
+    "zabbix": [
+      "zabbix"
+    ],
+    "zimbra": [
+      "zimbra"
+    ],
+    "zoom": [
+      "zoom"
+    ],
+    "ad-hoc аналитика": [
+      "ad-hoc аналитика"
+    ],
+    "agent-first разработка": [
+      "agent-first разработка"
+    ],
+    "awx": [
+      "awx"
+    ],
+    "backfill": [
+      "backfill"
+    ],
+    "branching/merging": [
+      "branching/merging"
+    ],
+    "centralized архитектура": [
+      "centralized архитектура"
+    ],
+    "code review": [
+      "code review"
+    ],
+    "columnar субд": [
+      "columnar субд"
+    ],
+    "computer science": [
+      "computer science"
+    ],
+    "cron": [
+      "cron"
+    ],
+    "cross-border": [
+      "cross-border"
+    ],
+    "data quality": [
+      "data quality"
+    ],
+    "dbt": [
+      "dbt"
+    ],
+    "dbt semantic layer": [
+      "dbt semantic layer"
+    ],
+    "debugging": [
+      "debugging"
+    ],
+    "digital-услуги": [
+      "digital-услуга"
+    ],
+    "dimensional modeling": [
+      "dimensional modeling"
+    ],
+    "e-commerce": [
+      "e-commerce"
+    ],
+    "error logs": [
+      "error logs"
+    ],
+    "executors": [
+      "executors"
+    ],
+    "failover": [
+      "failover"
+    ],
+    "false negative": [
+      "false negative"
+    ],
+    "false positive": [
+      "false positive"
+    ],
+    "federation": [
+      "federation"
+    ],
+    "fine-tuning": [
+      "fine-tuning"
+    ],
+    "fintech": [
+      "fintech"
+    ],
+    "grpc api": [
+      "grpc api"
+    ],
+    "governance": [
+      "governance"
+    ],
+    "high-concurrency bi": [
+      "high-concurrency bi"
+    ],
+    "high-load": [
+      "high-load"
+    ],
+    "http/web-сервисы": [
+      "http/web-сервис"
+    ],
+    "ios": [
+      "ios"
+    ],
+    "insomnia": [
+      "insomnia"
+    ],
+    "job analytics": [
+      "job analytics"
+    ],
+    "lakehouse": [
+      "lakehouse"
+    ],
+    "last mile": [
+      "last mile"
+    ],
+    "last-mile": [
+      "last-mile"
+    ],
+    "lineage-инструменты": [
+      "lineage-инструмент"
+    ],
+    "logcat": [
+      "logcat"
+    ],
+    "low-code": [
+      "low-code"
+    ],
+    "loyalty": [
+      "loyalty"
+    ],
+    "macos": [
+      "macos"
+    ],
+    "mobile data": [
+      "mobile data"
+    ],
+    "multicast": [
+      "multicast"
+    ],
+    "network analysis": [
+      "network analysis"
+    ],
+    "observability": [
+      "observability"
+    ],
+    "on-premise": [
+      "on-premise"
+    ],
+    "open-table форматы": [
+      "open-table формат"
+    ],
+    "pandas": [
+      "pandas"
+    ],
+    "pg_basebackup": [
+      "pg_basebackup"
+    ],
+    "pg_dump": [
+      "pg_dump"
+    ],
+    "pg_stat": [
+      "pg_stat"
+    ],
+    "precision": [
+      "precision"
+    ],
+    "purple teaming": [
+      "purple teaming"
+    ],
+    "recall": [
+      "recall"
+    ],
+    "replication": [
+      "replication"
+    ],
+    "requests": [
+      "requests"
+    ],
+    "rule-based системы": [
+      "rule-based система"
+    ],
+    "scheduler": [
+      "scheduler"
+    ],
+    "schema evolution": [
+      "schema evolution"
+    ],
+    "self-service аналитика": [
+      "self-service аналитика"
+    ],
+    "snapshots": [
+      "snapshots"
+    ],
+    "subject matter expert interviews": [
+      "subject matter expert interviews"
+    ],
+    "text-to-speech": [
+      "text-to-speech"
+    ],
+    "thinkcell": [
+      "thinkcell"
+    ],
+    "thought leadership": [
+      "thought leadership"
+    ],
+    "threat hunting": [
+      "threat hunting"
+    ],
+    "threat intelligence": [
+      "threat intelligence"
+    ],
+    "travel": [
+      "travel"
+    ],
+    "use cases": [
+      "use cases"
+    ],
+    "user experience": [
+      "user experience"
+    ],
+    "user stories": [
+      "user stories"
+    ],
+    "view": [
+      "view"
+    ],
+    "web-аналитика": [
+      "web-аналитика"
+    ],
+    "wireframes": [
+      "wireframes"
+    ],
+    "x64dbg": [
+      "x64dbg"
+    ],
+    "xapi": [
+      "xapi"
+    ],
+    "yii2": [
+      "yii2"
+    ],
+    "ав3": [
+      "ава3"
+    ],
+    "асу тп": [
+      "асу тп"
+    ],
+    "асутп": [
+      "асутп"
+    ],
+    "аэс": [
+      "аэс"
+    ],
+    "автоматизация кадрового документооборота": [
+      "автоматизация кадровый документооборот"
+    ],
+    "бгу": [
+      "бгу"
+    ],
+    "бп 3.0": [
+      "бп 3.0"
+    ],
+    "бсп": [
+      "бсп"
+    ],
+    "битфинанс": [
+      "битфинанс"
+    ],
+    "вна": [
+      "вна"
+    ],
+    "гост": [
+      "гост"
+    ],
+    "до 3": [
+      "до 3"
+    ],
+    "зкгу": [
+      "зкг"
+    ],
+    "зуп 3.1": [
+      "зуп 3.1"
+    ],
+    "ии": [
+      "ия"
+    ],
+    "ии в оценке": [
+      "ия в оценка"
+    ],
+    "информационные технологии": [
+      "информационный технология"
+    ],
+    "кд 2": [
+      "кд 2"
+    ],
+    "кд 3": [
+      "кд 3"
+    ],
+    "кипиа": [
+      "кипиа"
+    ],
+    "кис 1с": [
+      "киса 1с"
+    ],
+    "ктв": [
+      "ктв"
+    ],
+    "компас": [
+      "компас"
+    ],
+    "конвертация данных": [
+      "конвертация данные"
+    ],
+    "криптопро": [
+      "криптопро"
+    ],
+    "лвс": [
+      "лвс"
+    ],
+    "лкс": [
+      "лкс"
+    ],
+    "мэк 61131-3": [
+      "мэк 61131-3"
+    ],
+    "медицина": [
+      "медицина"
+    ],
+    "ндс": [
+      "ндс"
+    ],
+    "ндфл": [
+      "ндфл"
+    ],
+    "ооп": [
+      "ооп",
+      "oop"
+    ],
+    "обновление конфигурации 1с": [
+      "обновление конфигурация 1с"
+    ],
+    "оптимизация бизнес-процессов": [
+      "оптимизация бизнес-процесс"
+    ],
+    "пк": [
+      "пк"
+    ],
+    "плк": [
+      "плк"
+    ],
+    "пнр": [
+      "пнр"
+    ],
+    "пэвм": [
+      "пэвм"
+    ],
+    "первая форма": [
+      "первый форма"
+    ],
+    "планы обмена": [
+      "план обмен"
+    ],
+    "рсбу": [
+      "рсб"
+    ],
+    "сапр": [
+      "сапр"
+    ],
+    "свт": [
+      "свт"
+    ],
+    "сзи": [
+      "сзи"
+    ],
+    "скд": [
+      "скд"
+    ],
+    "скзи": [
+      "скзь"
+    ],
+    "скс": [
+      "скс"
+    ],
+    "скуд": [
+      "скуда"
+    ],
+    "субд": [
+      "субд"
+    ],
+    "схд": [
+      "схд"
+    ],
+    "сопровождение информационных систем": [
+      "сопровождение информационный система"
+    ],
+    "тз": [
+      "тз"
+    ],
+    "тмц": [
+      "тмц"
+    ],
+    "тсд": [
+      "тсд"
+    ],
+    "техническая поддержка 1с": [
+      "технический поддержка 1с"
+    ],
+    "техническая поддержка пользователей": [
+      "технический поддержка пользователь"
+    ],
+    "унф 3": [
+      "унф 3"
+    ],
+    "фстэк": [
+      "фстэк"
+    ],
+    "цод": [
+      "цод"
+    ],
+    "чпу": [
+      "чпу"
+    ],
+    "авиация": [
+      "авиация"
+    ],
+    "автоматизация": [
+      "автоматизация"
+    ],
+    "автоматизация seo-процессов": [
+      "автоматизация seo-процесс"
+    ],
+    "автоматизация бизнес-процессов": [
+      "автоматизация бизнес-процесс"
+    ],
+    "автоматизация бизнеса": [
+      "автоматизация бизнес"
+    ],
+    "автоматизация процессов": [
+      "автоматизация процесс"
+    ],
+    "автоматизация тестирования": [
+      "автоматизация тестирование"
+    ],
+    "автоматизация технологических процессов": [
+      "автоматизация технологический процесс"
+    ],
+    "автоматизированное тестирование": [
+      "автоматизированный тестирование"
+    ],
+    "автоматизированные системы управления ка": [
+      "автоматизированный система управление ка"
+    ],
+    "автономное вождение": [
+      "автономный вождение"
+    ],
+    "агентные системы": [
+      "агентный система"
+    ],
+    "агентские схемы": [
+      "агентский схема"
+    ],
+    "агенты": [
+      "агент"
+    ],
+    "агрегации": [
+      "агрегация"
+    ],
+    "администрирование": [
+      "администрирование"
+    ],
+    "администрирование lms": [
+      "администрирование lms"
+    ],
+    "администрирование сзи": [
+      "администрирование сзи"
+    ],
+    "администрирование локальных сетей": [
+      "администрирование локальный сеть"
+    ],
+    "администрирование серверов": [
+      "администрирование сервер"
+    ],
+    "администрирование сетевого оборудования": [
+      "администрирование сетевой оборудование"
+    ],
+    "акционные кампании": [
+      "акционный кампания"
+    ],
+    "алгоритмические исследования": [
+      "алгоритмический исследование"
+    ],
+    "алгоритмы": [
+      "алгоритм"
+    ],
+    "алгоритмы управления": [
+      "алгоритм управление"
+    ],
+    "анализ бизнес-процессов": [
+      "анализ бизнес-процесс"
+    ],
+    "анализ вакансий": [
+      "анализ вакансия"
+    ],
+    "анализ данных": [
+      "анализ данные"
+    ],
+    "анализ конкурентов": [
+      "анализ конкурент"
+    ],
+    "анализ трафика": [
+      "анализ трафик"
+    ],
+    "анализ ценообразования": [
+      "анализ ценообразование"
+    ],
+    "аналитика": [
+      "аналитика"
+    ],
+    "аналитика данных": [
+      "аналитика данные"
+    ],
+    "аналитика продаж": [
+      "аналитика продажа"
+    ],
+    "аналитические справки": [
+      "аналитический справка"
+    ],
+    "аналитические фреймворки": [
+      "аналитический фреймворк"
+    ],
+    "аналитические функции": [
+      "аналитический функция"
+    ],
+    "аналитическое мышление": [
+      "аналитический мышление"
+    ],
+    "аналоговые приемные устройства": [
+      "аналоговый приёмный устройство"
+    ],
+    "английский язык": [
+      "английский язык"
+    ],
+    "антивирусная защита": [
+      "антивирусный защита"
+    ],
+    "антифрод-правила": [
+      "антифрод-правило"
+    ],
+    "арбитражные измерения": [
+      "арбитражный измерение"
+    ],
+    "архитектура": [
+      "архитектура"
+    ],
+    "архитектура баз данных": [
+      "архитектура база данные"
+    ],
+    "архитектура данных": [
+      "архитектура данные"
+    ],
+    "архитектурные решения": [
+      "архитектурный решение"
+    ],
+    "атрибуты товаров": [
+      "атрибут товар"
+    ],
+    "аудит бизнес-процессов": [
+      "аудит бизнес-процесс"
+    ],
+    "база знаний": [
+      "база знание"
+    ],
+    "базы данных": [
+      "база данные",
+      "бд",
+      "database"
+    ],
+    "бенчмаркинг": [
+      "бенчмаркинг"
+    ],
+    "беспроводные сети": [
+      "беспроводный сеть"
+    ],
+    "бизнес-анализ": [
+      "бизнес-анализ"
+    ],
+    "бизнес-документация": [
+      "бизнес-документация"
+    ],
+    "бизнес-информатика": [
+      "бизнес-информатика"
+    ],
+    "бизнес-процессы": [
+      "бизнес-процесс"
+    ],
+    "блок-схемы бизнес-процессов": [
+      "блок-схема бизнес-процесс"
+    ],
+    "большие данные": [
+      "больший дать"
+    ],
+    "большие объемы данных": [
+      "больший объём данные"
+    ],
+    "браузерные системы": [
+      "браузерный система"
+    ],
+    "бухгалтерский учет": [
+      "бухгалтерский учёт"
+    ],
+    "бэкапы": [
+      "бэкап"
+    ],
+    "бэкенд": [
+      "бэкенд"
+    ],
+    "бэклог": [
+      "бэклога"
+    ],
+    "бюджетирование": [
+      "бюджетирование"
+    ],
+    "веб-порталы": [
+      "веб-портал"
+    ],
+    "веб-приложения": [
+      "веб-приложение"
+    ],
+    "веб-разработка": [
+      "веб-разработка"
+    ],
+    "веб-сервисы": [
+      "веб-сервис"
+    ],
+    "веб-тестирование": [
+      "веб-тестирование"
+    ],
+    "вебинары": [
+      "вебинар"
+    ],
+    "верстка": [
+      "вёрстка"
+    ],
+    "видеоконференции": [
+      "видеоконференция"
+    ],
+    "видеоконференцсвязь": [
+      "видеоконференцсвязь"
+    ],
+    "видеонаблюдение": [
+      "видеонаблюдение"
+    ],
+    "видимость": [
+      "видимость"
+    ],
+    "визуализация данных": [
+      "визуализация данные"
+    ],
+    "визуальный поиск": [
+      "визуальный поиск"
+    ],
+    "виртуализация": [
+      "виртуализация"
+    ],
+    "виртуальные фермы": [
+      "виртуальный ферма"
+    ],
+    "витрины данных": [
+      "витрина данные"
+    ],
+    "внедрение": [
+      "внедрение"
+    ],
+    "внутренние системы": [
+      "внутренний система"
+    ],
+    "воронка": [
+      "воронка"
+    ],
+    "воронка продаж": [
+      "воронка продажа"
+    ],
+    "врач узкой специализации": [
+      "врач узкий специализация"
+    ],
+    "высоконагруженные сервисы": [
+      "высоконагруженный сервис"
+    ],
+    "высоконагруженные системы": [
+      "высоконагруженный система"
+    ],
+    "высокоточное оборудование": [
+      "высокоточный оборудование"
+    ],
+    "выявление потребностей": [
+      "выявление потребность"
+    ],
+    "генеративный ии": [
+      "генеративный ия"
+    ],
+    "генераторы": [
+      "генератор"
+    ],
+    "геометрические измерения": [
+      "геометрический измерение"
+    ],
+    "гипотезы": [
+      "гипотеза"
+    ],
+    "графовые связи": [
+      "графовыя связь"
+    ],
+    "дашборды": [
+      "дашборд"
+    ],
+    "декомпозиция задач": [
+      "декомпозиция задача"
+    ],
+    "демо": [
+      "дть"
+    ],
+    "детектирование угроз": [
+      "детектирование угроза"
+    ],
+    "диагностика": [
+      "диагностика"
+    ],
+    "диаграммы последовательностей": [
+      "диаграмма последовательность"
+    ],
+    "дизайн взаимодействия": [
+      "дизайн взаимодействие"
+    ],
+    "дизайн-системы": [
+      "дизайн-система"
+    ],
+    "диспетчеризация": [
+      "диспетчеризация"
+    ],
+    "длинный цикл сделки": [
+      "длинный цикл сделка"
+    ],
+    "доказательная медицина": [
+      "доказательный медицина"
+    ],
+    "документация": [
+      "документация"
+    ],
+    "документирование": [
+      "документирование"
+    ],
+    "доставка": [
+      "доставка"
+    ],
+    "закрытие сделок": [
+      "закрытие сделка"
+    ],
+    "защита информации": [
+      "защита информация"
+    ],
+    "измерительная аппаратура": [
+      "измерительный аппаратура"
+    ],
+    "индонезийский язык": [
+      "индонезийский язык"
+    ],
+    "инженерия данных": [
+      "инженерия данные"
+    ],
+    "инженерия признаков": [
+      "инженерия признак"
+    ],
+    "инженерные системы": [
+      "инженерный система"
+    ],
+    "инструкции": [
+      "инструкция"
+    ],
+    "инструмент": [
+      "инструмент"
+    ],
+    "инструментация": [
+      "инструментация"
+    ],
+    "интеграции": [
+      "интеграция"
+    ],
+    "интеграционные шины": [
+      "интеграционный шина"
+    ],
+    "интеграция систем": [
+      "интеграция система"
+    ],
+    "интерактивные прототипы": [
+      "интерактивный прототип"
+    ],
+    "интернет-магазины": [
+      "интернет-магазин"
+    ],
+    "интернет-сервисы": [
+      "интернет-сервис"
+    ],
+    "инференс": [
+      "инференс"
+    ],
+    "информационная безопасность": [
+      "информационный безопасность"
+    ],
+    "информационные сайты": [
+      "информационный сайт"
+    ],
+    "инфраструктура": [
+      "инфраструктура"
+    ],
+    "инциденты информационной безопасности": [
+      "инцидент информационный безопасность"
+    ],
+    "испытание оборудования": [
+      "испытание оборудование"
+    ],
+    "исследования": [
+      "исследование"
+    ],
+    "источники питания": [
+      "источник питание"
+    ],
+    "кадровый учет": [
+      "кадровый учёт"
+    ],
+    "квадратичное программирование": [
+      "квадратичный программирование"
+    ],
+    "кейс-менеджмент": [
+      "кейс-менеджмент"
+    ],
+    "кибербезопасность": [
+      "кибербезопасность"
+    ],
+    "китайский язык": [
+      "китайский язык"
+    ],
+    "классы": [
+      "класс"
+    ],
+    "кластеризация": [
+      "кластеризация"
+    ],
+    "клиент-серверная архитектура": [
+      "клиент-серверный архитектура"
+    ],
+    "клиентские презентации": [
+      "клиентский презентация"
+    ],
+    "клинический анализ": [
+      "клинический анализ"
+    ],
+    "код-ревью": [
+      "код-ревить"
+    ],
+    "колоночные хранилища": [
+      "колоночный хранилище"
+    ],
+    "командная строка": [
+      "командный строка"
+    ],
+    "комбайны": [
+      "комбайн"
+    ],
+    "коммерческие предложения": [
+      "коммерческий предложение"
+    ],
+    "коммуникабельность": [
+      "коммуникабельность"
+    ],
+    "коммутаторы": [
+      "коммутатор"
+    ],
+    "коммутационное оборудование": [
+      "коммутационный оборудование"
+    ],
+    "компакция": [
+      "компакция"
+    ],
+    "консультирование клиентов": [
+      "консультирование клиент"
+    ],
+    "контент": [
+      "контент"
+    ],
+    "конфигурация по": [
+      "конфигурация по"
+    ],
+    "координатно-измерительная машина": [
+      "координатный-измерительный машина"
+    ],
+    "корпоративные сайты": [
+      "корпоративный сайт"
+    ],
+    "криптографические методы": [
+      "криптографический метод"
+    ],
+    "критерии приемки": [
+      "критерий приёмка"
+    ],
+    "кросс-функциональная команда": [
+      "кросс-функциональный команда"
+    ],
+    "кросс-функциональные команды": [
+      "кросс-функциональный команда"
+    ],
+    "крэш-логи": [
+      "крэш-лог"
+    ],
+    "кэширование": [
+      "кэширование"
+    ],
+    "лидерство": [
+      "лидерство"
+    ],
+    "лиды": [
+      "лида"
+    ],
+    "лицензионное программное обеспечение": [
+      "лицензионный программный обеспечение"
+    ],
+    "личные кабинеты": [
+      "личный кабинет"
+    ],
+    "логи": [
+      "лог"
+    ],
+    "логистика": [
+      "логистика"
+    ],
+    "локальные сети": [
+      "локальный сеть"
+    ],
+    "макеты": [
+      "макет"
+    ],
+    "маркетинг": [
+      "маркетинг"
+    ],
+    "маркетинговый анализ": [
+      "маркетинговый анализ"
+    ],
+    "маршрутизаторы": [
+      "маршрутизатор"
+    ],
+    "маршрутизация": [
+      "маршрутизация"
+    ],
+    "маршрутно-материальные спецификации": [
+      "маршрутный-материальный спецификация"
+    ],
+    "машинное обучение": [
+      "машинный обучение"
+    ],
+    "машиностроение": [
+      "машиностроение"
+    ],
+    "межсетевой экран": [
+      "межсетевой экран"
+    ],
+    "метаданные": [
+      "метаданные"
+    ],
+    "методики измерений": [
+      "методика измерение"
+    ],
+    "метрики": [
+      "метрика"
+    ],
+    "метрики контента": [
+      "метрика контент"
+    ],
+    "механическая обработка": [
+      "механический обработка"
+    ],
+    "миграция данных": [
+      "миграция данные"
+    ],
+    "микросервисы": [
+      "микросервис"
+    ],
+    "многопоточное программирование": [
+      "многопоточный программирование"
+    ],
+    "мобильная разработка": [
+      "мобильный разработка"
+    ],
+    "мобильное тестирование": [
+      "мобильный тестирование"
+    ],
+    "мобильные приложения": [
+      "мобильный приложение"
+    ],
+    "модели данных": [
+      "модель данные"
+    ],
+    "моделирование бизнес-процессов": [
+      "моделирование бизнес-процесс"
+    ],
+    "моделирование данных": [
+      "моделирование данные"
+    ],
+    "мониторинг": [
+      "мониторинг"
+    ],
+    "монтаж оборудования": [
+      "монтаж оборудование"
+    ],
+    "мультимодальное моделирование": [
+      "мультимодальный моделирование"
+    ],
+    "мультиплеерные протоколы": [
+      "мультиплеерный протокол"
+    ],
+    "навесное оборудование": [
+      "навесный оборудование"
+    ],
+    "навыки программирования": [
+      "навык программирование"
+    ],
+    "наладка оборудования": [
+      "наладка оборудование"
+    ],
+    "налог на прибыль": [
+      "налог на прибыль"
+    ],
+    "написание кода": [
+      "написание код"
+    ],
+    "наследование": [
+      "наследование"
+    ],
+    "наставничество": [
+      "наставничество"
+    ],
+    "настройка индексов": [
+      "настройка индекс"
+    ],
+    "настройка серверов": [
+      "настройка сервер"
+    ],
+    "настройка сетей": [
+      "настройка сеть"
+    ],
+    "настройка функциональности кис": [
+      "настройка функциональность киса"
+    ],
+    "нейронные сети": [
+      "нейронный сеть"
+    ],
+    "нормализация бд": [
+      "нормализация бд"
+    ],
+    "нормализация данных": [
+      "нормализация данные"
+    ],
+    "нормативная документация": [
+      "нормативный документация"
+    ],
+    "нормы расхода материалов": [
+      "норма расход материал"
+    ],
+    "нотации": [
+      "нотация"
+    ],
+    "облачные платформы": [
+      "облачный платформа"
+    ],
+    "облачные технологии": [
+      "облачный технология"
+    ],
+    "облачные хранилища": [
+      "облачный хранилище"
+    ],
+    "обследование зданий и сооружений": [
+      "обследование здание и сооружение"
+    ],
+    "обучаемость": [
+      "обучаемость"
+    ],
+    "обучение": [
+      "обучение"
+    ],
+    "обучение с подкреплением": [
+      "обучение с подкрепление"
+    ],
+    "оконные функции": [
+      "оконный функция"
+    ],
+    "онлайн-консультирование": [
+      "онлайн-консультирование"
+    ],
+    "онлайн-продажи": [
+      "онлайн-продажа"
+    ],
+    "операторы": [
+      "оператор"
+    ],
+    "операционная деятельность": [
+      "операционный деятельность"
+    ],
+    "операционные системы": [
+      "операционный система"
+    ],
+    "оптимизация бд": [
+      "оптимизация бд"
+    ],
+    "оптимизация запросов": [
+      "оптимизация запрос"
+    ],
+    "оптимизация кода": [
+      "оптимизация код"
+    ],
+    "оптимизация производительности": [
+      "оптимизация производительность"
+    ],
+    "оптимизация сайта": [
+      "оптимизация сайт"
+    ],
+    "опыт работы в части 1с зуп": [
+      "опыт работа в часть 1с зуп"
+    ],
+    "оргтехника": [
+      "оргтехника"
+    ],
+    "оркестрация": [
+      "оркестрация"
+    ],
+    "оснастка": [
+      "оснастка"
+    ],
+    "отбор сотрудников": [
+      "отбор сотрудник"
+    ],
+    "отзывы": [
+      "отзыв"
+    ],
+    "отладка": [
+      "отладка"
+    ],
+    "отладка программ": [
+      "отладка программа"
+    ],
+    "отчеты": [
+      "отчёт"
+    ],
+    "отчетность": [
+      "отчётность"
+    ],
+    "офисное по": [
+      "офисный по"
+    ],
+    "офисные программы": [
+      "офисный программа"
+    ],
+    "оформление заявок": [
+      "оформление заявка"
+    ],
+    "оценка ии": [
+      "оценка ия"
+    ],
+    "оценка лидеров": [
+      "оценка лидер"
+    ],
+    "оценка талантов": [
+      "оценка талант"
+    ],
+    "очереди сообщений": [
+      "очередь сообщение"
+    ],
+    "пайплайны": [
+      "пайплайна"
+    ],
+    "параллельное программирование": [
+      "параллельный программирование"
+    ],
+    "паттерны проектирования": [
+      "паттерн проектирование"
+    ],
+    "переговоры": [
+      "переговоры"
+    ],
+    "перегрузка операторов": [
+      "перегрузка оператор"
+    ],
+    "переопределение методов": [
+      "переопределение метод"
+    ],
+    "периферийное оборудование": [
+      "периферийный оборудование"
+    ],
+    "персонализация": [
+      "персонализация"
+    ],
+    "питчи": [
+      "питч"
+    ],
+    "план счетов бу": [
+      "план счёт бу"
+    ],
+    "план-факт анализ": [
+      "план-факт анализ"
+    ],
+    "планирование": [
+      "планирование"
+    ],
+    "планирование движения": [
+      "планирование движение"
+    ],
+    "планово-предупредительный ремонт": [
+      "планово-предупредительный ремонт"
+    ],
+    "платежные интеграции": [
+      "платёжный интеграция"
+    ],
+    "платформа 8.3": [
+      "платформа 8.3"
+    ],
+    "пневматические системы": [
+      "пневматический система"
+    ],
+    "поведенческая оценка": [
+      "поведенческий оценка"
+    ],
+    "позиции": [
+      "позиция"
+    ],
+    "поиск новых клиентов": [
+      "поиск новый клиент"
+    ],
+    "полный цикл анализа": [
+      "полный цикл анализ"
+    ],
+    "пользовательские интерфейсы": [
+      "пользовательский интерфейс"
+    ],
+    "пользовательские сценарии": [
+      "пользовательский сценарий"
+    ],
+    "последняя миля": [
+      "последний миля"
+    ],
+    "предпродажная подготовка": [
+      "предпродажный подготовка"
+    ],
+    "презентации": [
+      "презентация"
+    ],
+    "преобразователи частоты": [
+      "преобразователь частота"
+    ],
+    "приборы кипиа": [
+      "прибор кипиа"
+    ],
+    "прикладная математика": [
+      "прикладной математик"
+    ],
+    "прикладное по": [
+      "прикладной по"
+    ],
+    "приемо-передающие устройства": [
+      "прить-передавать устройство"
+    ],
+    "проведение встреч": [
+      "проведение встреча"
+    ],
+    "прогнозирование": [
+      "прогнозирование"
+    ],
+    "программирование": [
+      "программирование"
+    ],
+    "программирование бд": [
+      "программирование бд"
+    ],
+    "программы лояльности": [
+      "программа лояльность"
+    ],
+    "продажи проектных услуг": [
+      "продажа проектный услуга"
+    ],
+    "продуктовая аналитика": [
+      "продуктовый аналитика"
+    ],
+    "продуктовая документация": [
+      "продуктовый документация"
+    ],
+    "продуктовое внедрение": [
+      "продуктовый внедрение"
+    ],
+    "продуктовые решения": [
+      "продуктовый решение"
+    ],
+    "продуктовый дизайн": [
+      "продуктовый дизайн"
+    ],
+    "проектирование оснастки": [
+      "проектирование оснастка"
+    ],
+    "проектирование решений": [
+      "проектирование решение"
+    ],
+    "проектирование систем": [
+      "проектирование система"
+    ],
+    "проектная документация": [
+      "проектный документация"
+    ],
+    "проектный менеджмент": [
+      "проектный менеджмент"
+    ],
+    "промо-кампании": [
+      "промый-кампания"
+    ],
+    "протоколы": [
+      "протокол"
+    ],
+    "прототипирование": [
+      "прототипирование"
+    ],
+    "прямые продажи": [
+      "прямой продажа"
+    ],
+    "пуско-наладочные работы": [
+      "пуско-наладочный работа"
+    ],
+    "пусконаладочные работы": [
+      "пусконаладочный работа"
+    ],
+    "работа с большим объемом информации": [
+      "работа с больший объём информация"
+    ],
+    "работа со смартфонами": [
+      "работа с смартфон"
+    ],
+    "работу с корпоративными клиентами": [
+      "работа с корпоративный клиент"
+    ],
+    "рабочие станции": [
+      "рабочий станция"
+    ],
+    "радиоэлектроника": [
+      "радиоэлектроника"
+    ],
+    "развитие клиентов": [
+      "развитие клиент"
+    ],
+    "размещение рекламных материалов": [
+      "размещение рекламный материал"
+    ],
+    "разработка": [
+      "разработка"
+    ],
+    "разработка компьютерного программного обеспечения": [
+      "разработка компьютерный программный обеспечение"
+    ],
+    "разработка обучающих данных": [
+      "разработка обучать данные"
+    ],
+    "разработка программной документации": [
+      "разработка программный документация"
+    ],
+    "распознавание речи": [
+      "распознавание речь"
+    ],
+    "распределенные базы данных": [
+      "распределённый база данные"
+    ],
+    "распределенные системы": [
+      "распределённый система"
+    ],
+    "расчет заработной платы": [
+      "расчёт заработный плата"
+    ],
+    "расширения конфигураций": [
+      "расширение конфигурация"
+    ],
+    "реверс-инжиниринг": [
+      "реверс-инжиниринг"
+    ],
+    "регламенты": [
+      "регламент"
+    ],
+    "регулировка узлов": [
+      "регулировка узел"
+    ],
+    "редактор": [
+      "редактор"
+    ],
+    "резервное копирование": [
+      "резервный копирование"
+    ],
+    "реинжиниринг": [
+      "реинжиниринг"
+    ],
+    "реляционные бд": [
+      "реляционный бд"
+    ],
+    "реляционные базы данных": [
+      "реляционный база данные"
+    ],
+    "реляционные хранилища": [
+      "реляционный хранилище"
+    ],
+    "ремонт": [
+      "ремонт"
+    ],
+    "ремонт оборудования": [
+      "ремонт оборудование"
+    ],
+    "репликация": [
+      "репликация"
+    ],
+    "рефакторинг": [
+      "рефакторинг"
+    ],
+    "рефакторинг кода 1с": [
+      "рефакторинг код 1с"
+    ],
+    "роадмап": [
+      "роадмап"
+    ],
+    "роботизированные комплексы": [
+      "роботизированный комплекс"
+    ],
+    "ручное тестирование": [
+      "ручной тестирование"
+    ],
+    "сбор обратной связи": [
+      "сбор обратный связь"
+    ],
+    "сбор событий": [
+      "сбор событие"
+    ],
+    "сбор требований": [
+      "сбор требование"
+    ],
+    "сборка": [
+      "сборка"
+    ],
+    "сварка": [
+      "сварка"
+    ],
+    "сегментация аудитории": [
+      "сегментация аудитория"
+    ],
+    "сегментация рынка": [
+      "сегментация рынок"
+    ],
+    "сельскохозяйственная техника": [
+      "сельскохозяйственный техника"
+    ],
+    "семантический слой": [
+      "семантический слой"
+    ],
+    "сенсоры": [
+      "сенсор"
+    ],
+    "серверное оборудование": [
+      "серверный оборудование"
+    ],
+    "серверы": [
+      "сервер"
+    ],
+    "сервоприводы": [
+      "сервопривод"
+    ],
+    "сетевая безопасность": [
+      "сетевой безопасность"
+    ],
+    "сетевое оборудование": [
+      "сетевой оборудование"
+    ],
+    "сетевые подключения": [
+      "сетевой подключение"
+    ],
+    "сетевые протоколы": [
+      "сетевой протокол"
+    ],
+    "сетевые технологии": [
+      "сетевой технология"
+    ],
+    "сети": [
+      "сеть"
+    ],
+    "синтез речи": [
+      "синтез речь"
+    ],
+    "синтезаторы частот": [
+      "синтезатор частота"
+    ],
+    "система электронного документооборота": [
+      "система электронный документооборот"
+    ],
+    "системное администрирование": [
+      "системный администрирование"
+    ],
+    "системный анализ": [
+      "системный анализ"
+    ],
+    "системный дизайн": [
+      "системный дизайн"
+    ],
+    "системы безопасности": [
+      "система безопасность"
+    ],
+    "системы видеоконференций": [
+      "система видеоконференция"
+    ],
+    "системы мониторинга": [
+      "система мониторинг"
+    ],
+    "системы очередей сообщений": [
+      "система очередь сообщение"
+    ],
+    "системы скоринга": [
+      "система скоринг"
+    ],
+    "системы совместной работы в реальном времени": [
+      "система совместный работа в реальный время"
+    ],
+    "системы управления базами данных": [
+      "система управление база данные"
+    ],
+    "системы хранения данных": [
+      "система хранение данные"
+    ],
+    "складская логистика": [
+      "складской логистика"
+    ],
+    "складской учет": [
+      "складской учёт"
+    ],
+    "скрипты vizrt": [
+      "скрипт vizrt"
+    ],
+    "слаботочные системы": [
+      "слаботочный система"
+    ],
+    "сложные запросы": [
+      "сложный запрос"
+    ],
+    "снифферы трафика": [
+      "снифферы трафик"
+    ],
+    "средства защиты информации": [
+      "средство защита информация"
+    ],
+    "средства измерений": [
+      "средство измерение"
+    ],
+    "статистика": [
+      "статистика"
+    ],
+    "статистические методы": [
+      "статистический метод"
+    ],
+    "статистический анализ": [
+      "статистический анализ"
+    ],
+    "стейкхолдеры": [
+      "стейкхолдер"
+    ],
+    "стратегия": [
+      "стратегия"
+    ],
+    "страховые взносы": [
+      "страховой взнос"
+    ],
+    "строительно-ремонтные работы": [
+      "строительный-ремонтный работа"
+    ],
+    "структурированные кабельные системы": [
+      "структурировать кабельный система"
+    ],
+    "структуры данных": [
+      "структура данные"
+    ],
+    "сценарии тестирования": [
+      "сценарий тестирование"
+    ],
+    "тайский язык": [
+      "тайский язык"
+    ],
+    "текстовая релевантность": [
+      "текстовый релевантность"
+    ],
+    "телекоммуникации": [
+      "телекоммуникация"
+    ],
+    "терапевт": [
+      "терапевт"
+    ],
+    "тестирование": [
+      "тестирование"
+    ],
+    "техническая документация": [
+      "технический документация"
+    ],
+    "техническая поддержка": [
+      "технический поддержка"
+    ],
+    "техническая эксплуатация": [
+      "технический эксплуатация"
+    ],
+    "технические задания": [
+      "технический задание"
+    ],
+    "технические средства информационной защиты": [
+      "технический средство информационный защита"
+    ],
+    "технический анализ": [
+      "технический анализ"
+    ],
+    "технический английский": [
+      "технический английский"
+    ],
+    "техническое seo": [
+      "технический seo"
+    ],
+    "техническое обслуживание": [
+      "технический обслуживание"
+    ],
+    "технологическое сопровождение": [
+      "технологический сопровождение"
+    ],
+    "типизация": [
+      "типизация"
+    ],
+    "товарно-материальные ценности": [
+      "товарный-материальный ценность"
+    ],
+    "точки роста": [
+      "точка рост"
+    ],
+    "трактора": [
+      "трактор"
+    ],
+    "транспортная логистика": [
+      "транспортный логистика"
+    ],
+    "требования": [
+      "требование"
+    ],
+    "умный дом": [
+      "умный дом"
+    ],
+    "управление данными": [
+      "управление данные"
+    ],
+    "управление проектами": [
+      "управление проект"
+    ],
+    "управление рисками": [
+      "управление риск"
+    ],
+    "управленческая отчетность": [
+      "управленческий отчётность"
+    ],
+    "управляемые формы": [
+      "управляемый форма"
+    ],
+    "управляющие программы": [
+      "управлять программа"
+    ],
+    "установка по": [
+      "установка по"
+    ],
+    "устройства плавного пуска": [
+      "устройство плавный пуск"
+    ],
+    "факторный анализ": [
+      "факторный анализ"
+    ],
+    "фидбэк": [
+      "фидбэк"
+    ],
+    "финансовые результаты": [
+      "финансовый результат"
+    ],
+    "французский язык": [
+      "французский язык"
+    ],
+    "фреймворки": [
+      "фреймворк"
+    ],
+    "фреймворки автоматизации": [
+      "фреймворк автоматизация"
+    ],
+    "фрод-инструменты": [
+      "фрод-инструмент"
+    ],
+    "фронтенд": [
+      "фронтенд"
+    ],
+    "фронтенд-разработка": [
+      "фронтенд-разработка"
+    ],
+    "функциональные требования": [
+      "функциональный требование"
+    ],
+    "хинди": [
+      "хинди"
+    ],
+    "хранилища данных": [
+      "хранилище данные"
+    ],
+    "хранимые процедуры": [
+      "хранить процедура"
+    ],
+    "хуки": [
+      "хук"
+    ],
+    "ценовой мониторинг": [
+      "ценовой мониторинг"
+    ],
+    "цифровая трансформация": [
+      "цифровой трансформация"
+    ],
+    "цифровые сценарии": [
+      "цифровой сценарий"
+    ],
+    "чертежи": [
+      "чертёж"
+    ],
+    "чтение чертежей": [
+      "чтение чертёж"
+    ],
+    "шаблоны проектирования": [
+      "шаблон проектирование"
+    ],
+    "шифрование": [
+      "шифрование"
+    ],
+    "шифрование данных": [
+      "шифрование данные"
+    ],
+    "эвристики": [
+      "эвристика"
+    ],
+    "эвристические алгоритмы": [
+      "эвристический алгоритм"
+    ],
+    "экономика": [
+      "экономика"
+    ],
+    "эксперименты": [
+      "эксперимент"
+    ],
+    "эксплуатация зданий": [
+      "эксплуатация здание"
+    ],
+    "электрические системы": [
+      "электрический система"
+    ],
+    "электрические схемы": [
+      "электрический схема"
+    ],
+    "электробезопасность": [
+      "электробезопасность"
+    ],
+    "электроника": [
+      "электроника"
+    ],
+    "электронное оборудование": [
+      "электронный оборудование"
+    ],
+    "электронные базы данных": [
+      "электронный база данные"
+    ],
+    "электронные схемы": [
+      "электронный схема"
+    ],
+    "электронный документооборот": [
+      "электронный документооборот"
+    ],
+    "юнит-тесты": [
+      "юнит-тест"
+    ],
+    "язык разработки 1с": [
+      "язык разработка 1с"
+    ]
+  }
+}

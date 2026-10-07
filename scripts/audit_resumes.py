@@ -6,9 +6,8 @@ import pandas as pd
 import pypdf
 
 BASE_DIR = Path(__file__).resolve().parent
-EXEL_DIR = BASE_DIR / "exel"
-RESUMES_GT_PATH = EXEL_DIR / "ground_truth_resumes.csv"
-PDF_DIR = EXEL_DIR / "Резюме в pdf"
+RESUMES_GT_PATH = BASE_DIR.parent / "data" / "ground_truth_resumes.csv"
+PDF_DIR = BASE_DIR.parent / "data" / "resumes"
 
 if not RESUMES_GT_PATH.exists():
     raise FileNotFoundError(f"Файл не найден: {RESUMES_GT_PATH}")
@@ -167,4 +166,3 @@ for k, v in fp_counter.most_common(20):
 print("\n--- ТОП-20 ПРОПУСКОВ В РЕЗЮМЕ (FN) ---")
 for k, v in fn_counter.most_common(20):
     print(f"  • {k}: {v}")
-

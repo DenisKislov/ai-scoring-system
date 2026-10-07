@@ -21,14 +21,11 @@ Parser/   (Scrapy project name: HH_PARSE)
 │   └── config.json                 # What to parse + start_urls (vacancy/company/resume toggles)
 ├── requirements.txt
 ├── README.md
-├── print_from_mongodb.py           # Debug helper: count vacancies + print title/salary from Mongo
-├── extract_years_of_experience.py  # Offline helper: parse "Опыт работы: N лет" from resumes.json
 ├── *.json                          # Generated dumps (resumes/vacancies/extracted_*) — see "Utility scripts"
 └── gb_parse/
     ├── __init__.py
     ├── items.py                    # Scrapy Item definitions (vacancy, company, resume)
     ├── loaders.py                  # ItemLoaders with field processors
-    ├── middlewares.py              # Spider & downloader middlewares
     ├── pipelines.py                # MongoDB storage pipeline
     ├── settings.py                 # Scrapy settings
     ├── main.py                     # Alternative entry point (run from inside gb_parse/)
@@ -131,10 +128,11 @@ docker exec -i mongo mongosh --quiet gb_parse --eval "db.dropDatabase()"        
 
 Вспомогательные скрипты и JSON-дампы
 Это опциональные вспомогательные утилиты и сгенерированные артефакты — не являются частью самого обхода.
+Обе утилиты находятся в корневом каталоге `scripts/`; для обработки дампа `resumes.json` запускайте скрипт из каталога, где лежит дамп.
 Файл	Что делает
-print_from_mongodb.py	Небольшой отладочный скрипт: подключается к gb_parse, выводит количество вакансий и title/salary каждой вакансии.
-extract_years_of_experience.py	Вспомогательный скрипт для работы офлайн, который читает дамп resumes.json и извлекает общий опыт работы в годах с помощью регулярного выражения Опыт работы:\s*(\d+)\s*(лет|год|года) → extracted_experience.json.
-Примечание. В рабочем конвейере опыт работы в годах теперь извлекается напрямую из MongoDB с помощью db.builders.experience_years (без необходимости в JSON-дампе) и используется для разрешения конфликтов среди кандидатов с одинаковым рейтингом — см. корневой README.md. extract_years_of_experience.py сохранен как отдельный офлайн-вариант.
+scripts/print_from_mongodb.py	Небольшой отладочный скрипт: подключается к gb_parse, выводит количество вакансий и title/salary каждой вакансии.
+scripts/extract_years_of_experience.py	Вспомогательный скрипт для работы офлайн, который читает дамп resumes.json и извлекает общий опыт работы в годах с помощью регулярного выражения Опыт работы:\s*(\d+)\s*(лет|год|года) → extracted_experience.json.
+Примечание. В рабочем конвейере опыт работы в годах теперь извлекается напрямую из MongoDB с помощью db.builders.experience_years (без необходимости в JSON-дампе) и используется для разрешения конфликтов среди кандидатов с одинаковым рейтингом — см. корневой README.md. scripts/extract_years_of_experience.py сохранен как отдельный офлайн-вариант.
 
 JSON-дампы (*.json)
 resumes.json / vacancies.json / extracted_experience.json — это восстанавливаемые артефакты, созданные приведенными выше командами экспорта (или вспомогательным скриптом извлечения лет) — не исходные файлы. Если дамп выглядит поврежденным (начинается с текста терминала mongosh …), он был экспортирован с -it; повторно экспортируйте с -i --quiet (см. "Экспорт коллекции в JSON"). Пустые файлы можно безопасно удалять.

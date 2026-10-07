@@ -1,22 +1,6 @@
-# runtime dependencies (Python 3.10+, conda env candidate_scoring)
-# Установка из корня проекта:  pip install -r requirements.txt
-# синтетика, UI
-faker
-streamlit
-
-# Опционально — нужно только для MongoDB-интеграции и CLI `python -m scorer.service`
-pymongo>=4.0
-# API: веб-сервис (FastAPI) и парсинг файлов резюме (PDF)
-fastapi>=0.100
-uvicorn>=0.23
-pdfplumber
-pymongo
-spacy>=3.5.0
-sentence-transformers
-scikit-learn
-numpy
+# Локальная разработка, оценочные скрипты и тесты.
+-r api/requirements.txt
+-r scorer/requirements.txt
+-r tests/requirements.txt
 pypdf
-pymorphy3
-flashtext
-PyMuPDF>=1.23.0
 pandas>=2.0.0

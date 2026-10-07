@@ -1,5 +1,5 @@
 import pytest
-from skill_extractor import SkillExtractor
+from scorer.skill_extractor import SkillExtractor
 
 TAXONOMY = [
     "Python", "PostgreSQL", "C++", "C#", ".NET", "1С", "1С: ERP",

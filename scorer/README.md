@@ -148,14 +148,15 @@ python -m scorer.service [VACANCY_ID] [--top N] [--limit-resumes N] [--no-save] 
 
 ## Качество
 
-Качество ранжирования проверяется на синтетике с ground-truth ([`tests/eval_synthetic.py`](../tests/eval_synthetic.py)):
-
-- по каждой вакансии считаются `nDCG@10`, `nDCG`, `precision@5`, `Spearman(score, true_relevance)`;
-- в конце — корреляция компонент (`keyword` / `cosine` / `combined`) с истинной релевантностью;
-- проход по порогу `QUALITY_BAR = 0.80` (скрипт `assert`-ит проход).
+Качество ранжирования проверяется на синтетике с известной релевантностью
+([`scripts/benchmark_synthetic.py`](../scripts/benchmark_synthetic.py)).
+На 12 вакансиях × 30 резюме и трёх seed считаются Precision@10, Recall@10,
+MAP, MRR, NDCG@10 и Spearman. `tests/eval_synthetic.py` проверяет порог ТЗ
+NDCG@10 ≥ 0,80 тем же расчётом. Бинарная релевантность для P/R/MAP/MRR —
+`true_relevance ≥ 0.65`, NDCG использует непрерывную метку.
 
 ```bash
-python tests/eval_synthetic.py
+.venv/bin/python scripts/benchmark_synthetic.py
 ```
 
 > Это **контролируемые синтетические данные**: ground-truth задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Цифры доказывают корректность алгоритма и пайплайна оценки, но **не** продакшен-точность. Реальных лейблов нет (152-ФЗ).

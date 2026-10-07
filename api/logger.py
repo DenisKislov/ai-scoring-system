@@ -1,5 +1,8 @@
 import logging
-import os
+from pathlib import Path
+
+
+LOG_PATH = Path(__file__).resolve().parent.parent / "logs" / "app.log"
 
 
 def setup_logger(name: str) -> logging.Logger:
@@ -18,8 +21,8 @@ def setup_logger(name: str) -> logging.Logger:
         logger.addHandler(console_handler)
 
         # Запись в файл для фронтенда
-        log_file = os.path.join(os.getcwd(), 'app.log')
-        file_handler = logging.FileHandler(log_file, encoding='utf-8')
+        LOG_PATH.parent.mkdir(exist_ok=True)
+        file_handler = logging.FileHandler(LOG_PATH, encoding='utf-8')
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 

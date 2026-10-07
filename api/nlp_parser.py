@@ -1,146 +1,194 @@
+"""
+api/nlp_parser.py — словарный экстрактор навыков.
+
+Заменяет spaCy-подход: вместо NER/POS использует точный матч по словарю
+навыков (JSON-файл). Один словарь — один файл данных, никаких ML-моделей.
+
+Публичный API:
+    extract_smart_skills(text: str) -> list[str]
+        — основная функция, которую вызывает db/builders.py.
+
+Конфигурация через переменные окружения:
+    SKILLS_VOCAB_PATH   путь к JSON-словарю
+                        (по умолчанию "data/skills_vocab.json")
+
+Формат словаря (см. scripts/build_skills_vocab.py):
+    {
+      "version": "1.0",
+      "config": {"lemmatized": false, ...},
+      "skills": {
+        "python":     ["python"],
+        "postgresql": ["postgresql", "postgres", "psql"],
+        ...
+      }
+    }
+"""
+from __future__ import annotations
+
 import json
 import os
 import re
-from typing import List, Set, Dict
-from sentence_transformers import SentenceTransformer
+from typing import Dict, List, Optional, Set, Tuple
 
-# Трансформер оставляем для семантического скоринга текстов
-embedder = SentenceTransformer("cointegrated/rubert-tiny2")
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SKILLS_FILE = os.path.join(BASE_DIR, "esco_skills.json")
-MINED_FILE = os.path.join(BASE_DIR, "mined_skills.json")
-
-# 1. Базовый список таксономии
-TAXONOMY_SKILLS: List[str] = []
-if os.path.exists(SKILLS_FILE):
-    with open(SKILLS_FILE, "r", encoding="utf-8") as f:
-        TAXONOMY_SKILLS = [s.strip().lower() for s in json.load(f)]
-
-# 2. Загрузка базы терминов автоматического майнинга
-MINED_TAXONOMY: Dict[str, dict] = {}
-if os.path.exists(MINED_FILE):
-    with open(MINED_FILE, "r", encoding="utf-8") as f:
-        MINED_TAXONOMY = json.load(f)
-
-# 3. Структурированная карта синонимов и паттернов (Alias Map)
-SKILL_ALIASES: Dict[str, List[str]] = {
-    "bash": [r"\bbash\b", r"\bsh\b"],
-    "powershell": [r"\bpowershell\b", r"\bps1\b"],
-    "linux": [r"\blinux\b", r"\bлинукс\b", r"\bastra\s*linux\b", r"\balt\s*linux\b", r"\bubuntu\b", r"\bdebian\b",
-              r"\bcentos\b", r"\bredhat\b"],
-    "windows server": [r"\bwindows\s*server\b", r"\bmcs[ae]\b", r"\bactive\s*directory\b", r"\bsambadc\b"],
-    "zabbix": [r"\bzabbix\b"],
-    "vlan": [r"\bvlan\b", r"\b802\.1q\b"],
-    "vpn": [r"\bvpn\b", r"\bipsec\b", r"\bopenvpn\b", r"\bwireguard\b"],
-    "dhcp": [r"\bdhcp\b"],
-    "dns": [r"\bdns\b", r"\bbind9?\b"],
-    "itsm": [r"\bitsm\b", r"\bitil\b", r"\binframanager\b"],
-    "информационная безопасность": [r"\bинформационн\w+\s+безопасност\w+", r"\bиб\b", r"\bkaspersky\b"],
-    "системное администрирование": [r"\bсистемн\w+\s+администрирован\w+", r"\bсетев\w+\s+администратор\w*"],
-
-    # Веб и бэкенд разработка
-    "python": [r"\bpython\b", r"\bпитон\b"],
-    "java": [r"\bjava\b(?!\s*script)"],
-    "swift": [r"\bswift\b"],
-    "css": [r"\bcss3?\b"],
-    "sass": [r"\bsass\b", r"\bscss\b"],
-    "sql": [r"\bsql\b", r"\bpostgresql\b", r"\bmysql\b"],
-    "mongodb": [r"\bmongodb\b", r"\bmongo\b"],
-    "rest api": [r"\brest\s*api\b", r"\brestful\b", r"\brest\b"],
-    "solid": [r"\bsolid\b"],
-    "ооп": [r"\bооп\b", r"\boop\b", r"\bобъектно[- ]ориентированн\w+"],
-    "unit-тестирование": [r"\bunit[- ]тестирован\w+", r"\bюнит[- ]тест\w*", r"\bpytest\b"],
-    "c": [r"\bязык\s+[cс]\b", r"\bпрограммировани[ея]\s+на\s+[cс]\b"],
-    "c++": [r"\bc\+\+\b", r"\bси\+\+\b"],
-    "1с": [r"(?<![a-zа-яё0-9])1с(?![a-zа-яё0-9])", r"(?<![a-zа-яё0-9])1c(?![a-zа-яё0-9])"],
-
-    # Data Science & AI
-    "data science": [r"\bdata\s*science\b", r"\bдата\s*сайнс\b"],
-    "nlp": [r"\bnlp\b", r"\bобработк\w+\s+естественного\s+языка\b"],
-
-    # Управление, бизнес, документация
-    "техническое задание": [r"\bтехническ\w+\s+задани\w+", r"(?<![a-zа-яё0-9])тз(?![a-zа-яё0-9])"],
-    "бизнес-процессы": [r"\bбизнес[- ]процесс\w+"],
-    "делегирование": [r"\bделегирован\w+"],
-    "оргтехника": [r"\bоргтехник\w+"],
-    "seo": [r"\bseo\b"],
-
-    # Инженерные и производственные стеки
-    "autocad": [r"\bautocad\b", r"\bавтокад\b"],
-    "системы контроля доступа": [r"\bскуд\b", r"\bсистем\w*\s+контроля\s+доступа\b", r"\bсистем\w*\s+допуска\b"],
-    "пусконаладочные работы": [r"\bпусконаладочн\w+\s+работ\w+", r"\bпнр\b", r"\bналадк\w+"],
-    "проектирование слаботочных систем": [r"\bслаботочн\w+\s+систем\w+"],
-    "асу тп": [r"\bасу\s*тп\b"],
-
-    # Профиль HR и бухгалтерии
-    "кадровое делопроизводство": [r"\bкадров\w+\s+делопроизводств\w+"],
-    "подбор персонала": [r"\bподбор\w*\s+персонала\b", r"\bрекрутинг\w*"],
-    "рсбу": [r"(?<![a-zа-яё0-9])рсбу(?![a-zа-яё0-9])"],
-    "мсфо": [r"(?<![a-zа-яё0-9])мсфо(?![a-zа-яё0-9])"],
-    "управленческий учет": [r"\bуправленческ\w+\s+учет\w*"]
-}
-
-STOP_WORDS = {
-    "superjob", "headhunter", "hh.ru", "резюме", "вакансия", "обновлена",
-    "москва", "россия", "опыт работы", "условия", "требования", "обязанности"
-}
+# ---------------------------------------------------------------------------
+# Опциональная лемматизация.
+#
+# Работает только с кириллицей. Латиница и токены с цифрами не трогаются —
+# иначе pymorphy3 ломает 'oracle' -> 'оракл', 'ios' -> 'иос' и т.п.
+# По умолчанию лемматизация выключена: на вакансиях она вредит
+# (см. экспериментальные прогоны).
+# ---------------------------------------------------------------------------
+try:
+    import pymorphy3
+    _MORPH = pymorphy3.MorphAnalyzer()
+except ImportError:
+    _MORPH = None
 
 
-def clean_structural_noise(text: str) -> str:
-    """Удаляет технический шум, URL-адреса и служебные заголовки."""
-    text = re.sub(r"https?://\S+", " ", text)
-    text = re.sub(r"www\.\S+", " ", text)
-    text = re.sub(r"\b[\w\.-]+@[\w\.-]+\.\w+\b", " ", text)
-    text = re.sub(r"\b\d+/\d+\b", " ", text)
-    text = re.sub(r"\b\d{1,2}[./]\d{1,2}[./]\d{2,4}\b", " ", text)
-    text = re.sub(r"\b(forceprinting|printing|vacancy|resume)=\w*\b", " ", text, flags=re.I)
-    text = re.sub(r"\bsuper\s*job\b|\bheadhunter\b|\bhh\.ru\b", " ", text, flags=re.I)
-    return text
+_TOKEN_RE = re.compile(r"[А-Яа-яЁёA-Za-z]+")
 
 
-def extract_explicit_section_skills(text: str) -> Set[str]:
-    """Извлекает навыки, явно выписанные в блоке профессиональных навыков."""
-    found = set()
-    pattern = r"(?:Профессиональные навыки|Ключевые навыки)\s*([\s\S]*?)(?:(?:\n\s*(?:Условия|Контакты|О компании|Опыт работы)\b)|\Z)"
-    match = re.search(pattern, text, re.IGNORECASE)
-    if match:
-        raw_section = match.group(1).strip()
-        lines = [re.sub(r"\(.*?\)", "", l).strip(" :•-") for l in raw_section.splitlines() if l.strip()]
-        for line in lines:
-            for part in re.split(r"[,;•\n\t]+", line):
-                item = part.strip().lower()
-                if len(item) >= 2 and item not in STOP_WORDS:
-                    found.add(item)
-    return found
+def _lemma_ru_only(text: str) -> str:
+    """Лемматизируем только слова, содержащие кириллицу. Остальное — lower()."""
+    if _MORPH is None:
+        return text
+
+    def _repl(m: re.Match) -> str:
+        w = m.group(0)
+        if not re.search(r"[А-Яа-яЁё]", w):
+            return w.lower()
+        if len(w) < 2 or any(c.isdigit() for c in w):
+            return w.lower()
+        return _MORPH.parse(w.lower())[0].normal_form
+
+    return _TOKEN_RE.sub(_repl, text)
 
 
-def extract_smart_skills(text: str) -> list:
-    """Детерминированное извлечение навыков через Alias Map, базу майнинга и явный блок."""
+# ---------------------------------------------------------------------------
+# Очистка текста перед матчингом.
+#
+# Убирает типичный шум PDF-выгрузок (SuperJob-футер, URL, даты, e-mail)
+# и склеивает переносы строк, чтобы многословные навыки вроде
+# "анализ\nданных" находились.
+# ---------------------------------------------------------------------------
+def _clean_text(text: str, lemmatize: bool = False) -> str:
     if not text:
-        return []
+        return ""
+    t = text.replace("\u00ad", "")          # soft hyphen
+    t = t.replace("ё", "е").replace("Ё", "Е")
+    t = t.lower()
 
-    cleaned = clean_structural_noise(text)
-    text_lower = cleaned.lower()
-    extracted_skills: Set[str] = set()
+    # мусор из PDF
+    t = re.sub(r"https?://\S+", " ", t)
+    t = re.sub(r"www\.\S+", " ", t)
+    t = re.sub(r"\S+@\S+", " ", t)
+    t = re.sub(r"\b\d{2}\.\d{2}\.\d{4},?\s*\d{1,2}:\d{2}\b", " ", t)
+    t = re.sub(r"\bsuper\s*job\b", " ", t)
+    t = re.sub(r"russia\.superjob\.ru", " ", t)
+    t = re.sub(r"force\s*printing\s*=\s*1", " ", t)
+    t = re.sub(r"vacancy-\d+\.html", " ", t)
 
-    # 1. Поиск по явной карте алиасов и синонимов
-    for skill_name, patterns in SKILL_ALIASES.items():
-        for pat in patterns:
-            if re.search(pat, text_lower, re.IGNORECASE):
-                extracted_skills.add(skill_name)
-                break
+    # перенос строки перед строчной буквой — признак разрыва слова/фразы
+    t = re.sub(r"\n(?=[а-яa-z])", " ", t)
+    t = re.sub(r"\s*\n\s*", " ", t)
+    t = re.sub(r"[ \t\u00a0]+", " ", t)
 
-    # 2. Поиск по автоматически сгенерированной таксономии майнинга
-    for skill, data in MINED_TAXONOMY.items():
-        pattern = data.get("pattern")
-        if pattern and re.search(pattern, text_lower, re.IGNORECASE):
-            extracted_skills.add(skill)
+    if lemmatize:
+        t = _lemma_ru_only(t)
+    return t
 
-    # 3. Прямой подхват из блока «Профессиональные навыки»
-    section_items = extract_explicit_section_skills(cleaned)
-    for item in section_items:
-        if item in TAXONOMY_SKILLS or item in MINED_TAXONOMY:
-            extracted_skills.add(item)
 
-    return sorted(list(extracted_skills))
+# ---------------------------------------------------------------------------
+# Singleton словаря.
+#
+# Грузится один раз при первом вызове extract_smart_skills.
+# Все паттерны компилируются один раз, дальше — только search().
+# ---------------------------------------------------------------------------
+class _SkillVocabulary:
+    _instance: Optional["_SkillVocabulary"] = None
+
+    def __init__(self, path: str) -> None:
+        with open(path, "r", encoding="utf-8") as f:
+            doc = json.load(f)
+
+        # Поддерживаем оба формата:
+        #   A) {"config": {...}, "skills": {...}}          — наш build_skills_vocab.py
+        #   B) {"config": {...}, "resumes": {...},
+        #                       "vacancies": {...}}        — старый build_vocab.py
+        if "skills" in doc:
+            self.lemmatized: bool = bool(doc.get("config", {}).get("lemmatized", False))
+            raw: Dict[str, List[str]] = doc["skills"]
+        elif "resumes" in doc and "vacancies" in doc:
+            self.lemmatized = bool(doc.get("config", {}).get("lemmatized", False))
+            merged: Dict[str, List[str]] = {}
+            for split in ("resumes", "vacancies"):
+                for canonical, pats in doc[split].items():
+                    bucket = merged.setdefault(canonical, [])
+                    for p in pats:
+                        if p and p not in bucket:
+                            bucket.append(p)
+            raw = merged
+        else:
+            raise ValueError(
+                f"Непонятный формат словаря {path}: ожидаю ключ "
+                f"'skills' или пару 'resumes'+'vacancies'"
+            )
+
+        # Компиляция regex: длинные паттерны идут первыми,
+        # чтобы более специфичные совпадения не перекрывались короткими.
+        self.patterns: List[Tuple[str, re.Pattern]] = []
+        for canonical, pats in raw.items():
+            for p in pats:
+                if not p or len(p) < 2:
+                    continue
+                rx = re.compile(
+                    rf"(?<![a-zа-я0-9_]){re.escape(p)}(?![a-zа-я_])",
+                    re.IGNORECASE,
+                )
+                self.patterns.append((canonical, rx))
+        self.patterns.sort(key=lambda t: -len(t[1].pattern))
+
+    # ---- singleton access ----
+    @classmethod
+    def get(cls, path: Optional[str] = None) -> "_SkillVocabulary":
+        if cls._instance is None:
+            resolved = path or os.environ.get(
+                "SKILLS_VOCAB_PATH", "data/skills_vocab.json"
+            )
+            if not os.path.exists(resolved):
+                raise FileNotFoundError(
+                    f"Словарь навыков не найден: {resolved}. "
+                    f"Собери его: python scripts/build_skills_vocab.py "
+                    f"--from-list data/skills_source.txt --no-lemmatize"
+                )
+            cls._instance = cls(resolved)
+        return cls._instance
+
+    # ---- извлечение ----
+    def extract(self, text: str) -> List[str]:
+        norm = _clean_text(text, lemmatize=self.lemmatized)
+        hits: List[str] = []
+        seen: Set[str] = set()
+        for canonical, rx in self.patterns:
+            if canonical in seen:
+                continue
+            if rx.search(norm):
+                seen.add(canonical)
+                hits.append(canonical)
+        return sorted(hits)
+
+
+# ---------------------------------------------------------------------------
+# Публичный API
+# ---------------------------------------------------------------------------
+
+def extract_smart_skills(text: str) -> List[str]:
+    """
+    Основная точка входа. Возвращает отсортированный список навыков
+    (канонические имена из словаря).
+
+    Если словарь не собран — падаем с понятной ошибкой, а не молча
+    возвращаем пустой список. Это лучше: сразу видно, что нужно
+    запустить build_skills_vocab.py.
+    """
+    return _SkillVocabulary.get().extract(text)

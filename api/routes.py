@@ -1,5 +1,6 @@
 """HTTP routes — thin wrappers over ``db.mongo`` and ``scorer.service``."""
 from __future__ import annotations
+import os
 from data.synthetic import generate_dataset
 from typing import Optional
 
@@ -10,7 +11,7 @@ from db.builders import parse_raw_text_to_resume, resume_text
 from scorer.service import score_vacancy
 from fastapi.concurrency import run_in_threadpool
 from .file_parser import extract_text_from_file
-from .logger import setup_logger
+from .logger import LOG_PATH, setup_logger
 from .schemas import FeedbackIn, ResumeIn, ScoreRequest, VacancyIn
 
 logger = setup_logger("api.routes")
@@ -266,7 +267,7 @@ def generate_test_data(
                 "title": cand.get("role", parsed.get("title", "")),
                 "specialization": parsed.get("specialization", ""),
                 "experience": parsed.get("experience", ""),
-                "skills": cand.get("skills", parsed.get("skills", [])),
+                "skills": parsed.get("skills", []),
                 "tags": parsed.get("tags", []),
                 "_raw_text": cand["text"],
                 "_synthetic": True,
@@ -332,11 +333,10 @@ def get_feedback(vacancy_id: str, resume_id: str) -> dict:
 
 @router.get("/logs", summary="Получить последние логи сервера")
 def get_server_logs(lines: int = Query(default=50, ge=1)) -> dict:
-    log_file = os.path.join(os.getcwd(), "app.log")
-    if not os.path.exists(log_file):
+    if not LOG_PATH.exists():
         return {"logs": []}
 
-    with open(log_file, "r", encoding="utf-8") as f:
+    with LOG_PATH.open("r", encoding="utf-8") as f:
         # Читаем все строки и забираем только последние
         all_lines = f.readlines()
         last_lines = all_lines[-lines:]
@@ -369,9 +369,8 @@ def get_server_logs(lines: int = Query(default=50, ge=1)) -> dict:
 
 @router.delete("/logs/clear", summary="Очистить файл логов")
 def clear_server_logs() -> dict:
-    log_file = os.path.join(os.getcwd(), "app.log")
-    if os.path.exists(log_file):
-        open(log_file, 'w').close()  # Очищаем содержимое файла
+    if LOG_PATH.exists():
+        LOG_PATH.write_text("", encoding="utf-8")
     return {"status": "ok"}
 
 

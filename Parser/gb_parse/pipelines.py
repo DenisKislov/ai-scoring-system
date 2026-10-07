@@ -9,13 +9,6 @@ import pymongo
 from gb_parse.items import HhVacancyItem, HhCompanyItem, HhResumeItem
 
 
-class GbParsePipeline:
-    """Basic pass-through pipeline."""
-
-    def process_item(self, item, spider):
-        return item
-
-
 class GbParseMongoPipeline:
     """Store scraped items in MongoDB.
 

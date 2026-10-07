@@ -6,9 +6,8 @@ import pandas as pd
 import pypdf
 
 BASE_DIR = Path(__file__).resolve().parent
-EXEL_DIR = BASE_DIR / "exel"
-VACANCIES_GT_PATH = EXEL_DIR / "ground_truth_vacancies.csv"
-PDF_DIR = EXEL_DIR / "Вакансии в pdf"
+VACANCIES_GT_PATH = BASE_DIR.parent / "data" / "ground_truth_vacancies.csv"
+PDF_DIR = BASE_DIR.parent / "data" / "vacancies"
 
 df_gt = pd.read_csv(VACANCIES_GT_PATH)
 ALL_SKILLS = [c for c in df_gt.columns if c != "id"]

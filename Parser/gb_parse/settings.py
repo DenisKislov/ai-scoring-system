@@ -48,18 +48,6 @@ DEFAULT_REQUEST_HEADERS = {
     "Accept-Language": "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3",
 }
 
-# Enable or disable spider middlewares
-# See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'gb_parse.middlewares.GbParseSpiderMiddleware': 543,
-#}
-
-# Enable or disable downloader middlewares
-# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'gb_parse.middlewares.GbParseDownloaderMiddleware': 543,
-#}
-
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -69,7 +57,6 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "gb_parse.pipelines.GbParsePipeline": 300,
     "gb_parse.pipelines.GbParseMongoPipeline": 400,
 }
 

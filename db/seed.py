@@ -1,6 +1,7 @@
 import argparse
 
 from data.synthetic import generate_dataset
+from api.nlp_parser import extract_smart_skills
 from db import mongo
 
 
@@ -34,7 +35,7 @@ def seed(n_vacancies: int = 6, n_resumes: int = 20, seed: int = 42, clear: bool 
                 "title": c["role"],
                 "specialization": c["role"],
                 "experience": c["text"],
-                "skills": c.get("skills", []),
+                "skills": extract_smart_skills(c["text"]),
                 "tags": [],
                 "_synthetic": True,
                 "_target_vacancy_url": target_url,

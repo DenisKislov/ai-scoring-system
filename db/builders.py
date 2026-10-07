@@ -1,25 +1,12 @@
-"""Build scorer input text from hh.ru-shaped items.
-
-The Scrapy spider (and the synthetic seeder) store documents in the hh.ru item
-shape. These helpers flatten a document into a single text string suitable for
-``calculate_score`` / ``rank_candidates``:
-
-* vacancy  -> title + description + required skills
-* resume   -> title + specialization + experience + skills + tags
-
-Resume ``skills`` are often empty without an employer login on hh.ru, so the
-resume text leans on ``experience`` and ``specialization`` — the free-text
-fields that are always present. Field values may be ``str``, ``list``, or
-``None``; everything is normalized defensively.
-"""
+"""Build scorer input text from hh.ru-shaped items."""
 from __future__ import annotations
 
+import logging
 import re
 from typing import Any, Iterable, Optional
-import logging
 
-# Единый фасад извлечения навыков через SkillExtractor
-from scorer import extract_skills
+# Вызываем парсер куратора из api.nlp_parser
+from api.nlp_parser import extract_smart_skills
 
 logger = logging.getLogger("db.builders")
 logger.setLevel(logging.INFO)
@@ -63,12 +50,7 @@ _YEARS_RE = re.compile(r"опыт\s+работы:\s*(\d+)\s*(?:лет|год|г�
 
 
 def experience_years(item: dict) -> Optional[int]:
-    """Total years of experience parsed from the resume ``experience`` text.
-
-    Returns ``None`` when no figure is found. Used **only as a tie-breaker**
-    among equal-score candidates — it never enters the score itself, which stays
-    an absolute skill/text measure (see ``scorer.scoring``).
-    """
+    """Total years of experience parsed from the resume experience text."""
     text = _as_str(item.get("experience"))
     m = _YEARS_RE.search(text)
     return int(m.group(1)) if m else None
@@ -110,10 +92,10 @@ def parse_raw_text_to_resume(raw_text: str):
         logger.warning("WARN: Должность не найдена в тексте")
 
     # -----------------------------------------------------------------------
-    # ИСПОЛЬЗУЕМ ОБНОВЛЕННЫЙ SKILL EXTRACTOR
+    # ИСПОЛЬЗУЕМ СЛОВАРНЫЙ ПАРСЕР КУРАТОРА
     # -----------------------------------------------------------------------
-    logger.info("INFO: [SkillExtractor] Запуск извлечения навыков")
-    skills = sorted(list(extract_skills(raw_text)))
+    logger.info("INFO: [VocabExtractor] Запуск извлечения навыков")
+    skills = extract_smart_skills(raw_text)
 
     if skills:
         logger.info(f"INFO: Извлечено навыков ({len(skills)} шт.): {', '.join(skills)}")
@@ -121,8 +103,7 @@ def parse_raw_text_to_resume(raw_text: str):
         logger.warning("WARN: Парсер не нашел ни одного навыка в тексте")
 
     logger.info(
-        f"INFO: Распаршено резюме: должность='{title}', "
-        f"опыт='{experience_text}'"
+        f"INFO: Распаршено резюме: должность='{title}', опыт='{experience_text}'"
     )
 
     return {

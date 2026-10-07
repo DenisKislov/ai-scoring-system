@@ -13,9 +13,6 @@ COPY scorer/requirements.txt scorer/
 # Качаем пакеты с максимальной толерантностью к обрывам сети
 RUN pip install --no-cache-dir --default-timeout=1000 --retries 10 -r api/requirements.txt -r scorer/requirements.txt
 
-# Скачиваем русскую модель для spacy
-RUN python -m spacy download ru_core_news_sm
-
 COPY api/ api/
 COPY scorer/ scorer/
 COPY db/ db/
