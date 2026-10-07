@@ -22,7 +22,7 @@ def setup_logger(name: str) -> logging.Logger:
 
         # Запись в файл для фронтенда
         LOG_PATH.parent.mkdir(exist_ok=True)
-        file_handler = logging.FileHandler(LOG_PATH, encoding='utf-8')
+        file_handler = logging.FileHandler(LOG_PATH, encoding='utf-8', delay=True)
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
