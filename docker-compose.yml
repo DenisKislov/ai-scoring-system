@@ -1,44 +1,71 @@
-version: '3.8'
-
 services:
-  # 1. База данных MongoDB
   mongo:
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
     image: mongo:8
-    container_name: scoring_mongo
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
 
-  # 2. Бэкенд (FastAPI)
-  backend:
+  scorer:
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
     build:
       context: .
       dockerfile: backend.Dockerfile
-    container_name: scoring_backend
-    ports:
-      - "8000:8000"
-    environment:
-      - MONGO_URI=mongodb://mongo:27017
-      - API_HOST=0.0.0.0
-      - API_PORT=8000
-      - PORT=8000
-    depends_on:
-      - mongo
-    restart: always
+    command: ["uvicorn", "scorer.http_api:app", "--host", "0.0.0.0", "--port", "8001"]
+    volumes:
+      - ./config:/app/config:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
 
-  # 3. Фронтенд (React + Nginx)
+  backend:
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    environment:
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017}
+      MONGO_DB: ${MONGO_DB:-gb_parse}
+      SCORER_URL: http://scorer:8001
+      API_CORS_ORIGINS: ${API_CORS_ORIGINS:-http://localhost:3000}
+    volumes:
+      - ./config:/app/config:ro
+      - app_logs:/app/logs
+    depends_on:
+      mongo:
+        condition: service_healthy
+      scorer:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
   frontend:
+    platform: ${DOCKER_PLATFORM:-linux/amd64}
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    container_name: scoring_frontend
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL:-/api}
     ports:
-      - "3000:80"
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:80"
     depends_on:
-      - backend
-    restart: always
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   mongo_data:
+  app_logs:

@@ -1,0 +1,119 @@
+{
+  "checked_at": "2026-10-26T09:30:07.140348+00:00",
+  "source_report": "reports/audit-2026-10-26/realistic_diagnostic/synthetic_benchmark.json",
+  "configuration": {
+    "protocol_version": "integrated_curator_synthetic_v1",
+    "seeds": [
+      42,
+      7,
+      99
+    ],
+    "vacancies_per_seed": 12,
+    "resumes_per_vacancy": 30,
+    "k": 10,
+    "binary_relevance_threshold": 0.1,
+    "ranking_inputs": "rendered_text_only",
+    "relevance_source": "latent_profile_v2",
+    "expert_pair_relevance": false
+  },
+  "corpus": {
+    "queries": 36,
+    "resumes": 1080,
+    "roles": [
+      "Data Engineer",
+      "Data Scientist",
+      "DevOps-инженер",
+      "Frontend-разработчик",
+      "Python-разработчик",
+      "QA-инженер"
+    ],
+    "vacancy_skill_count_median": 8.0,
+    "resume_latent_skill_count_median": 9.0,
+    "resume_visible_skill_count_median": 6.0,
+    "vacancy_text_chars_median": 862.5,
+    "resume_text_chars_median": 884.0,
+    "positive_pairs": 1042,
+    "queries_without_positives": 0
+  },
+  "metrics": {
+    "precision_at_k": 1.0,
+    "recall_at_k": 0.34579304263212307,
+    "average_precision": 0.9945982000682754,
+    "reciprocal_rank": 1.0,
+    "ndcg_at_k": 0.9131343222577504,
+    "spearman_score": 0.784564625109936,
+    "precision_at_5": 1.0,
+    "spearman_pmi": 0.7864757137560252
+  },
+  "original_metrics_reproduced": true,
+  "algorithm": {
+    "version": "pmi-1.1.0",
+    "weights": {
+      "keyword": 0.85,
+      "cosine": 0.15
+    },
+    "critical_weight": 2.0,
+    "reference_corpus": "scorer/reference_corpus.py",
+    "skill_dictionary": "config/skills.json",
+    "personal_attributes": "excluded",
+    "relevance_threshold": 0.1,
+    "file_hashes": {
+      "config/algorithm.json": "39b6c6603e8870bdd934e7796701d72d96d5e8f21e668d50ba8d3c09aa15ee51",
+      "config/skills.json": "ba5a9e34f28f94a3d09ab8e316107c16cce854a1c2b16b172c9f964cfd59760f",
+      "scorer/reference_corpus.py": "1b573265667ffebee433f291642972a3c04afb3ca98bb3fa9218f0214ea9ccc3",
+      "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
+      "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
+      "scorer/skill_extractor.py": "3cfa4bbd2062a925e293374a8a4f04362757f744e7833f6f310e5d17d8fb50b0",
+      "scorer/skill_families.py": "2568db8c32e55c9c9d7055432c3edc1feaa728cecdf20e8281c35449409b678c",
+      "scorer/scoring.py": "bd12a322fbd80c1c78adc8c7a7285877d74a9b7ed80c4f87246b6ac319776833",
+      "scorer/normalize.py": "b8539727e07146a34a6ed5817e059dbb5bf89d0fe14bc0ea203525d0c8a8018a",
+      "scorer/privacy.py": "781a3551c4174450131b772c168a3b8e1d9b844ec388adb939fc5e223bdd9ee8",
+      "scorer/skills.py": "03383f4cd5550251a3dcfda1544d749429507b84d22fbb0b2ab4ad2890b3929f",
+      "requirements.lock": "daac8d739194ba34c492e3155ab2d1dfd9e85665fd4b36b79f6473bfd9423e09"
+    },
+    "dependencies": {
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5",
+      "pymongo": "4.18.0",
+      "PyMuPDF": "1.28.2",
+      "scikit-learn": "1.9.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "razdel": "0.5.0",
+      "pymorphy3": "2.0.6"
+    },
+    "fingerprint": "365cbd2f028b59d5b0046223efc9fda700f3315241c9621c87eaf3ea24e3c6af"
+  },
+  "by_seed": {
+    "42": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.34738186462324394,
+      "average_precision": 0.9915383920394075,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9131409759563508,
+      "spearman_score": 0.7761456082468468,
+      "precision_at_5": 1.0,
+      "spearman_pmi": 0.7779569892473118
+    },
+    "7": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.3460591133004926,
+      "average_precision": 0.9945361429779466,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9170533859953491,
+      "spearman_score": 0.785435601888938,
+      "precision_at_5": 1.0,
+      "spearman_pmi": 0.7872265480163144
+    },
+    "99": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.3439381499726327,
+      "average_precision": 0.9977200651874721,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9092086048215512,
+      "spearman_score": 0.792112665194023,
+      "precision_at_5": 1.0,
+      "spearman_pmi": 0.7942436040044494
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "verified_by": "",
+  "date": "",
+  "checks": {
+    "browser_a4_a5": false,
+    "swagger_a7": false,
+    "customer_a19": false,
+    "personal_data_review": false,
+    "documentation_complete": false,
+    "commission_acceptance": false
+  },
+  "evidence": "Заполняется испытателем и комиссией после выполнения проверок; сохранить как manual_evidence.json"
+}

@@ -4,8 +4,8 @@
   "config": {
     "lemmatized": true,
     "sources": {
-      "resumes": "data/ground_truth_resumes.csv",
-      "vacancies": "data/ground_truth_vacancies.csv"
+      "resumes": "ground_truth_resumes.csv",
+      "vacancies": "ground_truth_vacancies.csv"
     }
   },
   "resumes": {

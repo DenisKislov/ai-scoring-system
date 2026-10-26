@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-21T08:26:33.127337+00:00",
+  "tests": 4,
+  "failures": 0,
+  "production_build": "passed in Docker frontend image",
+  "browser": "in-app Chromium",
+  "ui_verified": [
+    "vacancy selection",
+    "199-candidate ranking after deletion tests",
+    "critical selections",
+    "component contributions",
+    "original text",
+    "8 highlighted skill fragments"
+  ],
+  "independent_customer_acceptance": false
+}

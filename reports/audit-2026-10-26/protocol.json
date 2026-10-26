@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-26T08:56:06.608890+00:00",
+  "accepted": false,
+  "release_tag": null,
+  "tracked_tree_clean": false,
+  "manual_evidence_complete": false,
+  "unit": {
+    "tests": 186,
+    "failures": 0
+  },
+  "cases": [
+    {
+      "case": "A-1",
+      "requirements": "Ф-1",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-2",
+      "requirements": "Ф-2",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-3",
+      "requirements": "Ф-3",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-4",
+      "requirements": "Ф-4",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-5",
+      "requirements": "Ф-5, Ф-6",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга; внешний вид/Swagger — по ручному листу"
+    },
+    {
+      "case": "A-6",
+      "requirements": "Ф-7",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-7",
+      "requirements": "Ф-6, Ф-8",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга; внешний вид/Swagger — по ручному листу"
+    },
+    {
+      "case": "A-8",
+      "requirements": "Ф-9",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-9",
+      "requirements": "К-1—К-6",
+      "status": "пройдено",
+      "evidence": "фиксированный PDF-набор; quality.json"
+    },
+    {
+      "case": "A-10",
+      "requirements": "К-7",
+      "status": "пройдено",
+      "evidence": "все нулевые и сильные пары; quality.json"
+    },
+    {
+      "case": "A-11",
+      "requirements": "К-8",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-12",
+      "requirements": "К-9",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-13",
+      "requirements": "Н-1",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-14",
+      "requirements": "Н-2",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-15",
+      "requirements": "Н-3",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-16",
+      "requirements": "Н-4",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-17",
+      "requirements": "Б-1",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    },
+    {
+      "case": "A-18",
+      "requirements": "Б-2",
+      "status": "требует проверки",
+      "evidence": "секреты: —; контакты-кандидаты: —; история Git проверяется отдельно от игнорируемых PDF"
+    },
+    {
+      "case": "A-19",
+      "requirements": "С-1, П-1",
+      "status": "техническая часть пройдена; ручная часть ожидается",
+      "evidence": "представитель Заказчика; выбранные браузеры; без участия разработчика"
+    },
+    {
+      "case": "A-20",
+      "requirements": "С-3",
+      "status": "пройдено в Docker",
+      "evidence": "настоящие API, MongoDB и отдельный сервис скоринга"
+    }
+  ],
+  "quality_passed": true,
+  "live_status": "passed",
+  "manual_pending": [
+    "А-19: независимое развёртывание и браузеры",
+    "Б-2: экспертиза происхождения данных",
+    "Д-1: актуальный ТЗ v5, комплект документов, утверждённый тег",
+    "П-1: представитель Заказчика",
+    "Подписи комиссии и акт"
+  ]
+}

@@ -29,6 +29,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 from typing import Dict, Iterable, Set, Tuple
 
 # --- Категории -------------------------------------------------------------
@@ -240,22 +241,29 @@ _KEYWORD_ORDER: Tuple[str, ...] = (
 )
 
 
-def _match_keyword(normalized: str, keyword: str) -> bool:
-    """Ищет *keyword* в *normalized* с учётом границ «слова».
-
-    Границы по символам, которые не являются буквой/цифрой, чтобы короткие
-    ключи не срабатывали внутри других слов: ``sql`` не матчится в ``mysql``,
-    ``ml`` не матчится в ``html``, ``git`` — в ``github``.
-    """
-    pattern = rf"(?<![a-zа-яё0-9]){re.escape(keyword)}(?![a-zа-яё0-9])"
-    return re.search(pattern, normalized) is not None
+def _match_keyword(normalized: str, pattern: "re.Pattern[str]") -> bool:
+    """Ищет *keyword*-паттерн в *normalized* (паттерн предкомпилирован —
+    компиляция на каждом вызове стоила ~80 с на пул из 100 резюме)."""
+    return pattern.search(normalized) is not None
 
 
+# Все keyword-правила компилируются один раз при импорте модуля.
+_COMPILED_KEYWORDS: dict = {
+    category: tuple(
+        (keyword, re.compile(rf"(?<![a-zа-яё0-9]){re.escape(keyword)}(?![a-zа-яё0-9])"))
+        for keyword in keywords
+    )
+    for category, keywords in _CATEGORY_KEYWORDS.items()
+}
+
+
+@lru_cache(maxsize=200_000)
 def category_of(skill: str) -> str:
     """Возвращает категорию канонического навыка.
 
     Порядок: явная разметка ``SKILL_CATEGORIES`` -> keyword-правила ->
-    ``CATEGORY_OTHER``.
+    ``CATEGORY_OTHER``. Кэшируется: одни и те же навыки категоризируются
+    при скоринге тысячи раз.
     """
     if not skill:
         return CATEGORY_OTHER
@@ -263,8 +271,8 @@ def category_of(skill: str) -> str:
         return SKILL_CATEGORIES[skill]
     normalized = skill.strip().lower()
     for category in _KEYWORD_ORDER:
-        for keyword in _CATEGORY_KEYWORDS[category]:
-            if _match_keyword(normalized, keyword):
+        for keyword, pattern in _COMPILED_KEYWORDS[category]:
+            if _match_keyword(normalized, pattern):
                 return category
     return CATEGORY_OTHER
 

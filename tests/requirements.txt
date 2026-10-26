@@ -1,3 +1,6 @@
 # тесты, httpx нужен TestClient'у API
 pytest
 httpx
+
+mongomock==4.3.0
+PyYAML

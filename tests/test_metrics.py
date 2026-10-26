@@ -19,7 +19,9 @@ from scorer.metrics import (  # noqa: E402
     macro_average,
     micro_average,
     precision,
+    precision_at_k,
     recall,
+    recall_at_k,
 )
 from scorer.skills_categories import (  # noqa: E402
     CATEGORY_DATABASES,
@@ -155,6 +157,47 @@ def _run_all():
             fn()
             print(f"PASS  {name}")
     print("\nALL METRIC TESTS PASSED")
+
+
+# --- ranking-метрики: Precision@k / Recall@k ---------------------------------
+# Релевантность — graded (0..1), бинаризуется порогом. Порядок списка —
+# порядок, который выдал скорер (лучшие первыми).
+
+def test_precision_at_k_basic():
+    rels = [0.9, 0.8, 0.1, 0.7] + [0.0] * 6          # в топ-10 три релевантных
+    assert precision_at_k(rels, k=10, threshold=0.5) == 0.3
+
+
+def test_precision_at_k_shorter_list():
+    # делится на фактическую длину среза (min(k, n)), как precision_at_k
+    assert precision_at_k([0.9, 0.1], k=10, threshold=0.5) == 0.5
+
+
+def test_recall_at_k_perfect():
+    # все 3 релевантных стоят в топ-3
+    rels = [0.9, 0.8, 0.7, 0.1, 0.0]
+    assert recall_at_k(rels, k=10, threshold=0.5) == 1.0
+
+
+def test_recall_at_k_partial():
+    # релевантных 4, в топ-4 попали только 2
+    rels = [0.9, 0.8, 0.1, 0.0, 0.7, 0.6]
+    assert abs(recall_at_k(rels, k=4, threshold=0.5) - 0.5) < 1e-9
+
+
+def test_recall_at_k_respects_k():
+    # релевантный за пределами топ-k не считается найденным
+    rels = [0.9, 0.0, 0.0, 0.8]                      # k=2: найден 1 из 2
+    assert recall_at_k(rels, k=2, threshold=0.5) == 0.5
+
+
+def test_recall_at_k_no_relevant_is_none():
+    # метрика не определена, когда релевантных нет вовсе
+    assert recall_at_k([0.1, 0.2, 0.0], k=10, threshold=0.5) is None
+
+
+def test_recall_at_k_empty():
+    assert recall_at_k([], k=10, threshold=0.5) is None
 
 
 if __name__ == "__main__":

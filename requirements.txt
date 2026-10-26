@@ -3,4 +3,3 @@
 -r scorer/requirements.txt
 -r tests/requirements.txt
 pypdf
-pandas>=2.0.0

@@ -1,0 +1,78 @@
+{
+  "algorithm": {
+    "version": "pmi-1.1.0",
+    "weights": {
+      "keyword": 0.85,
+      "cosine": 0.15
+    },
+    "critical_weight": 2.0,
+    "reference_corpus": "scorer/reference_corpus.py",
+    "skill_dictionary": "config/skills.json",
+    "personal_attributes": "excluded",
+    "relevance_threshold": 0.1,
+    "file_hashes": {
+      "config/algorithm.json": "39b6c6603e8870bdd934e7796701d72d96d5e8f21e668d50ba8d3c09aa15ee51",
+      "config/skills.json": "ba5a9e34f28f94a3d09ab8e316107c16cce854a1c2b16b172c9f964cfd59760f",
+      "scorer/reference_corpus.py": "1b573265667ffebee433f291642972a3c04afb3ca98bb3fa9218f0214ea9ccc3",
+      "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
+      "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
+      "scorer/skill_extractor.py": "3cfa4bbd2062a925e293374a8a4f04362757f744e7833f6f310e5d17d8fb50b0",
+      "scorer/skill_families.py": "2568db8c32e55c9c9d7055432c3edc1feaa728cecdf20e8281c35449409b678c",
+      "scorer/scoring.py": "bd12a322fbd80c1c78adc8c7a7285877d74a9b7ed80c4f87246b6ac319776833",
+      "scorer/normalize.py": "b8539727e07146a34a6ed5817e059dbb5bf89d0fe14bc0ea203525d0c8a8018a",
+      "scorer/privacy.py": "781a3551c4174450131b772c168a3b8e1d9b844ec388adb939fc5e223bdd9ee8",
+      "scorer/skills.py": "03383f4cd5550251a3dcfda1544d749429507b84d22fbb0b2ab4ad2890b3929f",
+      "requirements.lock": "daac8d739194ba34c492e3155ab2d1dfd9e85665fd4b36b79f6473bfd9423e09"
+    },
+    "dependencies": {
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5",
+      "pymongo": "4.18.0",
+      "PyMuPDF": "1.28.2",
+      "scikit-learn": "1.9.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "razdel": "0.5.0",
+      "pymorphy3": "2.0.6"
+    },
+    "fingerprint": "365cbd2f028b59d5b0046223efc9fda700f3315241c9621c87eaf3ea24e3c6af"
+  },
+  "selection": "first 10 vacancies in source JSON order, all 194 resumes",
+  "threshold": 0.1,
+  "source_datasets": {
+    "data/superjob_dataset.json": "53a519e516798b03f449891609be094a56d626171dfc5c18130e4b2f76d05e34",
+    "data/dataset_resume.json": "e08ee3a3393e7865d7453a25c3c353b752a5b96262ae6dff04b6efb8fd3dde6a"
+  },
+  "curator_reproduced": {
+    "command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1",
+    "source_archive": "/Users/denis/Downloads/ai-scoring-system-main.zip",
+    "source_archive_size": 156273718,
+    "metrics_rounded_as_in_screenshot": {
+      "ndcg_at_10": 0.925,
+      "precision_at_5": 0.96,
+      "precision_at_10": 0.92,
+      "recall_at_10": 0.195,
+      "spearman": 0.883
+    },
+    "screenshot_metrics_reproduced": true,
+    "ranking_inputs": "annotated expected_skills provided to scorer",
+    "true_relevance": "normalised expected_skills intersection divided by vacancy skill count",
+    "datasets": {
+      "data/superjob_dataset.json": {
+        "count": 111,
+        "sha256": "53a519e516798b03f449891609be094a56d626171dfc5c18130e4b2f76d05e34",
+        "selection": "first 10 in JSON order",
+        "identical_to_working_copy": true
+      },
+      "data/dataset_resume.json": {
+        "count": 194,
+        "sha256": "e08ee3a3393e7865d7453a25c3c353b752a5b96262ae6dff04b6efb8fd3dde6a",
+        "selection": "all 194",
+        "identical_to_working_copy": true
+      }
+    },
+    "working_project_modified": false
+  },
+  "current_annotated_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs annotated --output-dir reports/curator_comparison_2026-10-27 --output-prefix current_annotated",
+  "current_extracted_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs extracted --output-dir reports/curator_comparison_2026-10-27 --output-prefix current_extracted"
+}

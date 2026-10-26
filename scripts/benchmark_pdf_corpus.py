@@ -13,7 +13,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import logging
 import statistics
 import sys
 import time
@@ -33,9 +32,10 @@ from db.builders import (  # noqa: E402
     vacancy_text,
     logger as builders_logger,
 )
-from scorer.metrics import ndcg, precision_at_k, spearman  # noqa: E402
+from scorer.metrics import ndcg, precision_at_k, recall_at_k, spearman  # noqa: E402
 from scorer.scoring import rank_candidates  # noqa: E402
 from scorer.skills_categories import CATEGORIES, SKILL_CATEGORIES, category_of  # noqa: E402
+from scripts.benchmark_synthetic import ranking_metrics  # noqa: E402
 
 
 def normalized_skill(name: str) -> str:
@@ -132,7 +132,7 @@ def extraction_metrics(records: list[dict]) -> dict:
     }
 
 
-def rank_metrics(resumes: list[dict], vacancies: list[dict]) -> dict:
+def rank_metrics(resumes: list[dict], vacancies: list[dict], threshold: float = 0.5) -> dict:
     ids = [r["id"] for r in resumes]
     resume_docs = [{
         "title": r["parsed"]["title"],
@@ -166,17 +166,26 @@ def rank_metrics(resumes: list[dict], vacancies: list[dict]) -> dict:
                     if vac_truth else 0.0 for rid in ids}
         ordered_truth = [coverage[r["candidate_id"]] for r in ranked]
         scores = {r["candidate_id"]: r["score"] for r in ranked}
-        positive = sum(value >= 0.5 for value in coverage.values())
+        positive = sum(value >= threshold for value in coverage.values())
         nonzero = sum(value > 0 for value in coverage.values())
-        if nonzero:
-            rows.append({
-                "ndcg_at_10": ndcg(ordered_truth, k=10),
-                "ndcg_all": ndcg(ordered_truth),
-                "precision_at_5_threshold_0_5": precision_at_k(ordered_truth, 5, 0.5),
-                "spearman": spearman([scores[rid] for rid in ids],
-                                     [coverage[rid] for rid in ids]),
-                "positives_at_0_5": positive,
-            })
+        positions = {rid: i for i, rid in enumerate(ids)}
+        diagnostic = ranking_metrics(
+            [{**row, "candidate_id": positions[row["candidate_id"]]} for row in ranked],
+            [coverage[rid] for rid in ids], k=min(10, len(ids)), threshold=threshold,
+        )
+        rows.append({
+            "ndcg_at_10": ndcg(ordered_truth, k=10),
+            "ndcg_all": ndcg(ordered_truth),
+            "precision_at_5": precision_at_k(ordered_truth, 5, threshold),
+            "precision_at_10": precision_at_k(ordered_truth, 10, threshold),
+            "recall_at_10": recall_at_k(ordered_truth, 10, threshold),
+            "average_precision": diagnostic["average_precision"],
+            "reciprocal_rank": diagnostic["reciprocal_rank"],
+            "spearman": spearman([scores[rid] for rid in ids],
+                                 [coverage[rid] for rid in ids]),
+            "positives": positive,
+            "nonzero": nonzero,
+        })
         for result in ranked:
             if coverage[result["candidate_id"]] == 0:
                 zero_overlap_pairs += 1
@@ -186,41 +195,56 @@ def rank_metrics(resumes: list[dict], vacancies: list[dict]) -> dict:
 
         # A fixed pair's score should be independent of the other candidates.
         if index < min(5, len(vacancies)):
+            comparison_scores = scores
+            if len(resumes) > 200:
+                large = rank_candidates(
+                    vac_text, texts[:200], candidate_ids=ids[:200],
+                    vacancy_skills=set(vac_doc["skills"]), resume_skills_list=skills[:200],
+                )
+                comparison_scores = {r["candidate_id"]: r["score"] for r in large}
             subset = rank_candidates(
-                vac_text, texts[:20], candidate_ids=ids[:20],
-                vacancy_skills=set(vac_doc["skills"]), resume_skills_list=skills[:20],
+                vac_text, texts[:10], candidate_ids=ids[:10],
+                vacancy_skills=set(vac_doc["skills"]), resume_skills_list=skills[:10],
             )
-            score_changes.extend(abs(scores[r["candidate_id"]] - r["score"])
+            score_changes.extend(abs(comparison_scores[r["candidate_id"]] - r["score"])
                                  for r in subset)
         if (index + 1) % 8 == 0:
             print(f"Ranked {index + 1}/{len(vacancies)} vacancies", flush=True)
 
     def mean(key: str) -> float | None:
-        return statistics.mean(row[key] for row in rows) if rows else None
+        values = [row[key] for row in rows if row[key] is not None]
+        return statistics.mean(values) if values else None
 
     return {
         "vacancies_ranked": len(vacancies),
         "resumes_per_vacancy": len(resumes),
         "pairs": len(vacancies) * len(resumes),
-        "vacancies_with_nonzero_proxy_relevance": len(rows),
-        "vacancies_with_positive_at_0_5": sum(row["positives_at_0_5"] > 0
-                                               for row in rows),
+        "binary_relevance_threshold": threshold,
+        "vacancies_with_nonzero_proxy_relevance": sum(row["nonzero"] > 0 for row in rows),
+        "vacancies_with_positive": sum(row["positives"] > 0 for row in rows),
         "proxy_mean_ndcg_at_10": mean("ndcg_at_10"),
         "proxy_mean_ndcg_all": mean("ndcg_all"),
-        "proxy_mean_precision_at_5_threshold_0_5": mean("precision_at_5_threshold_0_5"),
+        "proxy_mean_precision_at_5": mean("precision_at_5"),
+        "proxy_mean_precision_at_10": mean("precision_at_10"),
+        "proxy_mean_recall_at_10": mean("recall_at_10"),
+        "proxy_map": mean("average_precision"),
+        "proxy_mrr": mean("reciprocal_rank"),
         "proxy_mean_spearman": mean("spearman"),
         "zero_overlap_pairs": zero_overlap_pairs,
         "zero_overlap_pairs_score_above_30": high_score_zero_overlap,
         "max_zero_overlap_score": max_zero_overlap_score,
         "pool_independence_pairs_checked": len(score_changes),
+        "pool_independence_small_pool_size": min(10, len(resumes)),
+        "pool_independence_large_pool_size": min(200, len(resumes)),
+        "has_at_least_200_resumes_for_pmi_pool_check": len(resumes) >= 200,
         "pool_independence_scores_changed": sum(delta > 0 for delta in score_changes),
         "pool_independence_max_score_delta": max(score_changes, default=0),
         "rank_seconds": round(time.perf_counter() - start, 3),
     }
 
 
-def synthetic_metrics() -> dict:
-    """Evaluate the specification's labelled synthetic ranking criterion."""
+def synthetic_metrics(threshold: float = 0.65) -> dict:
+    """Short historical regression diagnostic; does not establish PMI acceptance."""
     rows = []
     for entry in generate_dataset(n_vacancies=6, n_resumes=20, seed=42):
         candidates = entry["candidates"]
@@ -234,7 +258,7 @@ def synthetic_metrics() -> dict:
         rows.append({
             "ndcg_at_10": ndcg(ordered_truth, k=10),
             "ndcg_all": ndcg(ordered_truth),
-            "precision_at_5": precision_at_k(ordered_truth, k=5, threshold=0.5),
+            "precision_at_5": precision_at_k(ordered_truth, k=5, threshold=threshold),
             "spearman_score": spearman([scores[i] for i in range(len(candidates))],
                                        [truth[i] for i in range(len(candidates))]),
         })
@@ -247,12 +271,13 @@ def synthetic_metrics() -> dict:
         "vacancies": len(rows),
         "resumes_per_vacancy": 20,
         "seed": 42,
+        "binary_relevance_threshold": threshold,
         "mean_ndcg_at_10": mean_ndcg,
         "mean_ndcg_all": mean("ndcg_all"),
         "mean_precision_at_5": mean("precision_at_5"),
         "mean_spearman_score": mean("spearman_score"),
-        "ndcg_at_10_requirement": 0.8,
-        "ndcg_at_10_passed": mean_ndcg >= 0.8,
+        "regression_ndcg_at_10_threshold": 0.8,
+        "regression_ndcg_at_10_passed": mean_ndcg >= 0.8,
     }
 
 
@@ -280,6 +305,7 @@ def markdown(report: dict) -> str:
         "# Бенчмарк скорера на PDF-корпусе",
         "",
         f"Дата (UTC): {report['timestamp_utc']}",
+        f"Версия протокола: `{report['configuration']['protocol_version']}`.",
         "",
         "## Метод",
         "",
@@ -296,8 +322,10 @@ def markdown(report: dict) -> str:
         "**Экспертной разметки релевантности пар нет.** Для ранжирования "
         "использован только диагностический proxy: доля размеченных навыков вакансии, "
         "присутствующих среди размеченных навыков резюме. Это не оценка качества "
-        "подбора людей и не подтверждение порога nDCG@10 ≥ 0.80 из ТЗ. "
-        "P@5 использует порог proxy ≥ 0.5, как реализация `precision_at_k`.",
+        "подбора людей и не подтверждение приёмки по ПМИ. "
+        f"Precision/Recall/MAP/MRR используют выбранный порог proxy ≥ "
+        f"{report['configuration']['binary_relevance_threshold']}; "
+        "NDCG и Spearman — непрерывное покрытие.",
         "",
         "## Покрытие корпуса",
         "",
@@ -328,31 +356,43 @@ def markdown(report: dict) -> str:
               f"Оценено {rank['pairs']} пар: {rank['vacancies_ranked']} вакансии × "
               f"{rank['resumes_per_vacancy']} резюме. У "
               f"{rank['vacancies_with_nonzero_proxy_relevance']} вакансий есть хотя бы "
-              "одно ненулевое пересечение навыков; средние ниже рассчитаны по ним.",
+              "одно ненулевое пересечение навыков. Средние рассчитаны по всем "
+              "вакансиям; Recall — только по вакансиям с релевантными кандидатами. "
+              "Запрос без положительных кандидатов даёт AP/MRR=0; без ненулевого "
+              "ideal DCG — NDCG=0.",
               "", "| Метрика | Среднее |", "|---|---:|",
               f"| nDCG@10 (proxy) | {pct(rank['proxy_mean_ndcg_at_10'])} |",
               f"| nDCG (proxy) | {pct(rank['proxy_mean_ndcg_all'])} |",
-              f"| Precision@5, proxy ≥ 0.5 | {pct(rank['proxy_mean_precision_at_5_threshold_0_5'])} |",
+              f"| Precision@5 | {pct(rank['proxy_mean_precision_at_5'])} |",
+              f"| Precision@10 | {pct(rank['proxy_mean_precision_at_10'])} |",
+              f"| Recall@10 | {pct(rank['proxy_mean_recall_at_10'])} |",
+              f"| MAP | {pct(rank['proxy_map'])} |",
+              f"| MRR | {pct(rank['proxy_mrr'])} |",
               f"| Spearman(Score, proxy) | {pct(rank['proxy_mean_spearman'])} |",
               "",
-              f"Вакансий с хотя бы одним кандидатом при proxy ≥ 0.5: "
-              f"{rank['vacancies_with_positive_at_0_5']}. Нулевое пересечение навыков: "
+              f"Вакансий с хотя бы одним кандидатом выше выбранного порога: "
+              f"{rank['vacancies_with_positive']}. Нулевое пересечение навыков: "
               f"{rank['zero_overlap_pairs']} пар, из них Score > 30 у "
               f"{rank['zero_overlap_pairs_score_above_30']}; максимальный Score "
               f"{rank['max_zero_overlap_score']}.",
               "",
               f"Проверка независимости Score от пула: {rank['pool_independence_pairs_checked']} "
-              f"общих пар в полном пуле и пуле из 20 резюме; Score изменился у "
+              f"общих пар в пулах из {rank['pool_independence_small_pool_size']} и "
+              f"{rank['pool_independence_large_pool_size']} резюме; Score изменился у "
               f"{rank['pool_independence_scores_changed']}, максимальная разница "
               f"{rank['pool_independence_max_score_delta']} пунктов.",
               "",
-              "## Синтетический набор с известной релевантностью", ""]
+              ("Для сравнения пулов 10/200 данных достаточно." if
+               rank['has_at_least_200_resumes_for_pmi_pool_check'] else
+               "В оценённом PDF-корпусе меньше 200 резюме: это частичная проверка, "
+               "не полный сценарий пулов 10/200 из ПМИ."),
+              "", "## Синтетический набор с известной релевантностью", ""]
     synthetic = report["synthetic"]
     lines += [
         f"Существующий генератор `data.synthetic.generate_dataset`: "
         f"{synthetic['vacancies']} вакансий × {synthetic['resumes_per_vacancy']} "
-        f"резюме, seed={synthetic['seed']}. Spearman рассчитан именно по "
-        "целочисленному Score, как сформулировано в ТЗ.",
+        f"резюме, seed={synthetic['seed']}. Бинарный порог: "
+        f"{synthetic['binary_relevance_threshold']}. Spearman рассчитан по целочисленному Score.",
         "", "| Метрика | Среднее |", "|---|---:|",
         f"| nDCG@10 | {pct(synthetic['mean_ndcg_at_10'])} |",
         f"| nDCG | {pct(synthetic['mean_ndcg_all'])} |",
@@ -360,8 +400,10 @@ def markdown(report: dict) -> str:
         f"| Spearman(Score, истинная релевантность) | "
         f"{pct(synthetic['mean_spearman_score'])} |",
         "",
-        f"Порог ТЗ nDCG@10 ≥ {synthetic['ndcg_at_10_requirement']:.2f}: "
-        f"{'выполнен' if synthetic['ndcg_at_10_passed'] else 'не выполнен'}.",
+        f"Исторический регрессионный ориентир nDCG@10 ≥ "
+        f"{synthetic['regression_ndcg_at_10_threshold']:.2f}: "
+        f"{'выполнен' if synthetic['regression_ndcg_at_10_passed'] else 'не выполнен'}; "
+        "это не критерий приёмки текущего ПМИ.",
         "Это короткий контроль на 6 вакансиях × 20 резюме с одним seed. "
         "Основной бенчмарк обновлённой синтетики на трёх seed: "
         "[synthetic_benchmark.md](synthetic_benchmark.md).",
@@ -391,7 +433,12 @@ def markdown(report: dict) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "reports")
+    parser.add_argument("--threshold", type=float, default=0.5,
+                        help="binary labelled-skill proxy threshold (PMI convention: 0.1)")
+    parser.add_argument("--synthetic-threshold", type=float, default=0.65)
     args = parser.parse_args()
+    if not 0 < args.threshold <= 1 or not 0 < args.synthetic_threshold <= 1:
+        parser.error("thresholds must be in (0, 1]")
     # The parser logs extracted skills and resume titles. Keep benchmark output
     # aggregate-only and avoid writing personal data to logs.
     builders_logger.disabled = True
@@ -403,13 +450,21 @@ def main() -> None:
           f"{len(vacancies)} labelled vacancies", flush=True)
     report = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "configuration": {
+            "protocol_version": "integrated_curator_pdf_v1",
+            "binary_relevance_threshold": args.threshold,
+            "synthetic_binary_relevance_threshold": args.synthetic_threshold,
+            "relevance_source": "labelled_skill_coverage_proxy",
+            "expert_pair_relevance": False,
+            "ranking_inputs": "skills_extracted_from_pdf_text",
+        },
         "corpus": {"resumes": resume_info, "vacancies": vacancy_info},
         "extraction": {
             "resumes": extraction_metrics(resumes),
             "vacancies": extraction_metrics(vacancies),
         },
-        "ranking": rank_metrics(resumes, vacancies),
-        "synthetic": synthetic_metrics(),
+        "ranking": rank_metrics(resumes, vacancies, args.threshold),
+        "synthetic": synthetic_metrics(args.synthetic_threshold),
         "control_pair": control_pair_metrics(),
     }
     args.output_dir.mkdir(parents=True, exist_ok=True)

@@ -1,7 +1,8 @@
-"""Assert the ranking quality criterion on the seeded synthetic benchmark.
+"""Assert the historical regression guard on the seeded synthetic benchmark.
 
 The calculation lives in ``scripts.benchmark_synthetic`` so the regression
 check and the user-facing report use the same labels and metric definitions.
+The 0.80 guard is a regression check, not the current PMI acceptance criterion.
 """
 from __future__ import annotations
 

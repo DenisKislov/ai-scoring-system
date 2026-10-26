@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "project": "ai-scoring-pmi-14a9f2c4",
+  "started_at": "2026-10-26T19:39:34.042513+00:00",
+  "host": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  },
+  "cases": {
+    "A-1": {
+      "passed": true,
+      "vacancies": 10,
+      "resumes": 200,
+      "hashes_verified": 208
+    },
+    "A-2": {
+      "passed": true
+    },
+    "A-3": {
+      "passed": true,
+      "fingerprint": "987d82e12947606336181a0f747a391288865894421b509b511a9e32eb5f4eee"
+    },
+    "A-4": {
+      "passed": true,
+      "unique_results": 200
+    },
+    "A-5": {
+      "passed": true,
+      "scope": "API explanation and source; browser appearance checked separately"
+    },
+    "A-6": {
+      "passed": true,
+      "history_events": 2
+    },
+    "A-7": {
+      "passed": true
+    },
+    "A-12": {
+      "passed": true,
+      "score_pool10": 15,
+      "score_pool200": 15
+    },
+    "A-16": {
+      "passed": true,
+      "total_seconds": 6.111627457998111,
+      "batch100_seconds": 0.9241106669942383,
+      "single_seconds": 0.010621207999065518,
+      "ranking200_max_seconds": 0.4620665830007056
+    },
+    "A-13": {
+      "passed": true
+    },
+    "A-11": {
+      "passed": true,
+      "critical_all_score": 67,
+      "critical_none_score": 39
+    },
+    "A-17": {
+      "passed": true,
+      "equal_score": 83
+    },
+    "A-14": {
+      "passed": true,
+      "same_api_instance": true
+    },
+    "A-8": {
+      "passed": true,
+      "events_verified": true,
+      "cascades_verified": true
+    },
+    "A-15": {
+      "passed": true,
+      "recovery_seconds": 13.672232917000656,
+      "stats": {
+        "vacancies": 9,
+        "resumes": 199
+      },
+      "feedback_and_original_intact": true
+    },
+    "A-20": {
+      "passed": true,
+      "directions": 20,
+      "code_changes": 0,
+      "restart_required": false
+    },
+    "A-19": {
+      "passed": true,
+      "scope": "four amd64 Linux containers and HTTP UI delivery; customer independent/browser verification pending"
+    }
+  },
+  "manual_browser_check": "pending",
+  "kept": true,
+  "docker": {
+    "ServerVersion": "29.4.0",
+    "Architecture": "aarch64",
+    "NCPU": 10,
+    "MemTotal": 17011748864,
+    "OperatingSystem": "Docker Desktop"
+  },
+  "finished_at": "2026-10-26T19:40:35.171601+00:00"
+}

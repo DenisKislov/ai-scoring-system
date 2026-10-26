@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-26T08:57:42.262338+00:00",
+  "project": "ai-scoring-pmi-00dc253e",
+  "checks": {
+    "mysql_does_not_satisfy_critical_postgresql": true,
+    "canonical_ids_and_utc_dates": true,
+    "critical_clear_and_partial_rescore": true,
+    "scorer_outage_503_and_recovery": true
+  },
+  "passed": true
+}

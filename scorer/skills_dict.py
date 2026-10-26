@@ -101,3 +101,25 @@ _AUTO_RAW = _load_json("skills_auto_raw.json")
 
 SKILLS_ALL = {**_AUTO_SKILLS, **SKILLS}
 RAW_SKILLS_ALL = {**_AUTO_RAW, **RAW_SKILLS}
+SKILL_CATEGORIES = {
+    "Python": "Languages", "Java": "Languages", "JavaScript": "Languages", "TypeScript": "Languages",
+    "Go": "Languages", "Kotlin": "Languages", "PHP": "Languages", "Ruby": "Languages", "Scala": "Languages", "Swift": "Languages",
+    "SQL": "Databases", "PostgreSQL": "Databases", "MySQL": "Databases", "MongoDB": "Databases",
+    "Redis": "Databases", "ClickHouse": "Databases", "Elasticsearch": "Databases",
+    "Machine Learning": "AI/ML", "Deep Learning": "AI/ML", "Data Science": "AI/ML",
+    "NLP": "AI/ML", "Computer Vision": "AI/ML", "Artificial Intelligence": "AI/ML",
+    "Pandas": "AI/ML", "NumPy": "AI/ML", "scikit-learn": "AI/ML", "TensorFlow": "AI/ML",
+    "PyTorch": "AI/ML", "Keras": "AI/ML", "OpenCV": "AI/ML", "TensorRT": "AI/ML",
+    "Recommender Systems": "AI/ML", "Matplotlib": "AI/ML", "OCR": "AI/ML",
+    "Speech-to-Text": "AI/ML", "Core ML": "AI/ML",
+    "Spark": "BigData", "Hadoop": "BigData", "ETL": "BigData", "Аналитика данных": "Data Analytics",
+    "REST API": "Web/Backend", "FastAPI": "Web/Backend", "Django": "Web/Backend",
+    "Flask": "Web/Backend", "Spring": "Web/Backend", "React": "Web/Backend",
+    "Angular": "Web/Backend", "Vue": "Web/Backend", "HTML": "Web/Backend", "CSS": "Web/Backend",
+    "Docker": "DevOps", "Kubernetes": "DevOps", "Linux": "DevOps", "Bash": "DevOps",
+    "Git": "DevOps", "Jenkins": "DevOps", "Ansible": "DevOps", "Terraform": "DevOps",
+    "AWS": "DevOps", "GCP": "DevOps",
+    "Tableau": "BI", "Power BI": "BI", "Excel": "BI",
+    "Agile": "Methodologies", "Scrum": "Methodologies",
+    "C++": "Languages", "C#": "Languages", ".NET": "Web/Backend", "Node.js": "Web/Backend", "CI/CD": "DevOps"
+}

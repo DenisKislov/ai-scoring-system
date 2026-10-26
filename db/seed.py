@@ -1,8 +1,8 @@
 import argparse
 
 from data.synthetic import generate_dataset
-from api.nlp_parser import extract_smart_skills
 from db import mongo
+from scorer import extract_skills
 
 
 def seed(n_vacancies: int = 6, n_resumes: int = 20, seed: int = 42, clear: bool = False) -> dict:
@@ -20,7 +20,7 @@ def seed(n_vacancies: int = 6, n_resumes: int = 20, seed: int = 42, clear: bool 
             "url": f"https://hh.ru/vacancy/syn_{i}_{profession.replace(' ', '_')}",
             "title": profession,
             "description": entry["vacancy"]["text"],
-            "skills": entry["vacancy"]["skills"],
+            "skills": sorted(extract_skills(entry["vacancy"]["text"])),
             "author_name": "Synthetic Corp",
             "tags": [],
             "_synthetic": True,
@@ -35,7 +35,7 @@ def seed(n_vacancies: int = 6, n_resumes: int = 20, seed: int = 42, clear: bool 
                 "title": c["role"],
                 "specialization": c["role"],
                 "experience": c["text"],
-                "skills": extract_smart_skills(c["text"]),
+                "skills": sorted(extract_skills(c["text"])),
                 "tags": [],
                 "_synthetic": True,
                 "_target_vacancy_url": target_url,

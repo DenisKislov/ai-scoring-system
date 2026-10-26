@@ -1,0 +1,9 @@
+{
+  "case": "A-10",
+  "scope": "All pairs of fixed synthetic control set; no A-9 ranking-quality claim",
+  "pairs": 2000,
+  "zero_pairs": 1604,
+  "strong_pairs": 159,
+  "violations": [],
+  "passed": true
+}

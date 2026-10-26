@@ -1,0 +1,238 @@
+{
+  "timestamp_utc": "2026-10-07T08:40:37+00:00",
+  "corpus": {
+    "resumes": {
+      "csv_rows": 100,
+      "unique_ids": 98,
+      "ambiguous_ids": 2,
+      "duplicate_ids_same_labels": 0,
+      "ambiguous_pdf_count": 2,
+      "pdf_count": 100,
+      "parsed_pdf_count": 100,
+      "evaluated_count": 95,
+      "excluded": {
+        "without_unambiguous_label": 5
+      },
+      "parse_seconds": 9.621
+    },
+    "vacancies": {
+      "csv_rows": 101,
+      "unique_ids": 85,
+      "ambiguous_ids": 12,
+      "duplicate_ids_same_labels": 3,
+      "ambiguous_pdf_count": 12,
+      "pdf_count": 106,
+      "parsed_pdf_count": 106,
+      "evaluated_count": 64,
+      "excluded": {
+        "without_unambiguous_label": 42
+      },
+      "parse_seconds": 5.413
+    }
+  },
+  "extraction": {
+    "resumes": {
+      "micro": {
+        "tp": 1929,
+        "fp": 2590,
+        "fn": 341,
+        "precision": 0.4268643505200266,
+        "recall": 0.8497797356828194,
+        "f1": 0.5682722050375608
+      },
+      "by_category": {
+        "Языки программирования": {
+          "tp": 130,
+          "fp": 69,
+          "fn": 27,
+          "precision": 0.6532663316582915,
+          "recall": 0.8280254777070064,
+          "f1": 0.7303370786516854
+        },
+        "Базы данных": {
+          "tp": 138,
+          "fp": 90,
+          "fn": 25,
+          "precision": 0.6052631578947368,
+          "recall": 0.8466257668711656,
+          "f1": 0.7058823529411765
+        },
+        "ML / Data Science": {
+          "tp": 100,
+          "fp": 71,
+          "fn": 31,
+          "precision": 0.5847953216374269,
+          "recall": 0.7633587786259542,
+          "f1": 0.662251655629139
+        },
+        "Frontend": {
+          "tp": 326,
+          "fp": 226,
+          "fn": 23,
+          "precision": 0.5905797101449275,
+          "recall": 0.9340974212034384,
+          "f1": 0.7236403995560488
+        },
+        "Backend / API": {
+          "tp": 181,
+          "fp": 180,
+          "fn": 48,
+          "precision": 0.5013850415512465,
+          "recall": 0.7903930131004366,
+          "f1": 0.6135593220338984
+        },
+        "DevOps / Инфраструктура": {
+          "tp": 382,
+          "fp": 115,
+          "fn": 38,
+          "precision": 0.7686116700201208,
+          "recall": 0.9095238095238095,
+          "f1": 0.8331515812431843
+        },
+        "BI / Аналитика": {
+          "tp": 16,
+          "fp": 20,
+          "fn": 1,
+          "precision": 0.4444444444444444,
+          "recall": 0.9411764705882353,
+          "f1": 0.6037735849056604
+        },
+        "Процессы / Soft skills": {
+          "tp": 51,
+          "fp": 119,
+          "fn": 2,
+          "precision": 0.3,
+          "recall": 0.9622641509433962,
+          "f1": 0.45739910313901344
+        },
+        "Прочее": {
+          "tp": 605,
+          "fp": 1700,
+          "fn": 146,
+          "precision": 0.26247288503253796,
+          "recall": 0.8055925432756325,
+          "f1": 0.39594240837696326
+        }
+      }
+    },
+    "vacancies": {
+      "micro": {
+        "tp": 928,
+        "fp": 763,
+        "fn": 198,
+        "precision": 0.5487876995860438,
+        "recall": 0.8241563055062167,
+        "f1": 0.6588569400070998
+      },
+      "by_category": {
+        "Языки программирования": {
+          "tp": 44,
+          "fp": 5,
+          "fn": 8,
+          "precision": 0.8979591836734694,
+          "recall": 0.8461538461538461,
+          "f1": 0.8712871287128713
+        },
+        "Базы данных": {
+          "tp": 39,
+          "fp": 18,
+          "fn": 11,
+          "precision": 0.6842105263157895,
+          "recall": 0.78,
+          "f1": 0.7289719626168225
+        },
+        "ML / Data Science": {
+          "tp": 30,
+          "fp": 20,
+          "fn": 5,
+          "precision": 0.6,
+          "recall": 0.8571428571428571,
+          "f1": 0.7058823529411764
+        },
+        "Frontend": {
+          "tp": 18,
+          "fp": 10,
+          "fn": 5,
+          "precision": 0.6428571428571429,
+          "recall": 0.782608695652174,
+          "f1": 0.7058823529411765
+        },
+        "Backend / API": {
+          "tp": 33,
+          "fp": 13,
+          "fn": 8,
+          "precision": 0.717391304347826,
+          "recall": 0.8048780487804879,
+          "f1": 0.7586206896551724
+        },
+        "DevOps / Инфраструктура": {
+          "tp": 51,
+          "fp": 13,
+          "fn": 5,
+          "precision": 0.796875,
+          "recall": 0.9107142857142857,
+          "f1": 0.85
+        },
+        "BI / Аналитика": {
+          "tp": 8,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.888888888888889
+        },
+        "Процессы / Soft skills": {
+          "tp": 15,
+          "fp": 8,
+          "fn": 3,
+          "precision": 0.6521739130434783,
+          "recall": 0.8333333333333334,
+          "f1": 0.7317073170731708
+        },
+        "Прочее": {
+          "tp": 690,
+          "fp": 674,
+          "fn": 153,
+          "precision": 0.5058651026392962,
+          "recall": 0.8185053380782918,
+          "f1": 0.6252831898504757
+        }
+      }
+    }
+  },
+  "ranking": {
+    "vacancies_ranked": 64,
+    "resumes_per_vacancy": 95,
+    "pairs": 6080,
+    "vacancies_with_nonzero_proxy_relevance": 56,
+    "vacancies_with_positive_at_0_5": 1,
+    "proxy_mean_ndcg_at_10": 0.590069849360319,
+    "proxy_mean_ndcg_all": 0.7509497628089709,
+    "proxy_mean_precision_at_5_threshold_0_5": 0.0035714285714285718,
+    "proxy_mean_spearman": 0.41638844761647403,
+    "zero_overlap_pairs": 3687,
+    "zero_overlap_pairs_score_above_30": 545,
+    "max_zero_overlap_score": 64,
+    "pool_independence_pairs_checked": 100,
+    "pool_independence_scores_changed": 53,
+    "pool_independence_max_score_delta": 7,
+    "rank_seconds": 59.477
+  },
+  "synthetic": {
+    "vacancies": 6,
+    "resumes_per_vacancy": 20,
+    "seed": 42,
+    "mean_ndcg_at_10": 0.9494455112482095,
+    "mean_ndcg_all": 0.9778340983905802,
+    "mean_precision_at_5": 0.9333333333333333,
+    "mean_spearman_score": 0.793059925218516,
+    "ndcg_at_10_requirement": 0.8,
+    "ndcg_at_10_passed": true
+  },
+  "control_pair": {
+    "relevant_score": 85,
+    "irrelevant_score": 0,
+    "irrelevant_score_at_most_30": true,
+    "irrelevant_ranked_below_relevant": true
+  }
+}

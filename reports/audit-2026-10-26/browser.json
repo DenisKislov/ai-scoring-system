@@ -1,0 +1,10 @@
+{
+  "pre_final_server_patch": {
+    "vacancy_selection": true,
+    "cleared_all_critical_skills": true,
+    "scoring_199_candidates": true,
+    "candidate_card_and_contributions": true
+  },
+  "final_reload": "blocked_by_browser_approval_timeout_after_one_retry",
+  "screenshot": null
+}

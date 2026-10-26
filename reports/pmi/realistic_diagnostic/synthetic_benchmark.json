@@ -1,0 +1,73 @@
+{
+  "timestamp_utc": "2026-10-21T07:38:40+00:00",
+  "configuration": {
+    "protocol_version": "integrated_curator_synthetic_v1",
+    "seeds": [
+      42,
+      7,
+      99
+    ],
+    "vacancies_per_seed": 12,
+    "resumes_per_vacancy": 30,
+    "k": 10,
+    "binary_relevance_threshold": 0.1,
+    "ranking_inputs": "rendered_text_only",
+    "relevance_source": "latent_profile_v2",
+    "expert_pair_relevance": false
+  },
+  "corpus": {
+    "queries": 36,
+    "resumes": 1080,
+    "roles": [
+      "Data Engineer",
+      "Data Scientist",
+      "DevOps-инженер",
+      "Frontend-разработчик",
+      "Python-разработчик",
+      "QA-инженер"
+    ],
+    "vacancy_skill_count_median": 8.0,
+    "resume_latent_skill_count_median": 9.0,
+    "resume_visible_skill_count_median": 6.0,
+    "vacancy_text_chars_median": 862.5,
+    "resume_text_chars_median": 884.0,
+    "positive_pairs": 1042,
+    "queries_without_positives": 0
+  },
+  "mean": {
+    "precision_at_k": 1.0,
+    "recall_at_k": 0.34579304263212307,
+    "average_precision": 0.9937839654129952,
+    "reciprocal_rank": 1.0,
+    "ndcg_at_k": 0.9082107289238672,
+    "spearman_score": 0.7737719572756273
+  },
+  "by_seed": {
+    "42": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.34738186462324394,
+      "average_precision": 0.9901929763417108,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9008050602175746,
+      "spearman_score": 0.7597772809237578
+    },
+    "7": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.3460591133004926,
+      "average_precision": 0.9934388547098025,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9127339216400219,
+      "spearman_score": 0.7730108714375578
+    },
+    "99": {
+      "precision_at_k": 1.0,
+      "recall_at_k": 0.3439381499726327,
+      "average_precision": 0.9977200651874721,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_k": 0.9110932049140053,
+      "spearman_score": 0.7885277194655663
+    }
+  },
+  "regression_ndcg_at_10_threshold": 0.8,
+  "regression_ndcg_passed": true
+}

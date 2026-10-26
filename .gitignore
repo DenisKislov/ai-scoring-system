@@ -90,3 +90,10 @@ logs/
 #   scorer/skills_auto.json          (авто-онтология, gen: tools/build_ontology.py)
 #   scorer/skills_auto_raw.json      (символьная авто-онтология)
 #   scorer/reference_corpus.py       (референс-корпус TF-IDF, gen: tools/build_reference_corpus.py)
+# User backups stay outside the distributable source tree.
+*.archive
+backups/
+
+# Local external corpora are not part of the synthetic demonstration/release.
+/data/superjob_dataset.json
+/data/dataset_resume.json

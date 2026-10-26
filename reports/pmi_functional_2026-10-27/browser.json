@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-26T19:48:55.791Z",
+  "browser": "ChatGPT in-app browser",
+  "independent_customer": false,
+  "ui": {
+    "rating": true,
+    "count": true,
+    "card": true,
+    "source_text": true,
+    "highlighted_marks": 8,
+    "component_contributions": true,
+    "hr_yes_persisted_after_reopen": true,
+    "hr_no_and_history_events": 2
+  },
+  "swagger": {
+    "stats_http": 200,
+    "vacancy_http": 201,
+    "resume_http": 201,
+    "score_http": 200,
+    "results_http": 200,
+    "feedback_http": 200,
+    "invalid_feedback_http": 422,
+    "vacancy_id": "6adfad73f076be3bd0944969",
+    "resume_id": "6adfad8df076be3bd094496a"
+  },
+  "limitations": [
+    "Один встроенный браузер; независимая приёмка заказчиком и проверка в двух целевых браузерах не выполнены"
+  ]
+}

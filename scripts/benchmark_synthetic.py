@@ -98,9 +98,13 @@ def evaluate(
     return {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "configuration": {
+            "protocol_version": "integrated_curator_synthetic_v1",
             "seeds": list(seeds), "vacancies_per_seed": vacancies,
             "resumes_per_vacancy": resumes, "k": k,
             "binary_relevance_threshold": threshold,
+            "ranking_inputs": "rendered_text_only",
+            "relevance_source": "latent_profile_v2",
+            "expert_pair_relevance": False,
         },
         "corpus": {
             "queries": len(rows), "resumes": len(all_candidates),
@@ -115,8 +119,8 @@ def evaluate(
         },
         "mean": means,
         "by_seed": by_seed,
-        "ndcg_at_10_requirement": 0.8 if k == 10 else None,
-        "ndcg_requirement_passed": means["ndcg_at_k"] >= 0.8 if k == 10 else None,
+        "regression_ndcg_at_10_threshold": 0.8 if k == 10 else None,
+        "regression_ndcg_passed": means["ndcg_at_k"] >= 0.8 if k == 10 else None,
     }
 
 
@@ -127,6 +131,7 @@ def markdown(report: dict) -> str:
         "# Бенчмарк обновлённой синтетики",
         "",
         f"Дата (UTC): {report['timestamp_utc']}",
+        f"Версия протокола: `{cfg['protocol_version']}`; вход скорера — только тексты.",
         "",
         f"{corpus['queries']} вакансий-запросов, {corpus['resumes']} пар, "
         f"{len(corpus['roles'])} профессий, seed {', '.join(map(str, cfg['seeds']))}. "
@@ -169,8 +174,8 @@ def markdown(report: dict) -> str:
     if cfg["k"] == 10:
         rows += [
             "",
-            "Порог ТЗ NDCG@10 ≥ 0,80: " +
-            ("выполнен." if report["ndcg_requirement_passed"] else "не выполнен."),
+            "Регрессионный ориентир прежнего синтетического теста NDCG@10 ≥ 0,80: " +
+            ("выполнен." if report["regression_ndcg_passed"] else "не выполнен."),
         ]
     rows += [
         "",
@@ -178,8 +183,11 @@ def markdown(report: dict) -> str:
         "вакансии, тексты короче многих реальных PDF и не содержат всех "
         "особенностей кадровых документов. Показатели подтверждают работу "
         "алгоритма на этом контролируемом распределении, но не точность "
-        "отбора на реальных кандидатах. Результат не использовался для "
-        "подбора весов Score.",
+        "отбора на реальных кандидатах. Метки, параметры генератора и веса "
+        "Score не подбирались по результату этого прогона. Порог 0,1 можно "
+        "указать отдельно через --threshold, однако метки синтетического "
+        "профиля отличаются от proxy покрытия реального JSON-корпуса. "
+        "Этот отчёт не подтверждает полную приёмку по ПМИ.",
         "",
     ]
     return "\n".join(rows)

@@ -4,7 +4,7 @@ import pytest
 from collections import defaultdict
 from importlib import import_module
 
-from api.nlp_parser import extract_smart_skills
+from scorer import extract_skills
 from data.synthetic import ADJACENT_ROLES, generate_dataset
 from scripts.benchmark_synthetic import ranking_metrics
 
@@ -91,7 +91,9 @@ def test_db_seed_does_not_expose_hidden_skills(monkeypatch, dataset):
 
     stored = collections[seed_module.mongo.COLL_RESUMES]
     assert len(stored) == 20
-    assert all(item["skills"] == extract_smart_skills(candidate["text"])
+    assert all(item["skills"] == sorted(extract_skills(candidate["text"]))
                for item, candidate in zip(stored, dataset[0]["candidates"]))
+    stored_vacancies = collections[seed_module.mongo.COLL_VACANCIES]
+    assert stored_vacancies[0]["skills"] == sorted(extract_skills(dataset[0]["vacancy"]["text"]))
     assert any(set(item["skills"]) != set(candidate["skills"])
                for item, candidate in zip(stored, dataset[0]["candidates"]))

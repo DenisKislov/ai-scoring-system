@@ -88,3 +88,40 @@ def test_benefits_and_conditions_ignored(extractor):
 def test_empty_and_whitespace_input(extractor):
     assert extractor.extract("") == set()
     assert extractor.extract("   \n\t  ") == set()
+
+# --- Софт-скиллы и generic-зонтики не извлекаются --------------------------
+# Эмпирика по расширенному корпусу (data/, 305 документов): у этих слов
+# FP >= 4 при TP = 0 — они вне словаря разметки команды и только портят
+# точность (см. benchmark_real_data.py / CODE_REVIEW.md).
+
+def test_soft_skills_and_umbrellas_not_extracted():
+    taxonomy = [
+        "Python", "Ответственность", "Работа в команде", "Веб-приложения",
+        "Контейнеризация", "Базы данных", "Оптимизация производительности",
+        "Микросервисы", "Облачные технологии", "CI/CD",
+    ]
+    ex = SkillExtractor(taxonomy=taxonomy)
+    text = ("Требуется ответственность, работа в команде, оптимизация "
+            "производительности, разработка веб-приложений и микросервисов, "
+            "контейнеризация, базы данных. Стек: Python, CI/CD.")
+    skills = ex.extract(text)
+    assert "Python" in skills
+    assert "CI/CD" in skills
+    for noise in ("Ответственность", "Работа в команде", "Веб-приложения",
+                  "Контейнеризация", "Базы данных",
+                  "Оптимизация производительности", "Микросервисы"):
+        assert noise not in skills, f"{noise} не должен извлекаться"
+
+
+def test_it_matches_only_uppercase():
+    # английское местоимение "it" не должно давать навык «IT»
+    ex = SkillExtractor(taxonomy=["IT", "Информационные технологии"])
+    assert ex.extract("it is important to test it") == set()
+    assert "IT" in ex.extract("Опыт в IT-компании, IT-инфраструктура")
+
+
+def test_ci_fragment_not_extracted():
+    # «CI» без «/CD» — обрывок аббревиатуры, не отдельный навык
+    ex = SkillExtractor(taxonomy=["CI", "CI/CD"])
+    assert ex.extract("настройка CI") == set()
+    assert ex.extract("GitLab CI/CD pipelines") == {"CI/CD"}

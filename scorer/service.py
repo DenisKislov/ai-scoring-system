@@ -23,7 +23,9 @@ from typing import Dict, List, Optional, Set
 
 from db import mongo
 from db.builders import experience_years, resume_text, vacancy_text
-from scorer import rank_candidates
+from scorer.transport import rank as rank_candidates
+from scorer.config import algorithm_manifest
+from scorer.skills import extract_skills, normalize_skill_set
 
 
 def score_vacancy(
@@ -45,10 +47,14 @@ def score_vacancy(
     vac = mongo.get_vacancy(vacancy_id)
     if not vac:
         raise ValueError(f"vacancy {vacancy_id} not found")
+    vacancy_id = str(vac['_id'])
 
-    if resume_ids:
-        resumes = [r for r in (mongo.get_resume(rid)
-                               for rid in resume_ids) if r]
+    if resume_ids is not None:
+        resume_ids = list(dict.fromkeys(resume_ids))
+        resumes = [mongo.get_resume(rid) for rid in resume_ids]
+        if any(r is None for r in resumes):
+            raise ValueError("one or more resumes not found")
+        resumes = list({str(r['_id']): r for r in resumes}.values())
     else:
         resumes = mongo.list_resumes(limit=limit_resumes)
     if not resumes:
@@ -57,14 +63,22 @@ def score_vacancy(
     rids = [str(r["_id"]) for r in resumes]
     rtexts = [resume_text(r) for r in resumes]
 
-    # --- ДОБАВИТЬ ЭТИ ДВЕ СТРОКИ ---
-    v_skills = set(vac.get("skills", []))
-    r_skills_list = [set(r.get("skills", [])) for r in resumes]
+    v_skills = (set(vac['skills']) if vac.get('skills')
+                else extract_skills(vacancy_text(vac)))
+    explicit_critical = critical_skills is not None
+    if explicit_critical:
+        normalized_critical = normalize_skill_set(critical_skills)
+        if not normalized_critical <= normalize_skill_set(v_skills):
+            raise ValueError("critical skills must belong to vacancy skills")
+        critical_skills = normalized_critical
+    critical_skills = (set(vac.get("critical_skills", []))
+                       if critical_skills is None else critical_skills)
+    r_skills_list = [set(r['skills']) if r.get('skills') else extract_skills(text)
+                     for r, text in zip(resumes, rtexts)]
 
-    # --- ОБНОВИТЬ ВЫЗОВ ---
     ranked = rank_candidates(
-        vacancy_text(vac),
-        rtexts,
+        vacancy_text=vacancy_text(vac),
+        candidate_texts=rtexts,
         candidate_ids=rids,
         weights=weights,
         min_score=min_score,
@@ -75,7 +89,11 @@ def score_vacancy(
 
     by_id = {str(r["_id"]): r for r in resumes}
     years_by_id = {str(r["_id"]): experience_years(r) for r in resumes}
+    manifest = algorithm_manifest()
     for r in ranked:
+        r["algorithm_fingerprint"] = manifest["fingerprint"]
+        r["weights"] = weights or manifest["weights"]
+        r["resume_id"] = r["candidate_id"]
         rdoc = by_id.get(r["candidate_id"], {})
         r["url"] = rdoc.get("url")
         r["position"] = rdoc.get("title")
@@ -85,11 +103,14 @@ def score_vacancy(
     # Само значение Score не меняется — оно остаётся абсолютной мерой навыков.
     # ``experience_years`` равный None уходит в конец.
     ranked.sort(
-        key=lambda r: (r["score"], r.get("experience_years") or 0),
-        reverse=True,
+        key=lambda r: (-r["score"], r.get('experience_years') is None,
+                       -(r.get("experience_years") or 0), r['resume_id']),
     )
 
     if save:
+        if explicit_critical:
+            mongo.update_critical_skills(vacancy_id, sorted(critical_skills))
+            vac['critical_skills'] = sorted(critical_skills)
         mongo.save_scores(vacancy_id, ranked)
     return {"vacancy": vac, "results": ranked}
 

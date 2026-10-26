@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-21T07:35:51.285204+00:00",
+  "scope": "local parsing and scoring only; no DB/HTTP/container overhead",
+  "host": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  },
+  "seconds": {
+    "single_resume": 0.059996040996338706,
+    "batch_100": 0.43381641700398177,
+    "ranking_200_max": 0.055295375001151115,
+    "ten_vacancies_200_resumes": 1.3664191249990836
+  },
+  "limits_seconds": {
+    "single_resume": 120,
+    "batch_100": 1800,
+    "ranking_200_max": 10,
+    "ten_vacancies_200_resumes": 3600
+  },
+  "passed": true,
+  "container_acceptance_completed": false
+}

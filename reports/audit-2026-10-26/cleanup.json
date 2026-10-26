@@ -1,0 +1,8 @@
+{
+  "project": "ai-scoring-pmi-00dc253e",
+  "status": "not_removed",
+  "user_authorized": true,
+  "reason": "automatic_permission_review_timed_out_on_initial_attempt_and_one_retry_after_explicit_user_authorization",
+  "contains": "synthetic audit data only",
+  "manual_command": "docker compose -f /Users/denis/PycharmProjects/ai-scoring-system/docker-compose.yml --project-name ai-scoring-pmi-00dc253e down --volumes"
+}

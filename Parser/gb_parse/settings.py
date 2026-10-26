@@ -10,8 +10,9 @@
 BOT_NAME = "gb_parse"
 
 # MongoDB settings
-MONGO_URI = "mongodb://localhost:27017"
-MONGO_DB = "gb_parse"
+import os
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
+MONGO_DB = os.environ.get("MONGO_DB", "gb_parse")
 
 SPIDER_MODULES = ["gb_parse.spiders"]
 NEWSPIDER_MODULE = "gb_parse.spiders"

@@ -39,8 +39,25 @@ def precision_at_k(
     return float(np.mean([r >= threshold for r in top]))
 
 
+def recall_at_k(
+        predicted_relevances: Sequence[float], k: int, threshold: float = 0.5
+) -> Optional[float]:
+    """Доля релевантных, попавших в топ-*k*, от всех релевантных.
+
+    *predicted_relevances* — ground-truth релевантности в порядке, который
+    выдал скорер (лучшие первыми). Возвращает ``None``, если релевантных
+    нет вовсе — метрика не определена (запрос «без ответа»).
+    """
+    rel = list(predicted_relevances)
+    n_relevant = sum(1 for r in rel if r >= threshold)
+    if n_relevant == 0:
+        return None
+    found = sum(1 for r in rel[:k] if r >= threshold)
+    return found / n_relevant
+
+
 def spearman(predicted_scores: Sequence[float], true_relevances: Sequence[float]) -> float:
-    if len(predicted_scores) < 2:
+    if len(predicted_scores) < 2 or len(set(predicted_scores)) < 2 or len(set(true_relevances)) < 2:
         return 0.0
     rho, _ = spearmanr(predicted_scores, true_relevances)
     return float(rho) if rho == rho else 0.0

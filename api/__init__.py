@@ -1,3 +1,9 @@
-from .main import app, create_app
+"""API-пакет проекта.
 
-__all__ = ["app", "create_app"]
+FastAPI-приложение живёт в ``api.main`` и поднимается через
+``uvicorn api.main:app`` — импорт приложения из ``__init__`` убран намеренно:
+утилитные модули (например ``api.nlp_parser``) должны импортироваться быстро
+и без транзитивных зависимостей FastAPI/MongoDB/faker.
+"""
+
+__all__ = ["nlp_parser"]

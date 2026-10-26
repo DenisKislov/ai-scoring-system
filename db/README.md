@@ -16,7 +16,7 @@
 
 | Переменная | По умолчанию | Что |
 |---|---|---|
-| `MONGO_URI` | `mongodb://localhost:27017` | URI подключения |
+| `MONGO_URI` | `mongodb://mongo:27017` | URI подключения; для локального API задайте `mongodb://localhost:27017` |
 | `MONGO_DB` | `gb_parse` | Имя базы |
 
 Коллекции (константы `COLL_*`): `hh` (вакансии), `hh_resumes` (резюме), `hh_scores` (скоринги), `hh_feedback` (решения HR).
@@ -33,13 +33,14 @@
 
 - `vacancy_text(item)` — `title + description + skills + tags`.
 - `resume_text(item)` — `title + specialization + experience + skills + tags`. Поля могут быть `str`/`list`/`None` — безопасно нормализуются.
-- `experience_years(item)` — годы опыта из поля `experience` (regex `Опыт работы: N лет|год|года`). Используется **только как тайм-брейк** при равном скорe, в сам `score` не входит. Обобщение `scripts/extract_years_of_experience.py` на живой пайплайн.
+- `experience_years(item)` — числовое поле, затем парсер текстового опыта и `_raw_text`. Поддерживаются годы, месяцы, дробные формулировки и пересекающиеся периоды работы. Опыт используется для упорядочивания при равном Score.
+- `parse_raw_text_to_resume(text)` — навыки из единого `scorer.extract_skills` и опыт из `api.nlp_parser.extract_experience_years`.
 
 > **Anti-bias:** `resume_text` намеренно **не включает** `age`, `gender`, `address` — они изолированы от признаков на уровне сборки.
 
 ## seed.py
 
-Заливает синтетику (`data.synthetic.generate_dataset`) в коллекции `hh`/`hh_resumes` в формате hh.ru item, с служебными полями `_synthetic`, `_target_vacancy_url`, `_true_relevance` (для eval/интеграции). `--clear` удаляет синтетику и все скоринги.
+Заливает синтетику (`data.synthetic.generate_dataset`) в коллекции `hh`/`hh_resumes` в формате hh.ru item, с служебными полями `_synthetic`, `_target_vacancy_url`, `_true_relevance` (для eval/интеграции). Поле `skills` извлекается из видимого текста; скрытые навыки генератора не передаются рабочему скореру. `--clear` удаляет синтетику и все скоринги.
 
 ```bash
 python -m db.seed [--vacancies 6] [--resumes 20] [--seed 42] [--clear]

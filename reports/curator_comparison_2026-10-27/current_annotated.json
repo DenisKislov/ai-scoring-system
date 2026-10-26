@@ -1,0 +1,109 @@
+{
+  "timestamp_utc": "2026-10-26T19:18:50+00:00",
+  "configuration": {
+    "protocol_version": "integrated_curator_json_v1",
+    "ranking_inputs": "annotated",
+    "binary_relevance_threshold": 0.1,
+    "relevance_source": "normalised expected_skills coverage proxy",
+    "skill_extraction": "once_per_document_from_text",
+    "expert_pair_relevance": false
+  },
+  "corpus": {
+    "vacancies": 10,
+    "resumes": 194,
+    "pairs": 1940,
+    "queries_without_relevant_candidates": 0
+  },
+  "extraction": {
+    "vacancies": {
+      "micro": {
+        "tp": 54,
+        "fp": 9,
+        "fn": 148,
+        "documents": 10,
+        "documents_without_labels": 0,
+        "precision": 0.8571428571428571,
+        "recall": 0.26732673267326734,
+        "f1": 0.40754716981132083
+      },
+      "by_source": {
+        "rich-json": {
+          "tp": 54,
+          "fp": 9,
+          "fn": 148,
+          "documents": 10,
+          "documents_without_labels": 0,
+          "precision": 0.8571428571428571,
+          "recall": 0.26732673267326734,
+          "f1": 0.40754716981132083
+        }
+      }
+    },
+    "resumes": {
+      "micro": {
+        "tp": 1819,
+        "fp": 930,
+        "fn": 2121,
+        "documents": 194,
+        "documents_without_labels": 1,
+        "precision": 0.6616951618770462,
+        "recall": 0.4616751269035533,
+        "f1": 0.5438780086709524
+      },
+      "by_source": {
+        "pdf_assembled": {
+          "tp": 1009,
+          "fp": 734,
+          "fn": 571,
+          "documents": 96,
+          "documents_without_labels": 0,
+          "precision": 0.5788869764773379,
+          "recall": 0.6386075949367088,
+          "f1": 0.6072825759855552
+        },
+        "rich-json": {
+          "tp": 810,
+          "fp": 196,
+          "fn": 1550,
+          "documents": 98,
+          "documents_without_labels": 1,
+          "precision": 0.805168986083499,
+          "recall": 0.3432203389830508,
+          "f1": 0.481283422459893
+        }
+      }
+    },
+    "seconds": 2.7
+  },
+  "ranking": {
+    "mean": {
+      "ndcg_at_10": 0.9537489623673674,
+      "precision_at_5": 0.98,
+      "precision_at_10": 0.96,
+      "recall_at_10": 0.20462810487682598,
+      "recall_at_50": 0.6617972395287991,
+      "spearman_score": 0.8865611753696027
+    },
+    "queries_per_metric": {
+      "ndcg_at_10": 10,
+      "precision_at_5": 10,
+      "precision_at_10": 10,
+      "recall_at_10": 10,
+      "recall_at_50": 10,
+      "spearman_score": 10
+    },
+    "seconds": 4.815
+  },
+  "scores": {
+    "mean": 13.059278350515465,
+    "median": 12.0,
+    "max": 70,
+    "keyword_mean": 0.11221494845360824
+  },
+  "experience": {
+    "documents_with_number": 186,
+    "documents": 194,
+    "coverage": 0.9587628865979382,
+    "accuracy_measured": false
+  }
+}

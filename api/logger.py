@@ -13,7 +13,7 @@ def setup_logger(name: str) -> logging.Logger:
         logger.setLevel(logging.INFO)
 
         # Строгий формат: Время | Уровень | Сообщение
-        formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s', datefmt='%H:%M:%S')
+        formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s', datefmt='%Y-%m-%dT%H:%M:%S%z')
 
         # Вывод в консоль
         console_handler = logging.StreamHandler()
@@ -27,3 +27,8 @@ def setup_logger(name: str) -> logging.Logger:
         logger.addHandler(file_handler)
 
     return logger
+
+
+def event(logger, name: str, **fields):
+    import json
+    logger.info(json.dumps({"event": name, **fields}, ensure_ascii=False, default=str))

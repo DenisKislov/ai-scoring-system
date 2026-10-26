@@ -1,0 +1,71 @@
+{
+  "algorithm": {
+    "version": "curator-pmi-1.0.0",
+    "weights": {
+      "keyword": 0.85,
+      "cosine": 0.15
+    },
+    "critical_weight": 2.0,
+    "reference_corpus": "scorer/reference_corpus.py",
+    "skill_dictionary": "config/skills.json",
+    "personal_attributes": "excluded",
+    "relevance_threshold": 0.1,
+    "skill_matching": "curator_symmetric_families",
+    "text_similarity": "fixed_reference_tfidf_for_pmi_pool_invariance",
+    "file_hashes": {
+      "config/algorithm.json": "91ce0e48eda7f310d553396d15a818a3372d74a58463af759b0138bd3e0cafde",
+      "config/skills.json": "ba5a9e34f28f94a3d09ab8e316107c16cce854a1c2b16b172c9f964cfd59760f",
+      "scorer/reference_corpus.py": "1b573265667ffebee433f291642972a3c04afb3ca98bb3fa9218f0214ea9ccc3",
+      "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
+      "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
+      "scorer/skill_extractor.py": "3cfa4bbd2062a925e293374a8a4f04362757f744e7833f6f310e5d17d8fb50b0",
+      "scorer/skill_families.py": "b6af9f35882a18d54f1b0d80b8cd983f7c9f0831814e323746cda4ab9c04bcbc",
+      "scorer/scoring.py": "bd12a322fbd80c1c78adc8c7a7285877d74a9b7ed80c4f87246b6ac319776833",
+      "scorer/normalize.py": "b8539727e07146a34a6ed5817e059dbb5bf89d0fe14bc0ea203525d0c8a8018a",
+      "scorer/privacy.py": "781a3551c4174450131b772c168a3b8e1d9b844ec388adb939fc5e223bdd9ee8",
+      "scorer/skills.py": "03383f4cd5550251a3dcfda1544d749429507b84d22fbb0b2ab4ad2890b3929f",
+      "requirements.lock": "daac8d739194ba34c492e3155ab2d1dfd9e85665fd4b36b79f6473bfd9423e09"
+    },
+    "dependencies": {
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5",
+      "pymongo": "4.18.0",
+      "PyMuPDF": "1.28.2",
+      "scikit-learn": "1.9.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "razdel": "0.5.0",
+      "pymorphy3": "2.0.6"
+    },
+    "fingerprint": "987d82e12947606336181a0f747a391288865894421b509b511a9e32eb5f4eee"
+  },
+  "command": "python scripts/benchmark_real_data.py --output-dir reports/curator_pmi_2026-10-27 --output-prefix benchmark",
+  "corpus": {
+    "vacancies": 10,
+    "resumes": 194,
+    "pairs": 1940,
+    "queries_without_relevant_candidates": 0
+  },
+  "threshold": 0.1,
+  "ranking_inputs": "annotated",
+  "curator_reference_rounded": {
+    "ndcg_at_10": 0.925,
+    "precision_at_5": 0.96,
+    "precision_at_10": 0.92,
+    "recall_at_10": 0.195,
+    "spearman_score": 0.883
+  },
+  "matching_families_byte_identical_to_archive": true,
+  "archive_family_sha256": "b6af9f35882a18d54f1b0d80b8cd983f7c9f0831814e323746cda4ab9c04bcbc",
+  "datasets": {
+    "data/superjob_dataset.json": "53a519e516798b03f449891609be094a56d626171dfc5c18130e4b2f76d05e34",
+    "data/dataset_resume.json": "e08ee3a3393e7865d7453a25c3c353b752a5b96262ae6dff04b6efb8fd3dde6a"
+  },
+  "fixed_idf_preserved_for_pmi": true,
+  "python_tests": {
+    "passed": 186,
+    "failed": 0,
+    "skipped": 0
+  },
+  "source_backup": "/private/tmp/restore-curator-20261027/before_restore.zip"
+}

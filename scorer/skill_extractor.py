@@ -1,5 +1,5 @@
 import re
-from typing import Set, List, Tuple
+from typing import Optional, Set, List, Tuple
 
 BLACKLIST = {
     # Корпоративный и структурный шум
@@ -16,7 +16,14 @@ BLACKLIST = {
     # Шум из резюме и роли
     "английский язык", "английский", "frontend", "backend", "ui",
     "верстка", "вёрстка", "spa", "алгоритмы", "ооп", "excel", "crm",
-    "api", "django framework", "rest", "data science"
+    "api", "django framework", "rest", "data science",
+    # Софт-скиллы и generic-зонтики вне словаря разметки: эмпирика по
+    # расширенному корпусу (305 документов) — FP >= 4 при TP = 0.
+    "ответственность", "самостоятельность", "работа в команде",
+    "веб-приложения", "контейнеризация", "базы данных",
+    "оптимизация производительности", "информационная безопасность",
+    "cloud", "интернет-магазины", "ит-инфраструктура", "микросервисы",
+    "микросервисная архитектура", "ci",
 }
 
 INLINE_ALIASES = {
@@ -57,22 +64,61 @@ INLINE_ALIASES = {
     "WebSocket": r"(?:websocket|web\s*socket|ws\b)",
     "pyTelegramBotAPI": r"(?:pytelegrambotapi|telebot)",
     "Telegram Bot API": r"(?:telegram\s*bot\s*api)",
-    "Java": r"(?<![a-zа-яё0-9])java(?![a-zа-яё0-9]|script)"
+    "Java": r"(?<![a-zа-яё0-9])java(?![a-zа-яё0-9]|script)",
+    # «ООП» в резюме часто пишут развернуто
+    "ООП": r"(?:ооп|объектно[-\s]ориентированн\w+(?:\s+программирован\w+)?)"
 }
 
-STRICT_UPPERCASE = {"QA", "СВТ", "БД", "ВНА", "НДС", "ТМЦ", "РСБУ", "CI/CD"}
+STRICT_UPPERCASE = {"QA", "СВТ", "БД", "ВНА", "НДС", "ТМЦ", "РСБУ", "CI/CD", "IT"}
+
+
+def case_score(name: str) -> Tuple[int, int, str]:
+    """Детерминированный приоритет написания: предпочитаем «брендовое»
+    (больше заглавных), затем более длинное, затем лексикографический
+    порядок — итог не зависит от порядка перебора и хэш-сида процесса."""
+    return (sum(ch.isupper() for ch in name), len(name), name)
+
+
+def collapse_case(variants) -> Tuple[str, ...]:
+    """Схлопывает варианты, отличающиеся только регистром: ``python`` и
+    ``Python`` — один навык. Возвращает детерминированный кортеж."""
+    best = {}
+    for v in variants:
+        cur = best.get(v.lower())
+        if cur is None or case_score(v) > case_score(cur):
+            best[v.lower()] = v
+    return tuple(best.values())
 
 
 class SkillExtractor:
-    def __init__(self, taxonomy: List[str]):
+    def __init__(self, taxonomy: List[str], protected: Optional[Set[str]] = None, aliases: Optional[dict] = None):
+        """*protected* — имена из ground-truth разметки (колонки CSV,
+        expected_skills датасетов). Их BLACKLIST игнорирует: черный список
+        борется с шумом извлечения, но метка разметки — по определению
+        валидный навык, иначе гарантированы ложные пропуски (FN).
+
+        Таксономия дедуплицируется по регистру: источники дают по 2-3
+        написания одного навыка («PostgreSQL»/«postgresql»), и без
+        дедупликации выбор написания зависел от хэш-сида процесса —
+        экстрактор возвращал разные имена в разных запусках.
+        """
         self.patterns: List[Tuple[str, re.Pattern]] = []
-        sorted_skills = sorted(set(taxonomy), key=len, reverse=True)
+        self.aliases = aliases or {}
+        protected = {p.lower() for p in (protected or set())}
+        deduped = collapse_case(set(taxonomy))
+        sorted_skills = sorted(deduped, key=lambda s: (-len(s), s))
         for skill in sorted_skills:
-            if skill.lower() in BLACKLIST or skill in BLACKLIST:
+            if skill.lower() not in protected and (
+                    skill.lower() in BLACKLIST or skill in BLACKLIST):
                 continue
             self.patterns.append(self._compile_pattern(skill))
 
     def _compile_pattern(self, skill: str) -> Tuple[str, re.Pattern]:
+        if skill in self.aliases:
+            alternatives = sorted(self.aliases[skill], key=len, reverse=True)
+            pattern = "|".join(re.escape(a) for a in alternatives)
+            return skill, re.compile(rf"(?<![a-zа-яё0-9])(?:{pattern})(?![a-zа-яё0-9])", re.IGNORECASE)
+
         if skill in INLINE_ALIASES:
             return skill, re.compile(rf"(?<![a-zа-яё0-9]){INLINE_ALIASES[skill]}(?![a-zа-яё0-9])", re.IGNORECASE)
 
@@ -103,7 +149,7 @@ class SkillExtractor:
     @staticmethod
     def clean_text(text: str) -> str:
         # Разлепляем только кириллицу (не ломая латинский стек)
-        text = re.sub(r"([а-яё0-9])([А-ЯЁ])", r"\1 \2", text)
+        text = re.sub(r"([а-яё])([А-ЯЁ])", r"\1 \2", text)
 
         # Срезаем блок иностранных языков
         text = re.sub(

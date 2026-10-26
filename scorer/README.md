@@ -22,6 +22,7 @@ pip install -r scorer/requirements.txt
 | `scikit-learn` | TF-IDF-векторы + косинусное сходство |
 | `numpy` | метрики качества ранжирования (nDCG, precision@k) |
 | `scipy` | Spearman в [`metrics.py`](metrics.py) |
+| `pandas` | чтение словаря навыков из CSV |
 | `pymongo` *(опц., ставится на уровне проекта)* | только для CLI `python -m scorer.service` и интеграции с MongoDB |
 
 Стоп-слова встроены ([`stopwords_ru.py`](stopwords_ru.py)), онтология навыков и референс-корпус уже лежат в репо.
@@ -33,14 +34,14 @@ pip install -r scorer/requirements.txt
 Для каждой пары (вакансия, резюме) считается гибридный скор:
 
 ```
-raw = 0.6 · keyword_score + 0.4 · cosine_sim
+raw = 0.85 · keyword_score + 0.15 · cosine_sim
 Score(%) = round(raw · 100)
 ```
 
 1. **Нормализация** ([`normalize.py`](normalize.py)) — очистка HTML -> `razdel`-токенизация -> lowercase + раскрытие IT-сокращений (`k8s -> kubernetes`, `js -> javascript`, `mongo -> mongodb`, `ci -> ci/cd`, `ml -> machine learning` …) -> лемматизация `pymorphy3` (с `lru_cache`) -> удаление стоп-слов (до и после лемматизации) и однобуквенных токенов. Английские токены проходят lowercase **без** лемматизации (pymorphy3 — только русский).
 2. **Онтология навыков** ([`skills_dict.py`](skills_dict.py) + `skills_auto*.json`) — курируемый словарь IT-навыков с RU/EN-алиасами: буквенные в `SKILLS`, символьные в `RAW_SKILLS`; авто-расширение из корпуса профессий. При коллизии канонических имён курируемая запись выигрывает.
-3. **Сопоставление навыков** ([`skills.py`](skills.py)) — `matched_skills = skills(vacancy) ∩ skills(resume)`. Два матчера: lemma-матчер (уни- и биграммы нормализованных алиасов) и raw-substring-матчер (символьные: `C++`, `.NET`, `CI/CD`). **Must-have** (`critical_skills`) весят **×2** относительно обычных при расчёте `keyword_score`.
-4. **Сходство текстов** ([`similarity.py`](similarity.py)) — TF-IDF (uni+bi-grams, `sublinear_tf`) по лемматизированным текстам -> `cosine ∈ [0, 1]`. **Векторизатор обучается один раз** при импорте на фиксированном референс-корпусе ([`reference_corpus.py`](reference_corpus.py)) — поэтому косинус пары не зависит от состава пула, а `Score` остаётся **абсолютной мерой**.
+3. **Извлечение и сопоставление навыков** ([`skills.py`](skills.py)) — единый `SkillExtractor`, базовая онтология и версионируемый справочник config/skills.json. Названия нормализуются; совпадением считается прямой матч или принадлежность группе из `skill_families.py`. Группы куратора симметричны: это широкое допущение о заменяемости технологий. **Must-have** (`critical_skills`) весят **×2** относительно обычных при расчёте `keyword_score`.
+4. **Сходство текстов** ([`similarity.py`](similarity.py)) — TF-IDF по отдельным нормализованным токенам (`sublinear_tf=True`) и `cosine ∈ [0, 1]`. **Векторизатор обучается один раз** при импорте на фиксированном референс-корпусе ([`reference_corpus.py`](reference_corpus.py)). Одиночный и пакетный расчёты используют одно преобразование; состав пула не меняет косинус пары. Тексты без известных слов получают нулевую текстовую близость.
 5. **Итог** ([`scoring.py`](scoring.py)) — `Score` 0–100% (абсолютный), плюс `rank_percentile` (позиция в пачке — отдельное поле) и разбор `matched` / `missing` / `critical` с вкладом каждого компонента.
 
 > **Тай-брейк по опыту.** При равном `Score` кандидаты доупорядочиваются по годам опыта (больше -> выше). Годы извлекаются в слое интеграции ([`experience_years()`](../db/builders.py:34)), сам `Score` при этом не меняется. См. корневой README.
@@ -54,9 +55,10 @@ from scorer import calculate_score, rank_candidates, DEFAULT_WEIGHTS
 
 # одна пара
 calculate_score(resume_text, vacancy_text)
-# {"score": 73, "raw_score": 0.73,
+# Пример структуры результата (для keyword=0.8, cosine=0.6):
+# {"score": 77, "raw_score": 0.77,
 #  "keyword_score": 0.8, "cosine_sim": 0.6,
-#  "keyword_contribution": 0.48, "cosine_contribution": 0.24,
+#  "keyword_contribution": 0.68, "cosine_contribution": 0.09,
 #  "matched_skills": ["Python", "PostgreSQL", ...], "missing_skills": [...],
 #  "matched_critical": [...], "missing_critical": [...],
 #  "vacancy_skills": [...], "critical_skills": [...]}
@@ -151,15 +153,19 @@ python -m scorer.service [VACANCY_ID] [--top N] [--limit-resumes N] [--no-save] 
 Качество ранжирования проверяется на синтетике с известной релевантностью
 ([`scripts/benchmark_synthetic.py`](../scripts/benchmark_synthetic.py)).
 На 12 вакансиях × 30 резюме и трёх seed считаются Precision@10, Recall@10,
-MAP, MRR, NDCG@10 и Spearman. `tests/eval_synthetic.py` проверяет порог ТЗ
-NDCG@10 ≥ 0,80 тем же расчётом. Бинарная релевантность для P/R/MAP/MRR —
+MAP, MRR, NDCG@10 и Spearman. `tests/eval_synthetic.py` проверяет прежний
+регрессионный ориентир NDCG@10 ≥ 0,80; это не полная приёмка по ПМИ.
+Бинарная релевантность для диагностических P/R/MAP/MRR по умолчанию —
 `true_relevance ≥ 0.65`, NDCG использует непрерывную метку.
 
 ```bash
 .venv/bin/python scripts/benchmark_synthetic.py
 ```
 
-> Это **контролируемые синтетические данные**: ground-truth задаётся процедурой генерации, а текст резюме — зашумлённое наблюдение. Цифры доказывают корректность алгоритма и пайплайна оценки, но **не** продакшен-точность. Реальных лейблов нет (152-ФЗ).
+Это контролируемые синтетические данные: метки задаёт генератор, текст резюме
+отражает часть навыков профиля. Отдельно есть PDF-бенчмарк с размеченными
+навыками. Для оценки реального найма потребуется экспертная релевантность
+пар «вакансия — резюме». Старые измерения находятся в `reports/history/`.
 
 ---
 
@@ -170,3 +176,13 @@ NDCG@10 ≥ 0,80 тем же расчётом. Бинарная релевант
 ```bash
 python -m tools.clean_profession_skills && python -m tools.build_ontology && python -m tools.build_reference_corpus
 ```
+
+## Исправления логики от 26.10.2026
+
+Версия `pmi-1.1.0`: семейства навыков сопоставляются направленно (MySQL → SQL, но не SQL → PostgreSQL). Конкретные инструменты не заменяют друг друга. Пустые или отсутствующие навыки старых записей извлекаются из текста; нормализация учитывает обновлённый словарь даже при переданных готовых наборах. Одиночный и пакетный расчёт одинаково объясняют пустое резюме и возвращают флаг порога. Подробнее: `reports/audit-2026-10-26/README.md`.
+
+## Согласование с куратором от 27.10.2026
+
+Активная версия `curator-pmi-1.0.0`: восстановлены симметричные группы `skill_families.py` из архива. Фиксированный TF-IDF сохранён по решению пользователя для А-12 ПМИ; также сохранены нормализация алиасов, фильтрация персональных строк и проверки входов. Раздел об исправлениях от 26.10 выше описывает прежнюю версию и её метрики.
+
+Базовый прогон: `python scripts/benchmark_real_data.py`. По умолчанию это первые 10 вакансий, все 194 резюме, готовые размеченные навыки и порог 0.1. Отдельная проверка извлечения: `python scripts/benchmark_real_data.py --ranking-inputs extracted`. Результаты записываются в `reports/curator_benchmark/`. Последний зафиксированный прогон: `reports/curator_pmi_2026-10-27/README.md`.

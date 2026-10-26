@@ -4,8 +4,10 @@ from .normalize import normalize
 from .similarity import batch_cosine, pair_cosine
 from .skills import extract_skills, match_skills
 from .metrics import category_metrics
+from .config import load_config, validate_weights
+from .privacy import professional_text
 
-DEFAULT_WEIGHTS: Dict[str, float] = {"keyword": 0.85, "cosine": 0.15}
+DEFAULT_WEIGHTS: Dict[str, float] = load_config()["weights"]
 
 
 def calculate_score(
@@ -15,12 +17,9 @@ def calculate_score(
         min_score: Optional[float] = None,
         critical_skills: Optional[Set[str]] = None,
 ) -> Dict:
-    w = {**DEFAULT_WEIGHTS, **(weights or {})}
-    if not (resume_text and resume_text.strip()) or not (
-            vacancy_text and vacancy_text.strip()
-    ):
-        return _empty_result()
-
+    w = validate_weights({**load_config()["weights"], **(weights or {})})
+    resume_text = professional_text(resume_text)
+    vacancy_text = professional_text(vacancy_text)
     match = match_skills(
         resume_text,
         vacancy_text,
@@ -41,8 +40,8 @@ def calculate_score(
         "raw_score": round(raw, 3),
         "keyword_score": round(keyword_score, 3),
         "cosine_sim": round(cosine_sim, 3),
-        "keyword_contribution": round(w["keyword"] * keyword_score, 3),
-        "cosine_contribution": round(w["cosine"] * cosine_sim, 3),
+        "keyword_contribution": round(w["keyword"] * keyword_score, 3) if raw else 0.0,
+        "cosine_contribution": round(w["cosine"] * cosine_sim, 3) if raw else 0.0,
         "matched_skills": sorted(match["matched"]),
         "missing_skills": sorted(match["missing"]),
         "matched_critical": sorted(match["matched_critical"]),
@@ -67,7 +66,7 @@ def rank_candidates(
         vacancy_skills: Optional[Set[str]] = None,
         resume_skills_list: Optional[List[Set[str]]] = None,
 ) -> List[Dict]:
-    w = {**DEFAULT_WEIGHTS, **(weights or {})}
+    w = validate_weights({**load_config()["weights"], **(weights or {})})
     if not candidate_texts:
         return []
     if candidate_ids is None:
@@ -75,6 +74,12 @@ def rank_candidates(
     elif len(candidate_ids) != len(candidate_texts):
         raise ValueError("candidate_ids must align with candidate_texts")
 
+    if resume_skills_list is not None and len(resume_skills_list) != len(candidate_texts):
+        raise ValueError("resume_skills_list must align with candidate_texts")
+    if len(set(candidate_ids)) != len(candidate_ids):
+        raise ValueError("candidate_ids must be unique")
+    vacancy_text = professional_text(vacancy_text)
+    candidate_texts = [professional_text(t) for t in candidate_texts]
     norm_v = normalize(vacancy_text)
     norm_resumes = [normalize(r) for r in candidate_texts]
     cosines = batch_cosine(norm_v, norm_resumes)
@@ -94,6 +99,8 @@ def rank_candidates(
         )
         kw = match["keyword_score"]
         raw = w["keyword"] * kw + w["cosine"] * cos
+        if not rtext.strip() or not vacancy_text.strip() or not match["matched"]:
+            raw = 0.0
         score = round(raw * 100)
 
         cat_metrics = category_metrics(predicted_skills=match["resume_skills"], true_skills=v_skills)
@@ -104,13 +111,14 @@ def rank_candidates(
             "raw_score": round(raw, 3),
             "keyword_score": round(kw, 3),
             "cosine_sim": round(cos, 3),
-            "keyword_contribution": round(w["keyword"] * kw, 3),
-            "cosine_contribution": round(w["cosine"] * cos, 3),
+            "keyword_contribution": round(w["keyword"] * kw, 3) if raw else 0.0,
+            "cosine_contribution": round(w["cosine"] * cos, 3) if raw else 0.0,
             "matched_skills": sorted(match["matched"]),
             "missing_skills": sorted(match["missing"]),
             "matched_critical": sorted(match["matched_critical"]),
             "missing_critical": sorted(match["missing_critical"]),
             "critical_skills": sorted(match["critical_skills"]),
+            "vacancy_skills": sorted(match["vacancy_skills"]),
             "metrics_by_category": cat_metrics,
             "_raw": raw,
         }
@@ -138,20 +146,3 @@ def _add_percentile_rank(results: List[Dict]) -> None:
     for r in results:
         below = sum(1 for x in raws if x < r["_raw"])
         r["rank_percentile"] = round(100 * below / (n - 1))
-
-
-def _empty_result() -> Dict:
-    return {
-        "score": 0,
-        "raw_score": 0.0,
-        "keyword_score": 0.0,
-        "cosine_sim": 0.0,
-        "keyword_contribution": 0.0,
-        "cosine_contribution": 0.0,
-        "matched_skills": [],
-        "missing_skills": [],
-        "matched_critical": [],
-        "missing_critical": [],
-        "vacancy_skills": [],
-        "critical_skills": [],
-    }
