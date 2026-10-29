@@ -2,7 +2,7 @@
   "checked_at": "2026-10-26T09:30:07.140348+00:00",
   "source_report": "reports/audit-2026-10-26/realistic_diagnostic/synthetic_benchmark.json",
   "configuration": {
-    "protocol_version": "integrated_curator_synthetic_v1",
+    "protocol_version": "integrated_baseline_synthetic_v1",
     "seeds": [
       42,
       7,

@@ -98,7 +98,7 @@ def evaluate(
     return {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "configuration": {
-            "protocol_version": "integrated_curator_synthetic_v1",
+            "protocol_version": "integrated_baseline_synthetic_v1",
             "seeds": list(seeds), "vacancies_per_seed": vacancies,
             "resumes_per_vacancy": resumes, "k": k,
             "binary_relevance_threshold": threshold,

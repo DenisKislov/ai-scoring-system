@@ -1,7 +1,7 @@
 {
   "timestamp_utc": "2026-10-26T08:48:43+00:00",
   "configuration": {
-    "protocol_version": "integrated_curator_synthetic_v1",
+    "protocol_version": "integrated_baseline_synthetic_v1",
     "seeds": [
       42,
       7,

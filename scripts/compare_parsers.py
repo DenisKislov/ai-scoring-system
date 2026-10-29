@@ -14,8 +14,8 @@ sys.path.insert(0, str(BASE_DIR))
 import pandas as pd
 import pypdf
 
-# 1. Решение куратора (api/nlp_parser.py)
-from api.nlp_parser import extract_smart_skills as curator_extract
+# 1. Основной парсер (api/nlp_parser.py)
+from api.nlp_parser import extract_smart_skills as baseline_extract
 
 # 2. Наш парсер (scorer/skill_extractor.py)
 from scorer.skill_extractor import SkillExtractor
@@ -49,7 +49,7 @@ def run_benchmark(pdf_dir: Path, gt_path: Path, dataset_name: str):
 
     stats = {
         "our": {"tp": 0, "fp": 0, "fn": 0, "time": 0.0},
-        "curator": {"tp": 0, "fp": 0, "fn": 0, "time": 0.0},
+        "baseline": {"tp": 0, "fp": 0, "fn": 0, "time": 0.0},
     }
 
     processed = 0
@@ -81,14 +81,14 @@ def run_benchmark(pdf_dir: Path, gt_path: Path, dataset_name: str):
         stats["our"]["fp"] += len(our_pred - true_skills)
         stats["our"]["fn"] += len(true_skills - our_pred)
 
-        # Прогон парсера куратора
+        # Прогон основного парсера
         t0 = time.perf_counter()
-        curator_pred = {s.lower() for s in curator_extract(raw)}
-        stats["curator"]["time"] += time.perf_counter() - t0
+        baseline_pred = {s.lower() for s in baseline_extract(raw)}
+        stats["baseline"]["time"] += time.perf_counter() - t0
 
-        stats["curator"]["tp"] += len(true_skills & curator_pred)
-        stats["curator"]["fp"] += len(curator_pred - true_skills)
-        stats["curator"]["fn"] += len(true_skills - curator_pred)
+        stats["baseline"]["tp"] += len(true_skills & baseline_pred)
+        stats["baseline"]["fp"] += len(baseline_pred - true_skills)
+        stats["baseline"]["fn"] += len(true_skills - baseline_pred)
 
     def calc_metrics(m):
         tp, fp, fn = m["tp"], m["fp"], m["fn"]
@@ -98,7 +98,7 @@ def run_benchmark(pdf_dir: Path, gt_path: Path, dataset_name: str):
         return p, r, f1, m["time"]
 
     p_our, r_our, f1_our, t_our = calc_metrics(stats["our"])
-    p_cur, r_cur, f1_cur, t_cur = calc_metrics(stats["curator"])
+    p_cur, r_cur, f1_cur, t_cur = calc_metrics(stats["baseline"])
 
     print(f"\n{'='*75}")
     print(f"ДАТАСЕТ: {dataset_name} (проанализировано {processed} документов)")
@@ -106,7 +106,7 @@ def run_benchmark(pdf_dir: Path, gt_path: Path, dataset_name: str):
     print(f"{'Парсер':<24} | {'Precision':<10} | {'Recall':<10} | {'F1-Score':<10} | {'Время (сек)':<10}")
     print(f"{'-'*75}")
     print(f"{'Наш (SkillExtractor)':<24} | {p_our:<10.2%} | {r_our:<10.2%} | {f1_our:<10.2%} | {t_our:<10.2f}")
-    print(f"{'Куратора (NLP-Vocab)':<24} | {p_cur:<10.2%} | {r_cur:<10.2%} | {f1_cur:<10.2%} | {t_cur:<10.2f}")
+    print(f"{'Основной (NLP-Vocab)':<24} | {p_cur:<10.2%} | {r_cur:<10.2%} | {f1_cur:<10.2%} | {t_cur:<10.2f}")
     print(f"{'='*75}")
 
 

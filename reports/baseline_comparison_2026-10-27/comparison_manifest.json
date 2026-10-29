@@ -43,7 +43,7 @@
     "data/superjob_dataset.json": "53a519e516798b03f449891609be094a56d626171dfc5c18130e4b2f76d05e34",
     "data/dataset_resume.json": "e08ee3a3393e7865d7453a25c3c353b752a5b96262ae6dff04b6efb8fd3dde6a"
   },
-  "curator_reproduced": {
+  "baseline_reproduced": {
     "command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1",
     "source_archive": "/Users/denis/Downloads/ai-scoring-system-main.zip",
     "source_archive_size": 156273718,
@@ -73,6 +73,6 @@
     },
     "working_project_modified": false
   },
-  "current_annotated_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs annotated --output-dir reports/curator_comparison_2026-10-27 --output-prefix current_annotated",
-  "current_extracted_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs extracted --output-dir reports/curator_comparison_2026-10-27 --output-prefix current_extracted"
+  "current_annotated_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs annotated --output-dir reports/baseline_comparison_2026-10-27 --output-prefix current_annotated",
+  "current_extracted_command": "python scripts/benchmark_real_data.py --limit 10 --threshold 0.1 --ranking-inputs extracted --output-dir reports/baseline_comparison_2026-10-27 --output-prefix current_extracted"
 }

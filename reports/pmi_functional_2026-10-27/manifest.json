@@ -55,7 +55,7 @@
     "scorer/transport.py": "915aa76d2258004576417d0fdfda81d96bb89ba4f313078354e71025b09c146b"
   },
   "algorithm": {
-    "version": "curator-pmi-1.0.0",
+    "version": "baseline-pmi-1.0.0",
     "weights": {
       "keyword": 0.85,
       "cosine": 0.15
@@ -65,7 +65,7 @@
     "skill_dictionary": "config/skills.json",
     "personal_attributes": "excluded",
     "relevance_threshold": 0.1,
-    "skill_matching": "curator_symmetric_families",
+    "skill_matching": "baseline_symmetric_families",
     "text_similarity": "fixed_reference_tfidf_for_pmi_pool_invariance",
     "file_hashes": {
       "config/algorithm.json": "91ce0e48eda7f310d553396d15a818a3372d74a58463af759b0138bd3e0cafde",

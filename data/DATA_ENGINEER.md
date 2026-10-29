@@ -4,8 +4,8 @@
 > профессии, прямой `overlap` и численные результаты относятся к прежнему
 > набору и не подтверждают текущее ПМИ. Актуальная методика с шестью
 > направлениями — в [`README.md`](README.md), результаты — в
-> [`../reports/README.md`](../reports/README.md). Отчёты до интеграции куратора
-> сохранены в `../reports/history/pre_curator/`.
+> [`../reports/README.md`](../reports/README.md). Отчёты до объединения версий
+> сохранены в `../reports/history/pre_integration/`.
 
 ##  Роль
 

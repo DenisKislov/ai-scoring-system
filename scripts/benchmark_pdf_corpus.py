@@ -451,7 +451,7 @@ def main() -> None:
     report = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "configuration": {
-            "protocol_version": "integrated_curator_pdf_v1",
+            "protocol_version": "integrated_baseline_pdf_v1",
             "binary_relevance_threshold": args.threshold,
             "synthetic_binary_relevance_threshold": args.synthetic_threshold,
             "relevance_source": "labelled_skill_coverage_proxy",

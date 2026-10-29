@@ -1,13 +1,13 @@
-"""Diagnostic benchmark on the curator's labelled SuperJob JSON corpus.
+"""Diagnostic benchmark on the baseline labelled SuperJob JSON corpus.
 
 Extraction is measured against expected_skills, document by document. Ranking
 uses labelled skill coverage as a proxy, not expert relevance of people to jobs.
-The default annotated mode reproduces the curator's known-skill ranking test.
+The default annotated mode reproduces the baseline known-skill ranking test.
 The explicit extracted mode measures the additional skill-extraction stage.
 
 Examples::
 
-    python scripts/benchmark_real_data.py  # curator protocol: first 10, annotated skills, threshold 0.1
+    python scripts/benchmark_real_data.py  # baseline protocol: first 10, annotated skills, threshold 0.1
     python scripts/benchmark_real_data.py --limit 0
     python scripts/benchmark_real_data.py --limit 0 --threshold 0.1
     python scripts/benchmark_real_data.py --limit 10 --ranking-inputs extracted
@@ -136,7 +136,7 @@ def evaluate(vacancies: list[dict], resumes: list[dict], threshold: float = 0.1,
         kwargs = {"vacancy_skills": extracted_vacancies[index],
                   "resume_skills_list": extracted_resumes}
         if ranking_inputs == "annotated":
-            # Keep the curator's known-skill scenario, explicitly labelled oracle.
+            # Keep the baseline known-skill scenario, explicitly labelled oracle.
             v_text = " ".join([v_text, " ".join(sorted(v_skills))])
             kwargs = {"vacancy_skills": v_skills, "resume_skills_list": res_skills}
         true_rels = [len(v_skills & rs) / len(v_skills) if v_skills else 0.0
@@ -169,7 +169,7 @@ def evaluate(vacancies: list[dict], resumes: list[dict], threshold: float = 0.1,
     found = sum(experience_years(experience_doc(item)) is not None for item in resumes)
     return {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "configuration": {"protocol_version": "integrated_curator_json_v1",
+        "configuration": {"protocol_version": "integrated_baseline_json_v1",
                           "ranking_inputs": ranking_inputs,
                           "binary_relevance_threshold": threshold,
                           "relevance_source": "normalised expected_skills coverage proxy",
@@ -241,9 +241,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, default=10, help="число вакансий; 0 = все")
     parser.add_argument("--threshold", type=float, default=0.1,
-                        help="бинарный порог proxy-релевантности (куратор и ПМИ: 0.1)")
+                        help="бинарный порог proxy-релевантности (исходный протокол и ПМИ: 0.1)")
     parser.add_argument("--ranking-inputs", choices=("extracted", "annotated"), default="annotated")
-    parser.add_argument("--output-dir", type=Path, default=BASE_DIR / "reports" / "curator_benchmark")
+    parser.add_argument("--output-dir", type=Path, default=BASE_DIR / "reports" / "baseline_benchmark")
     parser.add_argument("--output-prefix", default="real_data_benchmark")
     args = parser.parse_args()
     if args.limit < 0:

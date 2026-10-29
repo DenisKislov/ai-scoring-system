@@ -1,5 +1,5 @@
 {
-  "version": "curator-pmi-1.0.0",
+  "version": "baseline-pmi-1.0.0",
   "weights": {
     "keyword": 0.85,
     "cosine": 0.15
@@ -9,6 +9,6 @@
   "skill_dictionary": "config/skills.json",
   "personal_attributes": "excluded",
   "relevance_threshold": 0.1,
-  "skill_matching": "curator_symmetric_families",
+  "skill_matching": "baseline_symmetric_families",
   "text_similarity": "fixed_reference_tfidf_for_pmi_pool_invariance"
 }

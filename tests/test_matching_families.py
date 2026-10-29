@@ -151,7 +151,7 @@ import pytest
     ('Airflow', 'ETL'), ('Spring', 'Java'), ('Selenium', 'Postman'),
     ('Ubuntu', 'Linux'), ('1С: Бухгалтерия', '1С: ERP'), ('GraphQL', 'REST API'),
 ])
-def test_curator_family_equivalence_is_preserved(requirement, known):
+def test_baseline_family_equivalence_is_preserved(requirement, known):
     result = match_skills('', '', vacancy_skills={requirement},
                           resume_skills={known}, critical_skills={requirement})
     assert result['matched'] == normalize_skill_set({requirement})
