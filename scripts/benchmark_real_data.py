@@ -34,8 +34,9 @@ from scorer import extract_skills, rank_candidates  # noqa: E402
 from scorer.metrics import ndcg, precision_at_k, recall_at_k, spearman  # noqa: E402
 from scorer.skills import normalize_skill_set  # noqa: E402
 
-VAC_PATH = BASE_DIR / "data" / "superjob_dataset.json"
-RES_PATH = BASE_DIR / "data" / "dataset_resume.json"
+LOCAL_DATASET_DIR = BASE_DIR / "data"
+PUBLISHED_DATASET_DIR = LOCAL_DATASET_DIR / "benchmark"
+DATASET_FILENAMES = ("superjob_dataset.json", "dataset_resume.json")
 
 
 def vacancy_text_of(item: dict) -> str:
@@ -196,8 +197,10 @@ def markdown(report: dict) -> str:
             else "oracle: размеченные expected_skills переданы скореру, а навыки вакансии добавлены в её текст")
     lines = ["# Диагностический бенчмарк JSON-корпуса", "",
              f"Дата (UTC): {report['timestamp_utc']}", "",
-             f"Версия протокола: `{cfg['protocol_version']}`.", "",
-             f"{corpus['vacancies']} вакансий × {corpus['resumes']} резюме = {corpus['pairs']} пар.",
+             f"Версия протокола: `{cfg['protocol_version']}`.", ""]
+    if dataset := cfg.get("dataset"):
+        lines.extend([f"Набор: {dataset}.", ""])
+    lines += [f"{corpus['vacancies']} вакансий × {corpus['resumes']} резюме = {corpus['pairs']} пар.",
              f"Вход ранжирования: **{cfg['ranking_inputs']}** — {mode}.", "",
              "**Релевантность — proxy покрытия размеченных навыков, а не экспертная оценка пар.** "
              "Режим annotated изолирует матчинг от ошибок извлечения и не оценивает загрузку PDF.",
@@ -206,7 +209,7 @@ def markdown(report: dict) -> str:
              "## Извлечение навыков", "",
              "На каждом документе сравниваются нормализованные expected_skills и навыки, "
              "извлечённые из текста. TP/FP/FN суммируются до вычисления micro P/R/F1. "
-             "Полные PDF-тексты и rich-json выдержки показаны раздельно; неполная разметка "
+             "Тексты из PDF и rich-json выдержки показаны раздельно; неполная разметка "
              "может давать ложные FP.", "",
              "| Корпус / источник | Документов | Precision | Recall | F1 | TP | FP | FN |",
              "|---|---:|---:|---:|---:|---:|---:|---:|"]
@@ -243,6 +246,8 @@ def main() -> int:
     parser.add_argument("--threshold", type=float, default=0.1,
                         help="бинарный порог proxy-релевантности (исходный протокол и ПМИ: 0.1)")
     parser.add_argument("--ranking-inputs", choices=("extracted", "annotated"), default="annotated")
+    parser.add_argument("--dataset-dir", type=Path,
+                        help="папка с двумя JSON; по умолчанию локальный набор, если он есть целиком, иначе опубликованный")
     parser.add_argument("--output-dir", type=Path, default=BASE_DIR / "reports" / "baseline_benchmark")
     parser.add_argument("--output-prefix", default="real_data_benchmark")
     args = parser.parse_args()
@@ -252,11 +257,24 @@ def main() -> int:
         parser.error("--threshold must be in (0, 1]")
     if Path(args.output_prefix).name != args.output_prefix:
         parser.error("--output-prefix must be a filename prefix")
-    vacancies = json.loads(VAC_PATH.read_text(encoding="utf-8"))
-    resumes = json.loads(RES_PATH.read_text(encoding="utf-8"))
+    dataset_dir = args.dataset_dir
+    if dataset_dir is None:
+        dataset_dir = LOCAL_DATASET_DIR if all(
+            (LOCAL_DATASET_DIR / name).is_file() for name in DATASET_FILENAMES
+        ) else PUBLISHED_DATASET_DIR
+    vacancy_path, resume_path = (dataset_dir / name for name in DATASET_FILENAMES)
+    for path in (vacancy_path, resume_path):
+        if not path.is_file():
+            parser.error(f"файл набора не найден: {path}")
+    vacancies = json.loads(vacancy_path.read_text(encoding="utf-8"))
+    resumes = json.loads(resume_path.read_text(encoding="utf-8"))
     if args.limit:
         vacancies = vacancies[:args.limit]
     report = evaluate(vacancies, resumes, args.threshold, args.ranking_inputs)
+    report["configuration"]["dataset"] = (
+        "опубликованный набор с удалёнными контактными и персональными полями"
+        if dataset_dir.resolve() == PUBLISHED_DATASET_DIR else "локальные JSON"
+    )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     (args.output_dir / f"{args.output_prefix}.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
