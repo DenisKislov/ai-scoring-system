@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "errors": [],
+  "restored_files": 219,
+  "source": "python -m pmi build/verify against frozen dataset/manifest.json"
+}

@@ -171,18 +171,19 @@ class SkillExtractor:
         text = re.sub(r"\bsuper\s*job\b|\bheadhunter\b|\bhh\.ru\b", " ", text, flags=re.I)
         return text
 
-    def extract(self, raw_text: str) -> Set[str]:
+    def extract_mentions(self, raw_text: str) -> list:
+        """Return accepted dictionary spans in clean_text(raw_text) coordinates."""
         cleaned = self.clean_text(raw_text)
-        matched_skills = set()
+        mentions = []
         occupied_spans = []
-
         for skill_name, pattern in self.patterns:
             for match in pattern.finditer(cleaned):
                 start, end = match.span()
                 if not any(s <= start and end <= e for s, e in occupied_spans):
-                    # Приводим варианты написания к канонической форме
-                    canonical_name = "FastAPI" if skill_name in {"Fast API", "fastapi"} else skill_name
-                    matched_skills.add(canonical_name)
+                    canonical = "FastAPI" if skill_name in {"Fast API", "fastapi"} else skill_name
+                    mentions.append((canonical, start, end))
                     occupied_spans.append((start, end))
+        return mentions
 
-        return matched_skills
+    def extract(self, raw_text: str) -> Set[str]:
+        return {name for name, _, _ in self.extract_mentions(raw_text)}

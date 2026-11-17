@@ -10,3 +10,6 @@ frontend/build
 scripts/exel
 data/resumes
 data/vacancies
+
+# Runtime model is in scorer/models; training sources and corpora stay outside images.
+training/

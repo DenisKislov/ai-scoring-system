@@ -1,0 +1,79 @@
+{
+  "method": "extracted_top1_lower_decile_pool_cap_v1",
+  "target": 0.343,
+  "vacancies": 10,
+  "resumes": 194,
+  "queries": [
+    {
+      "vacancy_index": 0,
+      "top1_coverage": 1.0,
+      "effective_threshold": 0.343,
+      "shown": 95,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 1,
+      "top1_coverage": 0.55,
+      "effective_threshold": 0.343,
+      "shown": 18,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 2,
+      "top1_coverage": 0.8,
+      "effective_threshold": 0.343,
+      "shown": 52,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 3,
+      "top1_coverage": 0.5,
+      "effective_threshold": 0.343,
+      "shown": 4,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 4,
+      "top1_coverage": 0.35714285714285715,
+      "effective_threshold": 0.343,
+      "shown": 1,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 5,
+      "top1_coverage": 0.34375,
+      "effective_threshold": 0.343,
+      "shown": 1,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 6,
+      "top1_coverage": 0.45454545454545453,
+      "effective_threshold": 0.343,
+      "shown": 26,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 7,
+      "top1_coverage": 0.5384615384615384,
+      "effective_threshold": 0.343,
+      "shown": 21,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 8,
+      "top1_coverage": 0.7142857142857143,
+      "effective_threshold": 0.343,
+      "shown": 31,
+      "top1_visible": true
+    },
+    {
+      "vacancy_index": 9,
+      "top1_coverage": 0.8888888888888888,
+      "effective_threshold": 0.343,
+      "shown": 27,
+      "top1_visible": true
+    }
+  ],
+  "top1_visible_everywhere": true
+}

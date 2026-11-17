@@ -2,6 +2,7 @@
 from __future__ import annotations
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -27,7 +28,13 @@ def matches(content: bytes) -> list:
 
 def scan(root: Path, out: Path, history=True) -> dict:
     findings, files = [], 0
-    candidates=[p for p in root.rglob('*') if p.is_file() and not any(part in EXCLUDED for part in p.relative_to(root).parts)]
+    candidates = []
+    for folder, directories, filenames in os.walk(root):
+        current = Path(folder)
+        directories[:] = [name for name in directories if name not in EXCLUDED
+                          and (current / name).relative_to(root).as_posix()
+                          not in {'data/resumes', 'data/vacancies'}]
+        candidates.extend(current / name for name in filenames if (current / name).is_file())
     ignored_result=subprocess.run(['git','check-ignore','--stdin'],cwd=root,input='\n'.join(str(p.relative_to(root)) for p in candidates)+'\n',capture_output=True,text=True)
     ignored=set(ignored_result.stdout.splitlines())
     for path in sorted(candidates):

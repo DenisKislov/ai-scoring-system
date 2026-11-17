@@ -1,10 +1,11 @@
 {
-  "version": "baseline-pmi-1.0.0",
+  "version": "spacy-pmi-1.1.0",
   "weights": {
     "keyword": 0.85,
     "cosine": 0.15
   },
   "critical_weight": 2.0,
+  "ner_skills_enabled": true,
   "reference_corpus": "scorer/reference_corpus.py",
   "skill_dictionary": "config/skills.json",
   "personal_attributes": "excluded",

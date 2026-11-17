@@ -41,19 +41,35 @@ def dictionary_path() -> Path:
 
 
 def algorithm_manifest() -> dict:
+    from .ner_skills import ner_enabled, ner_status, model_file_hashes  # отложенный импорт: без цикла
+
     config = load_config()
+    config["ner_skills_enabled"] = ner_enabled()
+    ner_runtime = ner_status()
     files = [config_path(), dictionary_path(), ROOT / config["reference_corpus"],
              ROOT / "scorer/skills_auto.json", ROOT / "scorer/skills_auto_raw.json",
              ROOT / "scorer/skill_extractor.py", ROOT / "scorer/skill_families.py",
              ROOT / "scorer/scoring.py", ROOT / "scorer/normalize.py", ROOT / "scorer/privacy.py",
-             ROOT / "scorer/skills.py", ROOT / "requirements.lock"]
+             ROOT / "scorer/skills.py", ROOT / "scorer/similarity.py",
+             ROOT / "scorer/dictionary.py", ROOT / "requirements.lock"]
+    packages = ["fastapi", "pydantic", "pymongo", "PyMuPDF", "scikit-learn", "numpy",
+                "scipy", "razdel", "pymorphy3"]
+    if ner_enabled():
+        # Model artifacts are part of the fingerprint only when NER is enabled.
+        files += [ROOT / "scorer/ner_skills.py"]
+        packages.append("spacy")
     dependencies = {}
-    for package in ["fastapi", "pydantic", "pymongo", "PyMuPDF", "scikit-learn", "numpy", "scipy", "razdel", "pymorphy3"]:
+    for package in packages:
         try:
             dependencies[package] = importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:
             dependencies[package] = "unavailable"
     hashes = {str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else p.name:
               hashlib.sha256(p.read_bytes()).hexdigest() for p in files if p.exists()}
-    fingerprint = hashlib.sha256(json.dumps({"config":config,"hashes":hashes,"dependencies":dependencies},sort_keys=True).encode()).hexdigest()
-    return {**config, "file_hashes": hashes, "dependencies": dependencies, "fingerprint": fingerprint}
+    if ner_enabled():
+        hashes.update({"scorer/models/resume_ner/" + name: digest
+                       for name, digest in model_file_hashes().items()})
+    fingerprint = hashlib.sha256(json.dumps({"config":config,"hashes":hashes,"dependencies":dependencies,
+                                             "ner_runtime":ner_runtime},sort_keys=True).encode()).hexdigest()
+    return {**config, "file_hashes": hashes, "dependencies": dependencies,
+            "fingerprint": fingerprint, "ner_skills": ner_runtime}

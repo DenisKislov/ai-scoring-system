@@ -21,6 +21,7 @@ from .skill_families import family_satisfied
 from .skills_dict import RAW_SKILLS_ALL, SKILLS_ALL
 from . import dictionary
 from .config import load_config
+from .ner_skills import ner_enabled, ner_extract_skills
 from .privacy import professional_text
 
 CRITICAL_WEIGHT = load_config()["critical_weight"]
@@ -128,12 +129,27 @@ def _get_extractor() -> SkillExtractor:
 
 
 def extract_skills(text: str) -> Set[str]:
-    """Возвращает множество канонических навыков, найденных в *text*."""
+    """Канонические навыки текста: словарь ∪ NER (за флагом ner_skills_enabled)."""
     if not text or not text.strip():
         return set()
 
     extractor = _get_extractor()
-    return normalize_skill_set(extractor.extract(professional_text(text)))
+    professional = professional_text(text)
+    clean = extractor.clean_text(professional)
+    mentions = extractor.extract_mentions(clean)
+    skills = normalize_skill_set({name for name, _, _ in mentions})
+    if ner_enabled():
+        additions = set()
+        for name in ner_extract_skills(professional):
+            occurrences = list(re.finditer(re.escape(name), clean, flags=re.I))
+            # A partial entity inside an accepted longer term adds no new skill.
+            nested = occurrences and all(any(start <= match.start() and match.end() <= end
+                                            for _, start, end in mentions)
+                                         for match in occurrences)
+            if not nested:
+                additions.add(name)
+        skills |= normalize_skill_set(additions)
+    return skills
 
 
 @lru_cache(maxsize=200_000)

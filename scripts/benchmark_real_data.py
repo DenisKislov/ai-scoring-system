@@ -33,38 +33,12 @@ sys.path.insert(0, str(BASE_DIR))
 from scorer import extract_skills, rank_candidates  # noqa: E402
 from scorer.metrics import ndcg, precision_at_k, recall_at_k, spearman  # noqa: E402
 from scorer.skills import normalize_skill_set  # noqa: E402
+from scorer.corpus import vacancy_text_of, resume_text_of  # noqa: E402
 
 LOCAL_DATASET_DIR = BASE_DIR / "data"
 PUBLISHED_DATASET_DIR = LOCAL_DATASET_DIR / "benchmark"
 DATASET_FILENAMES = ("superjob_dataset.json", "dataset_resume.json")
 
-
-def vacancy_text_of(item: dict) -> str:
-    body = []
-    if item.get("responsibilities"):
-        body.append(f"Обязанности: {item['responsibilities']}")
-    if item.get("requirements"):
-        body.append(f"Требования: {item['requirements']}")
-    if body:
-        return "\n\n".join([item.get("vacancy") or ""] + body).strip()
-    return item.get("raw_text") or item.get("vacancy") or ""
-
-
-def resume_text_of(item: dict) -> str:
-    parts = []
-    if item.get("career_goal"):
-        parts.append(f"Цель: {item['career_goal']}")
-    if item.get("key_strengths"):
-        parts.append(f"Ключевые навыки и сильные стороны: {item['key_strengths']}")
-    positions = item.get("previously_held_positions") or []
-    if positions:
-        exp_text = "\n".join(
-            f"- {p.get('position', '')} в {p.get('company', '')} "
-            f"({p.get('period', '')}): {p.get('responsibilities', '')}"
-            for p in positions
-        )
-        parts.append(f"Опыт работы:\n{exp_text}")
-    return "\n\n".join(p for p in parts if p).strip() or item.get("raw_text") or ""
 
 
 def gt_skills(item: dict) -> set:

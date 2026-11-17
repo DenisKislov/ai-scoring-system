@@ -1,0 +1,29 @@
+{
+  "dry_run": false,
+  "updated": 96,
+  "unchanged": 9,
+  "conflicts": 0,
+  "skills_added": 582,
+  "skills_removed": 0,
+  "by_kind": {
+    "resumes": 96,
+    "vacancies": 0
+  },
+  "preserved_fields_equal": true,
+  "collection_integrity": {
+    "hh": {
+      "count": 5,
+      "preserved_content_sha256": "ac11cdbc61a4a23b349352256b57b5703a0077758ecaec6eaf10ab3816bfc953"
+    },
+    "hh_resumes": {
+      "count": 205,
+      "preserved_content_sha256": "f8814284487b62efcfe201cbb44b91a1f7abe3d8dab5603d4eff3f529ba6bf9b"
+    },
+    "hh_feedback": {
+      "count": 1,
+      "preserved_content_sha256": "067c172fdbf4069b92520e78e29056afd2f8a7b8c132156ad8b6a5b96924372c"
+    }
+  },
+  "backup_created_outside_repository": true,
+  "api_stopped_during_apply": true
+}

@@ -97,3 +97,11 @@ backups/
 # Local external corpora are not part of the synthetic demonstration/release.
 /data/superjob_dataset.json
 /data/dataset_resume.json
+
+# Обучающие артефакты NER: модель пересобирается (reports/ner_gate/README.md)
+training/ner/out/
+training/ner/out_train.log
+
+# Local prepared training text and intermediate checkpoints
+training/ner/data/
+training/ner/annotated/

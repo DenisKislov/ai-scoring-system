@@ -4,3 +4,5 @@ httpx
 
 mongomock==4.3.0
 PyYAML
+
+fonttools==4.60.1

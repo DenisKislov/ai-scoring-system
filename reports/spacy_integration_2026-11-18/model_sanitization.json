@@ -1,0 +1,15 @@
+{
+  "documents_compared": 658,
+  "all_entity_predictions_equal": true,
+  "weights_and_other_files_unchanged": true,
+  "contact_scan_clean": true,
+  "cleanup": {
+    "source_strings": 640741,
+    "kept_strings": 640719,
+    "removed_strings": 22,
+    "findings_by_type": {
+      "contact_phone": 4,
+      "contact_email": 18
+    }
+  }
+}

@@ -6,6 +6,8 @@ COPY api/ api/
 COPY scorer/ scorer/
 COPY db/ db/
 COPY config/ config/
+COPY scripts/backfill_skills.py scripts/
+COPY data/benchmark/ data/benchmark/
 # Only synthetic templates are part of the distributable image.
 COPY data/__init__.py data/profiles.py data/synthetic.py data/synthetic_roles.json data/
 EXPOSE 8000

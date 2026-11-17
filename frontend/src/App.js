@@ -1,3 +1,4 @@
+import { effectiveThreshold, filterCandidates } from './candidateFilter';
 import React, { useState, useEffect, useRef } from 'react';
 import { api, API_BASE } from './api/api';
 import './App.css';
@@ -41,16 +42,7 @@ const highlightSkills = (text, fragments) => {
 
 // Доля навыков вакансии, которая есть у кандидата.
 // Эквивалент бенчмарка: len(v_skills & rs) / len(v_skills).
-const overlapRatio = (candidate) => {
-  if (!candidate) return 0;
-  const matched = new Set(candidate.matched_skills || []).size;
-  const missing = new Set([
-    ...(candidate.missing_skills || []),
-    ...(candidate.missing_critical || []),
-  ]).size;
-  const total = matched + missing;
-  return total > 0 ? matched / total : 0;
-};
+
 
 // Компактное отображение навыков в рейтинге.
 const renderMatchedSkills = (skills, max = 5) => {
@@ -449,11 +441,12 @@ function App() {
       setCandidates(candidatesArray);
 
       if (thresholdRatio !== null) {
-        const passed = candidatesArray.filter((c) => overlapRatio(c) >= thresholdRatio).length;
+        const activeThreshold = effectiveThreshold(candidatesArray, thresholdRatio);
+        const passed = filterCandidates(candidatesArray, thresholdRatio).length;
         addLog(
           'SUCCESS',
           `[Скоринг завершен] Оценено: ${candidatesArray.length} | ` +
-          `Порог ${(thresholdRatio * 100).toFixed(1)}% прошли: ${passed}`
+          `Порог ${((activeThreshold ?? thresholdRatio) * 100).toFixed(1)}% прошли: ${passed}`
         );
       } else {
         addLog(
@@ -545,9 +538,7 @@ function App() {
   const matchedFragments = [...(selectedCandidate?.matched_skills || []),
     ...resumeMentions.filter(m => matchedNames.includes(m.skill.toLowerCase())).map(m => m.text)];
 
-  const visibleCandidates = thresholdRatio === null
-    ? candidates
-    : candidates.filter((c) => overlapRatio(c) >= thresholdRatio);
+  const visibleCandidates = filterCandidates(candidates, thresholdRatio);
 
   const hiddenCount = candidates.length - visibleCandidates.length;
 

@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-18",
+  "browser": "Codex in-app browser",
+  "dataset": "isolated synthetic PMI corpus",
+  "checks": {
+    "ranking_visible": true,
+    "candidate_card": true,
+    "component_contributions": true,
+    "matched_skills": true,
+    "original_text_highlighting": true,
+    "hr_decision_saved_and_history_visible": true
+  },
+  "observed": {
+    "vacancies_after_control_deletion": 9,
+    "resumes_after_control_deletion": 199,
+    "display_target": 0.343,
+    "shown_first_vacancy": 30,
+    "top_score": 95
+  },
+  "screenshot": "ui.jpg",
+  "independent_customer_review": false,
+  "safari_chrome_current_release": "not checked in this run"
+}
