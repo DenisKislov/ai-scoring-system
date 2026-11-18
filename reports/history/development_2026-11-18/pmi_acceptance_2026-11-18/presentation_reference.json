@@ -1,0 +1,14 @@
+{
+  "source_file": "TI-1 презентация.pdf",
+  "sha256": "ee812f6f94d780ed2463cad1887cac9ec609dd47b083e2ee01e2cafbe5292836",
+  "pdf_page": 19,
+  "page_text": "10 / ПРОВЕРКА КАЧЕСТВА\nКачество ранжирования \n19\n0,928\nNDCG@10\n0,960\nPrecision@5\n0,920\nPrecision@10\n0,864\nSpearman\nЭксперимент ранжирования\n10 вакансий • 194 резюме • 1940 пар\nРежим annotated: на вход поданы готовые размеченные \nнавыки.\n",
+  "scope": "10 vacancies,194 resumes,1940 pairs; annotated skills; values rounded as printed",
+  "metrics": {
+    "ndcg_at_10": 0.928,
+    "precision_at_5": 0.96,
+    "precision_at_10": 0.92,
+    "spearman_tie_corrected": 0.864
+  },
+  "comparison_status": "different corpus and input mode; illustrative comparison only, not measured model improvement"
+}

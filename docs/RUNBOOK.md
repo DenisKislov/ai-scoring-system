@@ -12,7 +12,7 @@ docker compose up --build -d --wait
 
 По умолчанию UI — `http://localhost:3000`, API/Swagger — `http://localhost:8000/docs`. Четыре отдельных сервиса: frontend, backend, scorer, mongo. БД и скорер не публикуют порты наружу. Первая сборка скачивает зависимости, последующие используют кэш. Образ содержит исходники, конфигурацию, готовую spaCy-модель, обезличенный JSON-набор `data/benchmark` и синтетические шаблоны. Исходные пользовательские PDF и обучающие тексты в образ не копируются.
 
-`.env.example` перечисляет настройки; копировать его в `.env` нужно только для изменения значений. Адрес API фронтенда задаётся `REACT_APP_API_URL` при сборке, адрес БД — `MONGO_URI`, адрес скорера — `SCORER_URL` (в Compose установлен автоматически). По умолчанию в демонстрации нет реальных данных. Заполнить базу можно кнопкой синтетического генератора или загрузкой PDF-набора ПМИ.
+`.env.example` перечисляет настройки; копировать его в `.env` нужно только для изменения значений. Адрес API фронтенда задаётся `REACT_APP_API_URL` при сборке, адрес БД — `MONGO_URI`, адрес скорера — `SCORER_URL` (в Compose установлен автоматически). Готовые синтетические PDF находятся в `data/pmi_acceptance_release_2026-11-18/resumes/` и `vacancies/`. Их можно загрузить в интерфейсе. Кнопка демонстрационного генератора создаёт другой набор; она не заменяет фиксированный бенчмарк.
 
 ## Обновление
 
@@ -32,7 +32,7 @@ docker compose up -d --wait
 docker compose ps
 ```
 
-Остановка не удаляет тома. `/health` проверяет доступность БД, `/status` — жив ли процесс API. После восстановления должны сохраниться числа документов, оригиналы с хэшами, результаты и история HR. Цель ПМИ — не более 30 минут; длительность фактического испытания записывается в `reports/pmi/live.json`.
+Остановка не удаляет тома. `/health` проверяет доступность БД, `/status` — жив ли процесс API. После восстановления должны сохраниться числа документов, оригиналы с хэшами, результаты и история HR. Цель ПМИ — не более 30 минут; длительность фактического испытания записывается в `reports/pmi_release_2026-11-18/live.json`.
 
 Резервную копию можно получить из MongoDB штатным `mongodump --archive`, например:
 
@@ -44,7 +44,7 @@ docker compose exec -T mongo mongodump --archive > backup.archive
 
 ## Локальная разработка
 
-Python 3.13, Node.js 22:
+Python 3.13, Node.js 22. Для Python-драйвера на Windows используйте WSL; сайт в Docker не требует Python на хосте:
 
 ```bash
 python -m venv .venv
@@ -119,7 +119,7 @@ docker compose up -d --wait backend frontend
 
 ```bash
 python -m pytest -q
-python -m pmi run --live
+python -m pmi run --live --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
 ```
 
 Фронтенд: `CI=true npm test -- --watchAll=false --runInBand` и `npm run build` в его каталоге. В PowerShell установите переменную CI отдельно. ПМИ, критерии и ручные действия — `docs/PMI.md`.
@@ -128,3 +128,7 @@ python -m pmi run --live
 
 - `fontTools` закреплён в `requirements.lock` и `tests/requirements.txt`; отдельная ручная установка не требуется;
 - тест `test_stored_dates_keep_utc_offset_for_browser` ожидает Python 3.11+ (`datetime.fromisoformat` с суффиксом `Z`); на 3.10 он падает — используйте целевой Python 3.13.
+
+## Текущий замер
+
+Проверка готового набора: `python -m pmi quality --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction`. Контейнерный этап: `python -m pmi live` с теми же путями. Исходные результаты сохраняются, повторение пишется отдельно. [Методика](ACCEPTANCE_DATASET.md) и [отчёт](../reports/pmi_release_2026-11-18/README.md) описывают усреднение и ограничения.

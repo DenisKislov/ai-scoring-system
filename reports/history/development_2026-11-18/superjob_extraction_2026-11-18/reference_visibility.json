@@ -1,0 +1,628 @@
+{
+  "purpose": "Diagnostic only; protected reference labels define a separate pattern probe, not a production extractor or metric improvement. Pattern absence is not proof of semantic absence.",
+  "corpora": {
+    "resumes": {
+      "counts": {
+        "false_negatives": 1680,
+        "matching_reference_pattern_not_found": 1244,
+        "matching_reference_pattern_found": 436
+      },
+      "top_pattern_detectable_misses": [
+        [
+          "aiogram",
+          6
+        ],
+        [
+          "api",
+          6
+        ],
+        [
+          "mssql",
+          6
+        ],
+        [
+          "powershell",
+          6
+        ],
+        [
+          "storybook",
+          5
+        ],
+        [
+          "gunicorn",
+          4
+        ],
+        [
+          "docker compose",
+          4
+        ],
+        [
+          "unittest",
+          4
+        ],
+        [
+          "ssr",
+          4
+        ],
+        [
+          "fsd",
+          4
+        ],
+        [
+          "debian",
+          4
+        ],
+        [
+          "delphi",
+          3
+        ],
+        [
+          "vba",
+          3
+        ],
+        [
+          "alembic",
+          3
+        ],
+        [
+          "pytelegrambotapi",
+          3
+        ],
+        [
+          "sqlite",
+          3
+        ],
+        [
+          "asyncio",
+          3
+        ],
+        [
+          "react hook form",
+          3
+        ],
+        [
+          "ant design",
+          3
+        ],
+        [
+          "zod",
+          3
+        ],
+        [
+          "firebase",
+          3
+        ],
+        [
+          "lazy loading",
+          3
+        ],
+        [
+          "alertmanager",
+          3
+        ],
+        [
+          "tilda",
+          2
+        ],
+        [
+          "pygame",
+          2
+        ]
+      ],
+      "examples": [
+        {
+          "document_index": 0,
+          "source": "rich-json",
+          "missed_skill": "ms power bi"
+        },
+        {
+          "document_index": 2,
+          "source": "rich-json",
+          "missed_skill": "deberta"
+        },
+        {
+          "document_index": 2,
+          "source": "rich-json",
+          "missed_skill": "kaggle"
+        },
+        {
+          "document_index": 3,
+          "source": "rich-json",
+          "missed_skill": "crisp-dm"
+        },
+        {
+          "document_index": 4,
+          "source": "rich-json",
+          "missed_skill": "bert"
+        },
+        {
+          "document_index": 5,
+          "source": "rich-json",
+          "missed_skill": "amocrm"
+        },
+        {
+          "document_index": 5,
+          "source": "rich-json",
+          "missed_skill": "smm"
+        },
+        {
+          "document_index": 5,
+          "source": "rich-json",
+          "missed_skill": "статистический анализ"
+        },
+        {
+          "document_index": 5,
+          "source": "rich-json",
+          "missed_skill": "эконометрика"
+        },
+        {
+          "document_index": 10,
+          "source": "rich-json",
+          "missed_skill": "svm"
+        },
+        {
+          "document_index": 12,
+          "source": "rich-json",
+          "missed_skill": "cnn"
+        },
+        {
+          "document_index": 12,
+          "source": "rich-json",
+          "missed_skill": "gru"
+        }
+      ],
+      "production_dictionary_diagnostic": {
+        "counts": {
+          "production_pattern_not_found_in_text": 725,
+          "not_a_production_dictionary_key": 952,
+          "of_these_blacklisted": 25,
+          "production_pattern_matches_but_missing_final": 3
+        },
+        "top_terms": {
+          "production_pattern_not_found_in_text": [
+            [
+              "postgresql",
+              63
+            ],
+            [
+              "git",
+              54
+            ],
+            [
+              "linux",
+              27
+            ],
+            [
+              "sql",
+              22
+            ],
+            [
+              "typescript",
+              22
+            ],
+            [
+              "css3",
+              21
+            ],
+            [
+              "rest api",
+              19
+            ],
+            [
+              "html5",
+              18
+            ],
+            [
+              "github",
+              16
+            ],
+            [
+              "javascript",
+              15
+            ],
+            [
+              "html",
+              14
+            ],
+            [
+              "mysql",
+              12
+            ],
+            [
+              "scss",
+              12
+            ],
+            [
+              "docker",
+              11
+            ],
+            [
+              "bash",
+              11
+            ]
+          ],
+          "not_a_production_dictionary_key": [
+            [
+              "bootstrap",
+              13
+            ],
+            [
+              "gunicorn",
+              12
+            ],
+            [
+              "docker compose",
+              12
+            ],
+            [
+              "centos",
+              12
+            ],
+            [
+              "sqlite",
+              11
+            ],
+            [
+              "github actions",
+              10
+            ],
+            [
+              "бэм",
+              10
+            ],
+            [
+              "aiogram",
+              9
+            ],
+            [
+              "api",
+              9
+            ],
+            [
+              "alembic",
+              9
+            ],
+            [
+              "axios",
+              9
+            ],
+            [
+              "bem",
+              9
+            ],
+            [
+              "mssql",
+              8
+            ],
+            [
+              "unittest",
+              8
+            ],
+            [
+              "asyncio",
+              8
+            ]
+          ],
+          "production_pattern_matches_but_missing_final": [
+            [
+              "sql",
+              1
+            ],
+            [
+              "rest api",
+              1
+            ],
+            [
+              "gitlab",
+              1
+            ]
+          ]
+        }
+      }
+    },
+    "vacancies": {
+      "counts": {
+        "false_negatives": 1055,
+        "matching_reference_pattern_not_found": 479,
+        "matching_reference_pattern_found": 576
+      },
+      "top_pattern_detectable_misses": [
+        [
+          "тестирование",
+          7
+        ],
+        [
+          "дашборды",
+          6
+        ],
+        [
+          "программирование",
+          4
+        ],
+        [
+          "технические задания",
+          4
+        ],
+        [
+          "схд",
+          3
+        ],
+        [
+          "алгоритмы",
+          3
+        ],
+        [
+          "bi",
+          3
+        ],
+        [
+          "лвс",
+          3
+        ],
+        [
+          "сетевое оборудование",
+          3
+        ],
+        [
+          "интеграции",
+          3
+        ],
+        [
+          "техническое обслуживание",
+          3
+        ],
+        [
+          "прогнозирование",
+          2
+        ],
+        [
+          "эксперименты",
+          2
+        ],
+        [
+          "dag",
+          2
+        ],
+        [
+          "скс",
+          2
+        ],
+        [
+          "скуд",
+          2
+        ],
+        [
+          "протоколы",
+          2
+        ],
+        [
+          "bgp",
+          2
+        ],
+        [
+          "assembler",
+          2
+        ],
+        [
+          "ad",
+          2
+        ],
+        [
+          "структуры данных",
+          2
+        ],
+        [
+          "хранилища данных",
+          2
+        ],
+        [
+          "видеонаблюдение",
+          2
+        ],
+        [
+          "веб-сервисы",
+          2
+        ],
+        [
+          "клиент-серверная архитектура",
+          2
+        ]
+      ],
+      "examples": [
+        {
+          "document_index": 0,
+          "source": "rich-json",
+          "missed_skill": "аналитические функции"
+        },
+        {
+          "document_index": 0,
+          "source": "rich-json",
+          "missed_skill": "эвристические алгоритмы"
+        },
+        {
+          "document_index": 1,
+          "source": "rich-json",
+          "missed_skill": "parquet"
+        },
+        {
+          "document_index": 1,
+          "source": "rich-json",
+          "missed_skill": "нормализация бд"
+        },
+        {
+          "document_index": 1,
+          "source": "rich-json",
+          "missed_skill": "реляционные хранилища"
+        },
+        {
+          "document_index": 2,
+          "source": "rich-json",
+          "missed_skill": "системы мониторинга"
+        },
+        {
+          "document_index": 3,
+          "source": "rich-json",
+          "missed_skill": "аналитические фреймворки"
+        },
+        {
+          "document_index": 3,
+          "source": "rich-json",
+          "missed_skill": "прогнозирование"
+        },
+        {
+          "document_index": 3,
+          "source": "rich-json",
+          "missed_skill": "статистические методы"
+        },
+        {
+          "document_index": 3,
+          "source": "rich-json",
+          "missed_skill": "эксперименты"
+        },
+        {
+          "document_index": 4,
+          "source": "rich-json",
+          "missed_skill": "codesys"
+        },
+        {
+          "document_index": 4,
+          "source": "rich-json",
+          "missed_skill": "step 7"
+        }
+      ],
+      "production_dictionary_diagnostic": {
+        "counts": {
+          "production_pattern_not_found_in_text": 124,
+          "not_a_production_dictionary_key": 931,
+          "of_these_blacklisted": 93
+        },
+        "top_terms": {
+          "production_pattern_not_found_in_text": [
+            [
+              "postgresql",
+              9
+            ],
+            [
+              "анализ данных",
+              8
+            ],
+            [
+              "sql",
+              6
+            ],
+            [
+              "clickhouse",
+              5
+            ],
+            [
+              "javascript",
+              5
+            ],
+            [
+              "typescript",
+              5
+            ],
+            [
+              "machine learning",
+              4
+            ],
+            [
+              "big data",
+              3
+            ],
+            [
+              "llm",
+              3
+            ],
+            [
+              "apache kafka",
+              3
+            ],
+            [
+              "git",
+              3
+            ],
+            [
+              "python",
+              2
+            ],
+            [
+              "rabbitmq",
+              2
+            ],
+            [
+              "tcp/ip",
+              2
+            ],
+            [
+              "linux",
+              2
+            ]
+          ],
+          "not_a_production_dictionary_key": [
+            [
+              "тестирование",
+              7
+            ],
+            [
+              "английский язык",
+              7
+            ],
+            [
+              "дашборды",
+              6
+            ],
+            [
+              "техническая документация",
+              5
+            ],
+            [
+              "алгоритмы",
+              4
+            ],
+            [
+              "программирование",
+              4
+            ],
+            [
+              "сетевое оборудование",
+              4
+            ],
+            [
+              "управление проектами",
+              4
+            ],
+            [
+              "системный анализ",
+              4
+            ],
+            [
+              "технические задания",
+              4
+            ],
+            [
+              "e-commerce",
+              4
+            ],
+            [
+              "прогнозирование",
+              3
+            ],
+            [
+              "ai-инструменты",
+              3
+            ],
+            [
+              "скс",
+              3
+            ],
+            [
+              "скуд",
+              3
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

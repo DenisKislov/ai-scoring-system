@@ -19,7 +19,7 @@ import httpx
 from .dataset import verify
 
 
-def run_live(dataset: Path, output: Path, keep=False):
+def run_live(dataset: Path, output: Path, keep=False, cached_images=False):
     output.mkdir(parents=True,exist_ok=True)
     project = 'ai-scoring-pmi-' + uuid.uuid4().hex[:8]
     env = {**os.environ, 'API_PORT':'18000','FRONTEND_PORT':'13000',
@@ -30,13 +30,17 @@ def run_live(dataset: Path, output: Path, keep=False):
     scratch = Path(tempfile.mkdtemp(prefix='pmi-compose-'))
     shutil.copytree('config',scratch/'config')
     override = scratch/'compose.override.json'
-    override.write_text(json.dumps({'services': {
-        name:{'volumes':[str(scratch/'config')+':/app/config:ro']} for name in ['backend','scorer']}}))
+    services = {name:{'volumes':[str(scratch/'config')+':/app/config:ro']}
+                for name in ['backend','scorer']}
+    if cached_images:
+        services['mongo'] = {'pull_policy':'never'}
+    override.write_text(json.dumps({'services':services}))
     compose = ['docker','compose','-f',str(Path('docker-compose.yml').resolve()),
                '-f',str(override),'--project-name',project]
     report = {'status':'not_run','project':project,'started_at':datetime.now(timezone.utc).isoformat(),
               'host':{'os':platform.platform(),'machine':platform.machine()},
-              'cases':{},'manual_browser_check':'pending','kept':keep}
+              'cases':{},'manual_browser_check':'pending','kept':keep,
+              'mongo_pull_policy':'never (local cache)' if cached_images else 'compose default'}
     log_path = output/'docker.log'
     log = log_path.open('w')
     started_stack = False
@@ -48,7 +52,7 @@ def run_live(dataset: Path, output: Path, keep=False):
     def evidence(case, **details):
         report['cases'][case] = {'passed':True, **details}
         (output/'live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-        print(f'{case}: пройдено',flush=True)
+        print(f'{case}: '+('пройдено' if report['cases'][case]['passed'] else 'не пройдено'),flush=True)
 
     def wait_health(client, timeout=180):
         start = time.perf_counter()
@@ -89,9 +93,10 @@ def run_live(dataset: Path, output: Path, keep=False):
             source_hashes={item['id']:hashlib.sha256((dataset/item['file']).read_bytes()).hexdigest()
                            for item in data['vacancies']+data['resumes']}
             vids, rids = [], []
+            pdf_only = data.get('scoring_input_contract') == 'pdf_upload'
             start_total=time.perf_counter()
             for index,item in enumerate(data['vacancies']):
-                if index in [0,2]:
+                if index in [0,2] and not pdf_only:
                     doc=good(client.post('/vacancies',json={'title':item['title'],'description':item['text'],
                              'critical_skills':item['critical_skills']}),201)
                     vids.append(doc['_id'])
@@ -116,7 +121,13 @@ def run_live(dataset: Path, output: Path, keep=False):
                     batch100=time.perf_counter()-start
             assert len(set(vids))==10 and len(set(rids))==200
             assert good(client.get('/stats'))=={'vacancies':10,'resumes':200}
-            evidence('A-1',vacancies=10,resumes=200,hashes_verified=208)
+            if pdf_only:
+                form = good(client.post('/vacancies',json={
+                    'title':'Контроль формы','description':'Python PostgreSQL',
+                    'critical_skills':['Python']}),201)
+                good(client.delete('/vacancies/'+form['_id']))
+            evidence('A-1',vacancies=10,resumes=200,hashes_verified=210 if pdf_only else 208,
+                     vacancy_input='all PDF plus separate form check' if pdf_only else '2 form, 8 PDF')
             alias=good(client.post('/upload_resume',files={'file':('aliases.pdf',(dataset/'controls/aliases.pdf').read_bytes())}),201)
             assert set(alias['skills'])=={'PostgreSQL','JavaScript','Kubernetes'}
             good(client.delete('/resumes/'+alias['resume_id']))
@@ -153,9 +164,26 @@ def run_live(dataset: Path, output: Path, keep=False):
             assert a['score']==b['score']
             evidence('A-12',score_pool10=a['score'],score_pool200=b['score'])
             durations=[]
-            for vid in vids:
+            api_rankings = {}
+            source_resume_ids = dict(zip(rids,[r['id'] for r in data['resumes']]))
+            for vacancy,vid in zip(data['vacancies'],vids):
                 before=time.perf_counter();scored=good(client.post('/score',json={'vacancy_id':vid}));durations.append(time.perf_counter()-before)
                 assert scored['count']==200
+                stored = good(client.get('/results/'+vid))['results']
+                assert [r['resume_id'] for r in stored] == [r['resume_id'] for r in scored['results']]
+                api_rankings[vacancy['id']] = [
+                    {**row,'candidate_id':source_resume_ids[row['resume_id']]} for row in stored]
+            if pdf_only:
+                from .live_quality import evaluate_api_outputs
+                documents = {v['id']:good(client.get('/vacancies/'+vid)) for v,vid in zip(data['vacancies'],vids)}
+                documents.update({r['id']:good(client.get('/resumes/'+rid)) for r,rid in zip(data['resumes'],rids)})
+                quality = evaluate_api_outputs(data,documents,api_rankings,output)
+                report['quality_api'] = {'metrics':quality['metrics'],'passed':quality['passed'],
+                                         'evidence':'quality_api.json'}
+                evidence('A-9',passed=all(c['passed'] for c in quality['criteria'].values()),
+                         scope='PDF -> HTTP -> parser -> MongoDB -> scorer -> saved rankings',
+                         metrics=quality['metrics'])
+                evidence('A-10',passed=quality['a10']['passed'],failures=len(quality['a10']['failures']))
             total=time.perf_counter()-start_total
             before=time.perf_counter()
             one=good(client.post('/upload_resume',files={'file':('one.pdf',(dataset/data['resumes'][0]['file']).read_bytes())}),201)
@@ -252,7 +280,7 @@ def run_live(dataset: Path, output: Path, keep=False):
             browser=httpx.get('http://localhost:13000',timeout=10)
             assert browser.status_code==200 and '<div id="root">' in browser.text
             evidence('A-19',scope='four amd64 Linux containers and HTTP UI delivery; customer independent/browser verification pending')
-        report['status']='passed'
+        report['status']='passed' if all(case['passed'] for case in report['cases'].values()) else 'failed'
     except (Exception,KeyboardInterrupt) as exc:
         report['status']='failed'
         report['reason']=f'{type(exc).__name__}: {str(exc)[:500]}'

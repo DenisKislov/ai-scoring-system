@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-18T16:26:06.922169+00:00",
+  "integrity": {
+    "ok": true,
+    "errors": []
+  },
+  "production_algorithm_fingerprint_unchanged": true,
+  "api_change": "module documentation only",
+  "original_json_hashes_unchanged": true,
+  "all_dataset_bytes_unchanged_from_previous_protocol": true,
+  "local_api_all_metrics_and_rankings_equal": true,
+  "all_five_average_criteria_passed": true,
+  "a10_passed": true,
+  "unit": {
+    "passed": 244,
+    "skipped": [
+      "test_build_real_corpus_smok"
+    ],
+    "failed": []
+  },
+  "frontend": {
+    "passed": 15,
+    "build": "passed"
+  },
+  "docker_cases": 19,
+  "temporary_resources_removed": true,
+  "formal_acceptance": false,
+  "methodology": "docs/ACCEPTANCE_DATASET.md"
+}

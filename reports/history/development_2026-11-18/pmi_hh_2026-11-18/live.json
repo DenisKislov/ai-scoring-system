@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "project": "ai-scoring-pmi-f52ab16f",
+  "started_at": "2026-11-18T14:36:12.644874+00:00",
+  "host": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  },
+  "cases": {},
+  "manual_browser_check": "pending",
+  "kept": false,
+  "docker": {
+    "ServerVersion": "29.4.0",
+    "Architecture": "aarch64",
+    "NCPU": 10,
+    "MemTotal": 17011748864,
+    "OperatingSystem": "Docker Desktop"
+  },
+  "reason": "TimeoutExpired: Command '['docker', 'compose', '-f', '/Users/denis/PycharmProjects/ai-scoring-system/docker-compose.yml', '-f', '/var/folders/rn/vv2bznjd1m98wyryk1ltp1440000gn/T/pmi-compose-9naw2dbz/compose.override.json', '--project-name', 'ai-scoring-pmi-f52ab16f', 'up', '-d', '--wait']' timed out after 240 seconds",
+  "finished_at": "2026-11-18T14:40:22.034144+00:00"
+}

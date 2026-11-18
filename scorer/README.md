@@ -1,207 +1,58 @@
-# scorer/ — гибридный скорер резюме
+# Скоринг и NLP
 
-Алгоритмическое ядро проекта: оценивает, насколько резюме соответствует вакансии, и возвращает ранжированный список кандидатов. Сопоставление ключевых навыков по онтологии (с поддержкой must-have) плюс **TF-IDF + косинусное сходство** текстов; навыки дополнительно извлекает обученная на русском корпусе NER-модель (см. ниже).
+Модуль извлекает профессиональные навыки, сравнивает резюме с вакансией и возвращает Score 0–100 с объяснением.
 
-Работает с **русскими** текстами (hh.ru): нативное русское NLP, без перевода.
+## Технологии
 
----
-
-## NER-навыки
-
-[`ner_skills.py`](ner_skills.py) обёртывает spaCy NER-модель
-(`models/resume_ner`, 42 МБ, tok2vec+ner, лейбл Skill). Модель обучена на
-размеченном PDF-корпусе проекта (distant supervision; датасет и пайплайн —
-`training/ner/`, исходный пайплайн — Resume-Parser, MIT, лицензия в
-`training/ner/LICENSE`). Навыки документа = словарь ∪ NER; слияние — в
-[`skills.py:extract_skills`](skills.py) за ключом `ner_skills_enabled` в
-`config/algorithm.json` (env `NER_SKILLS_ENABLED` переопределяет). При
-ошибке загрузки используется словарь, причина пишется в журнал;
-состояние в `GET /config` → `ner_skills`.
-
-Повторный тест `reports/spacy_integration_2026-11-18/`: union с RU-моделью улучшил и извлечение
-(F1 резюме 0.544 → 0.612, вакансий 0.408 → 0.695), и ранжирование
-(NDCG@10 0.682 → 0.759) — включено по умолчанию.
-
----
-
-## Установка
-
-```bash
-# из корня проекта (conda env candidate_scoring, Python 3.10+)
-pip install -r scorer/requirements.txt
-```
-
-Зависимости — см. [`requirements.txt`](requirements.txt). Кратко:
-
-| Пакет | Зачем |
+| Этап | Инструмент |
 |---|---|
-| `pymorphy3` + `pymorphy3-dicts-ru` | лемматизация русских слов (`разработке -> разработка`) |
-| `razdel` | токенизация с учётом правил русского языка |
-| `scikit-learn` | TF-IDF-векторы + косинусное сходство |
-| `numpy` | метрики качества ранжирования (nDCG, precision@k) |
-| `scipy` | Spearman в [`metrics.py`](metrics.py) |
-| `pandas` | чтение словаря навыков из CSV |
-| `spacy` *(опц. NER)* | модель навыков `models/resume_ner`, ленивая загрузка |
-| `pymongo` *(опц., ставится на уровне проекта)* | только для CLI `python -m scorer.service` и интеграции с MongoDB |
+| Навыки | Словарь, алиасы и регулярные выражения; обученная русская spaCy NER-модель с меткой `Skill` |
+| NER | `scorer/models/resume_ner`, компоненты `tok2vec` и `ner`; готовые веса включены в репозиторий |
+| Токенизация и нормализация | razdel, pymorphy3, стоп-слова, раскрытие сокращений |
+| Текстовая близость | scikit-learn TF-IDF и косинусное сходство |
+| Стаж | Правила `api/nlp_parser.py`, годы, месяцы, закрытые и открытые периоды работы |
 
-Стоп-слова встроены ([`stopwords_ru.py`](stopwords_ru.py)), онтология навыков и референс-корпус уже лежат в репо.
+PDF читает PyMuPDF в `api/file_parser.py`. Профиль формируется в `db/builders.py`; навыки получаются через `scorer.skills.extract_skills`. Результаты словаря и NER объединяются, нормализуются и очищаются от повторов. Оценочная разметка не используется как рабочий словарь.
 
----
+## Формула
 
-## Как это работает
-
-Для каждой пары (вакансия, резюме) считается гибридный скор:
-
-```
-raw = 0.85 · keyword_score + 0.15 · cosine_sim
-Score(%) = round(raw · 100)
+```text
+Score = round(100 × (0.85 × keyword_score + 0.15 × cosine_sim))
 ```
 
-1. **Нормализация** ([`normalize.py`](normalize.py)) — очистка HTML -> `razdel`-токенизация -> lowercase + раскрытие IT-сокращений (`k8s -> kubernetes`, `js -> javascript`, `mongo -> mongodb`, `ci -> ci/cd`, `ml -> machine learning` …) -> лемматизация `pymorphy3` (с `lru_cache`) -> удаление стоп-слов (до и после лемматизации) и однобуквенных токенов. Английские токены проходят lowercase **без** лемматизации (pymorphy3 — только русский).
-2. **Онтология навыков** ([`skills_dict.py`](skills_dict.py) + `skills_auto*.json`) — курируемый словарь IT-навыков с RU/EN-алиасами: буквенные в `SKILLS`, символьные в `RAW_SKILLS`; авто-расширение из корпуса профессий. При коллизии канонических имён курируемая запись выигрывает.
-3. **Извлечение и сопоставление навыков** ([`skills.py`](skills.py)) — единый `SkillExtractor`, базовая онтология и версионируемый справочник config/skills.json. Названия нормализуются; совпадением считается прямой матч или принадлежность группе из `skill_families.py`. Исходные группы симметричны: это широкое допущение о заменяемости технологий. **Must-have** (`critical_skills`) весят **×2** относительно обычных при расчёте `keyword_score`.
-4. **Сходство текстов** ([`similarity.py`](similarity.py)) — TF-IDF по отдельным нормализованным токенам (`sublinear_tf=True`) и `cosine ∈ [0, 1]`. **Векторизатор обучается один раз** при импорте на фиксированном референс-корпусе ([`reference_corpus.py`](reference_corpus.py)). Одиночный и пакетный расчёты используют одно преобразование; состав пула не меняет косинус пары. Тексты без известных слов получают нулевую текстовую близость.
-5. **Итог** ([`scoring.py`](scoring.py)) — `Score` 0–100% (абсолютный), плюс `rank_percentile` (позиция в пачке — отдельное поле) и разбор `matched` / `missing` / `critical` с вкладом каждого компонента.
+Обычное требование весит 1, критическое — 2. Совпадением считается прямой навык или замена из симметричной группы `skill_families.py`. Широкие группы могут зачесть разные инструменты одной области; это учитывается при разборе ошибок. При пустом профессиональном тексте или отсутствии совпадений Score равен 0.
 
-> **Тай-брейк по опыту.** При равном `Score` кандидаты доупорядочиваются по годам опыта (больше -> выше). Годы извлекаются в слое интеграции ([`experience_years()`](../db/builders.py:34)), сам `Score` при этом не меняется. См. корневой README.
+TF-IDF обучен на фиксированном `reference_corpus.py`. Состав пула не меняет оценку одной пары. Персональные строки исключаются из признаков. Стаж влияет только на порядок при одинаковом целом Score: известный стаж по убыванию, неизвестный — после него, затем стабильный ID.
 
----
+## Использование
 
-## API
-
-```python
-from scorer import calculate_score, rank_candidates, DEFAULT_WEIGHTS
-
-# одна пара
-calculate_score(resume_text, vacancy_text)
-# Пример структуры результата (для keyword=0.8, cosine=0.6):
-# {"score": 77, "raw_score": 0.77,
-#  "keyword_score": 0.8, "cosine_sim": 0.6,
-#  "keyword_contribution": 0.68, "cosine_contribution": 0.09,
-#  "matched_skills": ["Python", "PostgreSQL", ...], "missing_skills": [...],
-#  "matched_critical": [...], "missing_critical": [...],
-#  "vacancy_skills": [...], "critical_skills": [...]}
-
-# пачка резюме под одну вакансию — отсортировано по score, у каждого rank_percentile
-rank_candidates(vacancy_text, [resume1, resume2, resume3])
-```
-
-Свои веса: `rank_candidates(vac_text, resumes, weights={"keyword": 0.6, "cosine": 0.4})`.
-
-### Must-have и порог
-
-```python
-calculate_score(
-    resume_text,
-    vacancy_text,
-    critical_skills={"Python", "PostgreSQL"},  # must-have — вес ×2 в keyword_score
-    min_score=60,                                # добавляет passed_threshold
-)
-```
-
-При передаче `critical_skills` поля `matched_critical` / `missing_critical` показывают покрытие must-have отдельно, а `keyword_score` считается как взвешенная доля покрытия (must-have = `CRITICAL_WEIGHT = 2.0`).
-
-### Метрики ([`metrics.py`](metrics.py))
-
-**Ранжирование** (качество упорядочивания кандидатов):
-
-```python
-from scorer.metrics import ndcg, precision_at_k, spearman
-ndcg(relevances_in_predicted_order, k=10)   # graded linear-gain nDCG@10
-precision_at_k(relevances, k=5, threshold=0.5)
-spearman(predicted_scores, true_relevances)
-```
-
-**Классификация навыков** — Precision / Recall / F1 целиком и по категориям
-(таксономия в [`skills_categories.py`](skills_categories.py)):
-
-```python
-from scorer.metrics import precision, recall, f1, classification_report
-
-precision(predicted_skills, true_skills)   # доля предсказанных навыков, которые истинны
-recall(predicted_skills, true_skills)      # доля истинных навыков, которые предсказаны
-f1(predicted_skills, true_skills)          # гармоническое среднее P и R
-
-report = classification_report(predicted_skills, true_skills)
-# report["overall"]            — P/R/F1 + TP/FP/FN по всему множеству
-# report["per_category"]       — {"категория": {"tp","fp","fn","precision","recall","f1"}}
-# report["micro"] / report["macro"] — агрегаты по категориям
-```
-
-Категории заданы в [`skills_categories.py`](skills_categories.py): языки
-программирования, базы данных, ML/Data Science, frontend, backend/API,
-DevOps/инфраструктура, BI, процессы/soft skills. Курируемые навыки размечены
-явно (`SKILL_CATEGORIES`), остальная авто-онтология — детерминированными
-keyword-правилами; нераспознанные навыки попадают в «Прочее». Свою разметку
-можно передать как `categories={"категория": {навыки...}}`.
-
----
-
-## CLI (через слой БД)
+Из корня проекта, Python 3.13:
 
 ```bash
-python -m scorer.service [VACANCY_ID] [--top N] [--limit-resumes N] [--no-save] [--json] [--critical-skills SKILL ...]
+python -m pip install -r requirements.lock
 ```
 
-Тянет вакансию и резюме из MongoDB, скорит, сохраняет в коллекцию `hh_scores` (БД `gb_parse`) и печатает топ-N. Нужен запущенный `mongo` и `pymongo`.
+```python
+from scorer import calculate_score, rank_candidates
 
----
-
-## Модули
-
-| Файл | Роль |
-|---|---|
-| [`__init__.py`](__init__.py) | публичный API: `calculate_score`, `rank_candidates`, `normalize`, `extract_skills`, `match_skills`, `DEFAULT_WEIGHTS` |
-| [`normalize.py`](normalize.py) | razdel + pymorphy3, аббревиатуры, стоп-слова, кэш лемм |
-| [`stopwords_ru.py`](stopwords_ru.py) | встроенный русский стоп-список |
-| [`skills_dict.py`](skills_dict.py) | курируемая онтология + автозагрузка `skills_auto*.json` |
-| [`skills_auto.json`](skills_auto.json) | авто-онтология из корпуса (gen: `tools/build_ontology.py`) |
-| [`skills_auto_raw.json`](skills_auto_raw.json) | символьные навыки (`C++`, `.NET`, `CI/CD`, …) |
-| [`skills.py`](skills.py) | извлечение/сопоставление навыков, must-have (вес ×2) |
-| [`reference_corpus.py`](reference_corpus.py) | референс-корпус для стабильного IDF (gen: `tools/build_reference_corpus.py`) — **не править руками** |
-| [`similarity.py`](similarity.py) | TF-IDF (фикс. IDF) + cosine |
-| [`scoring.py`](scoring.py) | `calculate_score` + `rank_candidates`, `DEFAULT_WEIGHTS` |
-| [`metrics.py`](metrics.py) | nDCG / precision@k / Spearman + Precision/Recall/F1 по категориям навыков |
-| [`skills_categories.py`](skills_categories.py) | таксономия категорий навыков для категорийных метрик |
-| [`service.py`](service.py) | интеграция с MongoDB + CLI |
-
----
-
-## Качество
-
-Качество ранжирования проверяется на синтетике с известной релевантностью
-([`scripts/benchmark_synthetic.py`](../scripts/benchmark_synthetic.py)).
-На 12 вакансиях × 30 резюме и трёх seed считаются Precision@10, Recall@10,
-MAP, MRR, NDCG@10 и Spearman. `tests/eval_synthetic.py` проверяет прежний
-регрессионный ориентир NDCG@10 ≥ 0,80; это не полная приёмка по ПМИ.
-Бинарная релевантность для диагностических P/R/MAP/MRR по умолчанию —
-`true_relevance ≥ 0.65`, NDCG использует непрерывную метку.
-
-```bash
-.venv/bin/python scripts/benchmark_synthetic.py
+one = calculate_score('Навыки: Python, PostgreSQL', 'Нужны Python, PostgreSQL, Docker',
+                      critical_skills={'Python'})
+rows = rank_candidates('Python PostgreSQL Docker', ['Python PostgreSQL', 'Docker'],
+                       candidate_ids=['r1', 'r2'])
 ```
 
-Это контролируемые синтетические данные: метки задаёт генератор, текст резюме
-отражает часть навыков профиля. Отдельно есть PDF-бенчмарк с размеченными
-навыками. Для оценки реального найма потребуется экспертная релевантность
-пар «вакансия — резюме». Старые измерения находятся в `reports/history/`.
+Ответ включает Score, взвешенное покрытие, cosine, найденные и отсутствующие требования, критические пробелы и вклады компонентов. Поле `min_score` добавляет флаг `passed_threshold`; интерфейсный фильтр покрытия хранится отдельно.
 
----
+Слой БД: `python -m scorer.service VACANCY_ID --top 10`. В Compose API вызывает отдельный HTTP-скорер; без `SCORER_URL` используется тот же модуль локально.
 
-## Регенерация артефактов
+## Конфигурация
 
-`skills_auto*.json` и `reference_corpus.py` уже в репо. Перегенерируются, если правите корпус профессий (запускать из корня проекта):
+`config/algorithm.json` содержит веса, версию и флаг `ner_skills_enabled`. `NER_SKILLS_ENABLED` переопределяет флаг, `NER_SKILLS_MODEL` — путь модели. `GET /config` показывает эффективные настройки, хэши и `ner_skills.available`. При ошибке модели используется словарь; причина попадает в журнал. После исправления ошибки загрузки процесс нужно перезапустить.
 
-```bash
-python -m tools.clean_profession_skills && python -m tools.build_ontology && python -m tools.build_reference_corpus
-```
+`config/skills.json` перечитывается после изменения файла. Для уже сохранённых документов применяется [пересчёт навыков](../docs/RUNBOOK.md#пересчёт-навыков-загруженных-документов).
 
-## Исправления логики от 26.10.2026
+## Проверка качества
 
-Версия `pmi-1.1.0`: семейства навыков сопоставляются направленно (MySQL → SQL, но не SQL → PostgreSQL). Конкретные инструменты не заменяют друг друга. Пустые или отсутствующие навыки старых записей извлекаются из текста; нормализация учитывает обновлённый словарь даже при переданных готовых наборах. Одиночный и пакетный расчёт одинаково объясняют пустое резюме и возвращают флаг порога. Подробнее: `reports/audit-2026-10-26/README.md`.
+Текущий полный путь проверен на [синтетическом PDF-наборе](../data/pmi_acceptance_release_2026-11-18/): NDCG@10 0,9401, P@5 0,96, P@10 0,93, R@10 0,1603, Spearman ПМИ 0,9156; обычный Spearman 0,9123. F1 навыков резюме 0,9228, вакансий 0,9315.
 
-## Согласование с ответственным за приёмку от 27.10.2026
-
-Активная версия `baseline-pmi-1.0.0`: восстановлены симметричные группы `skill_families.py` из архива. Фиксированный TF-IDF сохранён по решению пользователя для А-12 ПМИ; также сохранены нормализация алиасов, фильтрация персональных строк и проверки входов. Раздел об исправлениях от 26.10 выше описывает прежнюю версию и её метрики.
-
-Базовый прогон: `python scripts/benchmark_real_data.py`. По умолчанию это первые 10 вакансий, все 194 резюме, готовые размеченные навыки и порог 0.1. Отдельная проверка извлечения: `python scripts/benchmark_real_data.py --ranking-inputs extracted`. Результаты записываются в `reports/baseline_benchmark/`. Последний зафиксированный прогон: `reports/baseline_pmi_2026-10-27/README.md`.
+[Методика](../docs/ACCEPTANCE_DATASET.md) раскрывает состав, усреднение и результаты каждой вакансии; [отчёт](../reports/pmi_release_2026-11-18/README.md) содержит исходные значения. Это показатели выбранного синтетического сценария. Прежние JSON-эксперименты `annotated` и `extracted`, обучение и стресс-тесты сохранены отдельно в [реестре](../reports/README.md).

@@ -1,0 +1,29 @@
+{
+  "scope": "different calibrated synthetic corpus and full parser pipeline; not a revalidation of the old SuperJob experiment",
+  "rows": [
+    {
+      "metric": "ndcg_at_10",
+      "presentation_printed": 0.928,
+      "new_full_pipeline": 0.9401472080076567,
+      "difference": 0.012147208007656674
+    },
+    {
+      "metric": "precision_at_5",
+      "presentation_printed": 0.96,
+      "new_full_pipeline": 0.96,
+      "difference": 0.0
+    },
+    {
+      "metric": "precision_at_10",
+      "presentation_printed": 0.92,
+      "new_full_pipeline": 0.93,
+      "difference": 0.010000000000000009
+    },
+    {
+      "metric": "spearman_tie_corrected",
+      "presentation_printed": 0.864,
+      "new_full_pipeline": 0.9123438120862458,
+      "difference": 0.04834381208624583
+    }
+  ]
+}

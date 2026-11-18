@@ -1,0 +1,14 @@
+{
+  "registered_at": "2026-11-18T14:34:43.417760+00:00",
+  "dataset_path": "data/pmi_hh_2026-11-18",
+  "dataset_sha256": "faf18aa9e6da16bea2c143019389b7c2cdd0f7c0990c127f6f60cd6abef78126",
+  "manifest_sha256": "9de1f6c2d3938a842a1f8db54934ddb0b7e87b1952e32aba58f50ad2f937f390",
+  "algorithm_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+  "seed": 20261118,
+  "model": "unchanged production scorer/models/resume_ner",
+  "selection": "all 10 vacancies, all 200 resumes, all 2000 pairs; one fixed seed; no post-measurement selection",
+  "reference_inputs": "only HR critical skill selection; no reference skills or years passed into parser/scorer",
+  "measurement_started": false,
+  "synthetic": true,
+  "layout_status": "authored HH-style sections, not exported by HH; exact template conformity not asserted"
+}

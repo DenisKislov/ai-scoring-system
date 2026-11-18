@@ -12,8 +12,12 @@ def main():
     parser.add_argument('command',choices=['build','freeze','verify','quality','performance','audit','live','run','report'])
     parser.add_argument('--dataset',type=Path,default=Path('data/pmi'))
     parser.add_argument('--output',type=Path,default=Path('reports/pmi'))
+    parser.add_argument('--dataset-style',choices=['legacy','hh','it','acceptance'],default='legacy',
+                        help='Generator for a new protocol; frozen datasets retain their original style')
     parser.add_argument('--live',action='store_true',help='Run an isolated Docker acceptance environment')
     parser.add_argument('--keep',action='store_true',help='Keep only the newly created test stack for manual UI checks')
+    parser.add_argument('--cached-images',action='store_true',
+                        help='Use an already downloaded MongoDB image without contacting the registry')
     args = parser.parse_args()
     args.output.mkdir(parents=True,exist_ok=True)
     if args.command == 'build':
@@ -22,7 +26,7 @@ def main():
             if restored:
                 print(json.dumps({'restored_files':len(restored)})); return 0
             parser.error('Frozen dataset exists. Use a new --dataset path for a new protocol.')
-        data = generate(args.dataset); freeze(args.dataset)
+        data = generate(args.dataset,style=args.dataset_style); freeze(args.dataset)
         print(json.dumps({'vacancies':len(data['vacancies']),'resumes':len(data['resumes']),'pairs':len(data['pairs'])}))
         return 0
     if args.command == 'freeze':
@@ -37,7 +41,7 @@ def main():
             print(json.dumps({'restored_files':len(restored)}),flush=True)
     if args.command in ['quality','run']:
         if not (args.dataset/'manifest.json').exists():
-            generate(args.dataset); freeze(args.dataset)
+            generate(args.dataset,style=args.dataset_style); freeze(args.dataset)
         from .quality import evaluate
         quality=evaluate(args.dataset,args.output)
         print(json.dumps({'quality':quality['metrics'],'passed':quality['passed']}))
@@ -57,7 +61,7 @@ def main():
         (args.output/'unit_exit_code.json').write_text(json.dumps({'exit_code':unit.returncode}))
     if args.command == 'live' or (args.command == 'run' and args.live):
         from .live import run_live
-        live=run_live(args.dataset,args.output,keep=args.keep)
+        live=run_live(args.dataset,args.output,keep=args.keep,cached_images=args.cached_images)
         print(json.dumps({'live_status':live['status'],'reason':live.get('reason')}))
     if args.command in ['report','run','live']:
         from .protocol import protocol

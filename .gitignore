@@ -75,6 +75,8 @@ logs/
 # ──────────────────────────────────────────────────────────────
 *.pdf
 **/*.pdf
+# Published synthetic acceptance fixtures only; original PDF corpora stay ignored.
+!/data/pmi_acceptance_release_2026-11-18/**/*.pdf
 
 # ──────────────────────────────────────────────────────────────
 # Проект: регенерируемые артефакты парсера
@@ -105,3 +107,7 @@ training/ner/out_train.log
 # Local prepared training text and intermediate checkpoints
 training/ner/data/
 training/ner/annotated/
+
+# Local drafts and retained development inputs are not part of the source package.
+/local_archive/
+/output/

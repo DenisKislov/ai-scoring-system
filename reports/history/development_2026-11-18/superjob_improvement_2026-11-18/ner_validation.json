@@ -1,0 +1,47 @@
+{
+  "comparison": {
+    "existing": {
+      "ents_p": 0.9266666666666666,
+      "ents_r": 0.8512685914260717,
+      "ents_f": 0.8873689010487915
+    },
+    "new_scratch": {
+      "ents_p": 0.8658649398704903,
+      "ents_r": 0.8188976377952756,
+      "ents_f": 0.841726618705036
+    },
+    "new_transfer": {
+      "ents_p": 0.8427272727272728,
+      "ents_r": 0.8110236220472441,
+      "ents_f": 0.8265715559518503
+    }
+  },
+  "near_containment_candidates": [
+    {
+      "document_hash": "37d11f54ceca1ee9112734ae31bad1728eb398dc3c094c37554360bedc929e2c",
+      "source": "prepared_train",
+      "max_shingle_containment": 0.8304093567251462
+    },
+    {
+      "document_hash": "deb1d6caba5ea9040ac474096782f961a6b81609af20831c1fed12822efa62da",
+      "source": "prepared_train",
+      "max_shingle_containment": 0.9047619047619048
+    },
+    {
+      "document_hash": "5936fbb972d43213b01791188a50b8e277cfae776f08909d7c9c81315c2a242e",
+      "source": "prepared_train",
+      "max_shingle_containment": 0.8333333333333334
+    },
+    {
+      "document_hash": "86c0cb9ecc57f516f7e98d01e92fba329f8b80b56db538c5f42431d1d2cc0f69",
+      "source": "prepared_train",
+      "max_shingle_containment": 0.8148148148148148
+    },
+    {
+      "document_hash": "121549bfad0de89993899197ea3b452a6cc1851d8ca57ebfc2e1b6644fd973af",
+      "source": "prepared_train",
+      "max_shingle_containment": 0.8758620689655172
+    }
+  ],
+  "caveat": "Containment is a diagnostic and may reflect shared templates; Jaccard filter alone does not prove independent people/documents."
+}

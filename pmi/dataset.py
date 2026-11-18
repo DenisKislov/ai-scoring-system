@@ -46,7 +46,18 @@ def write_pdf(path: Path, text: str) -> None:
         doc.save(path, garbage=4, deflate=True, no_new_id=True)
 
 
-def generate(root: Path) -> dict:
+def generate(root: Path, *, style: str = 'legacy') -> dict:
+    if style == 'acceptance':
+        from .synthetic_acceptance import generate as generate_acceptance
+        return generate_acceptance(root)
+    if style == 'hh':
+        from .synthetic_hh import generate as generate_hh
+        return generate_hh(root)
+    if style == 'it':
+        from .synthetic_it import generate as generate_it
+        return generate_it(root)
+    if style != 'legacy':
+        raise ValueError('Unknown dataset style: '+style)
     rng = random.Random(SEED)
     root.mkdir(parents=True, exist_ok=True)
     for kind in ['vacancies', 'resumes', 'controls']:
@@ -101,6 +112,15 @@ def generate(root: Path) -> dict:
             required, critical, latent = set(vacancy['skills']), set(vacancy['critical_skills']), set(resume['latent_skills'])
             relevance = sum(2 if s in critical else 1 for s in required & latent) / (len(required) + len(critical))
             pairs.append({'vacancy_id':vacancy['id'], 'resume_id':resume['id'], 'relevance':relevance})
+    write_controls(root)
+    dataset = {'version':'pmi-synthetic-1', 'seed':SEED,
+               'label_definition':'weighted latent skill coverage; critical=2; ordinary=1',
+               'synthetic':True, 'vacancies':vacancies, 'resumes':resumes, 'pairs':pairs}
+    (root/'dataset.json').write_text(json.dumps(dataset, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+    return dataset
+
+
+def write_controls(root: Path) -> None:
     controls = {
         'aliases': 'Специализация: Разработчик\nНавыки: PostgreSQL, Postgres, постгрес, psql, JS, JavaScript, k8s, Kubernetes.',
         'critical_all': 'Специализация: Разработчик\nНавыки: Python, PostgreSQL.\nОпыт работы: 3 года.',
@@ -116,11 +136,6 @@ def generate(root: Path) -> dict:
     with fitz.open() as doc:
         doc.new_page()
         doc.save(root/'controls/no_text.pdf', no_new_id=True)
-    dataset = {'version':'pmi-synthetic-1', 'seed':SEED,
-               'label_definition':'weighted latent skill coverage; critical=2; ordinary=1',
-               'synthetic':True, 'vacancies':vacancies, 'resumes':resumes, 'pairs':pairs}
-    (root/'dataset.json').write_text(json.dumps(dataset, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-    return dataset
 
 
 def freeze(root: Path) -> dict:
@@ -130,7 +145,9 @@ def freeze(root: Path) -> dict:
     for folder in ['api','scorer','db','pmi','frontend/src']:
         sources.extend(p for p in (project/folder).rglob('*') if p.suffix in ['.py','.js','.css','.json'] and '__pycache__' not in p.parts)
     sources += [project/'docker-compose.yml', project/'backend.Dockerfile', project/'frontend/Dockerfile',project/'frontend/package-lock.json']
-    manifest = {'source_files':{str(p.relative_to(project)):sha256(p) for p in sorted(sources)},
+    data = json.loads((root/'dataset.json').read_text())
+    manifest = {'dataset_style':data.get('style','legacy'),
+                'source_files':{str(p.relative_to(project)):sha256(p) for p in sorted(sources)},
                 'algorithm':algorithm_manifest(), 'dataset_files':
                 {str(p.relative_to(root)):sha256(p) for p in sorted(root.rglob('*'))
                  if p.is_file() and p.name != 'manifest.json'}}
@@ -165,7 +182,12 @@ def restore_missing(root: Path) -> list[str]:
         return []
     with tempfile.TemporaryDirectory(prefix='pmi-regenerate-') as temporary:
         stage = Path(temporary)
-        generate(stage)
+        style = 'legacy'
+        if (root/'dataset.json').exists():
+            style = json.loads((root/'dataset.json').read_text()).get('style','legacy')
+        elif manifest.get('dataset_style'):
+            style = manifest['dataset_style']
+        generate(stage,style=style)
         for name in missing:
             candidate = stage/name
             if not candidate.is_file() or sha256(candidate) != manifest['dataset_files'][name]:

@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-18T14:47:07.018379+00:00",
+  "frozen_integrity": {
+    "ok": true,
+    "errors": []
+  },
+  "production_sources_unchanged_from_HEAD": true,
+  "baseline_commit": "13046f82ccfe03ce5acdbe2967b46e8b6859b186",
+  "original_benchmark_sha256_unchanged": {
+    "data/benchmark/superjob_dataset.json": true,
+    "data/benchmark/dataset_resume.json": true
+  },
+  "both_attempts_all_dataset_files_byte_identical": true,
+  "both_attempts_algorithm_manifests_identical": true,
+  "local_api_all_metrics_equal": true,
+  "local_api_all_rankings_scores_and_parsed_years_equal": true,
+  "preregistration_before_cached_measurement": true,
+  "technical_live_cases": 19,
+  "technical_live_failed": [],
+  "unit": {
+    "passed": 240,
+    "skipped": [
+      "test_build_real_corpus_smok"
+    ],
+    "failed": []
+  },
+  "owned_containers_remaining": [],
+  "owned_volumes_remaining": [],
+  "formal_acceptance": false,
+  "formal_limitations": [
+    "authored HH-style PDF; exact export template not certified",
+    "no independent expert pair relevance labels",
+    "synthetic acceptance corpus is not SuperJob presentation corpus",
+    "A-18 not re-audited; historical exception preserved",
+    "manual/browser/customer/commission/release approvals not completed in this experiment"
+  ]
+}

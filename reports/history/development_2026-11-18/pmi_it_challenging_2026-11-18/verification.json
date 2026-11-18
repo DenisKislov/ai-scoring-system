@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-18T15:06:20.278800+00:00",
+  "integrity": {
+    "ok": true,
+    "errors": []
+  },
+  "production_algorithm_model_and_dictionary_unchanged": true,
+  "previous_algorithm_manifest_identical": true,
+  "previous_dataset_bytes_unchanged": true,
+  "previous_source_hashes_match_archived_dispatcher_and_current_other_sources": true,
+  "original_presentation_benchmark_json_unchanged": true,
+  "preregistration_before_measurement": true,
+  "local_api_metrics_equal": true,
+  "local_api_all_2000_ordered_predictions_equal": true,
+  "unit": {
+    "passed": 242,
+    "skipped": [
+      "test_build_real_corpus_smok"
+    ],
+    "failures": []
+  },
+  "live_passed": 17,
+  "live_failed": [
+    "A-9",
+    "A-10"
+  ],
+  "numeric_criteria_passed": 4,
+  "formal_acceptance": false,
+  "new_data_or_model_selection_after_measurement": false
+}

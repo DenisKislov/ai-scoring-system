@@ -1,0 +1,135 @@
+{
+  "status": "passed",
+  "project": "ai-scoring-pmi-4379956c",
+  "started_at": "2026-11-18T15:25:42.264308+00:00",
+  "host": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64"
+  },
+  "cases": {
+    "A-1": {
+      "passed": true,
+      "vacancies": 10,
+      "resumes": 200,
+      "hashes_verified": 210,
+      "vacancy_input": "all PDF plus separate form check"
+    },
+    "A-2": {
+      "passed": true
+    },
+    "A-3": {
+      "passed": true,
+      "fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1"
+    },
+    "A-4": {
+      "passed": true,
+      "unique_results": 200
+    },
+    "A-5": {
+      "passed": true,
+      "scope": "API explanation and source; browser appearance checked separately"
+    },
+    "A-6": {
+      "passed": true,
+      "history_events": 2
+    },
+    "A-7": {
+      "passed": true
+    },
+    "A-12": {
+      "passed": true,
+      "score_pool10": 0,
+      "score_pool200": 0
+    },
+    "A-9": {
+      "passed": true,
+      "scope": "PDF -> HTTP -> parser -> MongoDB -> scorer -> saved rankings",
+      "metrics": {
+        "ndcg_at_10": 0.9401472080076567,
+        "precision_at_5": 0.96,
+        "precision_at_10": 0.93,
+        "recall_at_10": 0.1602721088435374,
+        "spearman": 0.9155532888322206,
+        "spearman_tie_corrected": 0.9123438120862458,
+        "map": 0.9995537991929682,
+        "mrr": 1.0
+      }
+    },
+    "A-10": {
+      "passed": true,
+      "failures": 0
+    },
+    "A-16": {
+      "passed": true,
+      "total_seconds": 16.98860074998811,
+      "batch100_seconds": 2.0540950830327347,
+      "single_seconds": 0.019175666035152972,
+      "ranking200_max_seconds": 0.8597636669874191
+    },
+    "A-13": {
+      "passed": true
+    },
+    "A-11": {
+      "passed": true,
+      "critical_all_score": 67,
+      "critical_none_score": 39
+    },
+    "A-17": {
+      "passed": true,
+      "equal_score": 83
+    },
+    "A-14": {
+      "passed": true,
+      "same_api_instance": true
+    },
+    "A-8": {
+      "passed": true,
+      "events_verified": true,
+      "cascades_verified": true
+    },
+    "A-15": {
+      "passed": true,
+      "recovery_seconds": 13.644392416987102,
+      "stats": {
+        "vacancies": 9,
+        "resumes": 199
+      },
+      "feedback_and_original_intact": true
+    },
+    "A-20": {
+      "passed": true,
+      "directions": 20,
+      "code_changes": 0,
+      "restart_required": false
+    },
+    "A-19": {
+      "passed": true,
+      "scope": "four amd64 Linux containers and HTTP UI delivery; customer independent/browser verification pending"
+    }
+  },
+  "manual_browser_check": "pending",
+  "kept": false,
+  "mongo_pull_policy": "never (local cache)",
+  "docker": {
+    "ServerVersion": "29.4.0",
+    "Architecture": "aarch64",
+    "NCPU": 10,
+    "MemTotal": 17011748864,
+    "OperatingSystem": "Docker Desktop"
+  },
+  "quality_api": {
+    "metrics": {
+      "ndcg_at_10": 0.9401472080076567,
+      "precision_at_5": 0.96,
+      "precision_at_10": 0.93,
+      "recall_at_10": 0.1602721088435374,
+      "spearman": 0.9155532888322206,
+      "spearman_tie_corrected": 0.9123438120862458,
+      "map": 0.9995537991929682,
+      "mrr": 1.0
+    },
+    "passed": true,
+    "evidence": "quality_api.json"
+  },
+  "finished_at": "2026-11-18T15:27:09.866228+00:00"
+}

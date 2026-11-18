@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-18T15:30:19.343276+00:00",
+  "integrity": {
+    "ok": true,
+    "errors": []
+  },
+  "production_sources_and_models_unchanged": true,
+  "previous_algorithm_fingerprint_identical": true,
+  "original_superjob_json_hashes_unchanged": true,
+  "previous_stress_corpus_files_unchanged": true,
+  "previous_harness_source_hashes_match_archived_dispatcher": true,
+  "all_local_and_api_rankings_and_metrics_identical": true,
+  "preregistration_before_final_measurement": true,
+  "calibration_after_previous_benchmark_results_disclosed": true,
+  "not_blind_validation": true,
+  "all_five_aggregate_numeric_limits_passed": true,
+  "a10_passed": true,
+  "live_cases_passed": 19,
+  "unit": {
+    "passed": 244,
+    "skipped": [
+      "test_build_real_corpus_smok"
+    ],
+    "failures": []
+  },
+  "formal_acceptance": false,
+  "remaining_manual_items": [
+    "confirm exact HH export template compatibility",
+    "approve dataset composition and its aggregate metric interpretation",
+    "customer deployment/browser/manual checks, A-18 historical exception, release and commission evidence"
+  ],
+  "test_source_hashes": {
+    "tests/conftest.py": "093769fa502fbb2c7ea88a87753641d341595cbcc2ffcae0d65e2c0662de7283",
+    "tests/eval_synthetic.py": "0e304b04934afa410b0f86ed611c6dc3949bccef955deafc7134b6c4c8d4a18c",
+    "tests/integration_demo.py": "85da75d3c1ed87a351f3601cc2416ad9382119113959aeb3beb3801af04038c6",
+    "tests/pmi/conftest.py": "264ab1d75f2952fa012d6d31a145c75356cc06409b05a40a0336f1a0b8b062e4",
+    "tests/pmi/test_acceptance.py": "0cfecc2970e495d14faac4094e1b678b75fa15ad7f962c6da656d4e63efe0dab",
+    "tests/pmi/test_acceptance_corpus_design.py": "b5ecac0dde02685bffc345f63c1f88b96a68bfb1e97946444fa6c957be1687eb",
+    "tests/pmi/test_challenging_corpus.py": "971b4a925a09cd497baacd0652f12b22a09d227b8b654c4351f42fbee8a7924c",
+    "tests/pmi/test_quality_pipeline.py": "597b080d45585941da80c5c0128cd928e5c0cd6722b615062e45e8814518f188",
+    "tests/pmi/test_regressions.py": "08831b36b1b70b30e7ca852e21d9c881e6ceca43b75662663f0efbf69f7b0d15",
+    "tests/pmi/test_reproducibility.py": "a8b85c0c36ceac9d715ed0f599fd64e924744402bac64291ded706f4693fcb71",
+    "tests/test_api.py": "08ed72371b0e670316d0215c66473f402ffa4395e424f584478addf26682a06a",
+    "tests/test_backfill_skills.py": "6986f7098b4b2d08e0c103f1c84a338db301faeca24b05c714e4d519ed513d57",
+    "tests/test_benchmark_inputs.py": "d5dfa22bd32d3bb319589e79e55fc766516b6bce490600880c01ddd1a69a1ca3",
+    "tests/test_display_threshold.py": "8a0180a31da4b8e895d9a314b2d64ddd0859adbf4047e506a39a513811bc32c8",
+    "tests/test_experience.py": "25ded38b47bc8bbc271c5c3c19170f269fcbd0a906fc16730e1624f6ecccd55e",
+    "tests/test_matching_families.py": "89b8b28b5831f2370f353e033db0e6fce7fae991edc2e3fffda27538d9590154",
+    "tests/test_metrics.py": "e1997a37c377ac5714d24501d527a200b35d7f3787ea224f2f79dd7ebbb23c23",
+    "tests/test_ner_skills.py": "1427adf15086ddac4e3be9958989183d0e2fa3061fb9141d247fe5200a917fca",
+    "tests/test_ranking.py": "ed3876cd65f4bd0bdd8db2288b5ae0e01005961a044f116e6b52d03acb8b9296",
+    "tests/test_ru_dataset_builder.py": "31e11a58a7e6ebc0ee9a7443d4c98f7e02c3ffa68728d76770db8aa2c2753390",
+    "tests/test_similarity.py": "a230df8df0eef7b8aed41d83da6b7c7bc76b28e72aa2494774bb7671478dba89",
+    "tests/test_skill_extractor.py": "17cf6ea110cb1ce8688ee42a8374b76e892cd99b4cceef2211b567bd3e324c45",
+    "tests/test_smoke.py": "41d54d957f56f5178ff9ff241932185b0aba729528d12b7ca62c4478dfb599f8",
+    "tests/test_superjob_cv.py": "a9657ebb281bf121e9e361450da632ba2f8605fed65d121d09226ec8ba5fbc7f",
+    "tests/test_synthetic_realism.py": "dbb20e359aac0d5f9594cdb0a9fc0d4e9a86ffbbe6b52add65efceb103456b3c"
+  }
+}

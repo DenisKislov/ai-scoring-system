@@ -1,0 +1,685 @@
+[
+  {
+    "vacancy_id": "v004",
+    "resume_id": "r041",
+    "reference_resume_abilities": [],
+    "extracted_resume_skills": [
+      "Аналитика данных"
+    ],
+    "reference_vacancy_skills": [
+      "pandas",
+      "Excel",
+      "Power BI",
+      "PostgreSQL",
+      "A/B-тестирование",
+      "Визуализация данных",
+      "Python"
+    ],
+    "extracted_vacancy_skills": [
+      "A/B-тестирование",
+      "Excel",
+      "Pandas",
+      "PostgreSQL",
+      "Power BI",
+      "Python",
+      "Аналитика данных"
+    ],
+    "scorer_result": {
+      "candidate_id": "r041",
+      "score": 42,
+      "raw_score": 0.422,
+      "keyword_score": 0.444,
+      "cosine_sim": 0.292,
+      "keyword_contribution": 0.378,
+      "cosine_contribution": 0.044,
+      "matched_skills": [
+        "Excel",
+        "Power BI",
+        "Аналитика данных"
+      ],
+      "missing_skills": [
+        "A/B-тестирование",
+        "Pandas",
+        "PostgreSQL",
+        "Python"
+      ],
+      "matched_critical": [
+        "Excel"
+      ],
+      "missing_critical": [
+        "Pandas"
+      ],
+      "critical_skills": [
+        "Excel",
+        "Pandas"
+      ],
+      "vacancy_skills": [
+        "A/B-тестирование",
+        "Excel",
+        "Pandas",
+        "PostgreSQL",
+        "Power BI",
+        "Python",
+        "Аналитика данных"
+      ],
+      "metrics_by_category": {
+        "ML / Data Science": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "Прочее": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Языки программирования": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "BI / Аналитика": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  },
+  {
+    "vacancy_id": "v004",
+    "resume_id": "r061",
+    "reference_resume_abilities": [],
+    "extracted_resume_skills": [
+      "Аналитика данных"
+    ],
+    "reference_vacancy_skills": [
+      "pandas",
+      "Excel",
+      "Power BI",
+      "PostgreSQL",
+      "A/B-тестирование",
+      "Визуализация данных",
+      "Python"
+    ],
+    "extracted_vacancy_skills": [
+      "A/B-тестирование",
+      "Excel",
+      "Pandas",
+      "PostgreSQL",
+      "Power BI",
+      "Python",
+      "Аналитика данных"
+    ],
+    "scorer_result": {
+      "candidate_id": "r061",
+      "score": 42,
+      "raw_score": 0.422,
+      "keyword_score": 0.444,
+      "cosine_sim": 0.292,
+      "keyword_contribution": 0.378,
+      "cosine_contribution": 0.044,
+      "matched_skills": [
+        "Excel",
+        "Power BI",
+        "Аналитика данных"
+      ],
+      "missing_skills": [
+        "A/B-тестирование",
+        "Pandas",
+        "PostgreSQL",
+        "Python"
+      ],
+      "matched_critical": [
+        "Excel"
+      ],
+      "missing_critical": [
+        "Pandas"
+      ],
+      "critical_skills": [
+        "Excel",
+        "Pandas"
+      ],
+      "vacancy_skills": [
+        "A/B-тестирование",
+        "Excel",
+        "Pandas",
+        "PostgreSQL",
+        "Power BI",
+        "Python",
+        "Аналитика данных"
+      ],
+      "metrics_by_category": {
+        "ML / Data Science": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "Прочее": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Языки программирования": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "BI / Аналитика": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  },
+  {
+    "vacancy_id": "v005",
+    "resume_id": "r133",
+    "reference_resume_abilities": [
+      "Kubernetes",
+      "PostgreSQL",
+      "Prometheus"
+    ],
+    "extracted_resume_skills": [
+      "PostgreSQL",
+      "Prometheus",
+      "Selenium"
+    ],
+    "reference_vacancy_skills": [
+      "Python",
+      "pytest",
+      "Selenium",
+      "Postman",
+      "SQL",
+      "Git",
+      "Docker",
+      "REST API"
+    ],
+    "extracted_vacancy_skills": [
+      "Docker",
+      "Git",
+      "Postman",
+      "Python",
+      "REST API",
+      "SQL",
+      "Selenium",
+      "pytest"
+    ],
+    "scorer_result": {
+      "candidate_id": "r133",
+      "score": 45,
+      "raw_score": 0.445,
+      "keyword_score": 0.5,
+      "cosine_sim": 0.136,
+      "keyword_contribution": 0.425,
+      "cosine_contribution": 0.02,
+      "matched_skills": [
+        "Postman",
+        "SQL",
+        "Selenium",
+        "pytest"
+      ],
+      "missing_skills": [
+        "Docker",
+        "Git",
+        "Python",
+        "REST API"
+      ],
+      "matched_critical": [
+        "pytest"
+      ],
+      "missing_critical": [
+        "Python"
+      ],
+      "critical_skills": [
+        "Python",
+        "pytest"
+      ],
+      "vacancy_skills": [
+        "Docker",
+        "Git",
+        "Postman",
+        "Python",
+        "REST API",
+        "SQL",
+        "Selenium",
+        "pytest"
+      ],
+      "metrics_by_category": {
+        "DevOps / Инфраструктура": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Backend / API": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Прочее": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "Языки программирования": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Процессы / Soft skills": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  },
+  {
+    "vacancy_id": "v006",
+    "resume_id": "r133",
+    "reference_resume_abilities": [
+      "Kubernetes",
+      "PostgreSQL",
+      "Prometheus"
+    ],
+    "extracted_resume_skills": [
+      "PostgreSQL",
+      "Prometheus",
+      "Selenium"
+    ],
+    "reference_vacancy_skills": [
+      "Selenium",
+      "Postman",
+      "SQL",
+      "Git",
+      "Docker",
+      "REST API",
+      "Python"
+    ],
+    "extracted_vacancy_skills": [
+      "Docker",
+      "Git",
+      "Postman",
+      "Python",
+      "REST API",
+      "SQL",
+      "Selenium"
+    ],
+    "scorer_result": {
+      "candidate_id": "r133",
+      "score": 50,
+      "raw_score": 0.497,
+      "keyword_score": 0.556,
+      "cosine_sim": 0.166,
+      "keyword_contribution": 0.472,
+      "cosine_contribution": 0.025,
+      "matched_skills": [
+        "Postman",
+        "SQL",
+        "Selenium"
+      ],
+      "missing_skills": [
+        "Docker",
+        "Git",
+        "Python",
+        "REST API"
+      ],
+      "matched_critical": [
+        "Postman",
+        "Selenium"
+      ],
+      "missing_critical": [],
+      "critical_skills": [
+        "Postman",
+        "Selenium"
+      ],
+      "vacancy_skills": [
+        "Docker",
+        "Git",
+        "Postman",
+        "Python",
+        "REST API",
+        "SQL",
+        "Selenium"
+      ],
+      "metrics_by_category": {
+        "DevOps / Инфраструктура": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Backend / API": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Прочее": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "Языки программирования": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  },
+  {
+    "vacancy_id": "v006",
+    "resume_id": "r037",
+    "reference_resume_abilities": [
+      "pytest"
+    ],
+    "extracted_resume_skills": [
+      "pytest"
+    ],
+    "reference_vacancy_skills": [
+      "Selenium",
+      "Postman",
+      "SQL",
+      "Git",
+      "Docker",
+      "REST API",
+      "Python"
+    ],
+    "extracted_vacancy_skills": [
+      "Docker",
+      "Git",
+      "Postman",
+      "Python",
+      "REST API",
+      "SQL",
+      "Selenium"
+    ],
+    "scorer_result": {
+      "candidate_id": "r037",
+      "score": 39,
+      "raw_score": 0.395,
+      "keyword_score": 0.444,
+      "cosine_sim": 0.114,
+      "keyword_contribution": 0.378,
+      "cosine_contribution": 0.017,
+      "matched_skills": [
+        "Postman",
+        "Selenium"
+      ],
+      "missing_skills": [
+        "Docker",
+        "Git",
+        "Python",
+        "REST API",
+        "SQL"
+      ],
+      "matched_critical": [
+        "Postman",
+        "Selenium"
+      ],
+      "missing_critical": [],
+      "critical_skills": [
+        "Postman",
+        "Selenium"
+      ],
+      "vacancy_skills": [
+        "Docker",
+        "Git",
+        "Postman",
+        "Python",
+        "REST API",
+        "SQL",
+        "Selenium"
+      ],
+      "metrics_by_category": {
+        "DevOps / Инфраструктура": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Прочее": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Backend / API": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Языки программирования": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Процессы / Soft skills": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  },
+  {
+    "vacancy_id": "v008",
+    "resume_id": "r188",
+    "reference_resume_abilities": [
+      "Airflow",
+      "Docker",
+      "Kafka",
+      "Python",
+      "SQL",
+      "Spark"
+    ],
+    "extracted_resume_skills": [
+      "Apache Airflow",
+      "Apache Kafka",
+      "Kubernetes",
+      "SQL",
+      "Spark"
+    ],
+    "reference_vacancy_skills": [
+      "Kubernetes",
+      "Git",
+      "Ansible",
+      "Terraform",
+      "Prometheus",
+      "PostgreSQL",
+      "Linux"
+    ],
+    "extracted_vacancy_skills": [
+      "Ansible",
+      "Git",
+      "Kubernetes",
+      "Linux",
+      "PostgreSQL",
+      "Prometheus",
+      "Terraform"
+    ],
+    "scorer_result": {
+      "candidate_id": "r188",
+      "score": 32,
+      "raw_score": 0.317,
+      "keyword_score": 0.333,
+      "cosine_sim": 0.224,
+      "keyword_contribution": 0.283,
+      "cosine_contribution": 0.034,
+      "matched_skills": [
+        "Kubernetes",
+        "PostgreSQL"
+      ],
+      "missing_skills": [
+        "Ansible",
+        "Git",
+        "Linux",
+        "Prometheus",
+        "Terraform"
+      ],
+      "matched_critical": [
+        "Kubernetes"
+      ],
+      "missing_critical": [
+        "Git"
+      ],
+      "critical_skills": [
+        "Git",
+        "Kubernetes"
+      ],
+      "vacancy_skills": [
+        "Ansible",
+        "Git",
+        "Kubernetes",
+        "Linux",
+        "PostgreSQL",
+        "Prometheus",
+        "Terraform"
+      ],
+      "metrics_by_category": {
+        "DevOps / Инфраструктура": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 5,
+          "precision": 1.0,
+          "recall": 0.16666666666666666,
+          "f1": 0.2857142857142857
+        },
+        "Базы данных": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "ML / Data Science": {
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        },
+        "Backend / API": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0
+        }
+      },
+      "rank_percentile": 100
+    }
+  }
+]

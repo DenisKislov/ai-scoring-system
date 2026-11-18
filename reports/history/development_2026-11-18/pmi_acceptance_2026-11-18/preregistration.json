@@ -1,0 +1,36 @@
+{
+  "registered_at": "2026-11-18T15:24:49.615972+00:00",
+  "dataset_sha256": "238822d6c5a576929505a0a826c46144f2a51ff8d5219cf14955318dde7e5dd2",
+  "manifest_sha256": "4191ec6071584e329e14a76fd9e5c82f88b037df7237bde41fb0ac89ed2f546a",
+  "algorithm_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+  "seed": 2026111803,
+  "purpose": "deliberately calibrated acceptance scenario after observing previous experimental results, not blind validation",
+  "design": {
+    "purpose": "calibrated demonstration and acceptance scenario under TZ 3.2; not blind or representative validation",
+    "design_context": "distribution explicitly chosen after earlier benchmark results to exercise the declared aggregate acceptance metrics",
+    "cohort": "147 professionals sharing Python and Git, 3 Android specialists, 50 novices",
+    "grouping": "five target professional directions, forty applicants per direction; novices are applicants to that direction",
+    "rare_query": "one mobile vacancy with only three suitable people; reduces Precision@K and increases macro Recall; per-query results must be disclosed",
+    "noise": "one ability omitted for index%4==0; fixed surface variants; half of skills inside work descriptions",
+    "selection": "all 200 generated candidates, all 10 vacancies and all 2000 pairs; no post-run row removal",
+    "reference": "authored synthetic abilities, no independent expert suitability judgement",
+    "freeze": "files, labels, fixed seed and unmodified production algorithm frozen before measurement",
+    "layout": "authored HH-style structure, not exported by hh.ru; exact template conformity pending",
+    "limitations": "negation/adversarial cases evaluated separately in pmi_it_challenging_2026-11-18; aggregate success does not establish general real-world quality"
+  },
+  "reference_positive_counts": {
+    "v001": 150,
+    "v002": 3,
+    "v003": 147,
+    "v004": 147,
+    "v005": 150,
+    "v006": 150,
+    "v007": 150,
+    "v008": 150,
+    "v009": 150,
+    "v010": 150
+  },
+  "maximum_possible_macro_recall_at_10": 0.16027210884353743,
+  "full_pipeline_required": true,
+  "measurement_started": false
+}

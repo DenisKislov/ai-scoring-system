@@ -1,0 +1,88 @@
+{
+  "project": "ai-scoring-pmi-039e7619",
+  "images": [
+    {
+      "id": "sha256:3c75c35e9379bdf3bd852331618000ea9d1415193df4f8409dd8b334898715df",
+      "tags": [
+        "ai-scoring-pmi-039e7619-backend:latest"
+      ]
+    },
+    {
+      "id": "sha256:26cb7f8c1f1113bd4985d9de817b4a850fbec8171c300d4c0e6277836b6eb669",
+      "tags": [
+        "ai-scoring-pmi-039e7619-scorer:latest"
+      ]
+    },
+    {
+      "id": "sha256:5bcffd89074c8c76452a4403af3ed59f30007dc2cc339a5bf824b692946c1df2",
+      "tags": [
+        "ai-scoring-pmi-039e7619-frontend:latest"
+      ]
+    }
+  ],
+  "server_algorithm_reproduced_from_used_image": {
+    "version": "spacy-pmi-1.1.0",
+    "weights": {
+      "keyword": 0.85,
+      "cosine": 0.15
+    },
+    "critical_weight": 2.0,
+    "ner_skills_enabled": true,
+    "reference_corpus": "scorer/reference_corpus.py",
+    "skill_dictionary": "config/skills.json",
+    "personal_attributes": "excluded",
+    "relevance_threshold": 0.1,
+    "skill_matching": "baseline_symmetric_families",
+    "text_similarity": "fixed_reference_tfidf_for_pmi_pool_invariance",
+    "file_hashes": {
+      "config/algorithm.json": "f0a7a2cc4d25d762da5f2913ef72cca3141fa18ef67e27cfdbf1ea3e690e88d6",
+      "config/skills.json": "ba5a9e34f28f94a3d09ab8e316107c16cce854a1c2b16b172c9f964cfd59760f",
+      "scorer/reference_corpus.py": "1b573265667ffebee433f291642972a3c04afb3ca98bb3fa9218f0214ea9ccc3",
+      "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
+      "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
+      "scorer/skill_extractor.py": "056078ed653080b89a19d30d5b69c5b5cd142c9553f9831673bd4539f35808fa",
+      "scorer/skill_families.py": "b6af9f35882a18d54f1b0d80b8cd983f7c9f0831814e323746cda4ab9c04bcbc",
+      "scorer/scoring.py": "bd12a322fbd80c1c78adc8c7a7285877d74a9b7ed80c4f87246b6ac319776833",
+      "scorer/normalize.py": "b8539727e07146a34a6ed5817e059dbb5bf89d0fe14bc0ea203525d0c8a8018a",
+      "scorer/privacy.py": "781a3551c4174450131b772c168a3b8e1d9b844ec388adb939fc5e223bdd9ee8",
+      "scorer/skills.py": "654d441c4905171424dac29ed06c32e6bd5ca897ac281777813296654d411291",
+      "scorer/similarity.py": "f012649f6d886e36fae77c7590a14ad13e923ff504cecb4cbbae2f3726bb6d34",
+      "scorer/dictionary.py": "5d85863896f7d54fd8e2d27f342bfc3a9f9b719ff0528068d2d3cc49a6b8e4cb",
+      "requirements.lock": "8abfa8e6728e35e88408e155a6bc1a0f00a1a315e75780e5f1e1dc28a2ef631e",
+      "scorer/ner_skills.py": "303437edcdbe04c69bd016f4bcf5f56182ae6c04607f7f6174b8a68977fa00f3",
+      "scorer/models/resume_ner/config.cfg": "92dc8cbb2ed98651b73c498d7b27ba9822cde1f4b3831fa397ab3ea2e07c8485",
+      "scorer/models/resume_ner/meta.json": "ef7aa17e39d0dabd5bed73a3b3f681f0c6e2bd38edbfcd6210b42b3e0535418e",
+      "scorer/models/resume_ner/ner/cfg": "a7172edadafba9f472e9ac0f2660eec04b6405e471be9e20267b79c67288d22d",
+      "scorer/models/resume_ner/ner/model": "402a2d86afd030711a1970c47e03d0dd13dfa613ffcdbefeec5df26a67169f51",
+      "scorer/models/resume_ner/ner/moves": "02d75c49562ed9f7967119c76ba91f120961d809f261b5c0b6c4bbd244b4e4c6",
+      "scorer/models/resume_ner/tok2vec/cfg": "f8a5a26e3056eb6fb06deeb3dbccfd88ae74900200c98c70b5966bbb7ec9d4de",
+      "scorer/models/resume_ner/tok2vec/model": "f227e1a55922c343225824c1b19dd6f3147dc1aff21c4a2fa83c3357d63e2837",
+      "scorer/models/resume_ner/tokenizer": "2227a2106f96afd2a302f3a71f5ef8068df8cf871efd3e1672ea375bde057366",
+      "scorer/models/resume_ner/vocab/key2row": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+      "scorer/models/resume_ner/vocab/lookups.bin": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+      "scorer/models/resume_ner/vocab/strings.json": "fa189d675a7c5681b4f379f4e4e7ea366bd3fa8be3a889e1a8fc72a87dd21e5f",
+      "scorer/models/resume_ner/vocab/vectors": "14772b683e726436d5948ad3fff2b43d036ef2ebbe3458aafed6004e05a40706",
+      "scorer/models/resume_ner/vocab/vectors.cfg": "ff4359091952c8cd16f1f0482f5770fb82d1707368d5cca3c46aa501f552e3c5"
+    },
+    "dependencies": {
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5",
+      "pymongo": "4.18.0",
+      "PyMuPDF": "1.28.2",
+      "scikit-learn": "1.9.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "razdel": "0.5.0",
+      "pymorphy3": "2.0.6",
+      "spacy": "3.8.16"
+    },
+    "fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+    "ner_skills": {
+      "enabled": true,
+      "available": true
+    }
+  },
+  "matches_recorded_live_fingerprint": true,
+  "containers_remaining": [],
+  "volumes_remaining": []
+}

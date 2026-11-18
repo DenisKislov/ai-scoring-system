@@ -1,0 +1,11 @@
+{
+  "scope": "export of tracked Git index with no local drafts, local archive, original PDF corpora or training outputs",
+  "frozen_inputs_verified": true,
+  "quality_passed": true,
+  "all_metrics_identical_to_api_report": true,
+  "all_2000_ordered_predictions_identical": true,
+  "external_dataset_download_required": false,
+  "published_pdf_count": 217,
+  "resume_pdf_count": 200,
+  "vacancy_pdf_count": 10
+}

@@ -1,0 +1,38 @@
+{
+  "registered_at": "2026-11-18T15:01:03.192278+00:00",
+  "seed": 2026111802,
+  "dataset_sha256": "50e041e2df5a6bc54478fed68e3b6fc35fc7d01322a5ff95bef8a6187e789c48",
+  "manifest_sha256": "60a2008e2e06e052bccd6ae5ed0180eb9a9de2175317de83e8a86c14d0e95d7d",
+  "algorithm_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+  "design": {
+    "fixed_before_measurement": true,
+    "selection": "one seed, every generated document and every pair",
+    "profiles": "five overlapping IT specialties, forty resumes each, two vacancies each",
+    "size": "index%20==0: zero skills; otherwise uniform 1..8",
+    "transition": "index%4==1: add one skill from the next specialty if not already in this role stack",
+    "omission": "one positive ability missing from text when size>=3 and index%3==0",
+    "context_only": "index%5==2: one technology used by another team, explicitly no personal experience",
+    "surface_forms": "fixed authored variants, selected with the registered seed",
+    "experience": "fixed closed periods, optional explicit total; ten unspecified values",
+    "score": "production formula, weights, model and dictionary unchanged",
+    "thresholds": "same five numerical PMI limits; failure is an allowed recorded outcome",
+    "layout_status": "authored HH-style sections; not an official HH export",
+    "external_validity": "diagnostic stress test; not a representative real corpus or the presentation experiment"
+  },
+  "design_context": "difficulty scenarios selected after observing the previous easy synthetic benchmark; not an independent blind validation",
+  "reference_positive_counts": {
+    "v001": 172,
+    "v002": 171,
+    "v003": 156,
+    "v004": 149,
+    "v005": 166,
+    "v006": 164,
+    "v007": 164,
+    "v008": 151,
+    "v009": 177,
+    "v010": 175
+  },
+  "maximum_possible_macro_recall_at_10": 0.06098931063243901,
+  "measurement_started": false,
+  "no_metric_target_or_result_based_selection": true
+}

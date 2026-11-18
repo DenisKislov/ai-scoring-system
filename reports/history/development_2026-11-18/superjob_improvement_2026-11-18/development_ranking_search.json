@@ -1,0 +1,6302 @@
+[
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5965247837952631,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4846153846153846,
+      "recall_at_10": 0.286274822453892,
+      "spearman_score": 0.4799635186270224
+    },
+    "objective": 1.0764883024222855
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5965247837952631,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4846153846153846,
+      "recall_at_10": 0.286274822453892,
+      "spearman_score": 0.4799635186270224
+    },
+    "objective": 1.0764883024222855
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5971378112550947,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.48846153846153845,
+      "recall_at_10": 0.2877763239553935,
+      "spearman_score": 0.47891031954628505
+    },
+    "objective": 1.0760481308013796
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5971378112550947,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.48846153846153845,
+      "recall_at_10": 0.2877763239553935,
+      "spearman_score": 0.47891031954628505
+    },
+    "objective": 1.0760481308013796
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5889011238437363,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.2790990752781448,
+      "spearman_score": 0.48380799766182114
+    },
+    "objective": 1.0727091215055573
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5889011238437363,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.2790990752781448,
+      "spearman_score": 0.48380799766182114
+    },
+    "objective": 1.0727091215055573
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.587642121212485,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4838987463509982
+    },
+    "objective": 1.0715408675634832
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.587642121212485,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4838987463509982
+    },
+    "objective": 1.0715408675634832
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5870368683528904,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4821178180436036
+    },
+    "objective": 1.069154686396494
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5870368683528904,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4821178180436036
+    },
+    "objective": 1.069154686396494
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5848367104245613,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4837163926661156
+    },
+    "objective": 1.068553103090677
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5848367104245613,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2775975737766434,
+      "spearman_score": 0.4837163926661156
+    },
+    "objective": 1.068553103090677
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5890012213760922,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.28429069546976504,
+      "spearman_score": 0.479331111110658
+    },
+    "objective": 1.0683323324867502
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5853034608922308,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2770633857424553,
+      "spearman_score": 0.48269077622550544
+    },
+    "objective": 1.0679942371177362
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5853034608922308,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2770633857424553,
+      "spearman_score": 0.48269077622550544
+    },
+    "objective": 1.0679942371177362
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5894167570955032,
+      "precision_at_5": 0.5307692307692307,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.3043832880623576,
+      "spearman_score": 0.4770621383982784
+    },
+    "objective": 1.0664788954937816
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5954830989652118,
+      "precision_at_5": 0.5307692307692307,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.30588478956385917,
+      "spearman_score": 0.4702423911375287
+    },
+    "objective": 1.0657254901027404
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5815081211001243,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2770633857424553,
+      "spearman_score": 0.48178011119647746
+    },
+    "objective": 1.0632882322966017
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5815081211001243,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2770633857424553,
+      "spearman_score": 0.48178011119647746
+    },
+    "objective": 1.0632882322966017
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5870350521004338,
+      "precision_at_5": 0.5307692307692307,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.3043832880623576,
+      "spearman_score": 0.47616832029544026
+    },
+    "objective": 1.063203372395874
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5844169371566719,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.48461538461538456,
+      "recall_at_10": 0.28682033549940505,
+      "spearman_score": 0.47743369710969463
+    },
+    "objective": 1.0618506342663665
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5832153074870112,
+      "precision_at_5": 0.523076923076923,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.2781070117860814,
+      "spearman_score": 0.47839564498603426
+    },
+    "objective": 1.0616109524730455
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5857746585614672,
+      "precision_at_5": 0.5384615384615384,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.3038491000281696,
+      "spearman_score": 0.4754430015972427
+    },
+    "objective": 1.0612176601587098
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.578275049077863,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.27561344679251637,
+      "spearman_score": 0.48286641947667097
+    },
+    "objective": 1.061141468554534
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.58402650689372,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2849220086010782,
+      "spearman_score": 0.4766736914453094
+    },
+    "objective": 1.0607001983390294
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5776254649269368,
+      "precision_at_5": 0.523076923076923,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2766055102845798,
+      "spearman_score": 0.4828187274440004
+    },
+    "objective": 1.0604441923709371
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5759627731370377,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.27561344679251637,
+      "spearman_score": 0.48396411142986906
+    },
+    "objective": 1.0599268845669068
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5809787348695108,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.2842328304119,
+      "spearman_score": 0.47758327795776423
+    },
+    "objective": 1.058562012827275
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5774738744709206,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.27571057188964143,
+      "spearman_score": 0.48081053373990557
+    },
+    "objective": 1.058284408210826
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.576534242614043,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2762447599238295,
+      "spearman_score": 0.4817358971059357
+    },
+    "objective": 1.0582701397199785
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.578275049077863,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.27561344679251637,
+      "spearman_score": 0.4798153879832622
+    },
+    "objective": 1.058090437061125
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5752437599318674,
+      "precision_at_5": 0.523076923076923,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2766055102845798,
+      "spearman_score": 0.482013691551845
+    },
+    "objective": 1.0572574514837123
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5759627731370377,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.27561344679251637,
+      "spearman_score": 0.4808935836069016
+    },
+    "objective": 1.0568563567439393
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5803303314826495,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.2860795947586643,
+      "spearman_score": 0.4760472797731792
+    },
+    "objective": 1.0563776112558285
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5743588208407032,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.2750792587583283,
+      "spearman_score": 0.48140715122854094
+    },
+    "objective": 1.0557659720692443
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5739833663929006,
+      "precision_at_5": 0.5307692307692308,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2760713222503919,
+      "spearman_score": 0.4812536733616884
+    },
+    "objective": 1.055237039754589
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5732585914740964,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2781430868221564,
+      "spearman_score": 0.4818873696402649
+    },
+    "objective": 1.0551459611143614
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5732083166448754,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.4692307692307691,
+      "recall_at_10": 0.2836986423777119,
+      "spearman_score": 0.4817593224262649
+    },
+    "objective": 1.0549676390711402
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5837838377825365,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.28429069546976504,
+      "spearman_score": 0.47091029946543134
+    },
+    "objective": 1.054694137247968
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.571983845921466,
+      "precision_at_5": 0.5000000000000001,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2781430868221564,
+      "spearman_score": 0.48126594509005377
+    },
+    "objective": 1.0532497910115197
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.572155876071667,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.28554540672447626,
+      "spearman_score": 0.4810682034605449
+    },
+    "objective": 1.0532240795322119
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5743588208407032,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.2750792587583283,
+      "spearman_score": 0.4783597666843191
+    },
+    "objective": 1.0527185875250225
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5713059817719096,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4692307692307691,
+      "recall_at_10": 0.2836986423777119,
+      "spearman_score": 0.481123393770437
+    },
+    "objective": 1.0524293755423466
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5729478961142399,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.28554540672447626,
+      "spearman_score": 0.4793694427901874
+    },
+    "objective": 1.0523173389044274
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5759577468991034,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.28369846362753315,
+      "spearman_score": 0.47628271695147795
+    },
+    "objective": 1.0522404638505813
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5693794344402495,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2781430868221564,
+      "spearman_score": 0.48144118389412915
+    },
+    "objective": 1.0508206183343787
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5706271811263801,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4692307692307691,
+      "recall_at_10": 0.2836986423777119,
+      "spearman_score": 0.4799016164688175
+    },
+    "objective": 1.0505287975951976
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5692550837340883,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2762447599238295,
+      "spearman_score": 0.48078277013404364
+    },
+    "objective": 1.0500378538681319
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5704446433555683,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2840439052229748,
+      "spearman_score": 0.479307772625608
+    },
+    "objective": 1.0497524159811764
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5678213972333516,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2750212149502845,
+      "spearman_score": 0.48173608005559415
+    },
+    "objective": 1.0495574772889458
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5809597580745376,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.48461538461538456,
+      "recall_at_10": 0.3397483921774617,
+      "spearman_score": 0.4679130320255759
+    },
+    "objective": 1.0488727901001136
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5740337841220609,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846145,
+      "recall_at_10": 0.24716989334896292,
+      "spearman_score": 0.4734201471407363
+    },
+    "objective": 1.047453931262797
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5656765213310135,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2750212149502845,
+      "spearman_score": 0.481272941968079
+    },
+    "objective": 1.0469494632990926
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5670113513652373,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.25640349008255964,
+      "spearman_score": 0.47889816559490417
+    },
+    "objective": 1.0459095169601413
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5645356265205527,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2490011701802398,
+      "spearman_score": 0.4804618421009442
+    },
+    "objective": 1.044997468621497
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5686630091917096,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.2867326516617212,
+      "spearman_score": 0.47600535107731806
+    },
+    "objective": 1.0446683602690277
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.565081182512601,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4615384615384616,
+      "recall_at_10": 0.24636283629190586,
+      "spearman_score": 0.4785320919647483
+    },
+    "objective": 1.0436132744773492
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5714242439111579,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.307492922421992,
+      "spearman_score": 0.47216836784224453
+    },
+    "objective": 1.0435926117534025
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.568137534732273,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.30451673194580153,
+      "spearman_score": 0.47518076450494473
+    },
+    "objective": 1.0433182992372179
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.568137534732273,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.30451673194580153,
+      "spearman_score": 0.47518076450494473
+    },
+    "objective": 1.0433182992372179
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5691684659059711,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.31197061439968393,
+      "spearman_score": 0.4734611885128872
+    },
+    "objective": 1.0426296544188585
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5700617940027805,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.3175509199799895,
+      "spearman_score": 0.4725658823486188
+    },
+    "objective": 1.0426276763513993
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5710844213759099,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.48461538461538467,
+      "recall_at_10": 0.28823415316322265,
+      "spearman_score": 0.47132594856081
+    },
+    "objective": 1.0424103699367198
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5633194235835091,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2824235348526043,
+      "spearman_score": 0.4789795008949499
+    },
+    "objective": 1.0422989244784588
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5774738744709206,
+      "precision_at_5": 0.5230769230769231,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.27571057188964143,
+      "spearman_score": 0.46470872892501514
+    },
+    "objective": 1.0421826033959358
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.576534242614043,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2762447599238295,
+      "spearman_score": 0.4655699882018144
+    },
+    "objective": 1.0421042308158572
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5623565301637424,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4615384615384616,
+      "recall_at_10": 0.24636283629190586,
+      "spearman_score": 0.47917194023782334
+    },
+    "objective": 1.0415284704015657
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5664834353811071,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.44999999999999996,
+      "recall_at_10": 0.2965802240092936,
+      "spearman_score": 0.47469103434669574
+    },
+    "objective": 1.041174469727803
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5664834353811071,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.44999999999999996,
+      "recall_at_10": 0.2965802240092936,
+      "spearman_score": 0.47469103434669574
+    },
+    "objective": 1.041174469727803
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.570061641994753,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.3113048387339083,
+      "spearman_score": 0.4704559933473615
+    },
+    "objective": 1.0405176353421144
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5630012279745582,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2458286482577178,
+      "spearman_score": 0.4774308129989055
+    },
+    "objective": 1.0404320409734638
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5634826275908148,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.2867326516617212,
+      "spearman_score": 0.4764699619958971
+    },
+    "objective": 1.0399525895867119
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.564966787813865,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.28619846362753315,
+      "spearman_score": 0.47496886310035313
+    },
+    "objective": 1.0399356509142181
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5700617940027805,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.3175509199799895,
+      "spearman_score": 0.4696311903438341
+    },
+    "objective": 1.0396929843466145
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5667421471045739,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4692307692307693,
+      "recall_at_10": 0.24856618849525802,
+      "spearman_score": 0.47281656712565795
+    },
+    "objective": 1.0395587142302318
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5636351747136354,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2490011701802398,
+      "spearman_score": 0.47525161413892675
+    },
+    "objective": 1.0388867888525621
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.561403204926349,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.28305184173091136,
+      "spearman_score": 0.4754125575853332
+    },
+    "objective": 1.036815762511682
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.557230110933793,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2490011701802398,
+      "spearman_score": 0.47942192724347377
+    },
+    "objective": 1.0366520381772668
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5644701115190429,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.25791516659423613,
+      "spearman_score": 0.4718860490800906
+    },
+    "objective": 1.0363561605991336
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5593015523197284,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4692307692307693,
+      "recall_at_10": 0.24856618849525802,
+      "spearman_score": 0.4764982059444477
+    },
+    "objective": 1.0357997582641763
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5677396050182747,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.25791516659423613,
+      "spearman_score": 0.46802288302848594
+    },
+    "objective": 1.0357624880467606
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5656169769365976,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.28322552315459265,
+      "spearman_score": 0.46995922525332684
+    },
+    "objective": 1.0355762021899244
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5579741382778332,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4692307692307693,
+      "recall_at_10": 0.24856618849525802,
+      "spearman_score": 0.4771796275591529
+    },
+    "objective": 1.035153765836986
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5635544270220119,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2835860297650993,
+      "spearman_score": 0.47156165564170444
+    },
+    "objective": 1.0351160826637162
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5788091233001643,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2849220086010782,
+      "spearman_score": 0.45618687499708144
+    },
+    "objective": 1.0349959982972456
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5616351802069245,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2643501730292426,
+      "spearman_score": 0.47257668146725007
+    },
+    "objective": 1.0342118616741747
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5692550837340883,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2762447599238295,
+      "spearman_score": 0.4647751381555621
+    },
+    "objective": 1.0340302218896504
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5589294102999307,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2835860297650993,
+      "spearman_score": 0.47468430061254785
+    },
+    "objective": 1.0336137109124786
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5557661135414876,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46538461538461545,
+      "recall_at_10": 0.24803200046107005,
+      "spearman_score": 0.47615745987317254
+    },
+    "objective": 1.0319235734146601
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5562969945181035,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.28305184173091136,
+      "spearman_score": 0.47478833049284536
+    },
+    "objective": 1.0310853250109488
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5600098581519163,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.31719408837315793,
+      "spearman_score": 0.4698051661333721
+    },
+    "objective": 1.0298150242852884
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5771678176180293,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2841812678603374,
+      "spearman_score": 0.45202373265398077
+    },
+    "objective": 1.0291915502720101
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5746920927733445,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.27677894795801755,
+      "spearman_score": 0.45365002270306315
+    },
+    "objective": 1.0283421154764076
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5849996088134419,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.3114764201554897,
+      "spearman_score": 0.44280216088174956
+    },
+    "objective": 1.0278017696951915
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5714242439111579,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.307492922421992,
+      "spearman_score": 0.456273570617025
+    },
+    "objective": 1.027697814528183
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5606909521782304,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.29213951956858913,
+      "spearman_score": 0.4654061576386503
+    },
+    "objective": 1.0260971098168807
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5564471378880674,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4846153846153846,
+      "recall_at_10": 0.2909057995848692,
+      "spearman_score": 0.4695566007940179
+    },
+    "objective": 1.0260037386820853
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5839471682402335,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.31332318450225405,
+      "spearman_score": 0.4419773579908789
+    },
+    "objective": 1.0259245262311123
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5554809807008545,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.31024964392871346,
+      "spearman_score": 0.4703040025826613
+    },
+    "objective": 1.0257849832835157
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5837751380900326,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.3059208645999342,
+      "spearman_score": 0.44167637592372516
+    },
+    "objective": 1.0254515140137577
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5847391882828064,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4807692307692307,
+      "recall_at_10": 0.31332318450225405,
+      "spearman_score": 0.44029184443972225
+    },
+    "objective": 1.0250310327225285
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5830972739404762,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.3114764201554897,
+      "spearman_score": 0.4416441600094918
+    },
+    "objective": 1.024741433949968
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5824184732949467,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.3114764201554897,
+      "spearman_score": 0.44142370440883644
+    },
+    "objective": 1.0238421777037832
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5875526434445214,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.3120106081896778,
+      "spearman_score": 0.43515491057001215
+    },
+    "objective": 1.0227075540145336
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5678213972333516,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2750212149502845,
+      "spearman_score": 0.45486868405571074
+    },
+    "objective": 1.0226900812890622
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.55046762641043,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.25491216359123314,
+      "spearman_score": 0.4715315533760547
+    },
+    "objective": 1.0219991797864847
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5487312728847135,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24831690074597024,
+      "spearman_score": 0.4730064425564426
+    },
+    "objective": 1.021737715441156
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5520605349611095,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2491239578030274,
+      "spearman_score": 0.4693878602346612
+    },
+    "objective": 1.0214483951957707
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5737916409664274,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.27677894795801755,
+      "spearman_score": 0.446708451800791
+    },
+    "objective": 1.0205000927672185
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5869042400576603,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.48461538461538456,
+      "recall_at_10": 0.3138573725364421,
+      "spearman_score": 0.43357764389299774
+    },
+    "objective": 1.020481883950658
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5732585914740964,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2781430868221564,
+      "spearman_score": 0.447221918507706
+    },
+    "objective": 1.0204805099818024
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5528991317795846,
+      "precision_at_5": 0.46923076923076923,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2791867316158012,
+      "spearman_score": 0.46737609536478514
+    },
+    "objective": 1.0202752271443698
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5656765213310135,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2750212149502845,
+      "spearman_score": 0.45421901069442916
+    },
+    "objective": 1.0198955320254428
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5673865771865849,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.27677894795801755,
+      "spearman_score": 0.4524084791385655
+    },
+    "objective": 1.0197950563251506
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5757734431893895,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.31100330093237044,
+      "spearman_score": 0.44330000890238125
+    },
+    "objective": 1.0190734520917708
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5791995535631163,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.48461538461538456,
+      "recall_at_10": 0.28682033549940505,
+      "spearman_score": 0.43963964163029584
+    },
+    "objective": 1.0188391951934122
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5440832397634767,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24831690074597024,
+      "spearman_score": 0.4731849997143099
+    },
+    "objective": 1.0172682394777866
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5741805064441338,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2763439662730358,
+      "spearman_score": 0.4421890542224044
+    },
+    "objective": 1.0163695606665382
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5693794344402495,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.2781430868221564,
+      "spearman_score": 0.4467659764530196
+    },
+    "objective": 1.016145410893269
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5728530924022385,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2763439662730358,
+      "spearman_score": 0.44312785679600003
+    },
+    "objective": 1.0159809491982386
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5537335140812564,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2922137508928205,
+      "spearman_score": 0.462201296143593
+    },
+    "objective": 1.0159348102248493
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5707403633055478,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.28369846362753315,
+      "spearman_score": 0.4450581894727298
+    },
+    "objective": 1.0157985527782776
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5633194235835091,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2824235348526043,
+      "spearman_score": 0.4522995661526717
+    },
+    "objective": 1.0156189897361807
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5430513825860255,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461539,
+      "recall_at_10": 0.24628121121028082,
+      "spearman_score": 0.4722386090420475
+    },
+    "objective": 1.015289991628073
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5704446433555683,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2840439052229748,
+      "spearman_score": 0.44472310263584114
+    },
+    "objective": 1.0151677459914095
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.554951793552618,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.23406760837167795,
+      "spearman_score": 0.45828902881943684
+    },
+    "objective": 1.0132408223720548
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5706450676658932,
+      "precision_at_5": 0.5153846153846154,
+      "precision_at_10": 0.4692307692307693,
+      "recall_at_10": 0.2758097782388477,
+      "spearman_score": 0.44213067837954234
+    },
+    "objective": 1.0127757460454356
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5686630091917096,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.2867326516617212,
+      "spearman_score": 0.4437195619516254
+    },
+    "objective": 1.012382571143335
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5494190451361608,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2348083491124187,
+      "spearman_score": 0.4604955685544663
+    },
+    "objective": 1.009914613690627
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5482709255450502,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.2424867417908113,
+      "spearman_score": 0.46153223976554464
+    },
+    "objective": 1.0098031653105948
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5481915537790738,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.2405026148066844,
+      "spearman_score": 0.46155998545422156
+    },
+    "objective": 1.0097515392332954
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5764037176354238,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4730769230769231,
+      "recall_at_10": 0.2763439662730358,
+      "spearman_score": 0.43226513999658567
+    },
+    "objective": 1.0086688576320095
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.564966787813865,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.28619846362753315,
+      "spearman_score": 0.4431755166099712
+    },
+    "objective": 1.0081423044238362
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.542415477294737,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2471761496052192,
+      "spearman_score": 0.46570491324894664
+    },
+    "objective": 1.0081203905436837
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5634826275908148,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4807692307692308,
+      "recall_at_10": 0.2867326516617212,
+      "spearman_score": 0.44441702946534123
+    },
+    "objective": 1.007899657056156
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5422757995166626,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.24608419226326184,
+      "spearman_score": 0.4651336257672876
+    },
+    "objective": 1.0074094252839503
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.540701652821107,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846145,
+      "recall_at_10": 0.30775607893514856,
+      "spearman_score": 0.4664940789072546
+    },
+    "objective": 1.0071957317283617
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.565081182512601,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4615384615384616,
+      "recall_at_10": 0.24636283629190586,
+      "spearman_score": 0.44200470508603434
+    },
+    "objective": 1.0070858875986353
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5420308715071767,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2471761496052192,
+      "spearman_score": 0.46469421472999767
+    },
+    "objective": 1.0067250862371744
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5499378649610598,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.26911513029419987,
+      "spearman_score": 0.456624783100831
+    },
+    "objective": 1.0065626480618908
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5443777360261174,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.2464817051607747,
+      "spearman_score": 0.46206727561726546
+    },
+    "objective": 1.006445011643383
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.570061641994753,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47692307692307695,
+      "recall_at_10": 0.3113048387339083,
+      "spearman_score": 0.4362101458779335
+    },
+    "objective": 1.0062717878726866
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5715691767797956,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2856929443720139,
+      "spearman_score": 0.4341583252762619
+    },
+    "objective": 1.0057275020560574
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5623565301637424,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4615384615384616,
+      "recall_at_10": 0.24636283629190586,
+      "spearman_score": 0.44285879511593423
+    },
+    "objective": 1.0052153252796767
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5687342454676771,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.29212795080702036,
+      "spearman_score": 0.43540084763932757
+    },
+    "objective": 1.0041350931070048
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5630012279745582,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2458286482577178,
+      "spearman_score": 0.4410297913980616
+    },
+    "objective": 1.0040310193726198
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5453131646042467,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.26911513029419987,
+      "spearman_score": 0.4581416193705182
+    },
+    "objective": 1.003454783974765
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5382929713680462,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.24664196157103113,
+      "spearman_score": 0.46491810052246774
+    },
+    "objective": 1.0032110718905138
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5718011503204828,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.3449718661509357,
+      "spearman_score": 0.43131816506361675
+    },
+    "objective": 1.0031193153840996
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5658670377823541,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.48461538461538467,
+      "recall_at_10": 0.28823415316322265,
+      "spearman_score": 0.4358356758544592
+    },
+    "objective": 1.0017027136368133
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5688164005285051,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846145,
+      "recall_at_10": 0.24716989334896292,
+      "spearman_score": 0.4319515702975669
+    },
+    "objective": 1.0007679708260722
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5715596711791409,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.3108296195086891,
+      "spearman_score": 0.4285822979280084
+    },
+    "objective": 1.0001419691071494
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.567272272869421,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.33802742170649125,
+      "spearman_score": 0.43241901798638427
+    },
+    "objective": 0.9996912908558052
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5564471378880674,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4846153846153846,
+      "recall_at_10": 0.2909057995848692,
+      "spearman_score": 0.4432320833730804
+    },
+    "objective": 0.9996792212611478
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5405340373374256,
+      "precision_at_5": 0.47692307692307695,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.2685809422600118,
+      "spearman_score": 0.4583232906854618
+    },
+    "objective": 0.9988573280228874
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5363081307334159,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24749666242573198,
+      "spearman_score": 0.4616564332584219
+    },
+    "objective": 0.9979645639918377
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5696212866854716,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.2856929443720139,
+      "spearman_score": 0.42718505896800624
+    },
+    "objective": 0.9968063456534779
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5690858765527226,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.31136380754287707,
+      "spearman_score": 0.42744790313871
+    },
+    "objective": 0.9965337796914326
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5664534607708955,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.47307692307692306,
+      "recall_at_10": 0.3108296195086891,
+      "spearman_score": 0.428828643520701
+    },
+    "objective": 0.9952821042915965
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5606909521782304,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.29213951956858913,
+      "spearman_score": 0.4340665198791698
+    },
+    "objective": 0.9947574720574002
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5399675548195281,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.2407371025411721,
+      "spearman_score": 0.4535795673787397
+    },
+    "objective": 0.9935471221982678
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5575666916711826,
+      "precision_at_5": 0.5076923076923078,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.28268994136901093,
+      "spearman_score": 0.43483712541113195
+    },
+    "objective": 0.9924038170823145
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5684935096812481,
+      "precision_at_5": 0.4923076923076923,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.31136380754287707,
+      "spearman_score": 0.42224154183672624
+    },
+    "objective": 0.9907350515179744
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5571547536410681,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.46923076923076923,
+      "recall_at_10": 0.2738619700410396,
+      "spearman_score": 0.4316695917794501
+    },
+    "objective": 0.9888243454205182
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.560832579342009,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4769230769230769,
+      "recall_at_10": 0.31999152867059827,
+      "spearman_score": 0.426363958486764
+    },
+    "objective": 0.987196537828773
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5528991317795846,
+      "precision_at_5": 0.46923076923076923,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2791867316158012,
+      "spearman_score": 0.43124488002413003
+    },
+    "objective": 0.9841440118037146
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5247984453825439,
+      "precision_at_5": 0.4923076923076923,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.26871830489737447,
+      "spearman_score": 0.4574292761662094
+    },
+    "objective": 0.9822277215487534
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5250894691776827,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.44999999999999996,
+      "recall_at_10": 0.2516880791171487,
+      "spearman_score": 0.4554710847295854
+    },
+    "objective": 0.9805605539072682
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.530198403615094,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.23869919737826695,
+      "spearman_score": 0.4489651985535312
+    },
+    "objective": 0.9791636021686252
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5487312728847135,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24831690074597024,
+      "spearman_score": 0.4301296513433701
+    },
+    "objective": 0.9788609242280836
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5257229723766875,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846145,
+      "recall_at_10": 0.287210923389993,
+      "spearman_score": 0.45205675549757307
+    },
+    "objective": 0.9777797278742606
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5258847702725348,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.23939364182271136,
+      "spearman_score": 0.45003301531056733
+    },
+    "objective": 0.975917785583102
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.524837438972219,
+      "precision_at_5": 0.4692307692307693,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2458286482577178,
+      "spearman_score": 0.45073001517457995
+    },
+    "objective": 0.9755674541467989
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5440832397634767,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24831690074597024,
+      "spearman_score": 0.43082451435083996
+    },
+    "objective": 0.9749077541143167
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5239707017423524,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.24628652371559331,
+      "spearman_score": 0.45028189217941883
+    },
+    "objective": 0.9742525939217712
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5430513825860255,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461539,
+      "recall_at_10": 0.24628121121028082,
+      "spearman_score": 0.43017811241493376
+    },
+    "objective": 0.9732294950009592
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.550858119073899,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.33553385671292635,
+      "spearman_score": 0.42166840725575894
+    },
+    "objective": 0.972526526329658
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5492323729402773,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.27495392738299695,
+      "spearman_score": 0.41966589255008147
+    },
+    "objective": 0.9688982654903587
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.548847767152717,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.4653846153846154,
+      "recall_at_10": 0.27495392738299695,
+      "spearman_score": 0.4183354325903149
+    },
+    "objective": 0.9671831997430319
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5468431513675539,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2491239578030274,
+      "spearman_score": 0.4195220804483583
+    },
+    "objective": 0.9663652318159122
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5451098670135865,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2744197393488089,
+      "spearman_score": 0.419341309499818
+    },
+    "objective": 0.9644511765134045
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5482709255450502,
+      "precision_at_5": 0.5076923076923077,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.2424867417908113,
+      "spearman_score": 0.4126655181747074
+    },
+    "objective": 0.9609364437197576
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5481915537790738,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.2405026148066844,
+      "spearman_score": 0.41194551294580545
+    },
+    "objective": 0.9601370667248792
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5494190451361608,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2348083491124187,
+      "spearman_score": 0.41033013211222547
+    },
+    "objective": 0.9597491772483863
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5160677313194469,
+      "precision_at_5": 0.47692307692307695,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.2523762673053368,
+      "spearman_score": 0.4423070070336823
+    },
+    "objective": 0.9583747383531293
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5363081307334159,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.24749666242573198,
+      "spearman_score": 0.4203615491301138
+    },
+    "objective": 0.9566696798635297
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5459772480781019,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.46153846153846145,
+      "recall_at_10": 0.27425948293855257,
+      "spearman_score": 0.40829934453174843
+    },
+    "objective": 0.9542765926098503
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5497344099590624,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.23406760837167795,
+      "spearman_score": 0.40432427467694154
+    },
+    "objective": 0.954058684636004
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5132633827787237,
+      "precision_at_5": 0.4615384615384616,
+      "precision_at_10": 0.4461538461538461,
+      "recall_at_10": 0.24597750548990838,
+      "spearman_score": 0.43799681337685625
+    },
+    "objective": 0.95126019615558
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5399675548195281,
+      "precision_at_5": 0.49230769230769234,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.2407371025411721,
+      "spearman_score": 0.40575746581028344
+    },
+    "objective": 0.9457250206298116
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5319063648232231,
+      "precision_at_5": 0.48461538461538467,
+      "precision_at_10": 0.4538461538461538,
+      "recall_at_10": 0.2794658568949264,
+      "spearman_score": 0.410975354193492
+    },
+    "objective": 0.9428817190167151
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5551230081742873,
+      "precision_at_5": 0.4923076923076923,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.2968929080719776,
+      "spearman_score": 0.3865733156490236
+    },
+    "objective": 0.9416963238233109
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5503438809074661,
+      "precision_at_5": 0.4846153846153846,
+      "precision_at_10": 0.4692307692307691,
+      "recall_at_10": 0.29635872003778957,
+      "spearman_score": 0.38834485698635873
+    },
+    "objective": 0.9386887378938249
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5545303249375446,
+      "precision_at_5": 0.4923076923076923,
+      "precision_at_10": 0.47307692307692295,
+      "recall_at_10": 0.2968929080719776,
+      "spearman_score": 0.38093471173643667
+    },
+    "objective": 0.9354650366739813
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.49908406454221765,
+      "precision_at_5": 0.4615384615384616,
+      "precision_at_10": 0.4423076923076923,
+      "recall_at_10": 0.24447600398840694,
+      "spearman_score": 0.435775396416893
+    },
+    "objective": 0.9348594609591107
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4991686762046497,
+      "precision_at_5": 0.4692307692307693,
+      "precision_at_10": 0.4423076923076923,
+      "recall_at_10": 0.24447600398840694,
+      "spearman_score": 0.43554587495081354
+    },
+    "objective": 0.9347145511554633
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4981738683537442,
+      "precision_at_5": 0.47692307692307695,
+      "precision_at_10": 0.44999999999999996,
+      "recall_at_10": 0.26518931845172133,
+      "spearman_score": 0.43172739816151434
+    },
+    "objective": 0.9299012665152586
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.49488339036253753,
+      "precision_at_5": 0.4692307692307693,
+      "precision_at_10": 0.4461538461538461,
+      "recall_at_10": 0.23790549116789408,
+      "spearman_score": 0.43458886422843057
+    },
+    "objective": 0.9294722545909682
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.534730481201907,
+      "precision_at_5": 0.49999999999999994,
+      "precision_at_10": 0.4692307692307691,
+      "recall_at_10": 0.29649608267515226,
+      "spearman_score": 0.3891892914025367
+    },
+    "objective": 0.9239197726044437
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5358062658946117,
+      "precision_at_5": 0.5,
+      "precision_at_10": 0.4653846153846153,
+      "recall_at_10": 0.3149887011677708,
+      "spearman_score": 0.3858323605679156
+    },
+    "objective": 0.9216386264625273
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5307875973878926,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.274064301493371,
+      "spearman_score": 0.3873388783673552
+    },
+    "objective": 0.9181264757552479
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5316543346177592,
+      "precision_at_5": 0.4692307692307693,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.27360642603549556,
+      "spearman_score": 0.3864045763828941
+    },
+    "objective": 0.9180589110006534
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.532701665918075,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.46153846153846156,
+      "recall_at_10": 0.2671714196004891,
+      "spearman_score": 0.38294857452360875
+    },
+    "objective": 0.9156502404416837
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5317979156670785,
+      "precision_at_5": 0.476923076923077,
+      "precision_at_10": 0.4576923076923076,
+      "recall_at_10": 0.26647697515604474,
+      "spearman_score": 0.3756994078065285
+    },
+    "objective": 0.907497323473607
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.5228846269649872,
+      "precision_at_5": 0.47692307692307695,
+      "precision_at_10": 0.45769230769230773,
+      "recall_at_10": 0.2801540450831146,
+      "spearman_score": 0.3807577408648305
+    },
+    "objective": 0.9036423678298177
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4775470296967877,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4076923076923077,
+      "recall_at_10": 0.227455842384912,
+      "spearman_score": 0.39308296951492944
+    },
+    "objective": 0.8706299992117171
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4773102068990597,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22646377889284844,
+      "spearman_score": 0.3931318898825346
+    },
+    "objective": 0.8704420967815942
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4773102068990597,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22646377889284844,
+      "spearman_score": 0.3931318898825346
+    },
+    "objective": 0.8704420967815942
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47521446466323053,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22778653021559978,
+      "spearman_score": 0.39345188778518203
+    },
+    "objective": 0.8686663524484126
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4775470296967877,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4076923076923077,
+      "recall_at_10": 0.227455842384912,
+      "spearman_score": 0.3910156659115265
+    },
+    "objective": 0.8685626956083141
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47521446466323053,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22778653021559978,
+      "spearman_score": 0.3928403773558982
+    },
+    "objective": 0.8680548420191287
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4741187972258049,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22547171540078498,
+      "spearman_score": 0.3938179611947834
+    },
+    "objective": 0.8679367584205884
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4741187972258049,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22547171540078498,
+      "spearman_score": 0.3938179611947834
+    },
+    "objective": 0.8679367584205884
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47173582285484006,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.22891595634502593,
+      "spearman_score": 0.3953731860069392
+    },
+    "objective": 0.8671090088617792
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47316898651919853,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.22877859370766324,
+      "spearman_score": 0.392864165491413
+    },
+    "objective": 0.8660331520106115
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47173824698222167,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.39379811216455557
+    },
+    "objective": 0.8655363591467773
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47173824698222167,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.393180765412945
+    },
+    "objective": 0.8649190123951667
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47113769871319156,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.39343778673910135
+    },
+    "objective": 0.8645754854522929
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47113769871319156,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.39343778673910135
+    },
+    "objective": 0.8645754854522929
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47043006579128305,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.39398572184518
+    },
+    "objective": 0.8644157876364631
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47043006579128305,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.39398572184518
+    },
+    "objective": 0.8644157876364631
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4698263701892126,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3933036817018341
+    },
+    "objective": 0.8631300518910467
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4698263701892126,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3926924335562442
+    },
+    "objective": 0.8625188037454568
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46923267810646646,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.3932810864273567
+    },
+    "objective": 0.8625137645338232
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46923267810646646,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.3932810864273567
+    },
+    "objective": 0.8625137645338232
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4689304223988676,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.3931265605004895
+    },
+    "objective": 0.8620569828993572
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4674860880057445,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.39412853052704
+    },
+    "objective": 0.8616146185327844
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4674860880057445,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.39412853052704
+    },
+    "objective": 0.8616146185327844
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4689304223988676,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2181188767979464,
+      "spearman_score": 0.3910305723050073
+    },
+    "objective": 0.8599609947038749
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4660232073085278,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21117443235350195,
+      "spearman_score": 0.39392304772413184
+    },
+    "objective": 0.8599462550326596
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4660232073085278,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21117443235350195,
+      "spearman_score": 0.39392304772413184
+    },
+    "objective": 0.8599462550326596
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4652247166371119,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2265578977369673,
+      "spearman_score": 0.3945263437325383
+    },
+    "objective": 0.8597510603696502
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47316898651919853,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.22877859370766324,
+      "spearman_score": 0.38649446649738545
+    },
+    "objective": 0.859663453016584
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46676221070545665,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3928849487355277
+    },
+    "objective": 0.8596471594409844
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4660542037564039,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.39343138676644834
+    },
+    "objective": 0.8594855905228522
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4657700147598171,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.3935674276420426
+    },
+    "objective": 0.8593374424018597
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46689720609479846,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.39229063419799287
+    },
+    "objective": 0.8591878402927913
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4654470050621645,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.39354559304769804
+    },
+    "objective": 0.8589925981098625
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4649465863062083,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3940381279048192
+    },
+    "objective": 0.8589847142110274
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4657700147598171,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.3929608391504447
+    },
+    "objective": 0.8587308539102618
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46808423577747404,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22128839246746201,
+      "spearman_score": 0.390640772923895
+    },
+    "objective": 0.858725008701369
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4646295239501602,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21018236886143843,
+      "spearman_score": 0.393931097306527
+    },
+    "objective": 0.8585606212566872
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4646295239501602,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21018236886143843,
+      "spearman_score": 0.393931097306527
+    },
+    "objective": 0.8585606212566872
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46537332993861125,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22720469838376792,
+      "spearman_score": 0.39262127626885907
+    },
+    "objective": 0.8579946062074704
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4649721057772061,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21978689096596052,
+      "spearman_score": 0.3929276323163323
+    },
+    "objective": 0.8578997380935385
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4632645531880437,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22142575510482468,
+      "spearman_score": 0.39458423483353455
+    },
+    "objective": 0.8578487880215783
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4696297258703914,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22128839246746201,
+      "spearman_score": 0.38814426877035196
+    },
+    "objective": 0.8577739946407434
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4660542037564039,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.39136016517795863
+    },
+    "objective": 0.8574143689343625
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47173582285484006,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.22891595634502593,
+      "spearman_score": 0.38537511690908305
+    },
+    "objective": 0.8571109397639232
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4623147909478984,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.39430682343685736
+    },
+    "objective": 0.8566216143847558
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4630846605162597,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21018236886143843,
+      "spearman_score": 0.3935344864954237
+    },
+    "objective": 0.8566191470116834
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47349833086630105,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.23046706102113054,
+      "spearman_score": 0.3825796037764535
+    },
+    "objective": 0.8560779346427545
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4610989876319099,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21198774566681522,
+      "spearman_score": 0.3948754009786328
+    },
+    "objective": 0.8559743886105426
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46231302288291254,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.393178157690541
+    },
+    "objective": 0.8554911805734535
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46556051238520146,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21945319688226647,
+      "spearman_score": 0.3897859711306161
+    },
+    "objective": 0.8553464835158175
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4636072383238753,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22212019954926912,
+      "spearman_score": 0.39160536966823606
+    },
+    "objective": 0.8552126079921114
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4630846605162597,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21018236886143843,
+      "spearman_score": 0.3914683400744933
+    },
+    "objective": 0.854553000590753
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4600746600791601,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21198774566681522,
+      "spearman_score": 0.3939178825452598
+    },
+    "objective": 0.8539925426244199
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46828483375780705,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.2319685625226321,
+      "spearman_score": 0.3849507424419464
+    },
+    "objective": 0.8532355761997534
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46676221070545665,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3864603881410409
+    },
+    "objective": 0.8532225988464975
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47084030938538657,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21911094029000985,
+      "spearman_score": 0.38225041812802846
+    },
+    "objective": 0.853090727513415
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47084030938538657,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21911094029000985,
+      "spearman_score": 0.38225041812802846
+    },
+    "objective": 0.853090727513415
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4654470050621645,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3872033399043157
+    },
+    "objective": 0.8526503449664802
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47032953807286204,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2194416281206977,
+      "spearman_score": 0.3814211948081298
+    },
+    "objective": 0.8517507328809919
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.469310927453841,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2184164958455654,
+      "spearman_score": 0.38196022775422783
+    },
+    "objective": 0.8512711552080688
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.47161331882536456,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.22253055308462263,
+      "spearman_score": 0.37950959863325007
+    },
+    "objective": 0.8511229174586146
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47032953807286204,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2194416281206977,
+      "spearman_score": 0.3807425609279085
+    },
+    "objective": 0.8510720990007705
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46925890396291003,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.38165906465475435
+    },
+    "objective": 0.8509179686176644
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.99,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46925890396291003,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21712681330588288,
+      "spearman_score": 0.38165906465475435
+    },
+    "objective": 0.8509179686176644
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46140981265264497,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.38950424029971786
+    },
+    "objective": 0.8509140529523629
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.469310927453841,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2184164958455654,
+      "spearman_score": 0.38112402358526215
+    },
+    "objective": 0.8504349510391032
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45665656822204864,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.17199440567347524,
+      "spearman_score": 0.3935872161957092
+    },
+    "objective": 0.8502437844177578
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45576984520930625,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.39403439264136636
+    },
+    "objective": 0.8498042378506726
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45795495389308694,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2131916281206977,
+      "spearman_score": 0.3916704251838615
+    },
+    "objective": 0.8496253790769485
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4652247166371119,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2265578977369673,
+      "spearman_score": 0.38395677704912157
+    },
+    "objective": 0.8491814936862334
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4534056369868028,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.16423133541040497,
+      "spearman_score": 0.3951700841263328
+    },
+    "objective": 0.8485757211131356
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46689720609479846,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3816399178660878
+    },
+    "objective": 0.8485371239608863
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4649465863062083,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3835198706267514
+    },
+    "objective": 0.8484664569329596
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4632645531880437,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22142575510482468,
+      "spearman_score": 0.38460971979570036
+    },
+    "objective": 0.8478742729837441
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4600746600791601,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21198774566681522,
+      "spearman_score": 0.38758181244109974
+    },
+    "objective": 0.8476564725202598
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46808423577747404,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22128839246746201,
+      "spearman_score": 0.37956572415609524
+    },
+    "objective": 0.8476499599335693
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46537332993861125,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22720469838376792,
+      "spearman_score": 0.38187679048624346
+    },
+    "objective": 0.8472501204248547
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4649721057772061,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21978689096596052,
+      "spearman_score": 0.38220750754095967
+    },
+    "objective": 0.8471796133181657
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4686045655340776,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2211777392318088,
+      "spearman_score": 0.3784180324946092
+    },
+    "objective": 0.8470225980286867
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4623147909478984,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.38384240199499126
+    },
+    "objective": 0.8461571929428897
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4696297258703914,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.22128839246746201,
+      "spearman_score": 0.37651568847136274
+    },
+    "objective": 0.8461454143417542
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4533458733562191,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.1732230381521077,
+      "spearman_score": 0.3927977602309171
+    },
+    "objective": 0.8461436335871362
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4610989876319099,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21198774566681522,
+      "spearman_score": 0.38495223386826627
+    },
+    "objective": 0.8460512215001761
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46556051238520146,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.21945319688226647,
+      "spearman_score": 0.3804670078090812
+    },
+    "objective": 0.8460275201942826
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4636072383238753,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.22212019954926912,
+      "spearman_score": 0.3822566990099792
+    },
+    "objective": 0.8458639373338546
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46231302288291254,
+      "precision_at_5": 0.423076923076923,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.3831900840742973
+    },
+    "objective": 0.8455031069572099
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46522685180327455,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22073131066038024,
+      "spearman_score": 0.3802337766799885
+    },
+    "objective": 0.8454606284832631
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.455485900352795,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1648781360572056,
+      "spearman_score": 0.389773617914962
+    },
+    "objective": 0.845259518267757
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45092769153047235,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.1709082233372929,
+      "spearman_score": 0.39407929929604496
+    },
+    "objective": 0.8450069908265173
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46457052464553966,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.3796102651053192
+    },
+    "objective": 0.8441807897508589
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46331797934044183,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.38846153846153847,
+      "recall_at_10": 0.21844956462863419,
+      "spearman_score": 0.3806659596438709
+    },
+    "objective": 0.8439839389843127
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4559094361590782,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.16542389285296244,
+      "spearman_score": 0.3874035483320363
+    },
+    "objective": 0.8433129844911145
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45037647196013125,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.3921937825137101
+    },
+    "objective": 0.8425702544738414
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46310505205642205,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2194416281206977,
+      "spearman_score": 0.3792951175441886
+    },
+    "objective": 0.8424001696006107
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46140981265264497,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22043369161276116,
+      "spearman_score": 0.38007921414158763
+    },
+    "objective": 0.8414890267942325
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45795495389308694,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2131916281206977,
+      "spearman_score": 0.3823640173849572
+    },
+    "objective": 0.8403189712780441
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4627762044612735,
+      "precision_at_5": 0.43846153846153846,
+      "precision_at_10": 0.41923076923076924,
+      "recall_at_10": 0.16263655194062152,
+      "spearman_score": 0.3774737550714273
+    },
+    "objective": 0.8402499595327008
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.450286072034087,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.38966356928215906
+    },
+    "objective": 0.839949641316246
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45665656822204864,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.17199440567347524,
+      "spearman_score": 0.3832403049301382
+    },
+    "objective": 0.8398968731521869
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45576984520930625,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.38365866910185376
+    },
+    "objective": 0.83942851431116
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.466986072822695,
+      "precision_at_5": 0.38461538461538464,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2211777392318088,
+      "spearman_score": 0.37200245558954737
+    },
+    "objective": 0.8389885284122424
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47349833086630105,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.23046706102113054,
+      "spearman_score": 0.36539278172269796
+    },
+    "objective": 0.8388911125889991
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45196996787306626,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16557258050165005,
+      "spearman_score": 0.3868745065725276
+    },
+    "objective": 0.8388444744455938
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46457052464553966,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.21249718367625325,
+      "spearman_score": 0.37416865508870384
+    },
+    "objective": 0.8387391797342435
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46522685180327455,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.22073131066038024,
+      "spearman_score": 0.37351094858701306
+    },
+    "objective": 0.8387378003902877
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4540047734371559,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.16806614549521506,
+      "spearman_score": 0.38432366298928566
+    },
+    "objective": 0.8383284364264416
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4534056369868028,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.16423133541040497,
+      "spearman_score": 0.3848924895669116
+    },
+    "objective": 0.8382981265537144
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4446011212953727,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.3936398925481962
+    },
+    "objective": 0.838241013843569
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4471527014171043,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.16656464399371357,
+      "spearman_score": 0.3900917723269026
+    },
+    "objective": 0.8372444737440069
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4551854063092121,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.1673717010507706,
+      "spearman_score": 0.38196027485994943
+    },
+    "objective": 0.8371456811691615
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4500809479294696,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.17386983879890838,
+      "spearman_score": 0.3870466491276049
+    },
+    "objective": 0.8371275970570745
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4611373548250117,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.41538461538461546,
+      "recall_at_10": 0.16189581119988078,
+      "spearman_score": 0.3759695665998409
+    },
+    "objective": 0.8371069214248525
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46828483375780705,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.2319685625226321,
+      "spearman_score": 0.36848719577481026
+    },
+    "objective": 0.8367720295326173
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.95,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46331797934044183,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.38846153846153847,
+      "recall_at_10": 0.21844956462863419,
+      "spearman_score": 0.3726936281708104
+    },
+    "objective": 0.8360116075112523
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45092769153047235,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.1709082233372929,
+      "spearman_score": 0.3848646113488098
+    },
+    "objective": 0.8357923028792822
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44524611933601066,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.15643219011125967,
+      "spearman_score": 0.39018288960770786
+    },
+    "objective": 0.8354290089437185
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4407280773966835,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1635553847344543,
+      "spearman_score": 0.39461646324669714
+    },
+    "objective": 0.8353445406433806
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4533458733562191,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.1732230381521077,
+      "spearman_score": 0.38179720057319416
+    },
+    "objective": 0.8351430739294132
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.455485900352795,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1648781360572056,
+      "spearman_score": 0.37911447612389815
+    },
+    "objective": 0.8346003764766932
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44779345862733455,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.16773245141152096,
+      "spearman_score": 0.38673931472590845
+    },
+    "objective": 0.834532773353243
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4403117465209301,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.1625633212423908,
+      "spearman_score": 0.393901898432432
+    },
+    "objective": 0.8342136449533621
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45369505691667,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.16538757406664362,
+      "spearman_score": 0.38036477141010516
+    },
+    "objective": 0.8340598283267752
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4614250563922186,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15326485881892837,
+      "spearman_score": 0.3717535351784178
+    },
+    "objective": 0.8331785915706365
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46310505205642205,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.2194416281206977,
+      "spearman_score": 0.3700039266273056
+    },
+    "objective": 0.8331089786837276
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4559094361590782,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.16542389285296244,
+      "spearman_score": 0.37705902142781
+    },
+    "objective": 0.8329684575868882
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45941203704234496,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15326485881892837,
+      "spearman_score": 0.3735451703025396
+    },
+    "objective": 0.8329572073448845
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.47161331882536456,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.22253055308462263,
+      "spearman_score": 0.3607766096087837
+    },
+    "objective": 0.8323899284341483
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45603140011139137,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21888454631361587,
+      "spearman_score": 0.3762367823889793
+    },
+    "objective": 0.8322681825003706
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.46571215340147326,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.15395930326337284,
+      "spearman_score": 0.3658124328251152
+    },
+    "objective": 0.8315245862265885
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45037647196013125,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.38114329949356607
+    },
+    "objective": 0.8315197714536973
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.450286072034087,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.3792527234128859
+    },
+    "objective": 0.8295387954469728
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43404444346033294,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3807692307692308,
+      "recall_at_10": 0.15312531180438138,
+      "spearman_score": 0.39488517838543025
+    },
+    "objective": 0.8289296218457631
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45196996787306626,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16557258050165005,
+      "spearman_score": 0.37634141531908427
+    },
+    "objective": 0.8283113831921505
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4686045655340776,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2211777392318088,
+      "spearman_score": 0.3588714377568998
+    },
+    "objective": 0.8274760032909774
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44450245338906913,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16443182936089895,
+      "spearman_score": 0.382837445366009
+    },
+    "objective": 0.8273398987550782
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4446011212953727,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.3826681738567454
+    },
+    "objective": 0.8272692951521181
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4407280773966835,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1635553847344543,
+      "spearman_score": 0.38542424504474027
+    },
+    "objective": 0.8261523224414238
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4471527014171043,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.16656464399371357,
+      "spearman_score": 0.378852157168675
+    },
+    "objective": 0.8260048585857793
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45369505691667,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.16538757406664362,
+      "spearman_score": 0.3719525006588273
+    },
+    "objective": 0.8256475575754973
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44217453648030103,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1643686980477676,
+      "spearman_score": 0.38322313965253646
+    },
+    "objective": 0.8253976761328374
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44524611933601066,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.15643219011125967,
+      "spearman_score": 0.37983243891180307
+    },
+    "objective": 0.8250785582478137
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4403117465209301,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.1625633212423908,
+      "spearman_score": 0.38459903896837183
+    },
+    "objective": 0.8249107854893019
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.444874198794691,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1648781360572056,
+      "spearman_score": 0.37976234094333877
+    },
+    "objective": 0.8246365397380298
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4384628990650133,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.15712663455570414,
+      "spearman_score": 0.3859946786816161
+    },
+    "objective": 0.8244575777466294
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4540047734371559,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.16806614549521506,
+      "spearman_score": 0.37008629309127306
+    },
+    "objective": 0.8240910665284289
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44185070037274976,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.38461538461538464,
+      "recall_at_10": 0.1618688767979464,
+      "spearman_score": 0.3821472382873702
+    },
+    "objective": 0.8239979386601199
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4438758046555978,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16506314249221207,
+      "spearman_score": 0.38000237037327056
+    },
+    "objective": 0.8238781750288684
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45603140011139137,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3884615384615385,
+      "recall_at_10": 0.21888454631361587,
+      "spearman_score": 0.36751136912145455
+    },
+    "objective": 0.8235427692328459
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4500809479294696,
+      "precision_at_5": 0.42307692307692313,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.17386983879890838,
+      "spearman_score": 0.3733517426019334
+    },
+    "objective": 0.823432690531403
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4491531693717517,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.16866150546557504,
+      "spearman_score": 0.3733521213647221
+    },
+    "objective": 0.8225052907364738
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.45181523603353746,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.4076923076923077,
+      "recall_at_10": 0.16980225660632617,
+      "spearman_score": 0.3705690297518974
+    },
+    "objective": 0.8223842657854349
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4551854063092121,
+      "precision_at_5": 0.40769230769230774,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.1673717010507706,
+      "spearman_score": 0.36704237321318944
+    },
+    "objective": 0.8222277795224016
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44692441726886023,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.374795159786315
+    },
+    "objective": 0.8217195770551753
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.466986072822695,
+      "precision_at_5": 0.38461538461538464,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.2211777392318088,
+      "spearman_score": 0.3544839482791119
+    },
+    "objective": 0.8214700211018069
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44779345862733455,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.4038461538461539,
+      "recall_at_10": 0.16773245141152096,
+      "spearman_score": 0.3729074206826203
+    },
+    "objective": 0.8207008793099548
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44690264148628106,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.16866150546557504,
+      "spearman_score": 0.37378133136988523
+    },
+    "objective": 0.8206839728561663
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.43404444346033294,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3807692307692308,
+      "recall_at_10": 0.15312531180438138,
+      "spearman_score": 0.3857212726591881
+    },
+    "objective": 0.8197657161195211
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4467647705794556,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16667725660632618,
+      "spearman_score": 0.37289540876268173
+    },
+    "objective": 0.8196601793421373
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4627762044612735,
+      "precision_at_5": 0.43846153846153846,
+      "precision_at_10": 0.41923076923076924,
+      "recall_at_10": 0.16263655194062152,
+      "spearman_score": 0.3565645590533549
+    },
+    "objective": 0.8193407635146284
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4611373548250117,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.41538461538461546,
+      "recall_at_10": 0.16189581119988078,
+      "spearman_score": 0.3543422850117123
+    },
+    "objective": 0.815479639836724
+  },
+  {
+    "extract": "base",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4892627261386337,
+      "precision_at_5": 0.4692307692307693,
+      "precision_at_10": 0.4423076923076923,
+      "recall_at_10": 0.23494240487147444,
+      "spearman_score": 0.3259334178822012
+    },
+    "objective": 0.8151961440208348
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.444874198794691,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1648781360572056,
+      "spearman_score": 0.37023159218045504
+    },
+    "objective": 0.815105790975146
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44450245338906913,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16443182936089895,
+      "spearman_score": 0.3705489570418551
+    },
+    "objective": 0.8150514104309242
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.9,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44185070037274976,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.38461538461538464,
+      "recall_at_10": 0.1618688767979464,
+      "spearman_score": 0.37315232957699074
+    },
+    "objective": 0.8150030299497405
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44217453648030103,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.1643686980477676,
+      "spearman_score": 0.37078719204536686
+    },
+    "objective": 0.8129617285256678
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4505946848679819,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.42692307692307696,
+      "recall_at_10": 0.1685973735264431,
+      "spearman_score": 0.3622393803374432
+    },
+    "objective": 0.8128340652054251
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.85,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44692441726886023,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16587019954926913,
+      "spearman_score": 0.3654088410758112
+    },
+    "objective": 0.8123332583446714
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4384628990650133,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.39230769230769236,
+      "recall_at_10": 0.15712663455570414,
+      "spearman_score": 0.37357931050459264
+    },
+    "objective": 0.8120422095696059
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4438758046555978,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16506314249221207,
+      "spearman_score": 0.36679585675863297
+    },
+    "objective": 0.8106716614142307
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44237337662456155,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16031660337067294,
+      "spearman_score": 0.3678376609927258
+    },
+    "objective": 0.8102110376172873
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45941203704234496,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15326485881892837,
+      "spearman_score": 0.35069843523511984
+    },
+    "objective": 0.8101104722774648
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.46571215340147326,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.15395930326337284,
+      "spearman_score": 0.3437572891563997
+    },
+    "objective": 0.809469442557873
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "word",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4614250563922186,
+      "precision_at_5": 0.43846153846153857,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15326485881892837,
+      "spearman_score": 0.3478051739524072
+    },
+    "objective": 0.8092302303446257
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.48452069169675216,
+      "precision_at_5": 0.4615384615384616,
+      "precision_at_10": 0.43846153846153846,
+      "recall_at_10": 0.20765857758764716,
+      "spearman_score": 0.3244148663782735
+    },
+    "objective": 0.8089355580750257
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.48635902414659693,
+      "precision_at_5": 0.4615384615384616,
+      "precision_at_10": 0.43461538461538457,
+      "recall_at_10": 0.21422909040815996,
+      "spearman_score": 0.3208784473507471
+    },
+    "objective": 0.807237471497344
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4467647705794556,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16667725660632618,
+      "spearman_score": 0.36027099644452293
+    },
+    "objective": 0.8070357670239785
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4470769261037162,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.4192307692307693,
+      "recall_at_10": 0.1677024351315047,
+      "spearman_score": 0.3597885169294519
+    },
+    "objective": 0.8068654430331681
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4491531693717517,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.16866150546557504,
+      "spearman_score": 0.3575359759687103
+    },
+    "objective": 0.806689145340462
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4358305777803026,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3846153846153847,
+      "recall_at_10": 0.15638454631361587,
+      "spearman_score": 0.37011487088107875
+    },
+    "objective": 0.8059454486613813
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44797202146505516,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.16671037163944122,
+      "spearman_score": 0.3578244335931982
+    },
+    "objective": 0.8057964550582534
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44690264148628106,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.16866150546557504,
+      "spearman_score": 0.35839197486238505
+    },
+    "objective": 0.8052946163486661
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.45181523603353746,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.4076923076923077,
+      "recall_at_10": 0.16980225660632617,
+      "spearman_score": 0.3534686057460184
+    },
+    "objective": 0.8052838417795558
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4477740183869026,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.16585567078474037,
+      "spearman_score": 0.3557892882975444
+    },
+    "objective": 0.803563306684447
+  },
+  {
+    "extract": "base",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.48382745909189756,
+      "precision_at_5": 0.4538461538461539,
+      "precision_at_10": 0.43461538461538457,
+      "recall_at_10": 0.21422909040815996,
+      "spearman_score": 0.3179513977370401
+    },
+    "objective": 0.8017788568289377
+  },
+  {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.48746298764632506,
+      "precision_at_5": 0.4538461538461539,
+      "precision_at_10": 0.43846153846153846,
+      "recall_at_10": 0.21573059190966148,
+      "spearman_score": 0.31387725578835735
+    },
+    "objective": 0.8013402434346824
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43950825927808224,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16031660337067294,
+      "spearman_score": 0.3606762109499278
+    },
+    "objective": 0.8001844702280101
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4452603282725366,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.1579191628482324,
+      "spearman_score": 0.35193655035980737
+    },
+    "objective": 0.797196878632344
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44412170182673993,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.15530054835461796,
+      "spearman_score": 0.3515791238193631
+    },
+    "objective": 0.7957008256461031
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.44159363597513857,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.15530054835461796,
+      "spearman_score": 0.3538728368743746
+    },
+    "objective": 0.7954664728495131
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.7,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4358305777803026,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3846153846153847,
+      "recall_at_10": 0.15638454631361587,
+      "spearman_score": 0.3573798417171315
+    },
+    "objective": 0.7932104194974341
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44237337662456155,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16031660337067294,
+      "spearman_score": 0.34990824481289506
+    },
+    "objective": 0.7922816214374566
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4421169201027605,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.1546061039101735,
+      "spearman_score": 0.3496065515673917
+    },
+    "objective": 0.7917234716701522
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43717932410265026,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15391165946572904,
+      "spearman_score": 0.34842878783467474
+    },
+    "objective": 0.785608111937325
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.43950825927808224,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16031660337067294,
+      "spearman_score": 0.34405551453703814
+    },
+    "objective": 0.7835637738151204
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43738585381983125,
+      "precision_at_5": 0.4000000000000001,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15391165946572904,
+      "spearman_score": 0.3445087500200865
+    },
+    "objective": 0.7818946038399177
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4476013753636995,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.42692307692307696,
+      "recall_at_10": 0.1685973735264431,
+      "spearman_score": 0.3285583361209969
+    },
+    "objective": 0.7761597114846963
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43483101807468777,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.40384615384615385,
+      "recall_at_10": 0.17130986165559792,
+      "spearman_score": 0.33578770418113807
+    },
+    "objective": 0.7706187222558258
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44159363597513857,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.15530054835461796,
+      "spearman_score": 0.3285143758553239
+    },
+    "objective": 0.7701080118304624
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44648059826450326,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.4192307692307693,
+      "recall_at_10": 0.1677024351315047,
+      "spearman_score": 0.32352286483397064
+    },
+    "objective": 0.7700034630984739
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.43656324236990673,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.3961538461538462,
+      "recall_at_10": 0.16976071635645262,
+      "spearman_score": 0.3329315209983736
+    },
+    "objective": 0.7694947633682803
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.434856489677496,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.39999999999999997,
+      "recall_at_10": 0.16337335371908995,
+      "spearman_score": 0.33380111130298634
+    },
+    "objective": 0.7686576009804824
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44412170182673993,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.15530054835461796,
+      "spearman_score": 0.3244054852526206
+    },
+    "objective": 0.7685271870793605
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4473756936258422,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4153846153846154,
+      "recall_at_10": 0.16671037163944122,
+      "spearman_score": 0.3192821005252714
+    },
+    "objective": 0.7666577941511136
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.42747738019570924,
+      "precision_at_5": 0.4307692307692308,
+      "precision_at_10": 0.39999999999999997,
+      "recall_at_10": 0.16351071635645262,
+      "spearman_score": 0.33729724488547663
+    },
+    "objective": 0.7647746250811859
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4472491270244946,
+      "precision_at_5": 0.41538461538461535,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.16585567078474037,
+      "spearman_score": 0.31564549097548394
+    },
+    "objective": 0.7628946179999785
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.4421169201027605,
+      "precision_at_5": 0.4,
+      "precision_at_10": 0.4115384615384616,
+      "recall_at_10": 0.1546061039101735,
+      "spearman_score": 0.3205937293332318
+    },
+    "objective": 0.7627106494359923
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.4310046679876084,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.38846153846153847,
+      "recall_at_10": 0.15388770048343672,
+      "spearman_score": 0.33080941813012044
+    },
+    "objective": 0.7618140861177288
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.5,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.44473543691012857,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.1579191628482324,
+      "spearman_score": 0.3117841498297391
+    },
+    "objective": 0.7565195867398677
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.43717932410265026,
+      "precision_at_5": 0.39230769230769236,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15391165946572904,
+      "spearman_score": 0.31810074027440927
+    },
+    "objective": 0.7552800643770595
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "char",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.43738585381983125,
+      "precision_at_5": 0.4000000000000001,
+      "precision_at_10": 0.40769230769230774,
+      "recall_at_10": 0.15391165946572904,
+      "spearman_score": 0.314856244842011
+    },
+    "objective": 0.7522420986618423
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.6,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.419997458931273,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.4,
+      "recall_at_10": 0.17007529375436337,
+      "spearman_score": 0.26988374692315414
+    },
+    "objective": 0.6898812058544271
+  },
+  {
+    "extract": "extended",
+    "family_credit": 1,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.41280999562432885,
+      "precision_at_5": 0.4230769230769231,
+      "precision_at_10": 0.39615384615384613,
+      "recall_at_10": 0.16227614845521807,
+      "spearman_score": 0.27429791412288074
+    },
+    "objective": 0.6871079097472096
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.3,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.41997036329063026,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.39615384615384613,
+      "recall_at_10": 0.1621387858178554,
+      "spearman_score": 0.2653836271109119
+    },
+    "objective": 0.6853539904015422
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0.15,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.42124529301139646,
+      "precision_at_5": 0.4153846153846154,
+      "precision_at_10": 0.3923076923076923,
+      "recall_at_10": 0.16852614845521802,
+      "spearman_score": 0.2628602190766737
+    },
+    "objective": 0.6841055120880701
+  },
+  {
+    "extract": "extended",
+    "family_credit": 0,
+    "cosine": "base",
+    "keyword_weight": 0.3,
+    "zero_gate": false,
+    "metrics": {
+      "ndcg_at_10": 0.41487114349761883,
+      "precision_at_5": 0.4076923076923077,
+      "precision_at_10": 0.38461538461538464,
+      "recall_at_10": 0.15265313258220214,
+      "spearman_score": 0.25985992998810786
+    },
+    "objective": 0.6747310734857267
+  }
+]

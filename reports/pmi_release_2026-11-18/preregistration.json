@@ -1,0 +1,11 @@
+{
+  "registered_at": "2026-11-18T16:14:28.369850+00:00",
+  "scope": "synthetic PDF acceptance dataset; repeated full pipeline for publication",
+  "dataset_sha256": "238822d6c5a576929505a0a826c46144f2a51ff8d5219cf14955318dde7e5dd2",
+  "manifest_sha256": "63037cb15f8f60589d88db13bd8d5e11c784051066eefebb3402c9030abac0e9",
+  "algorithm_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+  "all_input_bytes_identical_to_preceding_protocol": true,
+  "source_update": "documentation-only clarification of api.nlp_parser module role",
+  "methodology": "docs/ACCEPTANCE_DATASET.md",
+  "measurement_started": false
+}

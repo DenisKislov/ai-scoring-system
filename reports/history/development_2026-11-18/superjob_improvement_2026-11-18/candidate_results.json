@@ -1,0 +1,872 @@
+{
+  "dataset_files": {
+    "superjob_dataset.json": "68d25f53d53d5c62534c1f8de08f0f8bcaaceac2df59b95de4504edd322a56e2",
+    "dataset_resume.json": "7ed17f067c9c513645a70b1e17ec7a0f848abf83384664eaae79978c93e8b216"
+  },
+  "test_documents": {
+    "vacancies": 10,
+    "resumes": 194
+  },
+  "selection": "Model checkpoints chosen by NER validation; ranking settings chosen on 26 other vacancies, not on these ten test queries. Existing dictionary/model have historical overlap with this benchmark.",
+  "selected_ranking": {
+    "extract": "base",
+    "family_credit": 0,
+    "cosine": "word",
+    "keyword_weight": 0.99,
+    "zero_gate": true,
+    "metrics": {
+      "ndcg_at_10": 0.5965247837952631,
+      "precision_at_5": 0.5153846153846153,
+      "precision_at_10": 0.4846153846153846,
+      "recall_at_10": 0.286274822453892,
+      "spearman_score": 0.4799635186270224
+    },
+    "objective": 1.0764883024222855
+  },
+  "models": {
+    "existing": {
+      "extraction": {
+        "resumes": {
+          "micro": {
+            "tp": 2260,
+            "fp": 1182,
+            "fn": 1680,
+            "documents": 194,
+            "documents_without_labels": 1,
+            "precision": 0.6565950029052876,
+            "recall": 0.5736040609137056,
+            "f1": 0.6123001896505013
+          },
+          "by_source": {
+            "pdf_assembled": {
+              "tp": 1318,
+              "fp": 943,
+              "fn": 262,
+              "documents": 96,
+              "documents_without_labels": 0,
+              "precision": 0.5829279080053074,
+              "recall": 0.8341772151898734,
+              "f1": 0.6862796146836762
+            },
+            "rich-json": {
+              "tp": 942,
+              "fp": 239,
+              "fn": 1418,
+              "documents": 98,
+              "documents_without_labels": 1,
+              "precision": 0.7976291278577476,
+              "recall": 0.39915254237288134,
+              "f1": 0.5320530923467947
+            }
+          }
+        },
+        "vacancies": {
+          "micro": {
+            "tp": 114,
+            "fp": 12,
+            "fn": 88,
+            "documents": 10,
+            "documents_without_labels": 0,
+            "precision": 0.9047619047619048,
+            "recall": 0.5643564356435643,
+            "f1": 0.6951219512195121
+          },
+          "by_source": {
+            "rich-json": {
+              "tp": 114,
+              "fp": 12,
+              "fn": 88,
+              "documents": 10,
+              "documents_without_labels": 0,
+              "precision": 0.9047619047619048,
+              "recall": 0.5643564356435643,
+              "f1": 0.6951219512195121
+            }
+          }
+        }
+      },
+      "original_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7593707580533509,
+          "precision_at_5": 0.8400000000000001,
+          "precision_at_10": 0.85,
+          "recall_at_10": 0.166702877096891,
+          "spearman_score": 0.6569573386996629
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.7067563516830714,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.6916873772326632
+          },
+          {
+            "ndcg_at_10": 0.7681299307433946,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.09174311926605505,
+            "spearman_score": 0.6427347357084794
+          },
+          {
+            "ndcg_at_10": 0.7409287931696593,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.06666666666666667,
+            "spearman_score": 0.6350179155415548
+          },
+          {
+            "ndcg_at_10": 0.7358490244164675,
+            "precision_at_5": 0.6,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.12698412698412698,
+            "spearman_score": 0.7526896693455774
+          },
+          {
+            "ndcg_at_10": 0.8876142700864748,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.36,
+            "spearman_score": 0.7018861891037989
+          },
+          {
+            "ndcg_at_10": 0.6147282535104663,
+            "precision_at_5": 0.2,
+            "precision_at_10": 0.3,
+            "recall_at_10": 0.16666666666666666,
+            "spearman_score": 0.6084659945782386
+          },
+          {
+            "ndcg_at_10": 0.7385551330287801,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.11267605633802817,
+            "spearman_score": 0.5544304077461194
+          },
+          {
+            "ndcg_at_10": 0.7411454476160008,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.6878022125354868
+          },
+          {
+            "ndcg_at_10": 0.7326256838947119,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.12048192771084337,
+            "spearman_score": 0.5131263151952399
+          },
+          {
+            "ndcg_at_10": 0.9273746923844813,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.42105263157894735,
+            "spearman_score": 0.7817325700094702
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7593707580533509,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.8400000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.85,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.166702877096891,
+            "minimum": 0.15,
+            "passed": true
+          },
+          "spearman_score": {
+            "value": 0.6569573386996629,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      },
+      "selected_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7799532272515831,
+          "precision_at_5": 0.8400000000000001,
+          "precision_at_10": 0.85,
+          "recall_at_10": 0.16196248474546499,
+          "spearman_score": 0.6391447883821473
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.8361579392308006,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.6777701401802465
+          },
+          {
+            "ndcg_at_10": 0.7554193659981827,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.08256880733944955,
+            "spearman_score": 0.5673082923916969
+          },
+          {
+            "ndcg_at_10": 0.6477580212362417,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.06666666666666667,
+            "spearman_score": 0.6120620434101424
+          },
+          {
+            "ndcg_at_10": 0.7839658131830126,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.14285714285714285,
+            "spearman_score": 0.6917354035395505
+          },
+          {
+            "ndcg_at_10": 0.9539502331209296,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.4,
+            "spearman_score": 0.7212228896100422
+          },
+          {
+            "ndcg_at_10": 0.6076560809238493,
+            "precision_at_5": 0.0,
+            "precision_at_10": 0.2,
+            "recall_at_10": 0.1111111111111111,
+            "spearman_score": 0.5908812404199744
+          },
+          {
+            "ndcg_at_10": 0.8418696900157114,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.1267605633802817,
+            "spearman_score": 0.6348008002225367
+          },
+          {
+            "ndcg_at_10": 0.8079578176892351,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.5877459333754935
+          },
+          {
+            "ndcg_at_10": 0.7200226200467895,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.12048192771084337,
+            "spearman_score": 0.5159899887109345
+          },
+          {
+            "ndcg_at_10": 0.8447746910710787,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.7,
+            "recall_at_10": 0.3684210526315789,
+            "spearman_score": 0.7919311519608546
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7799532272515831,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.8400000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.85,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.16196248474546499,
+            "minimum": 0.15,
+            "passed": true
+          },
+          "spearman_score": {
+            "value": 0.6391447883821473,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      }
+    },
+    "new_scratch": {
+      "extraction": {
+        "resumes": {
+          "micro": {
+            "tp": 2214,
+            "fp": 1668,
+            "fn": 1726,
+            "documents": 194,
+            "documents_without_labels": 1,
+            "precision": 0.5703245749613601,
+            "recall": 0.5619289340101523,
+            "f1": 0.5660956277166965
+          },
+          "by_source": {
+            "pdf_assembled": {
+              "tp": 1268,
+              "fp": 1400,
+              "fn": 312,
+              "documents": 96,
+              "documents_without_labels": 0,
+              "precision": 0.4752623688155922,
+              "recall": 0.8025316455696202,
+              "f1": 0.5969868173258003
+            },
+            "rich-json": {
+              "tp": 946,
+              "fp": 268,
+              "fn": 1414,
+              "documents": 98,
+              "documents_without_labels": 1,
+              "precision": 0.7792421746293245,
+              "recall": 0.40084745762711865,
+              "f1": 0.5293788472299944
+            }
+          }
+        },
+        "vacancies": {
+          "micro": {
+            "tp": 122,
+            "fp": 23,
+            "fn": 80,
+            "documents": 10,
+            "documents_without_labels": 0,
+            "precision": 0.8413793103448276,
+            "recall": 0.6039603960396039,
+            "f1": 0.7031700288184437
+          },
+          "by_source": {
+            "rich-json": {
+              "tp": 122,
+              "fp": 23,
+              "fn": 80,
+              "documents": 10,
+              "documents_without_labels": 0,
+              "precision": 0.8413793103448276,
+              "recall": 0.6039603960396039,
+              "f1": 0.7031700288184437
+            }
+          }
+        }
+      },
+      "original_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7612346351350106,
+          "precision_at_5": 0.86,
+          "precision_at_10": 0.85,
+          "recall_at_10": 0.16699527475770973,
+          "spearman_score": 0.6613301516275076
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.7804847026116258,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.7445077190272485
+          },
+          {
+            "ndcg_at_10": 0.7471198121840305,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.09174311926605505,
+            "spearman_score": 0.6443457067385896
+          },
+          {
+            "ndcg_at_10": 0.755689425718918,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.06666666666666667,
+            "spearman_score": 0.6370449321356331
+          },
+          {
+            "ndcg_at_10": 0.7317602435972638,
+            "precision_at_5": 0.6,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.12698412698412698,
+            "spearman_score": 0.7498697186126774
+          },
+          {
+            "ndcg_at_10": 0.8776885001802562,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.36,
+            "spearman_score": 0.6919702696023294
+          },
+          {
+            "ndcg_at_10": 0.647455600114368,
+            "precision_at_5": 0.2,
+            "precision_at_10": 0.4,
+            "recall_at_10": 0.2222222222222222,
+            "spearman_score": 0.5872427893557621
+          },
+          {
+            "ndcg_at_10": 0.7173482036291294,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.11267605633802817,
+            "spearman_score": 0.5658773793652576
+          },
+          {
+            "ndcg_at_10": 0.7476131574462687,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.6906807315106602
+          },
+          {
+            "ndcg_at_10": 0.720512009075254,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.12048192771084337,
+            "spearman_score": 0.5221791447281302
+          },
+          {
+            "ndcg_at_10": 0.886674696792991,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.7,
+            "recall_at_10": 0.3684210526315789,
+            "spearman_score": 0.7795831251987875
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7612346351350106,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.86,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.85,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.16699527475770973,
+            "minimum": 0.15,
+            "passed": true
+          },
+          "spearman_score": {
+            "value": 0.6613301516275076,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      },
+      "selected_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7675706614207046,
+          "precision_at_5": 0.8400000000000001,
+          "precision_at_10": 0.8200000000000001,
+          "recall_at_10": 0.14993895201806415,
+          "spearman_score": 0.6411661727318052
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.8197849488642482,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.7081869914673196
+          },
+          {
+            "ndcg_at_10": 0.7412036079407578,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.08256880733944955,
+            "spearman_score": 0.5755374555216978
+          },
+          {
+            "ndcg_at_10": 0.6477580212362417,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.06666666666666667,
+            "spearman_score": 0.6159382726586702
+          },
+          {
+            "ndcg_at_10": 0.8184002765881399,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.14285714285714285,
+            "spearman_score": 0.6980771626542202
+          },
+          {
+            "ndcg_at_10": 0.9347370311379137,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.4,
+            "spearman_score": 0.7143792740523282
+          },
+          {
+            "ndcg_at_10": 0.5631082436431033,
+            "precision_at_5": 0.2,
+            "precision_at_10": 0.1,
+            "recall_at_10": 0.05555555555555555,
+            "spearman_score": 0.5749111208257899
+          },
+          {
+            "ndcg_at_10": 0.8217149650507517,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.1267605633802817,
+            "spearman_score": 0.6213195900330487
+          },
+          {
+            "ndcg_at_10": 0.8465342277152645,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.5892066712575841
+          },
+          {
+            "ndcg_at_10": 0.676483033735683,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.10843373493975904,
+            "spearman_score": 0.526257164750229
+          },
+          {
+            "ndcg_at_10": 0.8059822582949423,
+            "precision_at_5": 0.6,
+            "precision_at_10": 0.6,
+            "recall_at_10": 0.3157894736842105,
+            "spearman_score": 0.7878480240971641
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7675706614207046,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.8400000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.8200000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.14993895201806415,
+            "minimum": 0.15,
+            "passed": false
+          },
+          "spearman_score": {
+            "value": 0.6411661727318052,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      }
+    },
+    "new_transfer": {
+      "extraction": {
+        "resumes": {
+          "micro": {
+            "tp": 2209,
+            "fp": 1751,
+            "fn": 1731,
+            "documents": 194,
+            "documents_without_labels": 1,
+            "precision": 0.5578282828282828,
+            "recall": 0.5606598984771574,
+            "f1": 0.5592405063291139
+          },
+          "by_source": {
+            "pdf_assembled": {
+              "tp": 1258,
+              "fp": 1445,
+              "fn": 322,
+              "documents": 96,
+              "documents_without_labels": 0,
+              "precision": 0.46540880503144655,
+              "recall": 0.7962025316455696,
+              "f1": 0.5874387111837497
+            },
+            "rich-json": {
+              "tp": 951,
+              "fp": 306,
+              "fn": 1409,
+              "documents": 98,
+              "documents_without_labels": 1,
+              "precision": 0.7565632458233891,
+              "recall": 0.40296610169491526,
+              "f1": 0.525850152059718
+            }
+          }
+        },
+        "vacancies": {
+          "micro": {
+            "tp": 119,
+            "fp": 30,
+            "fn": 83,
+            "documents": 10,
+            "documents_without_labels": 0,
+            "precision": 0.7986577181208053,
+            "recall": 0.5891089108910891,
+            "f1": 0.6780626780626781
+          },
+          "by_source": {
+            "rich-json": {
+              "tp": 119,
+              "fp": 30,
+              "fn": 83,
+              "documents": 10,
+              "documents_without_labels": 0,
+              "precision": 0.7986577181208053,
+              "recall": 0.5891089108910891,
+              "f1": 0.6780626780626781
+            }
+          }
+        }
+      },
+      "original_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7561468711073751,
+          "precision_at_5": 0.8600000000000001,
+          "precision_at_10": 0.8400000000000001,
+          "recall_at_10": 0.16143971920215416,
+          "spearman_score": 0.6613228843857746
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.7779575771397634,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.7493820396768902
+          },
+          {
+            "ndcg_at_10": 0.7403602742253731,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.09174311926605505,
+            "spearman_score": 0.6454199284345564
+          },
+          {
+            "ndcg_at_10": 0.7544357245267252,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.06666666666666667,
+            "spearman_score": 0.6624060553730823
+          },
+          {
+            "ndcg_at_10": 0.7358490244164675,
+            "precision_at_5": 0.6,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.12698412698412698,
+            "spearman_score": 0.7533613771650232
+          },
+          {
+            "ndcg_at_10": 0.8776885001802562,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.36,
+            "spearman_score": 0.6919702696023294
+          },
+          {
+            "ndcg_at_10": 0.6464828854080397,
+            "precision_at_5": 0.4,
+            "precision_at_10": 0.3,
+            "recall_at_10": 0.16666666666666666,
+            "spearman_score": 0.5671966632756579
+          },
+          {
+            "ndcg_at_10": 0.7173482036291294,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.8,
+            "recall_at_10": 0.11267605633802817,
+            "spearman_score": 0.5436744684050302
+          },
+          {
+            "ndcg_at_10": 0.7429154104619676,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.6907636611916856
+          },
+          {
+            "ndcg_at_10": 0.7228705681352923,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.12048192771084337,
+            "spearman_score": 0.5209974809920935
+          },
+          {
+            "ndcg_at_10": 0.8455605429507373,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.7,
+            "recall_at_10": 0.3684210526315789,
+            "spearman_score": 0.7880568997413967
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7561468711073751,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.8600000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.8400000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.16143971920215416,
+            "minimum": 0.15,
+            "passed": true
+          },
+          "spearman_score": {
+            "value": 0.6613228843857746,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      },
+      "selected_algorithm": {
+        "mean": {
+          "ndcg_at_10": 0.7959832504482808,
+          "precision_at_5": 0.8800000000000001,
+          "precision_at_10": 0.8699999999999999,
+          "recall_at_10": 0.16411167619043107,
+          "spearman_score": 0.639921555677277
+        },
+        "queries": [
+          {
+            "ndcg_at_10": 0.8105569541598723,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07575757575757576,
+            "spearman_score": 0.7142625156063221
+          },
+          {
+            "ndcg_at_10": 0.7579546401618381,
+            "precision_at_5": 1.0,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.08256880733944955,
+            "spearman_score": 0.5743781728255964
+          },
+          {
+            "ndcg_at_10": 0.7865932340780044,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.07407407407407407,
+            "spearman_score": 0.6449857975782292
+          },
+          {
+            "ndcg_at_10": 0.7839658131830126,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.9,
+            "recall_at_10": 0.14285714285714285,
+            "spearman_score": 0.6917354035395505
+          },
+          {
+            "ndcg_at_10": 0.9347370311379137,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.4,
+            "spearman_score": 0.7143792740523282
+          },
+          {
+            "ndcg_at_10": 0.6212232087154476,
+            "precision_at_5": 0.2,
+            "precision_at_10": 0.2,
+            "recall_at_10": 0.1111111111111111,
+            "spearman_score": 0.5639875973404649
+          },
+          {
+            "ndcg_at_10": 0.8587744516375605,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.14084507042253522,
+            "spearman_score": 0.5966366823500105
+          },
+          {
+            "ndcg_at_10": 0.8465342277152645,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.125,
+            "spearman_score": 0.5842746797019096
+          },
+          {
+            "ndcg_at_10": 0.7101879025817766,
+            "precision_at_5": 1.0,
+            "precision_at_10": 1.0,
+            "recall_at_10": 0.12048192771084337,
+            "spearman_score": 0.5273462449911342
+          },
+          {
+            "ndcg_at_10": 0.849305041112117,
+            "precision_at_5": 0.8,
+            "precision_at_10": 0.7,
+            "recall_at_10": 0.3684210526315789,
+            "spearman_score": 0.7872291887872251
+          }
+        ],
+        "criteria": {
+          "ndcg_at_10": {
+            "value": 0.7959832504482808,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_5": {
+            "value": 0.8800000000000001,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "precision_at_10": {
+            "value": 0.8699999999999999,
+            "minimum": 0.9,
+            "passed": false
+          },
+          "recall_at_10": {
+            "value": 0.16411167619043107,
+            "minimum": 0.15,
+            "passed": true
+          },
+          "spearman_score": {
+            "value": 0.639921555677277,
+            "minimum": 0.8,
+            "passed": false
+          }
+        },
+        "all_five_passed": false
+      }
+    }
+  },
+  "goal_met": false,
+  "production_changed": false,
+  "frozen_inputs_verified": true,
+  "pending_decision": "Keep the exact published truncated JSON inputs, or re-extract full text from the same documents if the user permits it."
+}

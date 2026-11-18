@@ -13,3 +13,8 @@ data/vacancies
 
 # Runtime model is in scorer/models; training sources and corpora stay outside images.
 training/
+# Acceptance fixtures and reports are run by the host driver, not the web image.
+data/pmi*/
+reports/
+docs/
+output/

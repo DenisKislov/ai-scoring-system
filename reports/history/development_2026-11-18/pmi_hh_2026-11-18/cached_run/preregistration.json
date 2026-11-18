@@ -1,0 +1,12 @@
+{
+  "registered_at": "2026-11-18T14:42:14.881474+00:00",
+  "dataset_path": "data/pmi_hh_2026-11-18_cached",
+  "dataset_sha256": "faf18aa9e6da16bea2c143019389b7c2cdd0f7c0990c127f6f60cd6abef78126",
+  "manifest_sha256": "eaeadd82e6cd2ab9a1cf61e2697cccef944ee2c0a5194ca0419cfff500288fb8",
+  "algorithm_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
+  "seed": 20261118,
+  "amendment": "Docker registry timed out; MongoDB pull_policy=never uses pre-existing linux/amd64 MongoDB 8.3.17; no model/data/label/Score changes",
+  "previous_preregistration": "../preregistration.json",
+  "all_dataset_file_hashes_identical_to_first_run": true,
+  "measurement_started": false
+}

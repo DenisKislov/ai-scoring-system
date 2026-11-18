@@ -1,0 +1,39 @@
+{
+  "input_hashes_verified": true,
+  "all_six_model_hashes_verified": true,
+  "each_document_has_one_oof_prediction": true,
+  "fit_monitor_test_disjoint": true,
+  "raw_regex_findings": [
+    {
+      "file": "cross_validation.json",
+      "findings": [
+        {
+          "kind": "contact_phone",
+          "line": 10227
+        }
+      ]
+    }
+  ],
+  "reviewed_false_positive": {
+    "file": "cross_validation.json",
+    "path": "folds.1.history[3].loss.ner",
+    "type": "JSON floating point training loss, not a contact number"
+  },
+  "sensitive_string_findings": [],
+  "training_script_sha256_verified": true,
+  "tests": {
+    "passed": 35,
+    "failed": 0,
+    "scope": "CV split/label guards; benchmark inputs; metrics; ranking"
+  },
+  "archive": "/Users/denis/PycharmProjects/ai-scoring-system/training/ner/out/superjob_cv_2026-11-18/final/superjob_skill_ner.zip",
+  "archive_sha256": "36d5dea25379e16e915ea3848a980b4eeb591433e78dde23e2a1cc8698e02d15",
+  "archive_bytes": 8373876,
+  "production_model_replaced": false,
+  "full_test_suite": {
+    "passed": 235,
+    "skipped": 1,
+    "failed": 0
+  },
+  "archive_crc_verified": true
+}

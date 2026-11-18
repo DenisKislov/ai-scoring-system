@@ -1,0 +1,78 @@
+{
+  "scope": "historical model, not an out-of-fold baseline; training previously overlapped parts of this corpus",
+  "source": "reports/spacy_integration_2026-11-18/spacy.json",
+  "sha256": "182d0e194695fe82e996eac3e6b65b3e6e91753e7aefd03dbde230edbbd12066",
+  "metrics": {
+    "ndcg_at_10": 0.7593707580533509,
+    "precision_at_5": 0.84,
+    "precision_at_10": 0.85,
+    "recall_at_10": 0.166702877096891,
+    "recall_at_50": 0.5730570577473577,
+    "spearman_score": 0.6569573386996629
+  },
+  "extraction": {
+    "vacancies": {
+      "micro": {
+        "tp": 114,
+        "fp": 12,
+        "fn": 88,
+        "documents": 10,
+        "documents_without_labels": 0,
+        "precision": 0.9047619047619048,
+        "recall": 0.5643564356435643,
+        "f1": 0.6951219512195121
+      },
+      "by_source": {
+        "rich-json": {
+          "tp": 114,
+          "fp": 12,
+          "fn": 88,
+          "documents": 10,
+          "documents_without_labels": 0,
+          "precision": 0.9047619047619048,
+          "recall": 0.5643564356435643,
+          "f1": 0.6951219512195121
+        }
+      }
+    },
+    "resumes": {
+      "micro": {
+        "tp": 2260,
+        "fp": 1182,
+        "fn": 1680,
+        "documents": 194,
+        "documents_without_labels": 1,
+        "precision": 0.6565950029052876,
+        "recall": 0.5736040609137056,
+        "f1": 0.6123001896505013
+      },
+      "by_source": {
+        "pdf_assembled": {
+          "tp": 1318,
+          "fp": 943,
+          "fn": 262,
+          "documents": 96,
+          "documents_without_labels": 0,
+          "precision": 0.5829279080053074,
+          "recall": 0.8341772151898734,
+          "f1": 0.6862796146836762
+        },
+        "rich-json": {
+          "tp": 942,
+          "fp": 239,
+          "fn": 1418,
+          "documents": 98,
+          "documents_without_labels": 1,
+          "precision": 0.7976291278577476,
+          "recall": 0.39915254237288134,
+          "f1": 0.5320530923467947
+        }
+      }
+    },
+    "seconds": 15.466
+  },
+  "input_files": {
+    "superjob_dataset.json": "68d25f53d53d5c62534c1f8de08f0f8bcaaceac2df59b95de4504edd322a56e2",
+    "dataset_resume.json": "7ed17f067c9c513645a70b1e17ec7a0f848abf83384664eaae79978c93e8b216"
+  }
+}

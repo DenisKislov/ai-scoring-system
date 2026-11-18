@@ -1,0 +1,16 @@
+{
+  "exported_model_reproduces_metrics": true,
+  "input_files_unchanged": true,
+  "execution_script_sha256": "836030147eac4c1c2429ef620206a7fa66137482e1b4f47152254b6affa4eb09",
+  "actual_metrics": {
+    "ndcg_at_10": 0.931696194885809,
+    "precision_at_5": 0.9400000000000001,
+    "precision_at_10": 0.9299999999999999,
+    "recall_at_10": 0.19284230517762324,
+    "spearman_score": 0.8719827546137978
+  },
+  "feature_count": 109,
+  "disjoint_pair_splits": true,
+  "shared_subjects": "all 10 vacancies and all 194 resumes have training pairs",
+  "production_changed": false
+}
