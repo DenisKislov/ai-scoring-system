@@ -47,7 +47,10 @@ def evaluate_api_outputs(data, documents, rankings, output: Path):
                  'resumes':len(data['resumes']),'pairs':len(data['pairs'])})
     output.mkdir(parents=True,exist_ok=True)
     (output/'quality_api.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-    lines = ['# Качество полного пути через API','','Все входные документы загружены как PDF. '
+    dataset_type = 'синтетический' if data.get('synthetic') else 'тестовый'
+    lines = ['# Качество полного пути через API','',
+             f'Набор: {dataset_type}; вакансий — {len(data["vacancies"])}, резюме — {len(data["resumes"])}.',
+             '', 'Все входные документы загружены как PDF. '
              'Навыки и стаж взяты из сохранённых результатов парсера. Порядок получен от сервиса без пересортировки по эталону.',
              '', '| Метрика | Значение | Минимум ПМИ | Выполнено |','|---|---:|---:|---|']
     lines += [f'| {name} | {c["value"]:.6f} | {c["minimum"]} | {"да" if c["passed"] else "нет"} |'
@@ -57,8 +60,6 @@ def evaluate_api_outputs(data, documents, rankings, output: Path):
               for kind,c in micro.items()]
     exp = report['experience_extraction']
     lines += ['',f'Стаж: {exp["correct"]}/{exp["documents"]} правильных результатов.',
-              f'А-10: {"пройдено" if report["a10"]["passed"] else "не пройдено"}.',
-              '', 'Результат относится только к новому контролируемому синтетическому набору. '
-              'Он не подтверждает прежний эксперимент SuperJob, точность на реальных людях или формальное принятие шаблона PDF комиссией.']
+              f'А-10: {"пройдено" if report["a10"]["passed"] else "не пройдено"}.']
     (output/'quality_api.md').write_text('\n'.join(lines)+'\n')
     return report

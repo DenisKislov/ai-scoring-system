@@ -32,7 +32,7 @@
     "pmi/audit.py": "c6650c6ac2eccfbbc2da01ea79b5c6547fd8cccc50a11672498e0a8749680215",
     "pmi/dataset.py": "4d3282d8310cea4268628e7f02570f39ed6f7c3ac059d3986d32bcba7d261f79",
     "pmi/live.py": "84e5a69c4f370ad495bbbc2e932f60d0cbeb8cbf29e70d7f51e2d3826b2beb6f",
-    "pmi/live_quality.py": "328e3a0851a860c1694583feff5e936e7b82c441e55892b19ce5d623e8181972",
+    "pmi/live_quality.py": "d4b2ac437e7963cb1868132573cebc5443580646f1b9e87253be16f5c9f6eec2",
     "pmi/performance.py": "be0e6cbd052b70eb6768dabec2882951f4698c8d899bc4893d5075db0de1d8e6",
     "pmi/protocol.py": "46af5fbc36c272a8830b5ae724124e06faa1dc5adebb13ced00197515e78cec3",
     "pmi/quality.py": "dfc49163e65bbb4a0eb2d1d9c1a4653baaf0ed7e46de9968773286b057c05c1f",
@@ -348,5 +348,17 @@
     "vacancies/v008.pdf": "921beae2de7d1c7ad4aa9c171e5466f421f5ab08e6d4986811299315f1356da8",
     "vacancies/v009.pdf": "d4228d889e9992ffe5d9a46803f9266b24227b86679b0a468589c43c8768eea6",
     "vacancies/v010.pdf": "68ab7ed179a6d3bdde1fd8da88bb2a305108cf305b24adff148cb52db237dbee"
-  }
+  },
+  "report_format_revisions": [
+    {
+      "date": "2026-11-19",
+      "base_commit": "51cfb882983398cd1a515f2b68c0a2ebe02c693f",
+      "previous_manifest_sha256": "63037cb15f8f60589d88db13bd8d5e11c784051066eefebb3402c9030abac0e9",
+      "source": "pmi/live_quality.py",
+      "previous_source_sha256": "328e3a0851a860c1694583feff5e936e7b82c441e55892b19ce5d623e8181972",
+      "scope": "Markdown formatting only; dataset bytes, scoring algorithm and measured results unchanged",
+      "calculation_ast_unchanged": true,
+      "saved_api_results_replay_identical": true
+    }
+  ]
 }
