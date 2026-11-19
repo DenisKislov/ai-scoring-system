@@ -119,7 +119,7 @@ docker compose up -d --wait backend frontend
 
 ```bash
 python -m pytest -q
-python -m pmi run --live --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
+python -m pmi run --live
 ```
 
 Фронтенд: `CI=true npm test -- --watchAll=false --runInBand` и `npm run build` в его каталоге. В PowerShell установите переменную CI отдельно. ПМИ, критерии и ручные действия — `docs/PMI.md`.
@@ -131,4 +131,4 @@ python -m pmi run --live --dataset data/pmi_acceptance_release_2026-11-18 --outp
 
 ## Текущий замер
 
-Проверка готового набора: `python -m pmi quality --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction`. Контейнерный этап: `python -m pmi live` с теми же путями. Исходные результаты сохраняются, повторение пишется отдельно. [Методика](ACCEPTANCE_DATASET.md) и [отчёт](../reports/pmi_release_2026-11-18/README.md) описывают усреднение и ограничения.
+Проверка готового набора: `python -m pmi quality`. Контейнерный этап: `python -m pmi live`. По умолчанию результаты выводятся в консоль без файлов отчёта. Для явного сохранения добавьте `--output ПАПКА`. Коды завершения: 0 — технические проверки пройдены; 1 — ошибка или непройденный критерий. [Методика](ACCEPTANCE_DATASET.md) и [отчёт](../reports/pmi_release_2026-11-18/README.md) описывают усреднение и ограничения.

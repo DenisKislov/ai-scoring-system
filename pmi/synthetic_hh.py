@@ -11,7 +11,7 @@ from pathlib import Path
 import random
 import textwrap
 
-import fitz
+import pymupdf as fitz
 
 from .dataset import PROFILES, write_controls
 

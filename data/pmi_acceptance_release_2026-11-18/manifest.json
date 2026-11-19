@@ -3,7 +3,7 @@
   "source_files": {
     "api/__init__.py": "b15cd5fea7d22050ce0e3a3f12bb937e76324201b3b51f7bd57da3a5fbe744bd",
     "api/__main__.py": "062ce67541fa1e22ab86076bb87612a13f0d33aeb980cb26314ba99ff77813e2",
-    "api/file_parser.py": "194b0137042d9b1c1a6a9e4544b1a69f836ef534700f8ba4e01dc7893b5fc88c",
+    "api/file_parser.py": "26021772052c430a7afe75a868de187e8ee26785b16a591cebb7b37a17eaf1a9",
     "api/logger.py": "60cf040b7dd65dbb1968209a38113b483d3048afed2aec1be815b39a0ed8b430",
     "api/main.py": "54f0fca65cd4cd751b2ea58b68796905857c17d990c7be134d707348b22518f1",
     "api/nlp_parser.py": "f265ff83a50c6e1a6178b5f2118ca18dcc92c84fb4f9b17d8495c579629ba548",
@@ -28,16 +28,17 @@
     "frontend/src/index.js": "af166d0abc720277e3c68707ef1aa9d17ba028fa578af9aabb7b40568afa0181",
     "frontend/src/setupTests.js": "22583759d0045fdf8d62c9db0aacba9fd8bddde79c671aa08c97dcfd4e930cc6",
     "pmi/__init__.py": "91c42a175a8cf097217232c13d4aa1bbe615e226e2e8e5e661ad92e17d1fe4b3",
-    "pmi/__main__.py": "c5054e9632c99734862f3d84630881e7d9cc7587174942ddf2c8d30814070afe",
-    "pmi/audit.py": "c6650c6ac2eccfbbc2da01ea79b5c6547fd8cccc50a11672498e0a8749680215",
-    "pmi/dataset.py": "4d3282d8310cea4268628e7f02570f39ed6f7c3ac059d3986d32bcba7d261f79",
-    "pmi/live.py": "84e5a69c4f370ad495bbbc2e932f60d0cbeb8cbf29e70d7f51e2d3826b2beb6f",
-    "pmi/live_quality.py": "d4b2ac437e7963cb1868132573cebc5443580646f1b9e87253be16f5c9f6eec2",
-    "pmi/performance.py": "be0e6cbd052b70eb6768dabec2882951f4698c8d899bc4893d5075db0de1d8e6",
+    "pmi/__main__.py": "418933c8758ba86d133f34a3e0d7ca87af64196bcddc86c5bbf25b0ecf763d0f",
+    "pmi/audit.py": "4c6f0066b093fc81e7454c8e2dc00d6f2d0284fff28b3f3f6dcd55b184461b99",
+    "pmi/console.py": "5b1544a1e8718c4d1db7e4fe05bddb32e2ced004517b6840554c7c1298f7a5fb",
+    "pmi/dataset.py": "6dc9330452337d8a2239ebe69cdf7c6f960e09010dcd682c153c3d948294f6c8",
+    "pmi/live.py": "b0716c306c2beb74b6b191dd36844a907abb402f55c4f4c526191f1067bd2ac1",
+    "pmi/live_quality.py": "f962166901d57b33df6f94d706074ed82324bb6c2f8598a707e6d256247c70b8",
+    "pmi/performance.py": "9787fd1e40ed03f5fbc8641220b81b3ea8d861563c3f6a1dd3fc8bad21aad43a",
     "pmi/protocol.py": "46af5fbc36c272a8830b5ae724124e06faa1dc5adebb13ced00197515e78cec3",
-    "pmi/quality.py": "dfc49163e65bbb4a0eb2d1d9c1a4653baaf0ed7e46de9968773286b057c05c1f",
+    "pmi/quality.py": "2a7fd58bb56aa7cf5148a95c61410d6df67133fbf52db93052c9df12820a1c14",
     "pmi/synthetic_acceptance.py": "9c54960aba69c575989dda41cffbefa1fb61f50211098b99e3a58b36c2e63b3f",
-    "pmi/synthetic_hh.py": "ebcc1b410fdeb3da351cc1b48ccb7885a12c4bbd9ad3c076f896848a211998e8",
+    "pmi/synthetic_hh.py": "7d63050ac93310a1811833a24ad886a0a5d5bcbdefb1980a8c2d92450fb71c0d",
     "pmi/synthetic_it.py": "db660d38b6d010abc6763da608b9a0912fc70528370c7c56a01edc22c3144322",
     "scorer/__init__.py": "c38879ab541308d1248ebbfd5e5727788f8c8d9915206e3db027ca3b9fe6c076",
     "scorer/auto_threshold.py": "81d458b5ab73132b7b64544514d76f29fc95db5c567d7c2ba57c9fffabc45b3b",
@@ -359,6 +360,26 @@
       "scope": "Markdown formatting only; dataset bytes, scoring algorithm and measured results unchanged",
       "calculation_ast_unchanged": true,
       "saved_api_results_replay_identical": true
+    },
+    {
+      "date": "2026-11-19",
+      "base_commit": "e3693edbaf3ec27bd8132f121debd076b62a78ef",
+      "previous_manifest_sha256": "bc8e0dcde06ac3c1f41752cdddab3378cf3ec97c5979360bbcdd3fa4b41ac074",
+      "changed_sources": [
+        "api/file_parser.py",
+        "pmi/__main__.py",
+        "pmi/audit.py",
+        "pmi/dataset.py",
+        "pmi/live.py",
+        "pmi/live_quality.py",
+        "pmi/performance.py",
+        "pmi/quality.py",
+        "pmi/synthetic_hh.py",
+        "pmi/console.py"
+      ],
+      "scope": "Console results by default; explicit report export; technical exit codes; PyMuPDF import alias update",
+      "calculation_ast_unchanged": true,
+      "dataset_and_scoring_algorithm_unchanged": true
     }
   ]
 }

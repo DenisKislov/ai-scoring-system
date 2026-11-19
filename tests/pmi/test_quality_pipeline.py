@@ -10,7 +10,8 @@ from pmi.quality import evaluate, summarize_rankings
 from pmi.live_quality import evaluate_api_outputs
 
 
-def test_quality_uses_pdf_predictions_not_reference_years_or_skills(tmp_path,monkeypatch):
+@pytest.mark.parametrize('save_report', [False, True])
+def test_quality_uses_pdf_predictions_not_reference_years_or_skills(tmp_path,monkeypatch,save_report):
     data = {'version':'test','vacancies':[{'id':'v','file':'v.pdf','direction':'test',
              'skills':['SQL'],'critical_skills':[]}],
             'resumes':[{'id':rid,'file':rid+'.pdf','direction':'test',
@@ -32,10 +33,12 @@ def test_quality_uses_pdf_predictions_not_reference_years_or_skills(tmp_path,mon
         assert kwargs['resume_skills_list'] == [{'Python'}]*3
         return [{'candidate_id':rid,'score':50} for rid in kwargs['candidate_ids']]
     monkeypatch.setattr('pmi.quality.rank_candidates',rank)
-    report = evaluate(tmp_path,tmp_path/'report')
+    report = evaluate(tmp_path,tmp_path/'report' if save_report else None)
     assert [r['resume_id'] for r in report['rankings']['v']] == ['senior','zero','unknown']
     assert report['experience_extraction']['correct'] == 0
     assert report['experience_extraction']['ranking_source'] == 'parsed_from_pdf'
+    assert (tmp_path/'report/quality.json').exists() == save_report
+    assert (tmp_path/'report/quality.md').exists() == save_report
 
 
 def test_api_quality_preserves_service_order_instead_of_sorting_by_gold(tmp_path):

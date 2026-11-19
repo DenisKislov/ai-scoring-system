@@ -119,7 +119,7 @@ def ranking_metrics(ordered_relevance, scores):
             'mrr':next((1/i for i, r in enumerate(positive,1) if r),0)}
 
 
-def evaluate(root: Path, out: Path) -> dict:
+def evaluate(root: Path, out: Path | None = None) -> dict:
     integrity = verify(root)
     if not integrity['ok']:
         raise ValueError('Frozen inputs changed: '+str(integrity['errors']))
@@ -179,23 +179,24 @@ def evaluate(root: Path, out: Path) -> dict:
         'frozen_manifest':json.loads((root/'manifest.json').read_text()),
         'skill_extraction_by_category':dict(categories),
         'experience_extraction':experience_metrics(resumes,parsed), **ranking}
-    out.mkdir(parents=True, exist_ok=True)
-    (out/'quality.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-    rows = ['# Качество по ПМИ', '', 'Порог релевантности: 0.1. Разметка: взвешенное покрытие скрытых навыков до рендеринга PDF.',
-            'Контролируемая синтетика; результат не является оценкой отбора реальных людей.', '',
-            '| Метрика | Значение | Минимум ПМИ | Результат |','|---|---:|---:|---|']
-    rows += [f'| {name} | {c["value"]:.3f} | {c["minimum"]} | {"пройдено" if c["passed"] else "не пройдено"} |' for name,c in criteria.items()]
-    rows += ['', f'А-10: {"пройдено" if a10["passed"] else "не пройдено"}; нарушений {len(a10["failures"])} из {a10["zero_pairs"]} нулевых пар.',
-             '', '## Извлечение навыков', '', '| Корпус и категория | TP | FP | FN | Precision | Recall | F1 |', '|---|---:|---:|---:|---:|---:|---:|']
-    rows += [f'| {cat} | {c["tp"]} | {c["fp"]} | {c["fn"]} | {c["precision"]:.3f} | {c["recall"]:.3f} | {c["f1"]:.3f} |' for cat,c in sorted(categories.items())]
-    exp = report['experience_extraction']
-    rows += ['', f'Стаж извлечён верно: {exp["correct"]}/{exp["documents"]}. Для сортировки используется только результат парсера; эталонный стаж нужен для проверки точности.',
-             '', '## Методика и ограничения', '',
-             'nDCG использует линейный gain rel/log2(i+1). Spearman для приёмки рассчитан буквально по формуле (5) ПМИ со средними рангами; корреляция scipy с поправкой на связи записана отдельно в JSON.',
-             'Recall усреднён по запросам, имеющим релевантные резюме. Навыки извлекаются из PDF, а не передаются из эталонных меток.',
-             'Отдельный реалистичный генератор шести ИТ-направлений и реальные PDF/JSON остаются диагностическими наборами и оцениваются отдельно.']
-    if not report['passed']:
-        rows += ['', '## Анализ непройденных критериев', '',
-                 'Ошибки возможны из-за пропущенных в тексте скрытых навыков, лишних словарных совпадений и широкой заменяемости технологий в семействах навыков. Требуется проверить независимую разметку, сузить семейства и улучшить словарь на отдельном обучающем наборе. Веса и метки после этого прогона не подбирались.']
-    (out/'quality.md').write_text('\n'.join(rows)+'\n')
+    if out is not None:
+        out.mkdir(parents=True, exist_ok=True)
+        (out/'quality.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+        rows = ['# Качество по ПМИ', '', 'Порог релевантности: 0.1. Разметка: взвешенное покрытие скрытых навыков до рендеринга PDF.',
+                'Контролируемая синтетика; результат не является оценкой отбора реальных людей.', '',
+                '| Метрика | Значение | Минимум ПМИ | Результат |','|---|---:|---:|---|']
+        rows += [f'| {name} | {c["value"]:.3f} | {c["minimum"]} | {"пройдено" if c["passed"] else "не пройдено"} |' for name,c in criteria.items()]
+        rows += ['', f'А-10: {"пройдено" if a10["passed"] else "не пройдено"}; нарушений {len(a10["failures"])} из {a10["zero_pairs"]} нулевых пар.',
+                 '', '## Извлечение навыков', '', '| Корпус и категория | TP | FP | FN | Precision | Recall | F1 |', '|---|---:|---:|---:|---:|---:|---:|']
+        rows += [f'| {cat} | {c["tp"]} | {c["fp"]} | {c["fn"]} | {c["precision"]:.3f} | {c["recall"]:.3f} | {c["f1"]:.3f} |' for cat,c in sorted(categories.items())]
+        exp = report['experience_extraction']
+        rows += ['', f'Стаж извлечён верно: {exp["correct"]}/{exp["documents"]}. Для сортировки используется только результат парсера; эталонный стаж нужен для проверки точности.',
+                 '', '## Методика и ограничения', '',
+                 'nDCG использует линейный gain rel/log2(i+1). Spearman для приёмки рассчитан буквально по формуле (5) ПМИ со средними рангами; корреляция scipy с поправкой на связи записана отдельно в JSON.',
+                 'Recall усреднён по запросам, имеющим релевантные резюме. Навыки извлекаются из PDF, а не передаются из эталонных меток.',
+                 'Отдельный реалистичный генератор шести ИТ-направлений и реальные PDF/JSON остаются диагностическими наборами и оцениваются отдельно.']
+        if not report['passed']:
+            rows += ['', '## Анализ непройденных критериев', '',
+                     'Ошибки возможны из-за пропущенных в тексте скрытых навыков, лишних словарных совпадений и широкой заменяемости технологий в семействах навыков. Требуется проверить независимую разметку, сузить семейства и улучшить словарь на отдельном обучающем наборе. Веса и метки после этого прогона не подбирались.']
+        (out/'quality.md').write_text('\n'.join(rows)+'\n')
     return report

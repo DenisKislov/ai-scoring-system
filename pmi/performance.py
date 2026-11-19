@@ -12,7 +12,7 @@ from scorer import rank_candidates, extract_skills
 logger = setup_logger('pmi.performance')
 
 
-def measure(root: Path, out: Path) -> dict:
+def measure(root: Path, out: Path | None = None) -> dict:
     data = json.loads((root/'dataset.json').read_text())
     def parse(item):
         path = root/item['file']
@@ -46,6 +46,7 @@ def measure(root: Path, out: Path) -> dict:
               'seconds':elapsed,'limits_seconds':limits,
               'passed':all(elapsed[k] <= limit for k,limit in limits.items()),
               'container_acceptance_completed':False}
-    out.mkdir(parents=True,exist_ok=True)
-    (out/'performance_local.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    if out is not None:
+        out.mkdir(parents=True,exist_ok=True)
+        (out/'performance_local.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     return report

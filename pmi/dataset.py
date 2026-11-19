@@ -9,7 +9,7 @@ import hashlib
 import json
 import random
 from pathlib import Path
-import fitz
+import pymupdf as fitz
 
 SEED = 1729
 PROFILES = {

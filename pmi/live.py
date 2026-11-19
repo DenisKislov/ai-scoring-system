@@ -19,8 +19,9 @@ import httpx
 from .dataset import verify
 
 
-def run_live(dataset: Path, output: Path, keep=False, cached_images=False):
-    output.mkdir(parents=True,exist_ok=True)
+def run_live(dataset: Path, output: Path | None = None, keep=False, cached_images=False):
+    if output is not None:
+        output.mkdir(parents=True,exist_ok=True)
     project = 'ai-scoring-pmi-' + uuid.uuid4().hex[:8]
     env = {**os.environ, 'API_PORT':'18000','FRONTEND_PORT':'13000',
            'MONGO_DB':'pmi_acceptance','API_CORS_ORIGINS':'http://localhost:13000',
@@ -41,17 +42,19 @@ def run_live(dataset: Path, output: Path, keep=False, cached_images=False):
               'host':{'os':platform.platform(),'machine':platform.machine()},
               'cases':{},'manual_browser_check':'pending','kept':keep,
               'mongo_pull_policy':'never (local cache)' if cached_images else 'compose default'}
-    log_path = output/'docker.log'
-    log = log_path.open('w')
+    log = (output/'docker.log').open('w') if output is not None else None
     started_stack = False
 
     def docker(*args, timeout=600):
-        log.write('COMMAND '+ ' '.join(args)+'\n');log.flush()
-        return subprocess.run(compose+list(args),env=env,stdout=log,stderr=log,timeout=timeout,check=True)
+        if log is not None:
+            log.write('COMMAND '+ ' '.join(args)+'\n');log.flush()
+            return subprocess.run(compose+list(args),env=env,stdout=log,stderr=log,timeout=timeout,check=True)
+        return subprocess.run(compose+list(args),env=env,capture_output=True,text=True,timeout=timeout,check=True)
 
     def evidence(case, **details):
         report['cases'][case] = {'passed':True, **details}
-        (output/'live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+        if output is not None:
+            (output/'live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         print(f'{case}: '+('пройдено' if report['cases'][case]['passed'] else 'не пройдено'),flush=True)
 
     def wait_health(client, timeout=180):
@@ -178,8 +181,10 @@ def run_live(dataset: Path, output: Path, keep=False, cached_images=False):
                 documents = {v['id']:good(client.get('/vacancies/'+vid)) for v,vid in zip(data['vacancies'],vids)}
                 documents.update({r['id']:good(client.get('/resumes/'+rid)) for r,rid in zip(data['resumes'],rids)})
                 quality = evaluate_api_outputs(data,documents,api_rankings,output)
-                report['quality_api'] = {'metrics':quality['metrics'],'passed':quality['passed'],
-                                         'evidence':'quality_api.json'}
+                report['quality_api'] = {key:quality[key] for key in
+                    ['metrics','criteria','passed','dataset','skill_extraction_micro','experience_extraction','a10']}
+                if output is not None:
+                    report['quality_api']['evidence'] = 'quality_api.json'
                 evidence('A-9',passed=all(c['passed'] for c in quality['criteria'].values()),
                          scope='PDF -> HTTP -> parser -> MongoDB -> scorer -> saved rankings',
                          metrics=quality['metrics'])
@@ -284,15 +289,29 @@ def run_live(dataset: Path, output: Path, keep=False, cached_images=False):
     except (Exception,KeyboardInterrupt) as exc:
         report['status']='failed'
         report['reason']=f'{type(exc).__name__}: {str(exc)[:500]}'
+        if isinstance(exc,subprocess.CalledProcessError):
+            details = exc.stderr or exc.stdout
+            if details:
+                report['reason'] += '\n'+str(details)[-1500:].strip()
     finally:
         if started_stack:
+            if log is not None:
+                try:
+                    docker('logs','--no-color',timeout=30)
+                except Exception:
+                    pass
             try:
-                docker('logs','--no-color',timeout=30)
                 if not keep:
                     docker('down','--volumes',timeout=60)
             except Exception as exc:
                 report['cleanup_error']=type(exc).__name__
+                report['status']='failed'
         report['finished_at']=datetime.now(timezone.utc).isoformat()
-        log.close()
-        (output/'live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+        report['kept']=bool(keep and started_stack)
+        if log is not None:
+            log.close()
+        if not keep or not started_stack:
+            shutil.rmtree(scratch)
+        if output is not None:
+            (output/'live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     return report

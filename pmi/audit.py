@@ -26,7 +26,7 @@ def matches(content: bytes) -> list:
             for name,pattern in PATTERNS.items() for m in pattern.finditer(text)]
 
 
-def scan(root: Path, out: Path, history=True) -> dict:
+def scan(root: Path, out: Path | None = None, history=True) -> dict:
     findings, files = [], 0
     candidates = []
     for folder, directories, filenames in os.walk(root):
@@ -94,6 +94,7 @@ def scan(root: Path, out: Path, history=True) -> dict:
               'ignored_local_inputs':sorted(p for p in ignored if p.endswith(('.json','.csv'))),
               'manual_review_required':True,
               'limitations':'Regex scans cannot prove that names, addresses or all personal data are synthetic. Ignored user PDF directories are not distributed or scanned by this source audit.'}
-    out.mkdir(parents=True,exist_ok=True)
-    (out/'privacy_audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    if out is not None:
+        out.mkdir(parents=True,exist_ok=True)
+        (out/'privacy_audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     return report

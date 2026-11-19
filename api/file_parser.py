@@ -1,6 +1,6 @@
 """Bounded PDF/TXT text extraction; a scan requires a text layer (no OCR)."""
 import re
-import fitz
+import pymupdf as fitz
 
 MAX_FILE_BYTES = 8 * 1024 * 1024
 

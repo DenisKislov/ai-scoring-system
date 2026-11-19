@@ -28,14 +28,16 @@
 
 ```bash
 python -m pip install -r requirements.lock -r tests/requirements.txt
-python -m pmi verify --dataset data/pmi_acceptance_release_2026-11-18
-python -m pmi quality --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
-python -m pmi live --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
+python -m pmi verify
+python -m pmi quality
+python -m pmi live
 ```
 
 Для `live` нужен работающий Docker. Флаг `--cached-images` допускается, если `mongo:8` нужной архитектуры уже скачан. Временный стенд занимает порты 18000 и 13000 и не подключается к рабочей БД. После проверки его контейнеры и тома удаляются.
 
-`quality_api.json` содержит полный замер через API, `quality.json` — локальный путь из PDF, `live.json` — технические сценарии. Общий код `live` может оставаться ненулевым при `status=passed`, пока `protocol.json: accepted=false` из-за незавершённых ручных условий.
+Результаты выводятся в консоль без создания файлов отчёта: средние метрики, минимумы ПМИ, P/R/F1 навыков, точность стажа и итог проверок. `quality` измеряет локальный путь из PDF, `live` — путь через HTTP, MongoDB и отдельный скорер. Код 0 означает прохождение запущенных технических проверок, код 1 — ошибку или непройденный критерий.
+
+Только при явном `--output ПАПКА` дополнительно сохраняются JSON/Markdown: `quality_api.json` — API, `quality.json` — локальный путь, `live.json` — технические сценарии. Формальная приёмка в `protocol.json` оценивается отдельно.
 
 Для изменённой версии создайте новый протокол, сохранив прежние результаты:
 

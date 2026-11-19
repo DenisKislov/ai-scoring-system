@@ -14,10 +14,12 @@ Python-тесты используют FastAPI TestClient и mongomock; рабо
 ## Полный путь на синтетических PDF
 
 ```bash
-python -m pmi verify --dataset data/pmi_acceptance_release_2026-11-18
-python -m pmi quality --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
-python -m pmi live --dataset data/pmi_acceptance_release_2026-11-18 --output reports/reproduction
+python -m pmi verify
+python -m pmi quality
+python -m pmi live
 ```
+
+По умолчанию результаты выводятся в консоль, файлы отчёта не создаются. Экспорт включается явно: `--output ПАПКА`. Код завершения отражает результат запущенных технических проверок.
 
 `quality` проверяет PDF → текст → навыки и стаж → Score → рейтинг. `live` дополнительно загружает все документы через HTTP, использует настоящую MongoDB и отдельный скорер, сравнивает выдачу и сохранённые результаты. Создаётся отдельный Compose-проект на портах 18000/13000; после проверки удаляются только его ресурсы. Рабочая база не очищается.
 
