@@ -50,7 +50,7 @@ def algorithm_manifest() -> dict:
              ROOT / "scorer/skills_auto.json", ROOT / "scorer/skills_auto_raw.json",
              ROOT / "scorer/skill_extractor.py", ROOT / "scorer/skill_families.py",
              ROOT / "scorer/scoring.py", ROOT / "scorer/normalize.py", ROOT / "scorer/privacy.py",
-             ROOT / "scorer/skills.py", ROOT / "scorer/similarity.py",
+             ROOT / "scorer/skills.py", ROOT / "scorer/negation.py", ROOT / "scorer/similarity.py",
              ROOT / "scorer/dictionary.py", ROOT / "requirements.lock"]
     packages = ["fastapi", "pydantic", "pymongo", "PyMuPDF", "scikit-learn", "numpy",
                 "scipy", "razdel", "pymorphy3"]

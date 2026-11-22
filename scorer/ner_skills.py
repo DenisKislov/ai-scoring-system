@@ -87,15 +87,19 @@ def ner_status() -> dict:
     return {"enabled": enabled, "available": _load() is not None if enabled else False}
 
 
-def ner_extract_skills(text: str) -> Set[str]:
+def ner_skill_mentions(text: str) -> list[tuple[str, int, int]]:
+    """Recognise skills with offsets in the supplied text."""
     if not text or not text.strip():
-        return set()
+        return []
     nlp = _load()
     if nlp is None:
-        return set()
-    doc = nlp(_clean_text(text))
-    return {entity.text.strip() for entity in doc.ents
-            if entity.label_ == "Skill" and entity.text.strip()}
+        return []
+    return [(entity.text.strip(), entity.start_char, entity.end_char)
+            for entity in nlp(text).ents if entity.label_ == "Skill" and entity.text.strip()]
+
+
+def ner_extract_skills(text: str) -> Set[str]:
+    return {name for name, _, _ in ner_skill_mentions(_clean_text(text))} if text else set()
 
 
 def _reset_for_tests() -> None:

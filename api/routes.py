@@ -105,7 +105,7 @@ def get_vacancy(vacancy_id: str) -> dict:
 @router.post("/vacancies", status_code=status.HTTP_201_CREATED, summary="Upload a vacancy")
 def create_vacancy(payload: VacancyIn) -> dict:
     doc = payload.model_dump()
-    doc["skills"] = sorted(normalize_skill_set(set(doc["skills"])) | extract_skills(doc["title"] + "\n" + doc["description"]))
+    doc["skills"] = sorted(extract_skills(doc["title"] + "\n" + doc["description"], declared=set(doc["skills"])))
     doc["critical_skills"] = _critical(doc["critical_skills"], doc["skills"])
     doc["_id"] = mongo.insert_vacancy(doc)
     event(logger, "vacancy_created", document_id=doc["_id"], skills_count=len(doc["skills"]))
@@ -153,7 +153,7 @@ def _store_file(kind: str, content: bytes, filename: str, critical_skills=None) 
             "duration_seconds": duration, "status": "success"}
 
 
-@router.post("/upload_vacancy", status_code=201, response_model=UploadOut, summary="Загрузить PDF/TXT вакансии")
+@router.post("/upload_vacancy", status_code=201, response_model=UploadOut, summary="Загрузить PDF/DOCX/TXT вакансии")
 async def upload_vacancy_file(file: UploadFile = File(...), critical_skills: str = Form("[]")):
     try:
         critical = json.loads(critical_skills)
@@ -205,19 +205,19 @@ def get_resume(resume_id: str) -> dict:
 @router.post("/candidates", status_code=status.HTTP_201_CREATED, summary="Upload a resume")
 def create_resume(payload: ResumeIn) -> dict:
     doc = payload.model_dump()
-    doc["skills"] = sorted(normalize_skill_set(set(doc["skills"])) | extract_skills(resume_text(doc)))
+    doc["skills"] = sorted(extract_skills(resume_text(doc, for_scoring=True), declared=set(doc["skills"])))
     doc["_id"] = mongo.insert_resume(doc)
     event(logger, "resume_created", document_id=doc["_id"], skills_count=len(doc["skills"]))
     return doc
 
 
-@router.post("/upload_resume", status_code=201, response_model=UploadOut, summary="Загрузить PDF/TXT резюме")
+@router.post("/upload_resume", status_code=201, response_model=UploadOut, summary="Загрузить PDF/DOCX/TXT резюме")
 async def upload_resume_file(file: UploadFile = File(...)):
     content = await file.read(MAX_FILE_BYTES + 1)
     return await run_in_threadpool(_store_file, "resume", content, file.filename)
 
 
-@router.post("/upload_resumes", status_code=201, summary="Пакетная загрузка до 200 резюме")
+@router.post("/upload_resumes", status_code=201, summary="Пакетная загрузка до 200 резюме PDF/DOCX/TXT")
 async def upload_resumes(files: list[UploadFile] = File(...)):
     if not 1 <= len(files) <= 200:
         raise HTTPException(422, "Пакет должен содержать от 1 до 200 файлов")

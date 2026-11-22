@@ -566,14 +566,14 @@ function App() {
             <p className="section-description">Загрузите резюме и требования вакансии.</p>
             <div className="upload-field">
               <label htmlFor="resume-upload">Резюме</label>
-              <p id="resume-upload-hint">PDF или TXT · можно выбрать несколько</p>
-              <input id="resume-upload" type="file" multiple accept=".pdf,.txt" onChange={handleUploadResumes}
+              <p id="resume-upload-hint">PDF, DOCX или TXT · можно выбрать несколько</p>
+              <input id="resume-upload" type="file" multiple accept=".pdf,.docx,.txt" onChange={handleUploadResumes}
                 disabled={isUploading} aria-describedby="resume-upload-hint" />
             </div>
             <div className="upload-field">
               <label htmlFor="vacancy-upload">Вакансии</label>
-              <p id="vacancy-upload-hint">PDF или TXT · с текстовым слоем</p>
-              <input id="vacancy-upload" type="file" multiple accept=".pdf,.txt" onChange={handleUploadVacancies}
+              <p id="vacancy-upload-hint">PDF, DOCX или TXT · для PDF нужен текстовый слой</p>
+              <input id="vacancy-upload" type="file" multiple accept=".pdf,.docx,.txt" onChange={handleUploadVacancies}
                 disabled={isUploading} aria-describedby="vacancy-upload-hint" />
             </div>
             {isUploading && <p className="upload-status" role="status">Загрузка документов...</p>}

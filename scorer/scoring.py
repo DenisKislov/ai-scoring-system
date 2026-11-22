@@ -2,7 +2,7 @@ from typing import Dict, List, Optional, Set
 
 from .normalize import normalize
 from .similarity import batch_cosine, pair_cosine
-from .skills import extract_skills, match_skills
+from .skills import match_skill_sets, prepare_skill_input
 from .metrics import category_metrics
 from .config import load_config, validate_weights
 from .privacy import professional_text
@@ -18,13 +18,9 @@ def calculate_score(
         critical_skills: Optional[Set[str]] = None,
 ) -> Dict:
     w = validate_weights({**load_config()["weights"], **(weights or {})})
-    resume_text = professional_text(resume_text)
-    vacancy_text = professional_text(vacancy_text)
-    match = match_skills(
-        resume_text,
-        vacancy_text,
-        critical_skills=critical_skills,
-    )
+    resume_text, r_skills, denied = prepare_skill_input(professional_text(resume_text))
+    vacancy_text, v_skills, _ = prepare_skill_input(professional_text(vacancy_text))
+    match = match_skill_sets(v_skills, r_skills, critical_skills, denied)
     keyword_score = match["keyword_score"]
     cosine_sim = pair_cosine(normalize(vacancy_text), normalize(resume_text))
 
@@ -78,32 +74,23 @@ def rank_candidates(
         raise ValueError("resume_skills_list must align with candidate_texts")
     if len(set(candidate_ids)) != len(candidate_ids):
         raise ValueError("candidate_ids must be unique")
-    vacancy_text = professional_text(vacancy_text)
-    candidate_texts = [professional_text(t) for t in candidate_texts]
-    norm_v = normalize(vacancy_text)
-    norm_resumes = [normalize(r) for r in candidate_texts]
-    cosines = batch_cosine(norm_v, norm_resumes)
-
-    v_skills = vacancy_skills if vacancy_skills is not None else extract_skills(vacancy_text)
+    vacancy_text, v_skills, v_denied = prepare_skill_input(professional_text(vacancy_text), vacancy_skills)
+    prepared = [prepare_skill_input(professional_text(text), skills)
+                for text, skills in zip(candidate_texts, resume_skills_list or [None] * len(candidate_texts))]
+    cosines = batch_cosine(normalize(vacancy_text), [normalize(text) for text, _, _ in prepared])
 
     results: List[Dict] = []
-    for idx, (cid, rtext, cos) in enumerate(zip(candidate_ids, candidate_texts, cosines)):
-        r_skills = resume_skills_list[idx] if resume_skills_list else None
-
-        match = match_skills(
-            resume_text=rtext,
-            vacancy_text=vacancy_text,
-            vacancy_skills=v_skills,
-            critical_skills=critical_skills,
-            resume_skills=r_skills
-        )
+    metric_requirements = (vacancy_skills if vacancy_skills is not None and not v_denied
+                           else v_skills)
+    for cid, (rtext, r_skills, denied), cos in zip(candidate_ids, prepared, cosines):
+        match = match_skill_sets(v_skills, r_skills, critical_skills, denied)
         kw = match["keyword_score"]
         raw = w["keyword"] * kw + w["cosine"] * cos
         if not rtext.strip() or not vacancy_text.strip() or not match["matched"]:
             raw = 0.0
         score = round(raw * 100)
 
-        cat_metrics = category_metrics(predicted_skills=match["resume_skills"], true_skills=v_skills)
+        cat_metrics = category_metrics(predicted_skills=r_skills, true_skills=metric_requirements)
 
         item = {
             "candidate_id": cid,

@@ -25,7 +25,7 @@ from db import mongo
 from db.builders import experience_years, resume_text, vacancy_text
 from scorer.transport import rank as rank_candidates
 from scorer.config import algorithm_manifest
-from scorer.skills import extract_skills, normalize_skill_set
+from scorer.skills import extract_skills, normalize_skill_set, prepare_skill_input
 
 
 def score_vacancy(
@@ -61,14 +61,15 @@ def score_vacancy(
         raise ValueError("no resumes to score")
 
     rids = [str(r["_id"]) for r in resumes]
-    rtexts = [resume_text(r) for r in resumes]
+    rtexts = [resume_text(r, for_scoring=True) for r in resumes]
 
-    v_skills = (set(vac['skills']) if vac.get('skills')
-                else extract_skills(vacancy_text(vac)))
+    vtext = vacancy_text(vac)
+    v_skills = set(vac['skills']) if vac.get('skills') else extract_skills(vtext)
     explicit_critical = critical_skills is not None
     if explicit_critical:
         normalized_critical = normalize_skill_set(critical_skills)
-        if not normalized_critical <= normalize_skill_set(v_skills):
+        _, effective_skills, _ = prepare_skill_input(vtext, v_skills)
+        if not normalized_critical <= effective_skills:
             raise ValueError("critical skills must belong to vacancy skills")
         critical_skills = normalized_critical
     critical_skills = (set(vac.get("critical_skills", []))
@@ -77,7 +78,7 @@ def score_vacancy(
                      for r, text in zip(resumes, rtexts)]
 
     ranked = rank_candidates(
-        vacancy_text=vacancy_text(vac),
+        vacancy_text=vtext,
         candidate_texts=rtexts,
         candidate_ids=rids,
         weights=weights,

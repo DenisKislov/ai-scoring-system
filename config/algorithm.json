@@ -1,5 +1,5 @@
 {
-  "version": "spacy-pmi-1.1.0",
+  "version": "spacy-pmi-1.2.0",
   "weights": {
     "keyword": 0.85,
     "cosine": 0.15

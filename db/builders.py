@@ -20,6 +20,7 @@ import logging
 
 # Единый фасад извлечения навыков через SkillExtractor
 from scorer import extract_skills
+from scorer.negation import has_negation_cue
 
 # Робастный парсер опыта: покрывает форматы реальных резюме SuperJob/PDF
 # («2 года и 1 месяц», «Стаж 10 лет», периоды «апрель 2021 — настоящее
@@ -50,20 +51,23 @@ def _join(*parts: Iterable[Optional[Any]]) -> str:
 
 def vacancy_text(item: dict) -> str:
     """Text representation of a vacancy item for the scorer."""
-    return _join(item.get("title"), item.get("description"), item.get("skills"), item.get("tags"))
+    fields = [item.get("title"), item.get("description")]
+    text = "\n".join(_as_str(value) for value in fields)
+    if has_negation_cue(text):
+        # Previously extracted skills are evidence to check, not new positive mentions.
+        return text.strip()
+    return _join(*fields, item.get("skills"), item.get("tags"))
 
 
-def resume_text(item: dict) -> str:
+def resume_text(item: dict, *, for_scoring: bool = False) -> str:
     """Text representation of a resume item for the scorer."""
     if item.get("_raw_text") is not None:
         return item["_raw_text"]
-    return _join(
-        item.get("title"),
-        item.get("specialization"),
-        item.get("experience"),
-        item.get("skills"),
-        item.get("tags"),
-    )
+    fields = [item.get("title"), item.get("specialization"), item.get("experience")]
+    text = "\n".join(_as_str(value) for value in fields)
+    if for_scoring and has_negation_cue(text):
+        return text.strip()
+    return _join(*fields, item.get("skills"), item.get("tags"))
 
 
 def experience_years(item: dict) -> Optional[float]:

@@ -48,6 +48,22 @@ def test_a02_aliases_one_canonical(client):
     assert extract_skills('1С: Бухгалтерия, 1С Бухгалтерия, 1C: Бухгалтерия') == {'1С: Бухгалтерия'}
 
 
+def test_negation_reaches_pdf_upload_and_scoring(client, tmp_path):
+    path = tmp_path/'document.pdf'
+    write_pdf(path, 'Требования: Python и Docker. Kubernetes не требуется.')
+    vacancy = client.post('/upload_vacancy', files={'file': ('vacancy.pdf', path.read_bytes(), 'application/pdf')})
+    assert vacancy.status_code == 201 and set(vacancy.json()['skills']) == {'Python', 'Docker'}
+    write_pdf(path, 'Работаю с Python. Не работал с Docker.')
+    resume = client.post('/upload_resume', files={'file': ('resume.pdf', path.read_bytes(), 'application/pdf')})
+    assert resume.status_code == 201 and resume.json()['skills'] == ['Python']
+    # An old extraction may still contain Docker in storage.
+    mongo._coll(mongo.COLL_RESUMES).update_many({}, {'$set': {'skills': ['Python', 'Docker']}})
+    scored = client.post('/score', json={'vacancy_id': vacancy.json()['vacancy_id']})
+    assert scored.status_code == 200
+    result = scored.json()['results'][0]
+    assert result['matched_skills'] == ['Python'] and result['missing_skills'] == ['Docker']
+
+
 @pytest.mark.pmi_case('A-3')
 def test_a03_manifest_and_repeat(client, pair):
     config = client.get('/config').json()

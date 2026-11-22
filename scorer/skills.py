@@ -21,7 +21,8 @@ from .skill_families import family_satisfied
 from .skills_dict import RAW_SKILLS_ALL, SKILLS_ALL
 from . import dictionary
 from .config import load_config
-from .ner_skills import ner_enabled, ner_extract_skills
+from .ner_skills import ner_enabled, ner_extract_skills, ner_skill_mentions
+from .negation import has_negation_cue, negated_spans
 from .privacy import professional_text
 
 CRITICAL_WEIGHT = load_config()["critical_weight"]
@@ -128,13 +129,18 @@ def _get_extractor() -> SkillExtractor:
     return _EXTRACTOR_INSTANCE
 
 
-def extract_skills(text: str) -> Set[str]:
-    """Канонические навыки текста: словарь ∪ NER (за флагом ner_skills_enabled)."""
+def extract_skills(text: str, *, declared: Set[str] | None = None) -> Set[str]:
+    """Извлекает навыки из текста и при необходимости объединяет с указанными явно."""
+    explicit = normalize_skill_set(declared)
     if not text or not text.strip():
-        return set()
+        return explicit
+
+    professional = professional_text(text)
+    if has_negation_cue(professional):
+        _, positive, denied = _skill_polarity(professional, (declared or set()) | explicit)
+        return positive | (explicit - denied)
 
     extractor = _get_extractor()
-    professional = professional_text(text)
     clean = extractor.clean_text(professional)
     mentions = extractor.extract_mentions(clean)
     skills = normalize_skill_set({name for name, _, _ in mentions})
@@ -149,7 +155,45 @@ def extract_skills(text: str) -> Set[str]:
             if not nested:
                 additions.add(name)
         skills |= normalize_skill_set(additions)
-    return skills
+    return skills | explicit
+
+
+def _skill_polarity(text: str, declared: Set[str]) -> tuple[str, Set[str], Set[str]]:
+    extractor = _get_extractor()
+    clean = extractor.clean_text(text)
+    mentions = extractor.extract_mentions(clean)
+    recognised = mentions.copy()
+    if ner_enabled():
+        # Keep newlines here: a PDF list item must end the negation scope.
+        recognised.extend((name, start, end) for name, start, end in ner_skill_mentions(clean)
+                          if not any(a <= start and end <= b for _, a, b in mentions))
+    # Explicit skills may be absent from the dictionary and the model.
+    for name in sorted(declared, key=lambda name: (-len(name), name)):
+        pattern = rf"(?<![\w.]){re.escape(name)}(?![\w+#]|\.(?=\w))"
+        for match in re.finditer(pattern, clean, re.I):
+            start, end = match.span()
+            if not any(a <= start and end <= b for _, a, b in recognised):
+                recognised.append((name, start, end))
+
+    denied_spans = negated_spans(clean, {(a, b) for _, a, b in recognised})
+    positive = normalize_skill_set({name for name, a, b in recognised if (a, b) not in denied_spans})
+    denied = normalize_skill_set({name for name, a, b in recognised if (a, b) in denied_spans})
+    if denied_spans:
+        # Mask negative mentions before TF-IDF, including repeated aliases.
+        chars = list(clean)
+        for start, end in denied_spans:
+            chars[start:end] = ' ' * (end - start)
+        text = ''.join(chars)
+    return text, positive, denied - positive
+
+
+def prepare_skill_input(text: str, skills: Optional[Set[str]] = None) -> tuple[str, Set[str], Set[str]]:
+    """Return text for similarity, effective skills and explicitly denied skills."""
+    explicit = normalize_skill_set(skills)
+    if has_negation_cue(text):
+        text, positive, denied = _skill_polarity(text, (skills or set()) | explicit)
+        return text, positive if skills is None else explicit - denied, denied
+    return text, extract_skills(text) if skills is None else explicit, set()
 
 
 @lru_cache(maxsize=200_000)
@@ -183,7 +227,7 @@ def _normalized_skill(skill: str, dictionary_signature: tuple) -> FrozenSet[str]
     return frozenset({skill})
 
 
-def normalize_skill_set(raw_skills_set: Set[str]) -> Set[str]:
+def normalize_skill_set(raw_skills_set: Set[str] | None) -> Set[str]:
     """Приводит любое сырое множество навыков к каноническим ключам из онтологии."""
     if not raw_skills_set:
         return set()
@@ -203,21 +247,17 @@ def match_skills(
     resume_skills: Optional[Set[str]] = None,
 ) -> dict:
     """Сравнивает навыки резюме с навыками, требуемыми вакансией."""
-    if vacancy_skills is not None:
-        v_skills = normalize_skill_set(vacancy_skills)
-    else:
-        v_skills = extract_skills(vacancy_text)
+    _, v_skills, _ = prepare_skill_input(professional_text(vacancy_text), vacancy_skills)
+    _, r_skills, denied = prepare_skill_input(professional_text(resume_text), resume_skills)
+    return match_skill_sets(v_skills, r_skills, critical_skills, denied)
 
-    if resume_skills is not None:
-        r_skills = normalize_skill_set(resume_skills)
-    else:
-        r_skills = extract_skills(resume_text)
 
+def match_skill_sets(v_skills, r_skills, critical_skills, denied) -> dict:
     matched = v_skills & r_skills
 
     # Направленное сопоставление: требование «SQL» закрывается резюме с MySQL,
     # «Machine Learning» — scikit-learn/PyTorch, и т.д. (см. skill_families).
-    for v_skill in v_skills - matched:
+    for v_skill in v_skills - matched - denied:
         if family_satisfied(v_skill, r_skills):
             matched.add(v_skill)
 
