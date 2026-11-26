@@ -51,8 +51,11 @@ def test_api_quality_preserves_service_order_instead_of_sorting_by_gold(tmp_path
     rankings = {'v':[{'candidate_id':'b','score':50},{'candidate_id':'a','score':50}]}
     report = evaluate_api_outputs(data,documents,rankings,tmp_path)
     assert [row['resume_id'] for row in report['rankings']['v']] == ['b','a']
-    assert report['metrics']['mrr'] == .5
+    assert report['metrics']['precision_at_5'] == .2
     assert report['parser_reference_fields_used_for_prediction'] is False
+    exported = json.loads((tmp_path / 'quality_api.json').read_text())
+    assert set(exported['metrics']) == {'ndcg_at_10', 'precision_at_5', 'precision_at_10', 'recall_at_10', 'spearman'}
+    assert 'skill_extraction_micro' not in exported
     with pytest.raises(ValueError,match='exactly once'):
         summarize_rankings(data,{'v':[rankings['v'][0]]})
 

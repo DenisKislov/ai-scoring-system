@@ -182,7 +182,7 @@ def run_live(dataset: Path, output: Path | None = None, keep=False, cached_image
                 documents.update({r['id']:good(client.get('/resumes/'+rid)) for r,rid in zip(data['resumes'],rids)})
                 quality = evaluate_api_outputs(data,documents,api_rankings,output)
                 report['quality_api'] = {key:quality[key] for key in
-                    ['metrics','criteria','passed','dataset','skill_extraction_micro','experience_extraction','a10']}
+                    ['metrics','criteria','passed','dataset','a10']}
                 if output is not None:
                     report['quality_api']['evidence'] = 'quality_api.json'
                 evidence('A-9',passed=all(c['passed'] for c in quality['criteria'].values()),

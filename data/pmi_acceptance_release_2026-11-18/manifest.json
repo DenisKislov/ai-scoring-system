@@ -7,7 +7,7 @@
     "api/logger.py": "60cf040b7dd65dbb1968209a38113b483d3048afed2aec1be815b39a0ed8b430",
     "api/main.py": "54f0fca65cd4cd751b2ea58b68796905857c17d990c7be134d707348b22518f1",
     "api/nlp_parser.py": "21720c4180d2d9cfe9747893cd2b41c792570b7ceb8a052696b2133c1878b4cc",
-    "api/routes.py": "1141d9e3fa760d30b830c6c59ffe9ce116a952350ae56ee142630a2e3055dd2d",
+    "api/routes.py": "35ce8d10bf7af96e9df96b091e09013bbc249f3b0936bd8c54df3ed22d4feec6",
     "api/schemas.py": "99fcd6ebd0bc7353be4c35ae4f03ee809effa17603cae6f3f14a7db7c343807f",
     "api/threshold_service.py": "f2f655c2dd76b8a8712b15e44e0a178854d5ce2d7b2104275f52bdaa011aa16b",
     "backend.Dockerfile": "68c84f49970ff8dce43d94dfe8eb116144d74903197f0d2137488bd5726ad24d",
@@ -30,13 +30,13 @@
     "pmi/__init__.py": "91c42a175a8cf097217232c13d4aa1bbe615e226e2e8e5e661ad92e17d1fe4b3",
     "pmi/__main__.py": "418933c8758ba86d133f34a3e0d7ca87af64196bcddc86c5bbf25b0ecf763d0f",
     "pmi/audit.py": "4c6f0066b093fc81e7454c8e2dc00d6f2d0284fff28b3f3f6dcd55b184461b99",
-    "pmi/console.py": "5b1544a1e8718c4d1db7e4fe05bddb32e2ced004517b6840554c7c1298f7a5fb",
+    "pmi/console.py": "2cf62b064d0a695f745f0a6446e7ef97e5e784782564c9c362c0362c1d922610",
     "pmi/dataset.py": "6dc9330452337d8a2239ebe69cdf7c6f960e09010dcd682c153c3d948294f6c8",
-    "pmi/live.py": "b0716c306c2beb74b6b191dd36844a907abb402f55c4f4c526191f1067bd2ac1",
-    "pmi/live_quality.py": "f962166901d57b33df6f94d706074ed82324bb6c2f8598a707e6d256247c70b8",
+    "pmi/live.py": "f84429820bb1d16f50c44d353ab338a5383c2b585d606157424edaff7a12137f",
+    "pmi/live_quality.py": "ae7069dbb6c1593008b3b0a95524096027777d575d3b0b0f97df72c4a7b80c70",
     "pmi/performance.py": "9787fd1e40ed03f5fbc8641220b81b3ea8d861563c3f6a1dd3fc8bad21aad43a",
     "pmi/protocol.py": "46af5fbc36c272a8830b5ae724124e06faa1dc5adebb13ced00197515e78cec3",
-    "pmi/quality.py": "2a7fd58bb56aa7cf5148a95c61410d6df67133fbf52db93052c9df12820a1c14",
+    "pmi/quality.py": "8ce278f22bba5c5d2c553a657f05f573fedd01a3612e653aab8815812c58fa4c",
     "pmi/synthetic_acceptance.py": "9c54960aba69c575989dda41cffbefa1fb61f50211098b99e3a58b36c2e63b3f",
     "pmi/synthetic_hh.py": "7d63050ac93310a1811833a24ad886a0a5d5bcbdefb1980a8c2d92450fb71c0d",
     "pmi/synthetic_it.py": "db660d38b6d010abc6763da608b9a0912fc70528370c7c56a01edc22c3144322",
@@ -382,11 +382,24 @@
       "scope": "Console results by default; explicit report export; technical exit codes; PyMuPDF import alias update",
       "calculation_ast_unchanged": true,
       "dataset_and_scoring_algorithm_unchanged": true
+    },
+    {
+      "date": "2026-11-23",
+      "base_commit": "af8f24e5690a51da338553bd3d11095272b67723",
+      "previous_manifest_sha256": "7bc02d1cb409ede4c9f7758df2d59ff3234974fab922c90bb271ec5b9903e0c4",
+      "changed_sources": [
+        "api/routes.py",
+        "pmi/console.py",
+        "pmi/live.py",
+        "pmi/live_quality.py",
+        "pmi/quality.py"
+      ],
+      "scope": "Show five PMI quality metrics in published output. Synthetic inputs and scoring are unchanged."
     }
   ],
   "algorithm_revision": {
     "previous_commit": "af8f24e5690a51da338553bd3d11095272b67723",
-    "previous_manifest_sha256": "7bc02d1cb409ede4c9f7758df2d59ff3234974fab922c90bb271ec5b9903e0c4",
+    "previous_manifest_sha256": "dbf077b6268ec53b4d40cb46f950ec98e2de493422d7cfce851d22f70c0197c1",
     "previous_fingerprint": "93f0011db2da80ae32d2c636c249585ddfeb98b8430e23a5304d2f1e5f0aac20",
     "scope": "Directed skill matching; original dataset files retained"
   }

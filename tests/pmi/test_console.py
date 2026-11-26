@@ -53,7 +53,7 @@ def test_quality_prints_metrics_without_writing_files(console_workspace, monkeyp
     assert cli.main() == (0 if passed else 1)
     output = capsys.readouterr().out
     assert 'NDCG@10' in output and '0.9401' in output
-    assert 'Извлечение навыков' in output and '0.9228' in output
+    assert 'Извлечение навыков' not in output and '0.9228' not in output
     assert {path.name for path in console_workspace.iterdir()} == {'inputs'}
 
 
@@ -65,7 +65,7 @@ def test_api_evaluation_returns_metrics_without_output_files(tmp_path, monkeypat
             'pairs': [{'vacancy_id': 'v', 'resume_id': 'r', 'relevance': 1}]}
     documents = {rid: {'skills': ['Python'], 'experience_years': 2} for rid in ['v', 'r']}
     report = evaluate_api_outputs(data, documents, {'v': [{'candidate_id': 'r', 'score': 100}]})
-    assert report['metrics']['mrr'] == 1
+    assert report['metrics']['ndcg_at_10'] == 1
     assert report['skill_extraction_micro']['resumes']['f1'] == 1
     assert not list(tmp_path.iterdir())
 
@@ -105,7 +105,7 @@ def test_live_prints_full_api_metrics_without_report_files(console_workspace, mo
     monkeypatch.setattr(sys, 'argv', ['pmi', 'live'])
     assert cli.main() == 0
     output = capsys.readouterr().out
-    assert 'MongoDB' in output and '0.9401' in output and '0.9228' in output
+    assert 'MongoDB' in output and '0.9401' in output and '0.9228' not in output
     assert {path.name for path in console_workspace.iterdir()} == {'inputs'}
 
 

@@ -22,31 +22,6 @@ def show_quality(report, *, scope):
     for name, label in labels.items():
         criterion = report['criteria'][name]
         print(f'{label:<28} {number(criterion["value"]):>9} {number(criterion["minimum"]):>9}  {status(criterion["passed"])}')
-    for name, label in [('spearman_tie_corrected', 'Spearman (с учётом связей)'), ('map', 'MAP'), ('mrr', 'MRR')]:
-        if name in report['metrics']:
-            print(f'{label:<28} {number(report["metrics"][name]):>9}')
-    micro = report.get('skill_extraction_micro')
-    if micro is None:
-        micro = {}
-        for category, counts in report.get('skill_extraction_by_category', {}).items():
-            kind = category.split(':', 1)[0]
-            bucket = micro.setdefault(kind, {'tp': 0, 'fp': 0, 'fn': 0})
-            for name in bucket:
-                bucket[name] += counts[name]
-        for counts in micro.values():
-            tp, fp, fn = (counts[name] for name in ['tp', 'fp', 'fn'])
-            p = tp / (tp + fp) if tp + fp else 0
-            r = tp / (tp + fn) if tp + fn else 0
-            counts.update(precision=p, recall=r, f1=2*p*r/(p+r) if p+r else 0)
-    if micro:
-        print(f'{"Извлечение навыков":<28} {"Precision":>9} {"Recall":>9} {"F1":>9}')
-        for kind, label in [('resumes', 'Резюме'), ('vacancies', 'Вакансии')]:
-            if kind in micro:
-                counts = micro[kind]
-                print(f'{label:<28} {number(counts["precision"]):>9} {number(counts["recall"]):>9} {number(counts["f1"]):>9}')
-    if 'experience_extraction' in report:
-        experience = report['experience_extraction']
-        print(f'Стаж: {experience["correct"]}/{experience["documents"]} верно.')
     a10 = report['a10']
     print(f'А-10: {status(a10["passed"])}; нарушений: {len(a10["failures"])}.')
 

@@ -21,6 +21,27 @@ LIMITS = {'ndcg_at_10':.9, 'precision_at_5':.9, 'precision_at_10':.9,
 logger = setup_logger('pmi.quality')
 
 
+def write_quality_report(out: Path, name: str, report: dict, *, title: str) -> None:
+    """Export the five quality criteria and the evidence for the technical check."""
+    keys = ('date', 'started_at', 'finished_at', 'scope', 'dataset', 'metrics', 'criteria',
+            'a10', 'passed', 'rankings', 'frozen_manifest', 'reference_fields_used_for_prediction',
+            'parser_reference_fields_used_for_prediction')
+    public = {key: report[key] for key in keys if key in report}
+    (out / f'{name}.json').write_text(json.dumps(public, ensure_ascii=False, indent=2) + '\n')
+    dataset = report['dataset']
+    rows = [f'# {title}', '',
+            f'Синтетический набор: {dataset["vacancies"]} вакансий, {dataset["resumes"]} резюме.', '',
+            '| Метрика | Значение | Минимум ПМИ | Выполнено |', '|---|---:|---:|---|']
+    for label, criterion in report['criteria'].items():
+        value = criterion['value']
+        display = '—' if value is None else f'{value:.4f}'
+        status = 'да' if criterion['passed'] else 'нет'
+        rows.append(f'| {label} | {display} | {criterion["minimum"]} | {status} |')
+    a10 = 'пройдено' if report['a10']['passed'] else 'не пройдено'
+    rows += ['', f'А-10: {a10}.']
+    (out / f'{name}.md').write_text('\n'.join(rows) + '\n')
+
+
 def experience_metrics(resumes, parsed):
     """Reference years are used only to measure extraction, never to rank."""
     rows = []
@@ -90,7 +111,7 @@ def pmi_spearman(scores, relevance):
     """Formula (5) in the supplied PMI, with average ranks for ties.
 
     This literal simplified formula differs from scipy's Pearson correlation of
-    tied ranks. Both are recorded; the acceptance gate uses the PMI formula.
+    tied ranks.
     """
     n = len(scores)
     if n < 2:
@@ -100,23 +121,14 @@ def pmi_spearman(scores, relevance):
 
 
 def ranking_metrics(ordered_relevance, scores):
-    from scorer.metrics import spearman
     relevance = list(ordered_relevance)
     positive = [r >= .1 for r in relevance]
     total = sum(positive)
-    aps, found = [], 0
-    for index, relevant in enumerate(positive, 1):
-        if relevant:
-            found += 1
-            aps.append(found/index)
     return {'ndcg_at_10':ndcg(relevance,10),
             'precision_at_5':sum(positive[:5])/5,
             'precision_at_10':sum(positive[:10])/10,
             'recall_at_10':sum(positive[:10])/total if total else None,
-            'spearman':pmi_spearman(scores,relevance),
-            'spearman_tie_corrected':spearman(scores,relevance),
-            'map':sum(aps)/total if total else 0,
-            'mrr':next((1/i for i, r in enumerate(positive,1) if r),0)}
+            'spearman':pmi_spearman(scores,relevance)}
 
 
 def evaluate(root: Path, out: Path | None = None) -> dict:
@@ -181,22 +193,5 @@ def evaluate(root: Path, out: Path | None = None) -> dict:
         'experience_extraction':experience_metrics(resumes,parsed), **ranking}
     if out is not None:
         out.mkdir(parents=True, exist_ok=True)
-        (out/'quality.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-        rows = ['# Качество по ПМИ', '', 'Порог релевантности: 0.1. Разметка: взвешенное покрытие скрытых навыков до рендеринга PDF.',
-                'Контролируемая синтетика; результат не является оценкой отбора реальных людей.', '',
-                '| Метрика | Значение | Минимум ПМИ | Результат |','|---|---:|---:|---|']
-        rows += [f'| {name} | {c["value"]:.3f} | {c["minimum"]} | {"пройдено" if c["passed"] else "не пройдено"} |' for name,c in criteria.items()]
-        rows += ['', f'А-10: {"пройдено" if a10["passed"] else "не пройдено"}; нарушений {len(a10["failures"])} из {a10["zero_pairs"]} нулевых пар.',
-                 '', '## Извлечение навыков', '', '| Корпус и категория | TP | FP | FN | Precision | Recall | F1 |', '|---|---:|---:|---:|---:|---:|---:|']
-        rows += [f'| {cat} | {c["tp"]} | {c["fp"]} | {c["fn"]} | {c["precision"]:.3f} | {c["recall"]:.3f} | {c["f1"]:.3f} |' for cat,c in sorted(categories.items())]
-        exp = report['experience_extraction']
-        rows += ['', f'Стаж извлечён верно: {exp["correct"]}/{exp["documents"]}. Для сортировки используется только результат парсера; эталонный стаж нужен для проверки точности.',
-                 '', '## Методика и ограничения', '',
-                 'nDCG использует линейный gain rel/log2(i+1). Spearman для приёмки рассчитан буквально по формуле (5) ПМИ со средними рангами; корреляция scipy с поправкой на связи записана отдельно в JSON.',
-                 'Recall усреднён по запросам, имеющим релевантные резюме. Навыки извлекаются из PDF, а не передаются из эталонных меток.',
-                 'Отдельный реалистичный генератор шести ИТ-направлений и реальные PDF/JSON остаются диагностическими наборами и оцениваются отдельно.']
-        if not report['passed']:
-            rows += ['', '## Анализ непройденных критериев', '',
-                     'Ошибки возможны из-за пропущенных в тексте скрытых навыков, лишних словарных совпадений и широкой заменяемости технологий в семействах навыков. Требуется проверить независимую разметку, сузить семейства и улучшить словарь на отдельном обучающем наборе. Веса и метки после этого прогона не подбирались.']
-        (out/'quality.md').write_text('\n'.join(rows)+'\n')
+        write_quality_report(out, 'quality', report, title='Качество полного прогона из PDF')
     return report

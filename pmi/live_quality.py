@@ -3,12 +3,11 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime, timezone
-import json
 from pathlib import Path
 
 from scorer.metrics import category_metrics
 from scorer.skills import normalize_skill_set
-from .quality import experience_metrics, summarize_rankings
+from .quality import experience_metrics, summarize_rankings, write_quality_report
 
 
 def evaluate_api_outputs(data, documents, rankings, output: Path | None = None):
@@ -47,20 +46,5 @@ def evaluate_api_outputs(data, documents, rankings, output: Path | None = None):
                  'resumes':len(data['resumes']),'pairs':len(data['pairs'])})
     if output is not None:
         output.mkdir(parents=True,exist_ok=True)
-        (output/'quality_api.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-        dataset_type = 'синтетический' if data.get('synthetic') else 'тестовый'
-        lines = ['# Качество полного пути через API','',
-                 f'Набор: {dataset_type}; вакансий — {len(data["vacancies"])}, резюме — {len(data["resumes"])}.',
-                 '', 'Все входные документы загружены как PDF. '
-                 'Навыки и стаж взяты из сохранённых результатов парсера. Порядок получен от сервиса без пересортировки по эталону.',
-                 '', '| Метрика | Значение | Минимум ПМИ | Выполнено |','|---|---:|---:|---|']
-        lines += [f'| {name} | {c["value"]:.6f} | {c["minimum"]} | {"да" if c["passed"] else "нет"} |'
-                  for name,c in report['criteria'].items()]
-        lines += ['', '| Извлечение | Precision | Recall | F1 |','|---|---:|---:|---:|']
-        lines += [f'| {kind} | {c["precision"]:.6f} | {c["recall"]:.6f} | {c["f1"]:.6f} |'
-                  for kind,c in micro.items()]
-        exp = report['experience_extraction']
-        lines += ['',f'Стаж: {exp["correct"]}/{exp["documents"]} правильных результатов.',
-                  f'А-10: {"пройдено" if report["a10"]["passed"] else "не пройдено"}.']
-        (output/'quality_api.md').write_text('\n'.join(lines)+'\n')
+        write_quality_report(output, 'quality_api', report, title='Качество полного прогона через API')
     return report

@@ -87,6 +87,7 @@ def test_a04_order_storage_upsert_and_pair(client, pair):
         assert response.status_code == 200
     stored = client.get('/results/'+pair[0]).json()['results']
     assert len(stored) == 2
+    assert all('metrics_by_category' not in row for row in stored + response.json()['results'])
     assert len({r['_id'] for r in stored}) == 2
     assert stored[0]['resume_id'] == second
     assert all(0 <= r['score'] <= 100 for r in stored)

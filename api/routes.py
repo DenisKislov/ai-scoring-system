@@ -381,7 +381,9 @@ def generate_test_data(
 
 # --- scoring ---------------------------------------------------------------
 
-@router.post("/score", response_model=ResultsOut, summary="Run scoring for a vacancy")
+@router.post("/score", response_model=ResultsOut,
+             response_model_exclude={"results": {"__all__": {"metrics_by_category"}}},
+             summary="Run scoring for a vacancy")
 async def score(payload: ScoreRequest) -> dict:
     started = time.perf_counter()
     event(logger, "scoring_started", vacancy_id=payload.vacancy_id)
@@ -407,7 +409,9 @@ async def score(payload: ScoreRequest) -> dict:
     }
 
 
-@router.get("/results/{vacancy_id}", response_model=ResultsOut, summary="Ranked results for a vacancy")
+@router.get("/results/{vacancy_id}", response_model=ResultsOut,
+            response_model_exclude={"results": {"__all__": {"metrics_by_category"}}},
+            summary="Ranked results for a vacancy")
 def results(
     vacancy_id: str,
     top: Optional[int] = Query(default=None, ge=1),
