@@ -58,7 +58,7 @@
     "scorer/service.py": "8daeb0cf825b6bbcea38bd57af2a229e60003a3f96368033dd732e7bd3780613",
     "scorer/similarity.py": "f012649f6d886e36fae77c7590a14ad13e923ff504cecb4cbbae2f3726bb6d34",
     "scorer/skill_extractor.py": "056078ed653080b89a19d30d5b69c5b5cd142c9553f9831673bd4539f35808fa",
-    "scorer/skill_families.py": "b6af9f35882a18d54f1b0d80b8cd983f7c9f0831814e323746cda4ab9c04bcbc",
+    "scorer/skill_families.py": "771e3bbcc211f3dbce4f8ab69a87f122aca271a888b09be6e3556431df11b023",
     "scorer/skills.py": "dd0608541f370e46e86ec098bf619ceb0ae60fc34e55e7b9644e697de20a68bd",
     "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
     "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
@@ -68,7 +68,7 @@
     "scorer/transport.py": "915aa76d2258004576417d0fdfda81d96bb89ba4f313078354e71025b09c146b"
   },
   "algorithm": {
-    "version": "spacy-pmi-1.2.0",
+    "version": "spacy-pmi-1.2.2",
     "weights": {
       "keyword": 0.85,
       "cosine": 0.15
@@ -79,16 +79,16 @@
     "skill_dictionary": "config/skills.json",
     "personal_attributes": "excluded",
     "relevance_threshold": 0.1,
-    "skill_matching": "baseline_symmetric_families",
+    "skill_matching": "directed_requirements",
     "text_similarity": "fixed_reference_tfidf_for_pmi_pool_invariance",
     "file_hashes": {
-      "config/algorithm.json": "dda864e780fb294c8ac88e3ca26e0d8032c72dd84ebfc60efc6a91cb8f8c7332",
+      "config/algorithm.json": "b087e90db2206b8f51a21acd1b067fefea273b17cd95b66735061226b92a9e8a",
       "config/skills.json": "ba5a9e34f28f94a3d09ab8e316107c16cce854a1c2b16b172c9f964cfd59760f",
       "scorer/reference_corpus.py": "1b573265667ffebee433f291642972a3c04afb3ca98bb3fa9218f0214ea9ccc3",
       "scorer/skills_auto.json": "359e1a0b1bcb413b4702e706ccbdc1899199d8572df3d6ae22b5a279dff3dac8",
       "scorer/skills_auto_raw.json": "a6387555bd8c43e40f943def6142e350f777d8fd912a5c6d64d36e245769c119",
       "scorer/skill_extractor.py": "056078ed653080b89a19d30d5b69c5b5cd142c9553f9831673bd4539f35808fa",
-      "scorer/skill_families.py": "b6af9f35882a18d54f1b0d80b8cd983f7c9f0831814e323746cda4ab9c04bcbc",
+      "scorer/skill_families.py": "771e3bbcc211f3dbce4f8ab69a87f122aca271a888b09be6e3556431df11b023",
       "scorer/scoring.py": "cf4902cb3bace6abeebe4e0324b3c5d1ec90681987c1e20f549708eefee42c7f",
       "scorer/normalize.py": "b8539727e07146a34a6ed5817e059dbb5bf89d0fe14bc0ea203525d0c8a8018a",
       "scorer/privacy.py": "781a3551c4174450131b772c168a3b8e1d9b844ec388adb939fc5e223bdd9ee8",
@@ -124,7 +124,7 @@
       "pymorphy3": "2.0.6",
       "spacy": "3.8.16"
     },
-    "fingerprint": "93f0011db2da80ae32d2c636c249585ddfeb98b8430e23a5304d2f1e5f0aac20",
+    "fingerprint": "f512425e0f5ac91990a5505cf6266748f7dc7b7ac5de96b4d9b4c84dfaa37170",
     "ner_skills": {
       "enabled": true,
       "available": true
@@ -385,9 +385,9 @@
     }
   ],
   "algorithm_revision": {
-    "previous_commit": "5080784baa6fd73cc2988118ed36490257731fea",
-    "previous_manifest_sha256": "dd4a8703c8492198dd6a09ca90f501b70abc52aed79046dc034031dcdec167ad",
-    "previous_fingerprint": "30d4f52fe1b48e731010e94455cdf0132ac20b6f86455d1a695d1deb76c0f2a1",
-    "scope": "Explicit skill negation in extraction and scoring; original dataset files retained"
+    "previous_commit": "af8f24e5690a51da338553bd3d11095272b67723",
+    "previous_manifest_sha256": "7bc02d1cb409ede4c9f7758df2d59ff3234974fab922c90bb271ec5b9903e0c4",
+    "previous_fingerprint": "93f0011db2da80ae32d2c636c249585ddfeb98b8430e23a5304d2f1e5f0aac20",
+    "scope": "Directed skill matching; original dataset files retained"
   }
 }

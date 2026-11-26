@@ -9,6 +9,7 @@ from scorer.ner_skills import ner_skill_mentions
 @pytest.mark.parametrize(('text', 'expected'), [
     ('Не знаю Docker и Python', set()),
     ('Docker не использовал. На Python работал.', {'Python'}),
+    ('На Python работал. Docker не применял.', {'Python'}),
     ('Docker и Python не знаю', set()),
     ('Python, без опыта Docker', {'Python'}),
     ('Без опыта SQL, Python использую без Docker', {'Python'}),
@@ -42,10 +43,11 @@ def test_real_ner_extraction_respects_negation(monkeypatch):
 
 
 def test_explicit_denial_blocks_family_match_and_tfidf_term():
-    vacancy = 'PostgreSQL и Python'
-    negative = calculate_score('Использую MySQL и Python. Не использую PostgreSQL.', vacancy)
+    vacancy = 'SQL и Python'
+    negative = calculate_score('Использую MySQL и Python. Не использую SQL.', vacancy)
     control = calculate_score('Использую MySQL и Python. Не использую .', vacancy)
     assert negative['matched_skills'] == ['Python']
+    assert control['matched_skills'] == ['Python', 'SQL']
     assert negative['cosine_sim'] == control['cosine_sim']
 
 

@@ -1,18 +1,10 @@
-"""Тесты семей навыков (skill families) в матчинге резюме↔вакансия.
-
-Проблема на реальных данных: резюме «Data Scientist» со стеком
-MySQL/PostgreSQL/scikit-learn получало keyword_score ~0.38 против вакансии
-с требованиями SQL / Machine Learning — формально навыки не совпадают,
-по факту кандидат ими владеет.
-
-Семья = требование вакансии, которое закрывается родственными навыками:
-``SQL`` ← MySQL/PostgreSQL/SQLite/ClickHouse..., ``Machine Learning`` ←
-scikit-learn/PyTorch/..., ``анализ данных`` ← Tableau/Power BI/дашборды...
-"""
+"""Направленное сопоставление навыков в скорере."""
 from __future__ import annotations
 
 import os
 import sys
+
+import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -59,12 +51,11 @@ def test_data_analysis_satisfied_by_bi():
     assert score == 1.0
 
 
-def test_adhoc_analytics_satisfied_by_data_analysis():
-    # «ad-hoc аналитика» — формулировка реальных SuperJob-вакансий
+def test_data_analysis_satisfied_by_adhoc_analytics():
     r = match_skills(
-        "Опыт: анализ данных, A/B тесты, статистика",
-        "Требования: ad-hoc аналитика, Python")
-    assert "ad-hoc аналитика" in r["matched"]
+        "", "", vacancy_skills={"Аналитика данных"},
+        resume_skills={"ad-hoc аналитика"})
+    assert r["matched"] == normalize_skill_set({"Аналитика данных"})
 
 
 def test_javascript_satisfied_by_react():
@@ -132,17 +123,6 @@ def test_critical_skill_satisfied_by_family():
     assert out["missing_critical"] == set()
 
 
-if __name__ == "__main__":
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            fn()
-            print(f"PASS  {name}")
-    print("\nALL FAMILY TESTS PASSED")
-
-
-import pytest
-
-
 @pytest.mark.parametrize('requirement,known', [
     ('PostgreSQL', 'MySQL'), ('PostgreSQL', 'SQL'), ('MySQL', 'PostgreSQL'),
     ('React', 'JavaScript'), ('React', 'Vue'), ('TypeScript', 'JavaScript'),
@@ -151,8 +131,9 @@ import pytest
     ('Airflow', 'ETL'), ('Spring', 'Java'), ('Selenium', 'Postman'),
     ('Ubuntu', 'Linux'), ('1С: Бухгалтерия', '1С: ERP'), ('GraphQL', 'REST API'),
 ])
-def test_baseline_family_equivalence_is_preserved(requirement, known):
+def test_related_skill_does_not_satisfy_a_specific_critical_requirement(requirement, known):
     result = match_skills('', '', vacancy_skills={requirement},
                           resume_skills={known}, critical_skills={requirement})
-    assert result['matched'] == normalize_skill_set({requirement})
-    assert result['missing_critical'] == set()
+    assert result['matched'] == set()
+    assert result['missing_critical'] == normalize_skill_set({requirement})
+    assert result['keyword_score'] == 0.0
